@@ -35,9 +35,7 @@ a:hover {
         }
     }
     & .line {
-        @include mobile{
-            width: 1500% !important;
-        }
+        width: 1500% !important;
     }
 }
 #current-trade-status {
