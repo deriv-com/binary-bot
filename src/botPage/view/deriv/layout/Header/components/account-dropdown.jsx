@@ -8,6 +8,7 @@ const Separator = () => <div className="account__switcher-seperator"></div>;
 const AccountDropdown = React.forwardRef(({ clientInfo, setIsAccDropdownOpen }, dropdownRef) => {
     const [activeTab, setActiveTab] = React.useState(clientInfo.tokenList[0].loginInfo.is_virtual === 0 ? "real" : "demo");
     const container_ref = React.useRef();
+    const virtualAccId = clientInfo.tokenList.find(acc => acc.loginInfo.is_virtual === 1).accountName;
 
     React.useEffect(() => {
         function handleClickOutside(event) {
@@ -57,8 +58,12 @@ const AccountDropdown = React.forwardRef(({ clientInfo, setIsAccDropdownOpen }, 
                 <div className="account__switcher-total-balance">
                     <span className="account__switcher-total-balance-text">{translate("Total assets")}</span>
                     <span className="account__switcher-total-balance-amount account__switcher-balance">
-                        {clientInfo.balance?.total[activeTab === "real" ? "deriv" : "deriv_demo"].amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                        <span className="symbols">&nbsp;{clientInfo.balance?.total[activeTab === "real" ? "deriv" : "deriv_demo"].currency}</span>
+                        {
+                            activeTab === "real" 
+                                ? clientInfo.balance?.total.deriv.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+                                : clientInfo.balance?.accounts[virtualAccId].balance.toLocaleString(undefined, { minimumFractionDigits: 2 })
+                        }
+                        <span className="symbols">&nbsp;{activeTab === "real" ? clientInfo.balance?.total.deriv.currency : "USD"}</span>
                     </span>
                 </div>
                 <div className="account__switcher-total-text">{translate("Total assets in your Deriv accounts")}</div>
