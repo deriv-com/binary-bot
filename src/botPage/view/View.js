@@ -36,8 +36,6 @@ import {
     get as getStorage,
     set as setStorage,
     getToken,
-    syncWithDerivApp,
-    convertForDerivStore,
 } from '../../common/utils/storageManager';
 import GTM from '../../common/gtm';
 import {
@@ -244,12 +242,6 @@ const updateTokenList = () => {
         if (!('loginInfo' in activeToken)) {
             removeAllTokens();
             updateTokenList();
-        } else {
-            const activeLoginId = tokenList[0].accountName;
-            const clientAccounts = convertForDerivStore(tokenList);
-            setStorage('active_loginid', activeLoginId);
-            setStorage('client.accounts', JSON.stringify(clientAccounts));
-            syncWithDerivApp();
         }
 
         tokenList.forEach(tokenInfo => {
@@ -466,8 +458,6 @@ export default class View {
 
         const clearActiveTokens = () => {
             setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, '');
-            setStorage('active_loginid', null);
-            syncWithDerivApp();
         };
 
         $('.panelExitButton').click(function onClick() {
