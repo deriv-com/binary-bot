@@ -66,23 +66,23 @@ const DrawerMenu = ({
                         src="image/deriv/ic-close.svg" 
                         className="header__drawer-close"
                         onClick={()=>{updateShowDrawerMenu(false)}}
-                        />
-                        {translate('Menu')}
+                    />
+                    <span>{translate('Menu')}</span>
+                </div>
+                <div 
+                    id="platform__switcher" 
+                    className="header__drawer__platform-switcher" 
+                    onClick={() => setIsPlatformSwitcherOpen(!isPlatformSwitcherOpen)}
+                >
+                    <img className="header__logo" src="image/deriv/brand/ic-brand-binarybot.svg" />
+                    <div className="platform__switcher-header">Binary Bot</div>
+                    <img 
+                        id="platform__switcher-expand"
+                        className={classNames("header__icon header__expand", {"open" : isPlatformSwitcherOpen})}
+                        src="image/deriv/ic-chevron-down-bold.svg" 
+                    />
                 </div>
                 <div className="header__drawer-content">
-                    <div 
-                        id="platform__switcher" 
-                        className="header__drawer__platform-switcher" 
-                        onClick={() => setIsPlatformSwitcherOpen(!isPlatformSwitcherOpen)}
-                    >
-                        <img className="header__logo" src="image/deriv/brand/ic-brand-binarybot.svg" />
-                        <div className="platform__switcher-header">Binary Bot</div>
-                        <img 
-                            id="platform__switcher-expand"
-                            className={classNames("header__icon header__expand", {"open" : isPlatformSwitcherOpen})}
-                            src="image/deriv/ic-chevron-down-bold.svg" 
-                        />
-                    </div>
                     {isPlatformSwitcherOpen && <PlatformDropdown platforms={platforms} hideDropdown={hideDropdown} ref={platformDropdownRef}/>}
                     {isLogged && <MenuLinks />} 
                 </div>
