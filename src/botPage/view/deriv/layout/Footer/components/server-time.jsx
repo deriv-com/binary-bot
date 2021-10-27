@@ -8,6 +8,7 @@ const ServerTime = ({ api }) => {
 
     const updateTime = () => {
         if (!date) return;
+        if (!navigator.onLine || api.socket.readyState !== 1 || document.visibilityState !== 'visible') setHasApiResponse(false);
 
         date.setSeconds(date.getSeconds() + 1);
 
@@ -22,8 +23,6 @@ const ServerTime = ({ api }) => {
     };
 
     const getServerTime = () => {
-        if (!navigator.onLine || api.socket.readyState !== 1) setHasApiResponse(false);
-
         api.send({ time: 1 }).then(response => {
             const newDate = new Date(response.time * 1000);
             setDate(newDate);
@@ -34,10 +33,14 @@ const ServerTime = ({ api }) => {
     React.useEffect(() => {
         getServerTime();
 
+        const socketCloseHandler = () => setHasApiResponse(false);
+        api.socket.addEventListener("close", socketCloseHandler);
+
         const updateTimeInterval = setInterval(updateTime, 1000);
         const serverTimeInterval = setInterval(getServerTime, 30000);
 
         return () => {
+            api.socket.removeEventListener("close", socketCloseHandler);
             clearInterval(updateTimeInterval);
             clearInterval(serverTimeInterval);
         };
