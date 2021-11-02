@@ -10,6 +10,8 @@ const ServerTime = ({ api }) => {
         if (!date) return;
         if (!navigator.onLine || api.socket.readyState !== 1 || document.visibilityState !== 'visible') setHasApiResponse(false);
 
+        if (!hasApiResponse) getServerTime();
+
         date.setSeconds(date.getSeconds() + 1);
 
         const year = date.getUTCFullYear();
