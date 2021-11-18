@@ -748,9 +748,13 @@ export default class View {
 
         window.addEventListener('storage', e => {
             window.onbeforeunload = null;
-            if (['activeToken', 'active_loginid'].includes(e.key) && e.newValue !== e.oldValue) {
+            if (e.key === 'active_loginid' && e.newValue !== e.oldValue) {
+                setStorage('activeToken', null);
+                setStorage('tokenList', '[]');
+
                 window.location.reload();
             }
+            if (e.key === 'activeToken' && e.newValue !== e.oldValue) window.location.reload();
             if (e.key === 'realityCheckTime') hideRealityCheck();
         });
 

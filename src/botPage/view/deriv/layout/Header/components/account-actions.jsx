@@ -7,7 +7,7 @@ import { generateDerivLink } from "../../../utils";
 
 const AccountActions = ({ clientInfo }) => {
     const { currency, is_virtual, loginid } = clientInfo.tokenList[0].loginInfo;
-    const balance = clientInfo.balance?.accounts[loginid].balance || clientInfo.tokenList[0].loginInfo.balance;
+    const balance = clientInfo.balance?.accounts[loginid].balance;
     const [isAccDropdownOpen, setIsAccDropdownOpen] = React.useState(false);
     const dropdownRef = React.useRef();
 
@@ -30,7 +30,7 @@ const AccountActions = ({ clientInfo }) => {
                         src={`image/deriv/currency/ic-currency-${is_virtual ? "virtual" : currency.toLowerCase()}.svg`} 
                     />
                     <div id="header__acc-balance" className="header__acc-balance">
-                        {balance.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[currency]?.fractional_digits ?? 2})}
+                        {balance?.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[currency]?.fractional_digits ?? 2})}
                         <span className="symbols">&nbsp;{currency}</span>
                     </div>
                     <img 

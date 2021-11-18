@@ -65,7 +65,8 @@ function loginCheck() {
                 });
             } else if (isLoggedInDeriv()) {
                 const activeAccount = getStorage('active_loginid');
-                const tokenList = convertForBinaryStore(JSON.parse(getStorage('client.accounts')));
+                const clientAccounts = JSON.parse(getStorage('client.accounts'));
+                const tokenList = convertForBinaryStore(activeAccount, clientAccounts);
                 const activeToken = tokenList.find(account => account.accountName === activeAccount).token;
 
                 setStorage('activeToken', activeToken);
