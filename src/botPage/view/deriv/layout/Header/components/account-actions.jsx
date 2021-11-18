@@ -1,9 +1,10 @@
 import React from "react";
-import { translate } from "../../../../../../common/utils/tools";
+import { translate, isMobile } from "../../../../../../common/utils/tools";
 import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
 import { currencyNameMap } from "../../../config";
 import { generateDerivLink } from "../../../utils";
+import AccountsInfoLoader from "./accounts-info-loader.jsx";
 
 const AccountActions = ({ clientInfo }) => {
     const { currency, is_virtual, loginid } = clientInfo.tokenList[0].loginInfo;
@@ -11,7 +12,7 @@ const AccountActions = ({ clientInfo }) => {
     const [isAccDropdownOpen, setIsAccDropdownOpen] = React.useState(false);
     const dropdownRef = React.useRef();
 
-    return (
+    return typeof balance === 'number' ? (
         <React.Fragment>
             <Notifications />
             <a className="url-account-details header__account header__menu-item mobile-hide" href={generateDerivLink('account')}>
@@ -47,6 +48,8 @@ const AccountActions = ({ clientInfo }) => {
             />}
             <a className="url-cashier-deposit btn btn--primary header__deposit mobile-hide" href="https://app.deriv.com/cashier/deposit">{translate("Deposit")}</a>
         </React.Fragment>
+    ) : (
+        <AccountsInfoLoader is_mobile={isMobile()}/>
     )
 };
 
