@@ -14,6 +14,7 @@ import {
     get as getStorage,
     convertForBinaryStore,
 } from '../../common/utils/storageManager';
+import _Blockly from './blockly';
 
 $.ajaxSetup({
     cache: false,
@@ -33,9 +34,10 @@ window._trackJs = {
 require('trackjs');
 
 loginCheck().then(() => {
-    const view = new View();
+    const blockly = new _Blockly();
+    const view = new View(blockly);
 
-    view.initPromise.then(() => {
+    view.then(() => {
         $('.show-on-load').show();
         $('.barspinner').hide();
         window.dispatchEvent(new Event('resize'));

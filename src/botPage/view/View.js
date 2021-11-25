@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import 'jquery-ui/ui/widgets/dialog';
-import _Blockly, { load } from './blockly';
+import { load } from './blockly';
 import Chart from './Dialogs/Chart';
 import Limits from './Dialogs/Limits';
 import IntegrationsDialog from './Dialogs/IntegrationsDialog';
@@ -305,485 +305,479 @@ const checkForRequiredBlocks = () => {
     return true;
 };
 
-export default class View {
-    constructor() {
-        logHandler();
-        this.initPromise = new Promise(resolve => {
-            updateConfigCurrencies(api).then(() => {
-                symbolPromise.then(() => {
-                    updateTokenList();
-                    this.blockly = new _Blockly();
-                    this.blockly.initPromise.then(() => {
-                        initRealityCheck(() => $('#stopButton').triggerHandler('click'));
-                        applyToolboxPermissions();
-                        renderReactComponents();
-                        this.setElementActions();
-                        resolve();
-                    });
-                });
-            });
-        });
-    }
+const setFileBrowser = () => {
+    const readFile = (f, dropEvent = {}) => {
+        const reader = new FileReader();
+        reader.onload = e => load(e.target.result, dropEvent);
+        reader.readAsText(f);
+    };
 
-    // eslint-disable-next-line class-methods-use-this
-    setFileBrowser() {
-        const readFile = (f, dropEvent = {}) => {
-            const reader = new FileReader();
-            reader.onload = e => load(e.target.result, dropEvent);
-            reader.readAsText(f);
-        };
-
-        const handleFileSelect = e => {
-            let files;
-            let dropEvent;
-            if (e.type === 'drop') {
-                e.stopPropagation();
-                e.preventDefault();
-                ({ files } = e.dataTransfer);
-                dropEvent = e;
-            } else {
-                ({ files } = e.target);
-            }
-            files = Array.from(files);
-            files.forEach(file => {
-                if (file.type.match('text/xml')) {
-                    readFile(file, dropEvent);
-                } else {
-                    globalObserver.emit('ui.log.info', `${translate('File is not supported:')} ${file.name}`);
-                }
-            });
-            $('#files').val('');
-        };
-
-        const handleDragOver = e => {
+    const handleFileSelect = e => {
+        let files;
+        let dropEvent;
+        if (e.type === 'drop') {
             e.stopPropagation();
             e.preventDefault();
-            e.dataTransfer.dropEffect = 'copy'; // eslint-disable-line no-param-reassign
-        };
-
-        const dropZone = document.body;
-
-        dropZone.addEventListener('dragover', handleDragOver, false);
-        dropZone.addEventListener('drop', handleFileSelect, false);
-
-        $('#files').on('change', handleFileSelect);
-
-        $('#open_btn')
-            .on('click', () => {
-                $.FileDialog({
-                    // eslint-disable-line new-cap
-                    accept: '.xml',
-                    cancelButton: 'Close',
-                    dragMessage: 'Drop files here',
-                    dropheight: 400,
-                    errorMessage: 'An error occured while loading file',
-                    multiple: false,
-                    okButton: 'OK',
-                    readAs: 'DataURL',
-                    removeMessage: 'Remove&nbsp;file',
-                    title: 'Load file',
-                });
-            })
-            .on('files.bs.filedialog', ev => {
-                handleFileSelect(ev.files);
-            })
-            .on('cancel.bs.filedialog', ev => {
-                handleFileSelect(ev);
-            });
-    }
-    setElementActions() {
-        this.setFileBrowser();
-        this.addBindings();
-        this.addEventHandlers();
-    }
-    addBindings() {
-        const stop = e => {
-            if (e) {
-                e.preventDefault();
-            }
-            stopRealityCheck();
-            this.stop();
-        };
-
-        const getAccountSwitchText = () => {
-            if (this.blockly.hasStarted()) {
-                return [
-                    translate(
-                        'Binary Bot will not place any new trades. Any trades already placed (but not expired) will be completed by our system. Any unsaved changes will be lost.'
-                    ),
-                    translate(
-                        'Note: Please see the Binary.com statement page for details of all confirmed transactions.'
-                    ),
-                ];
-            }
-            return [translate('Any unsaved changes will be lost.')];
-        };
-
-        const logout = () => {
-            showDialog({
-                title: translate('Are you sure?'),
-                text: getAccountSwitchText(),
-                className: 'logout-dialog',
-            })
-                .then(() => {
-                    this.stop();
-                    googleDrive.signOut();
-                    GTM.setVisitorId();
-                    removeTokens();
-                })
-                .catch(() => {});
-        };
-
-        const removeTokens = () => {
-            logoutAllTokens().then(() => {
-                updateTokenList();
-                globalObserver.emit('ui.log.info', translate('Logged you out!'));
-                clearRealityCheck();
-                clearActiveTokens();
-                window.location.reload();
-            });
-        };
-
-        const clearActiveTokens = () => {
-            setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, '');
-            setStorage('active_loginid', null);
-            syncWithDerivApp();
-        };
-
-        $('.panelExitButton').click(function onClick() {
-            $(this)
-                .parent()
-                .hide();
-        });
-
-        $('.draggable-dialog')
-            .hide()
-            .dialog({
-                resizable: false,
-                autoOpen: false,
-                width: Math.min(document.body.offsetWidth, 770),
-                height: Math.min(document.body.offsetHeight, 600),
-                closeText: '',
-                classes: { 'ui-dialog-titlebar-close': 'icon-close' },
-            });
-
-        $('#integrations').click(() => integrationsDialog.open());
-
-        $('#load-xml').click(() => loadDialog.open());
-
-        $('#save-xml').click(() => saveDialog.save().then(arg => this.blockly.save(arg)));
-
-        $('#undo').click(() => {
-            this.blockly.undo();
-        });
-
-        $('#redo').click(() => {
-            this.blockly.redo();
-        });
-
-        $('#zoomIn').click(() => {
-            this.blockly.zoomOnPlusMinus(true);
-        });
-
-        $('#zoomOut').click(() => {
-            this.blockly.zoomOnPlusMinus(false);
-        });
-
-        $('#rearrange').click(() => {
-            this.blockly.cleanUp();
-        });
-
-        $('#chartButton').click(() => {
-            if (!chart) {
-                chart = new Chart(api);
-            }
-
-            chart.open();
-        });
-
-        $('#tradingViewButton').click(() => {
-            tradingView.open();
-        });
-
-        const exportContent = {};
-        exportContent.summaryPanel = () => {
-            globalObserver.emit('summary.export');
-        };
-
-        exportContent.logPanel = () => {
-            globalObserver.emit('log.export');
-        };
-
-        const addExportButtonToPanel = panelId => {
-            const buttonHtml =
-                '<button class="icon-save" style="position:absolute;top:50%;margin:-10px 0 0 0;right:2em;padding:0.2em"></button>';
-            const $button = $(buttonHtml);
-            const panelSelector = `[aria-describedby="${panelId}"]`;
-            if (!$(`${panelSelector} .icon-save`).length) {
-                $button.insertBefore(`${panelSelector} .icon-close`);
-                $(`${panelSelector} .icon-close`).blur();
-                $($(`${panelSelector} .icon-save`)).click(() => {
-                    exportContent[panelId]();
-                });
-            }
-        };
-
-        const showSummary = () => {
-            $('#summaryPanel')
-                .dialog('option', 'minWidth', 770)
-                .dialog('open');
-            addExportButtonToPanel('summaryPanel');
-        };
-
-        $('#logButton').click(() => {
-            $('#logPanel').dialog('open');
-            addExportButtonToPanel('logPanel');
-        });
-
-        $('#showSummary').click(showSummary);
-
-        $('#deriv__logout-btn, #logout, #toolbox-logout').click(() => {
-            saveBeforeUnload();
-            logout();
-            hideRealityCheck();
-        });
-
-        globalObserver.register('ui.logout', () => {
-            $('.barspinner').show();
-            removeTokens();
-            hideRealityCheck();
-        });
-
-        const submitRealityCheck = () => {
-            const time = parseInt($('#realityDuration').val());
-            if (time >= 10 && time <= 60) {
-                hideRealityCheck();
-                startRealityCheck(time, null, () => $('#stopButton').triggerHandler('click'));
+            ({ files } = e.dataTransfer);
+            dropEvent = e;
+        } else {
+            ({ files } = e.target);
+        }
+        files = Array.from(files);
+        files.forEach(file => {
+            if (file.type.match('text/xml')) {
+                readFile(file, dropEvent);
             } else {
-                $('#rc-err').show();
+                globalObserver.emit('ui.log.info', `${translate('File is not supported:')} ${file.name}`);
             }
-        };
+        });
+        $('#files').val('');
+    };
 
-        $('#continue-trading').click(() => {
-            submitRealityCheck();
+    const handleDragOver = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy'; // eslint-disable-line no-param-reassign
+    };
+
+    const dropZone = document.body;
+
+    dropZone.addEventListener('dragover', handleDragOver, false);
+    dropZone.addEventListener('drop', handleFileSelect, false);
+
+    $('#files').on('change', handleFileSelect);
+
+    $('#open_btn')
+        .on('click', () => {
+            $.FileDialog({
+                // eslint-disable-line new-cap
+                accept: '.xml',
+                cancelButton: 'Close',
+                dragMessage: 'Drop files here',
+                dropheight: 400,
+                errorMessage: 'An error occured while loading file',
+                multiple: false,
+                okButton: 'OK',
+                readAs: 'DataURL',
+                removeMessage: 'Remove&nbsp;file',
+                title: 'Load file',
+            });
+        })
+        .on('files.bs.filedialog', ev => {
+            handleFileSelect(ev.files);
+        })
+        .on('cancel.bs.filedialog', ev => {
+            handleFileSelect(ev);
+        });
+};
+
+const addBindings = blockly => {
+    const stop = e => {
+        if (e) {
+            e.preventDefault();
+        }
+        stopRealityCheck();
+        blockly.stop();
+    };
+
+    const getAccountSwitchText = () => {
+        if (blockly.hasStarted()) {
+            return [
+                translate(
+                    'Binary Bot will not place any new trades. Any trades already placed (but not expired) will be completed by our system. Any unsaved changes will be lost.'
+                ),
+                translate('Note: Please see the Binary.com statement page for details of all confirmed transactions.'),
+            ];
+        }
+        return [translate('Any unsaved changes will be lost.')];
+    };
+
+    const logout = () => {
+        showDialog({
+            title: translate('Are you sure?'),
+            text: getAccountSwitchText(),
+            className: 'logout-dialog',
+        })
+            .then(() => {
+                stop(blockly);
+                googleDrive.signOut();
+                GTM.setVisitorId();
+                removeTokens();
+            })
+            .catch(() => {});
+    };
+
+    const removeTokens = () => {
+        logoutAllTokens().then(() => {
+            updateTokenList();
+            globalObserver.emit('ui.log.info', translate('Logged you out!'));
+            clearRealityCheck();
+            clearActiveTokens();
+            window.location.reload();
+        });
+    };
+
+    const clearActiveTokens = () => {
+        setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, '');
+        setStorage('active_loginid', null);
+        syncWithDerivApp();
+    };
+
+    $('.panelExitButton').click(function onClick() {
+        $(this)
+            .parent()
+            .hide();
+    });
+
+    $('.draggable-dialog')
+        .hide()
+        .dialog({
+            resizable: false,
+            autoOpen: false,
+            width: Math.min(document.body.offsetWidth, 770),
+            height: Math.min(document.body.offsetHeight, 600),
+            closeText: '',
+            classes: { 'ui-dialog-titlebar-close': 'icon-close' },
         });
 
-        $('#realityDuration').keypress(e => {
-            const char = String.fromCharCode(e.which);
-            if (e.keyCode === 13) {
-                submitRealityCheck();
-            }
-            /* Unicode check is for firefox because it
-             * trigger this event when backspace, arrow keys are pressed
-             * in chrome it is not triggered
-             */
-            const unicodeStrings = /[\u0008|\u0000]/; // eslint-disable-line no-control-regex
-            if (unicodeStrings.test(char)) return;
+    $('#integrations').click(() => integrationsDialog.open());
 
-            if (!/([0-9])/.test(char)) {
+    $('#load-xml').click(() => loadDialog.open());
+
+    $('#save-xml').click(() => saveDialog.save().then(arg => blockly.save(arg)));
+
+    $('#undo').click(() => {
+        blockly.undo();
+    });
+
+    $('#redo').click(() => {
+        blockly.redo();
+    });
+
+    $('#zoomIn').click(() => {
+        blockly.zoomOnPlusMinus(true);
+    });
+
+    $('#zoomOut').click(() => {
+        blockly.zoomOnPlusMinus(false);
+    });
+
+    $('#rearrange').click(() => {
+        blockly.cleanUp();
+    });
+
+    $('#chartButton').click(() => {
+        if (!chart) {
+            chart = new Chart(api);
+        }
+
+        chart.open();
+    });
+
+    $('#tradingViewButton').click(() => {
+        tradingView.open();
+    });
+
+    const exportContent = {};
+    exportContent.summaryPanel = () => {
+        globalObserver.emit('summary.export');
+    };
+
+    exportContent.logPanel = () => {
+        globalObserver.emit('log.export');
+    };
+
+    const addExportButtonToPanel = panelId => {
+        const buttonHtml =
+            '<button class="icon-save" style="position:absolute;top:50%;margin:-10px 0 0 0;right:2em;padding:0.2em"></button>';
+        const $button = $(buttonHtml);
+        const panelSelector = `[aria-describedby="${panelId}"]`;
+        if (!$(`${panelSelector} .icon-save`).length) {
+            $button.insertBefore(`${panelSelector} .icon-close`);
+            $(`${panelSelector} .icon-close`).blur();
+            $($(`${panelSelector} .icon-save`)).click(() => {
+                exportContent[panelId]();
+            });
+        }
+    };
+
+    const showSummary = () => {
+        $('#summaryPanel')
+            .dialog('option', 'minWidth', 770)
+            .dialog('open');
+        addExportButtonToPanel('summaryPanel');
+    };
+
+    $('#logButton').click(() => {
+        $('#logPanel').dialog('open');
+        addExportButtonToPanel('logPanel');
+    });
+
+    $('#showSummary').click(showSummary);
+
+    $('#deriv__logout-btn, #logout, #toolbox-logout').click(() => {
+        saveBeforeUnload();
+        logout();
+        hideRealityCheck();
+    });
+
+    globalObserver.register('ui.logout', () => {
+        $('.barspinner').show();
+        removeTokens();
+        hideRealityCheck();
+    });
+
+    const submitRealityCheck = () => {
+        const time = parseInt($('#realityDuration').val());
+        if (time >= 10 && time <= 60) {
+            hideRealityCheck();
+            startRealityCheck(time, null, () => $('#stopButton').triggerHandler('click'));
+        } else {
+            $('#rc-err').show();
+        }
+    };
+
+    $('#continue-trading').click(() => {
+        submitRealityCheck();
+    });
+
+    $('#realityDuration').keypress(e => {
+        const char = String.fromCharCode(e.which);
+        if (e.keyCode === 13) {
+            submitRealityCheck();
+        }
+        /* Unicode check is for firefox because it
+         * trigger this event when backspace, arrow keys are pressed
+         * in chrome it is not triggered
+         */
+        const unicodeStrings = /[\u0008|\u0000]/; // eslint-disable-line no-control-regex
+        if (unicodeStrings.test(char)) return;
+
+        if (!/([0-9])/.test(char)) {
+            e.preventDefault();
+        }
+    });
+
+    const startBot = limitations => {
+        const elRunButtons = document.querySelectorAll('#runButton, #summaryRunButton');
+        const elStopButtons = document.querySelectorAll('#stopButton, #summaryStopButton');
+
+        elRunButtons.forEach(el => {
+            const elRunButton = el;
+            elRunButton.style.display = 'none';
+            elRunButton.setAttributeNode(document.createAttribute('disabled'));
+        });
+        elStopButtons.forEach(el => {
+            const elStopButton = el;
+            elStopButton.style.display = 'inline-block';
+        });
+
+        showSummary();
+        blockly.run(limitations);
+    };
+
+    $('#runButton').click(() => {
+        // setTimeout is needed to ensure correct event sequence
+        if (!checkForRequiredBlocks()) {
+            setTimeout(() => $('#stopButton').triggerHandler('click'));
+            return;
+        }
+
+        const token = $('.account-id')
+            .first()
+            .attr('value');
+        const tokenObj = getToken(token);
+        initRealityCheck(() => $('#stopButton').triggerHandler('click'));
+
+        if (tokenObj && tokenObj.hasTradeLimitation) {
+            const limits = new Limits(api);
+            limits
+                .getLimits()
+                .then(startBot)
+                .catch(() => {});
+        } else {
+            startBot();
+        }
+    });
+
+    $('#stopButton')
+        .click(e => stop(e))
+        .hide();
+
+    $('[aria-describedby="summaryPanel"]').on('click', '#summaryRunButton', () => {
+        $('#runButton').trigger('click');
+    });
+
+    $('[aria-describedby="summaryPanel"]').on('click', '#summaryStopButton', () => {
+        $('#stopButton').trigger('click');
+    });
+
+    $('#resetButton').click(() => {
+        let dialogText;
+        if (blockly.hasStarted()) {
+            dialogText = [
+                translate(
+                    'Binary Bot will not place any new trades. Any trades already placed (but not expired) will be completed by our system. Any unsaved changes will be lost.'
+                ),
+                translate('Note: Please see the Binary.com statement page for details of all confirmed transactions.'),
+            ];
+        } else {
+            dialogText = [translate('Any unsaved changes will be lost.')];
+        }
+        showDialog({
+            title: translate('Are you sure?'),
+            text: dialogText,
+            className: 'reset-dialog',
+        })
+            .then(() => {
+                blockly.stop();
+                blockly.resetWorkspace();
+                setTimeout(() => blockly.cleanUp(), 0);
+            })
+            .catch(() => {});
+    });
+
+    globalObserver.register('ui.switch_account', token => {
+        showDialog({
+            title: translate('Are you sure?'),
+            text: getAccountSwitchText(),
+            className: 'switch-account-dialog',
+        })
+            .then(() => {
+                stop(blockly);
+                $('.barspinner').show();
+                GTM.setVisitorId();
+                const activeToken = token;
+                const tokenList = getTokenList();
+                setStorage('tokenList', '');
+                addTokenIfValid(activeToken, tokenList).then(() => {
+                    setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, activeToken);
+                    window.location.reload();
+                });
+            })
+            .catch(() => {});
+    });
+
+    $('#btn__login, #login, #toolbox-login')
+        .bind('click.login', () => {
+            saveBeforeUnload();
+            document.location = getOAuthURL();
+        })
+        .text(translate('Log in'));
+
+    $('#statement-reality-check').click(() => {
+        document.location = `https://www.binary.com/${getLanguage()}/user/statementws.html#no-reality-check`;
+    });
+    $(document).keydown(e => {
+        if (e.which === 189) {
+            // Ctrl + -
+            if (e.ctrlKey) {
+                blockly.zoomOnPlusMinus(false);
                 e.preventDefault();
             }
+        } else if (e.which === 187) {
+            // Ctrl + +
+            if (e.ctrlKey) {
+                blockly.zoomOnPlusMinus(true);
+                e.preventDefault();
+            }
+        }
+    });
+};
+
+const addEventHandlers = blockly => {
+    const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');
+    const getStopButtonElements = () => document.querySelectorAll('#stopButton, #summaryStopButton');
+
+    window.addEventListener('storage', e => {
+        window.onbeforeunload = null;
+        if (['activeToken', 'active_loginid'].includes(e.key) && e.newValue !== e.oldValue) {
+            window.location.reload();
+        }
+        if (e.key === 'realityCheckTime') hideRealityCheck();
+    });
+
+    globalObserver.register('Error', error => {
+        getRunButtonElements().forEach(el => {
+            const elRunButton = el;
+            elRunButton.removeAttribute('disabled');
         });
 
-        const startBot = limitations => {
-            const elRunButtons = document.querySelectorAll('#runButton, #summaryRunButton');
-            const elStopButtons = document.querySelectorAll('#stopButton, #summaryStopButton');
+        if (error.error && error.error.error.code === 'InvalidToken') {
+            removeAllTokens();
+            updateTokenList();
+            blockly.stop();
+        }
+    });
 
-            elRunButtons.forEach(el => {
-                const elRunButton = el;
-                elRunButton.style.display = 'none';
-                elRunButton.setAttributeNode(document.createAttribute('disabled'));
-            });
-            elStopButtons.forEach(el => {
-                const elStopButton = el;
-                elStopButton.style.display = 'inline-block';
-            });
+    globalObserver.register('bot.running', () => {
+        getRunButtonElements().forEach(el => {
+            const elRunButton = el;
+            elRunButton.style.display = 'none';
+            elRunButton.setAttributeNode(document.createAttribute('disabled'));
+        });
+        getStopButtonElements().forEach(el => {
+            const elStopButton = el;
+            elStopButton.style.display = 'inline-block';
+            elStopButton.removeAttribute('disabled');
+        });
+    });
 
-            showSummary();
-            this.blockly.run(limitations);
-        };
+    globalObserver.register('bot.stop', () => {
+        // Enable run button, this event is emitted after the interpreter
+        // killed the API connection.
+        getStopButtonElements().forEach(el => {
+            const elStopButton = el;
+            elStopButton.style.display = null;
+            elStopButton.removeAttribute('disabled');
+        });
+        getRunButtonElements().forEach(el => {
+            const elRunButton = el;
+            elRunButton.style.display = null;
+            elRunButton.removeAttribute('disabled');
+        });
+    });
 
-        $('#runButton').click(() => {
-            // setTimeout is needed to ensure correct event sequence
-            if (!checkForRequiredBlocks()) {
-                setTimeout(() => $('#stopButton').triggerHandler('click'));
-                return;
-            }
-
+    globalObserver.register('bot.info', info => {
+        if ('profit' in info) {
             const token = $('.account-id')
                 .first()
                 .attr('value');
-            const tokenObj = getToken(token);
-            initRealityCheck(() => $('#stopButton').triggerHandler('click'));
-
-            if (tokenObj && tokenObj.hasTradeLimitation) {
-                const limits = new Limits(api);
-                limits
-                    .getLimits()
-                    .then(startBot)
-                    .catch(() => {});
-            } else {
-                startBot();
-            }
-        });
-
-        $('#stopButton')
-            .click(e => stop(e))
-            .hide();
-
-        $('[aria-describedby="summaryPanel"]').on('click', '#summaryRunButton', () => {
-            $('#runButton').trigger('click');
-        });
-
-        $('[aria-describedby="summaryPanel"]').on('click', '#summaryStopButton', () => {
-            $('#stopButton').trigger('click');
-        });
-
-        $('#resetButton').click(() => {
-            let dialogText;
-            if (this.blockly.hasStarted()) {
-                dialogText = [
-                    translate(
-                        'Binary Bot will not place any new trades. Any trades already placed (but not expired) will be completed by our system. Any unsaved changes will be lost.'
-                    ),
-                    translate(
-                        'Note: Please see the Binary.com statement page for details of all confirmed transactions.'
-                    ),
-                ];
-            } else {
-                dialogText = [translate('Any unsaved changes will be lost.')];
-            }
-            showDialog({
-                title: translate('Are you sure?'),
-                text: dialogText,
-                className: 'reset-dialog',
-            })
-                .then(() => {
-                    this.stop();
-                    this.blockly.resetWorkspace();
-                    setTimeout(() => this.blockly.cleanUp(), 0);
-                })
-                .catch(() => {});
-        });
-
-        globalObserver.register('ui.switch_account', token => {
-            showDialog({
-                title: translate('Are you sure?'),
-                text: getAccountSwitchText(),
-                className: 'switch-account-dialog',
-            })
-                .then(() => {
-                    this.stop();
-                    $('.barspinner').show();
-                    GTM.setVisitorId();
-                    const activeToken = token;
-                    const tokenList = getTokenList();
-                    setStorage('tokenList', '');
-                    addTokenIfValid(activeToken, tokenList).then(() => {
-                        setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, activeToken);
-                        window.location.reload();
-                    });
-                })
-                .catch(() => {});
-        });
-
-        $('#btn__login, #login, #toolbox-login')
-            .bind('click.login', () => {
-                saveBeforeUnload();
-                document.location = getOAuthURL();
-            })
-            .text(translate('Log in'));
-
-        $('#statement-reality-check').click(() => {
-            document.location = `https://www.binary.com/${getLanguage()}/user/statementws.html#no-reality-check`;
-        });
-        $(document).keydown(e => {
-            if (e.which === 189) {
-                // Ctrl + -
-                if (e.ctrlKey) {
-                    this.blockly.zoomOnPlusMinus(false);
-                    e.preventDefault();
-                }
-            } else if (e.which === 187) {
-                // Ctrl + +
-                if (e.ctrlKey) {
-                    this.blockly.zoomOnPlusMinus(true);
-                    e.preventDefault();
-                }
-            }
-        });
-    }
-    stop() {
-        this.blockly.stop();
-    }
-    addEventHandlers() {
-        const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');
-        const getStopButtonElements = () => document.querySelectorAll('#stopButton, #summaryStopButton');
-
-        window.addEventListener('storage', e => {
-            window.onbeforeunload = null;
-            if (['activeToken', 'active_loginid'].includes(e.key) && e.newValue !== e.oldValue) {
-                window.location.reload();
-            }
-            if (e.key === 'realityCheckTime') hideRealityCheck();
-        });
-
-        globalObserver.register('Error', error => {
-            getRunButtonElements().forEach(el => {
-                const elRunButton = el;
-                elRunButton.removeAttribute('disabled');
+            const user = getToken(token);
+            globalObserver.emit('log.revenue', {
+                user,
+                profit: info.profit,
+                contract: info.contract,
             });
+        }
+    });
+};
 
-            if (error.error && error.error.error.code === 'InvalidToken') {
-                removeAllTokens();
+const setElementActions = blockly => {
+    setFileBrowser();
+    addBindings(blockly);
+    addEventHandlers(blockly);
+};
+
+export const view = blockly => {
+    logHandler();
+    return new Promise(resolve => {
+        updateConfigCurrencies(api).then(() => {
+            symbolPromise.then(() => {
                 updateTokenList();
-                this.stop();
-            }
-        });
-
-        globalObserver.register('bot.running', () => {
-            getRunButtonElements().forEach(el => {
-                const elRunButton = el;
-                elRunButton.style.display = 'none';
-                elRunButton.setAttributeNode(document.createAttribute('disabled'));
-            });
-            getStopButtonElements().forEach(el => {
-                const elStopButton = el;
-                elStopButton.style.display = 'inline-block';
-                elStopButton.removeAttribute('disabled');
-            });
-        });
-
-        globalObserver.register('bot.stop', () => {
-            // Enable run button, this event is emitted after the interpreter
-            // killed the API connection.
-            getStopButtonElements().forEach(el => {
-                const elStopButton = el;
-                elStopButton.style.display = null;
-                elStopButton.removeAttribute('disabled');
-            });
-            getRunButtonElements().forEach(el => {
-                const elRunButton = el;
-                elRunButton.style.display = null;
-                elRunButton.removeAttribute('disabled');
-            });
-        });
-
-        globalObserver.register('bot.info', info => {
-            if ('profit' in info) {
-                const token = $('.account-id')
-                    .first()
-                    .attr('value');
-                const user = getToken(token);
-                globalObserver.emit('log.revenue', {
-                    user,
-                    profit: info.profit,
-                    contract: info.contract,
+                blockly.initPromise.then(() => {
+                    initRealityCheck(() => $('#stopButton').triggerHandler('click'));
+                    applyToolboxPermissions();
+                    renderReactComponents();
+                    setElementActions(blockly);
+                    resolve();
                 });
-            }
+            });
         });
-    }
-}
+    });
+};
+
+export default view;
 
 function initRealityCheck(stopCallback) {
     startRealityCheck(
