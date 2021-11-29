@@ -124,7 +124,7 @@ export const syncWithDerivApp = () => {
     }
 };
 
-export const convertForBinaryStore = clientAccounts => {
+export const convertForBinaryStore = (activeAccount, clientAccounts) => {
     const tokenList = [];
     const accountNames = Object.keys(clientAccounts);
     const accountList = [];
@@ -133,6 +133,7 @@ export const convertForBinaryStore = clientAccounts => {
         const accountListItem = {};
 
         accountListItem.account_type = clientAccounts[account].account_type;
+        accountListItem.balance = clientAccounts[account].balance;
         accountListItem.currency = clientAccounts[account].currency;
         accountListItem.is_disabled = clientAccounts[account].is_disabled;
         accountListItem.is_virtual = clientAccounts[account].is_virtual;
@@ -143,11 +144,11 @@ export const convertForBinaryStore = clientAccounts => {
         accountList.push(accountListItem);
     });
 
-    accountNames.forEach((account, index) => {
+    accountNames.forEach(account => {
         const accountInfo = {};
         const loginInfo = {};
 
-        if (index === 0) {
+        if (account === activeAccount) {
             loginInfo.accountList = accountList;
             loginInfo.balance = clientAccounts[account].balance;
             loginInfo.email = clientAccounts[account].email;
@@ -168,7 +169,7 @@ export const convertForBinaryStore = clientAccounts => {
         accountInfo.hasRealityCheck = false; // using false as default - needs clarification
         accountInfo.hasTradeLimitation = false; // using false as default - needs clarification
 
-        tokenList.push(accountInfo);
+        account === activeAccount ? tokenList.unshift(accountInfo) : tokenList.push(accountInfo);
     });
 
     return tokenList;

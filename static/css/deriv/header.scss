@@ -124,6 +124,14 @@
         align-self: center;
         margin-left: 16px;
     }
+    &__preloader {
+        width: 350px;
+        height: 46px;
+
+        @include mobile {
+            display: none;
+        }
+    }
     &__acc {
         &-info {
             display: flex;
