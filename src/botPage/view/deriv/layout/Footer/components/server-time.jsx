@@ -1,7 +1,8 @@
 import React from "react";
+import {api} from '../../../../View';
 import  Popover from '../../../components/popover.jsx';
 
-const ServerTime = ({ api }) => {
+const ServerTime = () => {
     const [hasApiResponse, setHasApiResponse] = React.useState(false);
     const [date, setDate] = React.useState();
     const [dateString, setDateString] = React.useState();

@@ -49,13 +49,7 @@ body {
 }
 
 #blocklyArea {
-    height: calc(100% - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT});
-}
-
-@media only screen and (max-height: 723px) {
-    #blocklyArea {
-        height: 86%;
-    }
+    height: 100%;
 }
 
 #center, #workspace_center {

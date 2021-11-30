@@ -1,10 +1,13 @@
 import { doUntilDone } from '../bot/tools';
 import TicksService from './TicksService';
+import { api } from '../../botPage/view/View';
 
 export default class ChartTicksService extends TicksService {
     observe() {
-        this.api.events.on('tick', r => {
-            const { tick: { symbol, id } } = r;
+        api.events.on('tick', r => {
+            const {
+                tick: { symbol, id },
+            } = r;
 
             if (this.ticks.has(symbol)) {
                 this.subscriptions = this.subscriptions.setIn(['tick', symbol], id);
@@ -12,8 +15,10 @@ export default class ChartTicksService extends TicksService {
             }
         });
 
-        this.api.events.on('ohlc', r => {
-            const { ohlc: { symbol, granularity, id } } = r;
+        api.events.on('ohlc', r => {
+            const {
+                ohlc: { symbol, granularity, id },
+            } = r;
 
             if (this.candles.hasIn([symbol, Number(granularity)])) {
                 this.subscriptions = this.subscriptions.setIn(['ohlc', symbol, Number(granularity)], id);
@@ -28,10 +33,10 @@ export default class ChartTicksService extends TicksService {
 
         return new Promise((resolve, reject) => {
             doUntilDone(() =>
-                this.api.getTickHistory(symbol, {
-                    subscribe  : 1,
-                    end        : 'latest',
-                    count      : 1000,
+                api.getTickHistory(symbol, {
+                    subscribe: 1,
+                    end: 'latest',
+                    count: 1000,
                     granularity: granularity ? Number(granularity) : undefined,
                     style,
                 })

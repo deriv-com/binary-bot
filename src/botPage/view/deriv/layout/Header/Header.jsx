@@ -102,6 +102,7 @@ const Header = ({ clientInfo }) => {
     const hideDropdown = e => !platformDropdownRef.current.contains(e.target) && setIsPlatformSwitcherOpen(false);
 
     return (
+        <div id='header-wrapper'>
         <div className="header">
             <div id="deriv__header" className="header__menu-items">
                 {isDesktop() &&
@@ -146,6 +147,7 @@ const Header = ({ clientInfo }) => {
                      platformDropdownRef={platformDropdownRef}
                      isLogged={isLogged}
                      />}
+        </div>
         </div>
     );
 };

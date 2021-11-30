@@ -1,0 +1,3 @@
+.workspace{
+    height: calc(100% - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT} - #{$FOOTER_HEIGHT});
+}

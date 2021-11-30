@@ -2,6 +2,7 @@
 import json2csv from 'json2csv';
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid';
+import { api } from '../View';
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { appendRow, updateRow, saveAs } from '../shared';
 import { translate } from '../../../common/i18n';
@@ -38,11 +39,11 @@ export default class TradeTable extends Component {
         super();
         this.state = {
             initial: {
-                id  : 0,
+                id: 0,
                 rows: [],
             },
             [accountID]: {
-                id  : 0,
+                id: 0,
                 rows: [],
             },
         };
@@ -77,8 +78,6 @@ export default class TradeTable extends Component {
     }
 
     componentWillMount() {
-        const { api } = this.props;
-
         globalObserver.register('summary.export', () => {
             const accountData = this.state[this.props.accountID];
             if (accountData && accountData.rows.length > 0) {
@@ -106,8 +105,8 @@ export default class TradeTable extends Component {
             const tradeObj = TradeTable.getTradeObject(contract);
             const trade = {
                 ...tradeObj,
-                profit          : getProfit(tradeObj),
-                contract_status : translate('Pending'),
+                profit: getProfit(tradeObj),
+                contract_status: translate('Pending'),
                 contract_settled: false,
             };
 
@@ -133,7 +132,7 @@ export default class TradeTable extends Component {
         });
     }
 
-    async settleContract(api, contractID) {
+    async settleContract(contractID) {
         let settled = false;
         let delay = 3000;
 
@@ -143,7 +142,7 @@ export default class TradeTable extends Component {
             await sleep();
 
             try {
-                await this.refreshContract(api, contractID);
+                await this.refreshContract(contractID);
 
                 const { accountID } = this.props;
                 const rows = this.state[accountID].rows.slice();
@@ -160,7 +159,7 @@ export default class TradeTable extends Component {
         }
     }
 
-    refreshContract(api, contractID) {
+    refreshContract(contractID) {
         return api.getContractInfo(contractID).then(r => {
             const contract = r.proposal_open_contract;
             const tradeObj = TradeTable.getTradeObject(contract);
@@ -181,7 +180,7 @@ export default class TradeTable extends Component {
 
                 if (reference === trade.reference) {
                     return {
-                        contract_status : translate('Settled'),
+                        contract_status: translate('Settled'),
                         contract_settled: true,
                         reference,
                         ...trade,
@@ -209,7 +208,7 @@ export default class TradeTable extends Component {
             return row;
         });
         const data = json2csv({
-            data  : rows,
+            data: rows,
             fields: [
                 'id',
                 'timestamp',

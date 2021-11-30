@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import React from "react";
+import {api} from '../../../../View';
 import  Popover from '../../../components/popover.jsx';
 import { translate} from "../../../../../../common/utils/tools";
 
 
-const NetworkStatus = ({ api }) => {
+const NetworkStatus = () => {
     const [status, setStatus] = React.useState("offline");
 
     React.useEffect(() => {

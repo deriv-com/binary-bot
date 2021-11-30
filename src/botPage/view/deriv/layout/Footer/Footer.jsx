@@ -1,4 +1,5 @@
 import React from "react";
+import {api} from '../../../View';
 import NetworkStatus from "./components/network-status.jsx";
 import ServerTime from "./components/server-time.jsx";
 import ToggleFullScreen from "./components/toggle-fullscreen.jsx";
@@ -12,7 +13,7 @@ const HelpCenter = () => (
     </a>
 );
 
-const Footer = ({ api }) => {
+const Footer = () => {
     return (
         <footer className="footer">
             <NetworkStatus api={api} />

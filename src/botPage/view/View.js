@@ -10,10 +10,8 @@ import LoadDialog from './Dialogs/LoadDialog';
 import SaveDialog from './Dialogs/SaveDialog';
 import TradingView from './Dialogs/TradingView';
 import logHandler from './logger';
-import LogTable from './LogTable';
 import NetworkMonitor from './NetworkMonitor';
 import { symbolPromise } from './shared';
-import TradeInfoPanel from './TradeInfoPanel';
 import { showDialog } from '../bot/tools';
 import config, { updateConfigCurrencies } from '../common/const';
 import { isVirtual } from '../common/tools';
@@ -47,7 +45,6 @@ import {
 } from './blockly/utils';
 
 // Deriv components
-import Footer from './deriv/layout/Footer';
 import Header from './deriv/layout/Header';
 import Main from './deriv/layout/Main';
 import store from './deriv/store';
@@ -56,7 +53,7 @@ let realityCheckTimeout;
 let chart;
 const clientInfo = {};
 
-const api = generateLiveApiInstance();
+export const api = generateLiveApiInstance();
 
 new NetworkMonitor(api, $('#server-status')); // eslint-disable-line no-new
 
@@ -308,6 +305,7 @@ const checkForRequiredBlocks = () => {
 export default class View {
     constructor() {
         logHandler();
+        renderReactComponents();
         this.initPromise = new Promise(resolve => {
             updateConfigCurrencies(api).then(() => {
                 symbolPromise.then(() => {
@@ -316,7 +314,6 @@ export default class View {
                     this.blockly.initPromise.then(() => {
                         initRealityCheck(() => $('#stopButton').triggerHandler('click'));
                         applyToolboxPermissions();
-                        renderReactComponents();
                         this.setElementActions();
                         resolve();
                     });
@@ -797,32 +794,8 @@ function initRealityCheck(stopCallback) {
 function renderReactComponents() {
     ReactDOM.render(
         <Provider store={store}>
-            <Header clientInfo={clientInfo} />
-        </Provider>,
-        document.getElementById('header-wrapper')
-    );
-    ReactDOM.render(
-        <Provider store={store}>
-            <Main clientInfo={clientInfo} api={api} />
+            <Main clientInfo={clientInfo} />
         </Provider>,
         document.getElementById('main')
-    );
-    ReactDOM.render(
-        <Provider store={store}>
-            <Footer api={api} />
-        </Provider>,
-        document.getElementById('footer')
-    );
-    ReactDOM.render(
-        <Provider store={store}>
-            <TradeInfoPanel api={api} />
-        </Provider>,
-        document.getElementById('summaryPanel')
-    );
-    ReactDOM.render(
-        <Provider store={store}>
-            <LogTable />
-        </Provider>,
-        document.getElementById('logTable')
     );
 }
