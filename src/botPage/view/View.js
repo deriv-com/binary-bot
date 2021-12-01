@@ -5,12 +5,7 @@ import 'jquery-ui/ui/widgets/dialog';
 import _Blockly, { load } from './blockly';
 import Chart from './Dialogs/Chart';
 import Limits from './Dialogs/Limits';
-import IntegrationsDialog from './Dialogs/IntegrationsDialog';
-import LoadDialog from './Dialogs/LoadDialog';
-import SaveDialog from './Dialogs/SaveDialog';
-import TradingView from './Dialogs/TradingView';
 import logHandler from './logger';
-import NetworkMonitor from './NetworkMonitor';
 import { symbolPromise } from './shared';
 import { showDialog } from '../bot/tools';
 import config, { updateConfigCurrencies } from '../common/const';
@@ -54,22 +49,6 @@ let chart;
 const clientInfo = {};
 
 export const api = generateLiveApiInstance();
-
-new NetworkMonitor(api, $('#server-status')); // eslint-disable-line no-new
-
-api.send({ website_status: '1', subscribe: 1 });
-
-api.events.on('website_status', response => {
-    $('.web-status').trigger('notify-hide');
-    const { message } = response.website_status;
-    if (message) {
-        $.notify(message, {
-            position: 'bottom left',
-            autoHide: false,
-            className: 'warn web-status',
-        });
-    }
-});
 
 api.events.on('balance', response => {
     if (response.balance.accounts) {
@@ -125,8 +104,6 @@ const subscribeToAllAccountsBalance = token => {
     });
 };
 
-const tradingView = new TradingView();
-
 const showRealityCheck = () => {
     $('.blocker').show();
     $('.reality-check').show();
@@ -178,10 +155,6 @@ const clearRealityCheck = () => {
     setStorage('realityCheckTime', null);
     stopRealityCheck();
 };
-
-const integrationsDialog = new IntegrationsDialog();
-const loadDialog = new LoadDialog();
-const saveDialog = new SaveDialog();
 
 const getActiveToken = (tokenList, activeToken) => {
     const activeTokenObject = tokenList.filter(tokenObject => tokenObject.token === activeToken);
@@ -464,12 +437,6 @@ export default class View {
                 classes: { 'ui-dialog-titlebar-close': 'icon-close' },
             });
 
-        $('#integrations').click(() => integrationsDialog.open());
-
-        $('#load-xml').click(() => loadDialog.open());
-
-        $('#save-xml').click(() => saveDialog.save().then(arg => this.blockly.save(arg)));
-
         $('#undo').click(() => {
             this.blockly.undo();
         });
@@ -496,10 +463,6 @@ export default class View {
             }
 
             chart.open();
-        });
-
-        $('#tradingViewButton').click(() => {
-            tradingView.open();
         });
 
         const exportContent = {};

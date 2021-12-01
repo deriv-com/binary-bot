@@ -1,6 +1,5 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {api} from '../../../View';
 import Tour from '../../../tour'
 import { get as getStorage, isDone } from '../../../../../common/utils/storageManager';
 import {updateShowTour} from '../../store/ui-slice';
@@ -10,7 +9,7 @@ import Footer from '../Footer';
 import Workspace from '../workspace';
 
 
-const Main = ({api,clientInfo})=>{
+const Main = ({clientInfo})=>{
     const {show_tour} = useSelector(state => state.ui);
     const dispatch = useDispatch()
     React.useEffect(()=>{

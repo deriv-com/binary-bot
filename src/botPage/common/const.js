@@ -1,6 +1,6 @@
 import { translate } from '../../common/i18n';
-import { generateLiveApiInstance } from '../../common/appId';
 import { load as loadLang } from '../../common/lang';
+import { api } from '../../botPage/view/View';
 
 loadLang();
 
@@ -274,7 +274,7 @@ const config = {
     quick_strategies: ['martingale', 'dalembert'],
 };
 
-export async function updateConfigCurrencies(api = generateLiveApiInstance()) {
+export async function updateConfigCurrencies() {
     try {
         const response = await api.getPayoutCurrencies();
         config.lists.CURRENCY = response.payout_currencies.map(c => {

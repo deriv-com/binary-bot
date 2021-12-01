@@ -1,15 +1,38 @@
 import React from 'react';
 import TradeInfoPanel from '../../../TradeInfoPanel';
 import LogTable from '../../../LogTable';
-import {api} from '../../../View';
+import TradingView from '../../../Dialogs/TradingView';
+import IntegrationsDialog from '../../../Dialogs/IntegrationsDialog';
+import LoadDialog from '../../../Dialogs/LoadDialog';
+import SaveDialog from '../../../Dialogs/SaveDialog';
 
-const ToolBox = ()=>{
+const tradingView = new TradingView();
+const integrationsDialog = new IntegrationsDialog();
+const loadDialog = new LoadDialog();
+const saveDialog = new SaveDialog();
+
+const ToolBox = ({blockly})=>{
     return(
         <div id="toolbox" className="actions_menu show-on-load">
         <button data-i18n-title="Reset the blocks to their initial state" id="resetButton" className="toolbox-button icon-reset"/>
-        <button data-i18n-title="Load new blocks (xml file)" id="load-xml" className="toolbox-button icon-browse"/>
-        <button data-i18n-title="Save the existing blocks (xml file)" id="save-xml" className="toolbox-button icon-save"/>
-        <button data-i18n-title="Connect Binary Bot to your Google Drive to easily save and re-use your blocks" id="integrations" className="toolbox-button icon-integrations invisible"/>
+        <button 
+            data-i18n-title="Load new blocks (xml file)" 
+            id="load-xml" 
+            className="toolbox-button icon-browse"
+            onClick={()=>{loadDialog.open()}}
+        />
+        <button 
+            data-i18n-title="Save the existing blocks (xml file)" 
+            id="save-xml" 
+            className="toolbox-button icon-save"
+            onClick = {()=>{saveDialog.save().then(arg => this.blockly.save(arg))}}
+        />
+        <button 
+            data-i18n-title="Connect Binary Bot to your Google Drive to easily save and re-use your blocks" 
+            id="integrations" 
+            className="toolbox-button icon-integrations invisible"
+            onClick= {()=>{integrationsDialog.open()}}
+        />
 
         <span className="toolbox-separator"/>
         <button data-i18n-title="Undo the changes (Ctrl+Z)" id="undo" className="toolbox-button icon-undo"/>
@@ -28,7 +51,11 @@ const ToolBox = ()=>{
 
         <span className="toolbox-separator"/>
         <button data-i18n-title="Show chart" id="chartButton" className="toolbox-button icon-chart-line"/>
-        <button data-i18n-title="Show Trading View" id="tradingViewButton" className="toolbox-button icon-trading-view"/>
+        <button 
+            data-i18n-title="Show Trading View"
+            className="toolbox-button icon-trading-view"
+            onClick= {()=>{tradingView.open();}}
+            />
 
         {/* needs remove this part after update clientInfo */}
 

@@ -1,5 +1,4 @@
 import React from "react";
-import {api} from '../../../View';
 import NetworkStatus from "./components/network-status.jsx";
 import ServerTime from "./components/server-time.jsx";
 import ToggleFullScreen from "./components/toggle-fullscreen.jsx";
@@ -16,11 +15,11 @@ const HelpCenter = () => (
 const Footer = () => {
     return (
         <footer className="footer">
-            <NetworkStatus api={api} />
+            <NetworkStatus  />
             <FooterIconSeparator />
             <LanguageSelector />
             <FooterIconSeparator />
-            <ServerTime api={api} />
+            <ServerTime />
             <FooterIconSeparator />
             <div className="footer__links">
                 <HelpCenter />
