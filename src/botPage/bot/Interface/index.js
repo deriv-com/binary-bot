@@ -1,33 +1,28 @@
 import TradeEngine from '../TradeEngine';
 import { noop, createDetails } from '../tools';
-import TicksInterface from './TicksInterface';
-import ToolsInterface from './ToolsInterface';
+import getTicksInterface from './TicksInterface';
+import getToolsInterface from './ToolsInterface';
 
 /**
  * Bot - Bot Module
  * @namespace Bot
  */
 
-export default class Interface extends ToolsInterface(TicksInterface(class {})) {
+export default class Interface {
     constructor($scope) {
-        super();
         this.tradeEngine = new TradeEngine($scope);
         this.api = $scope.api;
         this.observer = $scope.observer;
         this.$scope = $scope;
+        this.getTicksInterface = () => getTicksInterface(this.tradeEngine);
+        this.getToolsInterface = () => getToolsInterface(this.tradeEngine);
     }
-    getInterface(name = 'Global') {
-        if (name === 'Bot') {
-            return {
-                ...this.getBotInterface(),
-                ...this.getToolsInterface(),
-            };
-        }
+    getGlobalInterface() {
         return {
-            watch  : (...args) => this.tradeEngine.watch(...args),
-            sleep  : (...args) => this.sleep(...args),
-            alert  : (...args) => alert(...args), // eslint-disable-line no-alert
-            prompt : (...args) => prompt(...args), // eslint-disable-line no-alert
+            watch: (...args) => this.tradeEngine.watch(...args),
+            sleep: (...args) => this.sleep(...args),
+            alert: (...args) => alert(...args), // eslint-disable-line no-alert
+            prompt: (...args) => prompt(...args), // eslint-disable-line no-alert
             console: {
                 log(...args) {
                     // eslint-disable-next-line no-console
@@ -36,22 +31,28 @@ export default class Interface extends ToolsInterface(TicksInterface(class {})) 
             },
         };
     }
+    getInterface() {
+        return {
+            ...this.getBotInterface(),
+            ...this.getToolsInterface(),
+        };
+    }
     getBotInterface() {
         const getDetail = (i, pipSize) => createDetails(this.tradeEngine.data.contract, pipSize)[i];
 
         return {
-            init                : (...args) => this.tradeEngine.init(...args),
-            start               : (...args) => this.tradeEngine.start(...args),
-            stop                : (...args) => this.tradeEngine.stop(...args),
-            purchase            : (...args) => this.tradeEngine.purchase(...args),
+            init: (...args) => this.tradeEngine.init(...args),
+            start: (...args) => this.tradeEngine.start(...args),
+            stop: (...args) => this.tradeEngine.stop(...args),
+            purchase: (...args) => this.tradeEngine.purchase(...args),
             getPurchaseReference: () => this.tradeEngine.getPurchaseReference(),
-            getAskPrice         : contractType => Number(this.getProposal(contractType).ask_price),
-            getPayout           : contractType => Number(this.getProposal(contractType).payout),
-            isSellAvailable     : () => this.tradeEngine.isSellAtMarketAvailable(),
-            sellAtMarket        : () => this.tradeEngine.sellAtMarket(),
-            getSellPrice        : () => this.getSellPrice(),
-            isResult            : result => getDetail(10) === result,
-            readDetails         : i => getDetail(i - 1, this.tradeEngine.getPipSize()),
+            getAskPrice: contractType => Number(this.getProposal(contractType).ask_price),
+            getPayout: contractType => Number(this.getProposal(contractType).payout),
+            isSellAvailable: () => this.tradeEngine.isSellAtMarketAvailable(),
+            sellAtMarket: () => this.tradeEngine.sellAtMarket(),
+            getSellPrice: () => this.getSellPrice(),
+            isResult: result => getDetail(10) === result,
+            readDetails: i => getDetail(i - 1, this.tradeEngine.getPipSize()),
         };
     }
     sleep(arg = 1) {

@@ -6,9 +6,9 @@ const $scope = createScope();
 
 const botInterface = new Interface($scope);
 
-const Bot = botInterface.getInterface('Bot');
+const Bot = botInterface.getInterface();
 
-const { watch, alert } = botInterface.getInterface();
+const { watch, alert } = botInterface.getGlobalInterface();
 
 describe('Interface', () => {
     it('alert should not be native', () => {
@@ -23,16 +23,16 @@ describe('Interface', () => {
         beforeAll(done => {
             Bot.init('Xkq6oGFEHh6hJH8', {
                 candleInterval: 60,
-                contractTypes : ['DIGITODD', 'DIGITEVEN'],
-                symbol        : 'R_100',
+                contractTypes: ['DIGITODD', 'DIGITEVEN'],
+                symbol: 'R_100',
             });
 
             Bot.start({
-                amount       : 1,
-                currency     : 'USD',
-                duration     : 5,
+                amount: 1,
+                currency: 'USD',
+                duration: 5,
                 duration_unit: 't',
-                basis        : 'stake',
+                basis: 'stake',
             });
 
             watch('before').then(c => {

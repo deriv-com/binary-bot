@@ -3,6 +3,7 @@ import { createScope } from './CliTools';
 import Interface from './Interface';
 import { clone } from '../common/clone';
 import { observer as globalObserver } from '../../common/utils/observer';
+import getTicksInterface from './Interface/TicksInterface';
 
 /* eslint-disable func-names, no-underscore-dangle */
 JSInterpreter.prototype.takeStateSnapshot = function() {
@@ -58,22 +59,16 @@ export default class Interpreter {
     }
     run(code) {
         const initFunc = (interpreter, scope) => {
-            const botInterface = this.bot.getInterface('Bot');
-            const ticksInterface = this.bot.getTicksInterface();
-            const { alert, prompt, sleep, console: customConsole } = this.bot.getInterface();
-
-            interpreter.setProperty(scope, 'console', interpreter.nativeToPseudo(customConsole));
-            interpreter.setProperty(scope, 'alert', interpreter.nativeToPseudo(alert));
-            interpreter.setProperty(scope, 'prompt', interpreter.nativeToPseudo(prompt));
-            interpreter.setProperty(
-                scope,
-                'getPurchaseReference',
-                interpreter.nativeToPseudo(botInterface.getPurchaseReference)
-            );
-
+            // setting up scope.bot properties
+            const botInterface = this.bot.getInterface();
             const pseudoBotInterface = interpreter.nativeToPseudo(botInterface);
+            const async_bot_properties = {
+                purchase: botInterface.purchase,
+                sellAtMarket: botInterface.sellAtMarket,
+                ...getTicksInterface(this.bot.tradeEngine),
+            };
 
-            Object.entries(ticksInterface).forEach(([name, f]) => {
+            Object.entries(async_bot_properties).forEach(([name, f]) => {
                 interpreter.setProperty(pseudoBotInterface, name, this.createAsync(interpreter, f));
             });
 
@@ -89,24 +84,15 @@ export default class Interpreter {
                 })
             );
 
-            interpreter.setProperty(
-                pseudoBotInterface,
-                'purchase',
-                this.createAsync(interpreter, botInterface.purchase)
-            );
-            interpreter.setProperty(
-                pseudoBotInterface,
-                'sellAtMarket',
-                this.createAsync(interpreter, botInterface.sellAtMarket)
-            );
-            interpreter.setProperty(scope, 'Bot', pseudoBotInterface);
+            // Setting up scope properties
+            const { alert, prompt, sleep, console: customConsole, watch } = this.bot.getGlobalInterface();
 
-            interpreter.setProperty(
-                scope,
-                'watch',
-                this.createAsync(interpreter, watchName => {
-                    const { watch } = this.bot.getInterface();
-
+            const scope_global_properties = {
+                console: interpreter.nativeToPseudo(customConsole),
+                alert: interpreter.nativeToPseudo(alert),
+                prompt: interpreter.nativeToPseudo(prompt),
+                getPurchaseReference: interpreter.nativeToPseudo(botInterface.getPurchaseReference),
+                watch: this.createAsync(interpreter, watchName => {
                     if (timeMachineEnabled(this.bot)) {
                         const snapshot = this.interpreter.takeStateSnapshot();
                         if (watchName === 'before') {
@@ -117,10 +103,14 @@ export default class Interpreter {
                     }
 
                     return watch(watchName);
-                })
-            );
+                }),
+                sleep: this.createAsync(interpreter, sleep),
+                Bot: pseudoBotInterface,
+            };
 
-            interpreter.setProperty(scope, 'sleep', this.createAsync(interpreter, sleep));
+            Object.entries(scope_global_properties).forEach(([name, func]) => {
+                interpreter.setProperty(scope, name, func);
+            });
         };
 
         return new Promise((resolve, reject) => {

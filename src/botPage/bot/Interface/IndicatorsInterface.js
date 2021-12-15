@@ -4,24 +4,24 @@ import bb, { bollingerBandsArray as bba } from '@binary-com/binary-indicators/li
 import rsi, { relativeStrengthIndexArray as rsia } from '@binary-com/binary-indicators/lib/relativeStrengthIndex';
 import macda from '@binary-com/binary-indicators/lib/macd';
 
-export default Interface =>
-    class extends Interface {
-        getIndicatorsInterface() {
-            return {
-                sma  : (input, periods) => this.decorate(sma, input, { periods }),
-                smaa : (input, periods) => this.decorate(smaa, input, { periods }),
-                ema  : (input, periods) => this.decorate(ema, input, { periods }),
-                emaa : (input, periods) => this.decorate(emaa, input, { periods }),
-                rsi  : (input, periods) => this.decorate(rsi, input, { periods }),
-                rsia : (input, periods) => this.decorate(rsia, input, { periods }),
-                bb   : (input, config, field) => this.decorate(bb, input, config)[field],
-                bba  : (input, config, field) => this.decorate(bba, input, config).map(r => r[field]),
-                macda: (input, config, field) => this.decorate(macda, input, config).map(r => r[field]),
-            };
-        }
-        decorate(f, input, config, ...args) {
-            const pipSize = this.tradeEngine.getPipSize();
+const decorate = (f, getPipSize, input, config, ...args) => {
+    const pipSize = getPipSize();
+    return f(input, { pipSize, ...config }, ...args);
+};
 
-            return f(input, { pipSize, ...config }, ...args);
-        }
+const getIndicatorsInterface = tradeEngine => {
+    const { getPipSize } = tradeEngine;
+    return {
+        sma: (input, periods) => decorate(sma, getPipSize, input, { periods }),
+        smaa: (input, periods) => decorate(smaa, getPipSize, input, { periods }),
+        ema: (input, periods) => decorate(ema, getPipSize, input, { periods }),
+        emaa: (input, periods) => decorate(emaa, getPipSize, input, { periods }),
+        rsi: (input, periods) => decorate(rsi, getPipSize, input, { periods }),
+        rsia: (input, periods) => decorate(rsia, getPipSize, input, { periods }),
+        bb: (input, config, field) => decorate(bb, getPipSize, input, config)[field],
+        bba: (input, config, field) => decorate(bba, getPipSize, input, config).map(r => r[field]),
+        macda: (input, config, field) => decorate(macda, getPipSize, input, config).map(r => r[field]),
     };
+};
+
+export default getIndicatorsInterface;
