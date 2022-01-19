@@ -21,6 +21,7 @@ const Main = ({api, blockly}) => {
       (parseInt(getStorage("closedTourPopup")) || 0) + 24 * 60 * 60 * 1000;
     dispatch(updateShowTour(isDone("welcomeFinished") || days_passed));
   }, []);
+  
   return (
     <div className="main">
       {should_show_tour && <Tour />}

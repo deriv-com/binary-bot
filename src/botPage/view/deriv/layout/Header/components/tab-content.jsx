@@ -1,11 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { translate } from "../../../../../../common/utils/tools";
 import { observer as globalObserver } from '../../../../../../common/utils/observer';
 import { currencyNameMap } from "../../../config";
 import { generateDerivLink } from "../../../utils";
 
-const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {    
+const TabContent = ({ tab, isActive, setIsAccDropdownOpen}) => {    
     const [isAccordionOpen, setIsAccordionOpen] = React.useState(true);
+    const {token_list, account_balance} = useSelector(state=>state.client)
     const item_ref = React.useRef([])
     const isReal = tab === "real";
     
@@ -25,10 +27,11 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
                     </div>
                 </h3>
                 <div className={`account__switcher-list ${isAccordionOpen ? "open" : ""}`}>
-                    {clientInfo.tokenList.map((acc, index) => {
-                        const accBalanceInfo = clientInfo.balance?.accounts[acc.loginInfo.loginid];
-                        const currency = accBalanceInfo?.currency;
-                        const amount = accBalanceInfo?.balance.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[currency]?.fractional_digits ?? 2})
+                    {token_list.map((acc, index) => {
+                        let acc_balance ={};
+                        if( acc.accountName in account_balance){
+                            acc_balance = account_balance[acc.accountName]
+                        }
 
                         return isReal !== Boolean(acc.loginInfo.is_virtual) && (
                             <div 
@@ -40,16 +43,16 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
                                 <input type="hidden" className="token"  value={acc.token}/>
                                 <img 
                                     src={`image/deriv/currency/ic-currency-${
-                                        acc.loginInfo.is_virtual ? "virtual" : acc.loginInfo.currency.toLowerCase()
+                                        acc.loginInfo.is_virtual ? "virtual" : acc_balance?.currency?.toLowerCase()
                                     }.svg`} 
                                 />
                                 <span>
-                                    {acc.loginInfo.is_virtual ? translate("Demo") : (currencyNameMap[acc.loginInfo.currency]?.name || acc.loginInfo.currency)}
+                                    {acc.loginInfo.is_virtual ? translate("Demo") : (currencyNameMap[acc_balance.currency]?.name || acc_balance.currency)}
                                     <div className="account__switcher-loginid">{acc.loginInfo.loginid}</div>
                                 </span>
                                 <span className="account__switcher-balance">
-                                    {amount}
-                                    <span className="symbols">&nbsp;{currency}</span>
+                                    {acc_balance?.balance?.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[acc_balance.currency]?.fractional_digits ?? 2})}
+                                    <span className="symbols">&nbsp;{acc_balance?.currency ==="UST"?"USDT":acc_balance?.currency}</span>
                                 </span>
                             </div>
                         )}

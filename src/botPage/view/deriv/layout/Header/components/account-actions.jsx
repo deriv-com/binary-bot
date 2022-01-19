@@ -3,13 +3,63 @@ import { translate } from "../../../../../../common/utils/tools";
 import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
 import { currencyNameMap } from "../../../config";
-import { generateDerivLink } from "../../../utils";
+import { generateDerivLink, getActiveToken } from "../../../utils";
+import { 
+    set as setStorage,
+    getTokenList, 
+    removeAllTokens, 
+    convertForDerivStore,
+    syncWithDerivApp
 
-const AccountActions = ({ clientInfo }) => {
-    const { currency, is_virtual, loginid } = clientInfo.tokenList[0].loginInfo;
-    const balance = clientInfo.balance?.accounts[loginid].balance || clientInfo.tokenList[0].loginInfo.balance;
+} from "../../../../../../common/utils/storageManager";
+import {api} from '../../../../View';
+import { useDispatch } from "react-redux";
+import {resetClient, updateActiveAccount, updateTokenList, updateBalance} from '../../../store/client-slice';
+import { useSelector } from "react-redux";
+
+const AccountActions = () => {
+    const { currency, is_virtual, balance, account_balance } = useSelector(state=>state.client);
     const [isAccDropdownOpen, setIsAccDropdownOpen] = React.useState(false);
+    const dispatch = useDispatch()
     const dropdownRef = React.useRef();
+
+    React.useEffect(()=>{
+        api.events.on('balance', response => {
+            dispatch(updateBalance(response.balance));
+        })
+    },[])
+
+    React.useEffect(()=>{
+        const token_list = getTokenList();
+        const active_token = getActiveToken(token_list);
+        if(token_list){
+            dispatch(updateTokenList(token_list))
+        }
+      
+        if(active_token?.loginInfo){
+            dispatch(updateActiveAccount(active_token))
+
+            api.authorize(active_token.token).then(() => {
+                api.send({ forget_all: 'balance' }).then(() => {
+                    api.send({
+                        balance: 1,
+                        account: 'all',
+                        subscribe: 1,
+                    });
+                });
+            })
+            .catch(()=>{
+                removeAllTokens();
+                dispatch(resetClient())
+            });
+        }else{
+            const active_login_id = tokenList[0].accountName;
+            const client_accounts = convertForDerivStore(active_login_id);
+            setStorage('active_loginid', active_login_id);
+            setStorage('client.accounts', JSON.stringify(client_accounts));
+            syncWithDerivApp();
+        }
+    },[])
 
     return (
         <React.Fragment>
@@ -41,7 +91,7 @@ const AccountActions = ({ clientInfo }) => {
             </div>
             {isAccDropdownOpen && 
             <AccountDropdown 
-                clientInfo={clientInfo}
+                virtual = {is_virtual}
                 ref={dropdownRef}
                 setIsAccDropdownOpen = {setIsAccDropdownOpen}
             />}

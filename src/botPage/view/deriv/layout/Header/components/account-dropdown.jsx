@@ -1,34 +1,24 @@
 import React from "react";
 import { translate } from "../../../../../../common/utils/tools";
 import TabContent from "./tab-content.jsx";
+import { useSelector } from "react-redux";
 import { observer as globalObserver } from '../../../../../../common/utils/observer';
 import { currencyNameMap } from "../../../config";
 
+
 const Separator = () => <div className="account__switcher-seperator"></div>;
-const getTotalAssets = (clientInfo,is_virtual)=>{
-    let total = 0
 
-    if(is_virtual){
-        const virtual_account = Object.values(clientInfo.balance.accounts).find(acc => acc.demo_account ===1 && acc.type ==='deriv')
-        total = virtual_account?.balance || 0
-    }else{
-        total = clientInfo.balance.total.deriv.amount;
-    }
-    return total.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[total]?.fractional_digits ?? 2})
+const getTotalDemo = (accounts)=>{
+   const demo_account = Object.values(accounts).find(acc=> acc.demo_account && acc.type === "deriv");
+   const total =  demo_account?.balance || 0;
+   return total.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[total]?.fractional_digits ?? 2})
 }
-const AccountDropdown = React.forwardRef(({ clientInfo, setIsAccDropdownOpen }, dropdownRef) => {
-    const [activeTab, setActiveTab] = React.useState(clientInfo.tokenList[0].loginInfo.is_virtual === 0 ? "real" : "demo");
-    let totalCurrency = 'USD'
+
+
+const AccountDropdown = React.forwardRef(({setIsAccDropdownOpen,virtual }, dropdownRef) => {
+    const [activeTab, setActiveTab] = React.useState(virtual ? "demo" : "real");
+    const {total_deriv, account_balance} = useSelector(state=>state.client);
     const container_ref = React.useRef();
-    const total = getTotalAssets(clientInfo, activeTab==='demo')
-    if(activeTab ==="demo"){
-        totalCurrency = 'USD'
-
-    }else{
-        const currency = clientInfo.balance?.total[activeTab === "real" ? "deriv" : "deriv_demo"].currency
-        totalCurrency = currency;
-    }
-
 
     React.useEffect(() => {
         function handleClickOutside(event) {
@@ -62,15 +52,15 @@ const AccountDropdown = React.forwardRef(({ clientInfo, setIsAccDropdownOpen }, 
                 </ul>
                 <TabContent 
                     tab="real" 
-                    clientInfo={clientInfo} 
                     isActive={activeTab === "real"} 
                     setIsAccDropdownOpen={setIsAccDropdownOpen}
+                    account_balance= {account_balance}
                 />
                 <TabContent 
                     tab="demo" 
-                    clientInfo={clientInfo} 
                     isActive={activeTab === "demo"}
                     setIsAccDropdownOpen={setIsAccDropdownOpen}
+                    account_balance={account_balance}
                     />
             </div>
             <Separator />
@@ -78,8 +68,8 @@ const AccountDropdown = React.forwardRef(({ clientInfo, setIsAccDropdownOpen }, 
                 <div className="account__switcher-total-balance">
                     <span className="account__switcher-total-balance-text">{translate("Total assets")}</span>
                     <span className="account__switcher-total-balance-amount account__switcher-balance">
-                        {total}
-                        <span className="symbols">&nbsp;{totalCurrency}</span>
+                        {activeTab ==="demo" ? getTotalDemo(account_balance): total_deriv.amount}
+                        <span className="symbols">&nbsp;{activeTab ==="demo"? "USD": total_deriv.currency}</span>
                     </span>
                 </div>
                 <div className="account__switcher-total-text">{translate("Total assets in your Deriv accounts")}</div>
