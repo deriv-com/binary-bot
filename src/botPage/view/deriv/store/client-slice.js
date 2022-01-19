@@ -1,7 +1,7 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 
 const initial_state = {
-  active_token: {},
+  active_token: '',
   account_list: [],
   active_account_name: '',
   account_balance: {},
@@ -26,6 +26,7 @@ export const clientSlice = createSlice({
     resetClient: () => initial_state,
     updateActiveAccount: (state, action) => {
       state.active_account_name = action.payload.accountName;
+      state.active_token = action.payload.token;
       state.account_list = [...action.payload.loginInfo.account_list];
       state.is_virtual = !!action.payload.loginInfo.is_virtual;
       state.balance = action.payload.loginInfo.balance;

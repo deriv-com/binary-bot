@@ -8,7 +8,6 @@ import GTM from '../common/gtm';
 import { load as loadLang, showBanner } from '../common/lang';
 import { getTokenList } from '../common/utils/storageManager';
 import { createUrl } from '../common/utils/tools';
-import '../common/binary-ui/dropdown';
 
 const renderElements = () => {
   ReactDOM.render(<Logo />, document.getElementById('binary-logo'));

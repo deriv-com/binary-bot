@@ -18,7 +18,7 @@ import {resetClient, updateActiveAccount, updateTokenList, updateBalance} from '
 import { useSelector } from "react-redux";
 
 const AccountActions = () => {
-    const { currency, is_virtual, balance, account_balance } = useSelector(state=>state.client);
+    const { currency, is_virtual, balance, active_token, active_account_name } = useSelector(state=>state.client);
     const [isAccDropdownOpen, setIsAccDropdownOpen] = React.useState(false);
     const dispatch = useDispatch()
     const dropdownRef = React.useRef();
@@ -64,6 +64,9 @@ const AccountActions = () => {
     return (
         <React.Fragment>
             <Notifications />
+            {/* [Todo] Needs to remove input after add client info to blockly */}
+            <input type="hidden" id="active-token"value={active_token}/>
+            <input type="hidden" id="active-account-name"value={active_account_name}/>
             <a className="url-account-details header__account header__menu-item mobile-hide" href={generateDerivLink('account')}>
                 <img className="header__icon-button" id="header__account-settings" src="image/deriv/ic-user-outline.svg" />
             </a>

@@ -13,17 +13,9 @@ import { symbolPromise } from './shared';
 import TradeInfoPanel from './TradeInfoPanel';
 import { showDialog } from '../bot/tools';
 import config, { updateConfigCurrencies } from '../common/const';
-import { isVirtual } from '../common/tools';
-import {
-  logoutAllTokens,
-  getOAuthURL,
-  generateLiveApiInstance,
-  AppConstants,
-  addTokenIfValid,
-} from '../../common/appId';
+import { logoutAllTokens, generateLiveApiInstance, AppConstants, addTokenIfValid } from '../../common/appId';
 import { translate } from '../../common/i18n';
 import googleDrive from '../../common/integrations/GoogleDrive';
-import { getLanguage } from '../../common/lang';
 import { observer as globalObserver } from '../../common/utils/observer';
 import {
   getTokenList,
@@ -51,75 +43,21 @@ let chart;
 
 export const api = generateLiveApiInstance();
 
-api.events.on('balance', response => {
-  const {
-    balance: { balance: b, currency },
-  } = response;
-
-  const elTopMenuBalances = document.querySelectorAll('.topMenuBalance');
-  const localString = getLanguage().replace('_', '-');
-  const balance = (+b).toLocaleString(localString, {
-    minimumFractionDigits: config.lists.CRYPTO_CURRENCIES.includes(currency) ? 8 : 2,
-  });
-
-  elTopMenuBalances.forEach(elTopMenuBalance => {
-    const element = elTopMenuBalance;
-    element.textContent = `${balance} ${currency === 'UST' ? 'USDT' : currency}`;
-  });
-
-  globalObserver.setState({ balance: b, currency });
-});
-
 const tradingView = new TradingView();
 
 const integrationsDialog = new IntegrationsDialog();
 
 const updateTokenList = () => {
   const tokenList = getTokenList();
-  if (tokenList.length === 0) {
-    $('.account-id')
-      .removeAttr('value')
-      .text('');
-    $('.account-type').text('');
-    $('.login-id-list')
-      .children()
-      .remove();
-  } else {
+  if (tokenList.length) {
     const activeToken = getActiveToken(tokenList);
-
-    if (!('loginInfo' in activeToken)) {
-      removeAllTokens();
-      updateTokenList();
-    } else {
+    if ('loginInfo' in activeToken) {
       const activeLoginId = tokenList[0].accountName;
       const clientAccounts = convertForDerivStore(tokenList);
       setStorage('active_loginid', activeLoginId);
       setStorage('client.accounts', JSON.stringify(clientAccounts));
       syncWithDerivApp();
     }
-
-    tokenList.forEach(tokenInfo => {
-      let prefix;
-
-      if (isVirtual(tokenInfo)) {
-        prefix = 'Virtual Account';
-      } else if (tokenInfo.loginInfo.currency === 'UST') {
-        prefix = 'USDT Account';
-      } else {
-        prefix = `${tokenInfo.loginInfo.currency} Account`;
-      }
-
-      if (tokenInfo === activeToken) {
-        $('.account-id')
-          .attr('value', `${tokenInfo.token}`)
-          .text(`${tokenInfo.accountName}`);
-        $('.account-type').text(`${prefix}`);
-      } else {
-        $('.login-id-list').append(
-          `<a href="#" value="${tokenInfo.token}"><li><span>${prefix}</span><div>${tokenInfo.accountName}</div></li></a><div class="separator-line-thin-gray"></div>`
-        );
-      }
-    });
   }
 };
 
@@ -170,7 +108,6 @@ const checkForRequiredBlocks = () => {
 
 export default class View {
   constructor() {
-    logHandler();
     this.initPromise = new Promise(resolve => {
       updateConfigCurrencies(api).then(() => {
         symbolPromise.then(() => {
@@ -178,6 +115,7 @@ export default class View {
           this.blockly = new _Blockly();
           this.blockly.initPromise.then(() => {
             renderReactComponents(this.blockly);
+            logHandler();
             applyToolboxPermissions();
             this.setElementActions();
             resolve();
@@ -411,9 +349,7 @@ export default class View {
         return;
       }
 
-      const token = $('.account-id')
-        .first()
-        .attr('value');
+      const token = document.getElementById('active-token').value;
       const tokenObj = getToken(token);
 
       if (tokenObj && tokenObj.hasTradeLimitation) {
@@ -459,13 +395,6 @@ export default class View {
         })
         .catch(() => {});
     });
-
-    $('#btn__login, #login, #toolbox-login')
-      .bind('click.login', () => {
-        saveBeforeUnload();
-        document.location = getOAuthURL();
-      })
-      .text(translate('Log in'));
   }
   stop() {
     this.blockly.stop();
@@ -524,9 +453,7 @@ export default class View {
 
     globalObserver.register('bot.info', info => {
       if ('profit' in info) {
-        const token = $('.account-id')
-          .first()
-          .attr('value');
+        const token = document.getElementById('active-token').value;
         const user = getToken(token);
         globalObserver.emit('log.revenue', {
           user,
