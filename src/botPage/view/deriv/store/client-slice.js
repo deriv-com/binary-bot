@@ -14,6 +14,7 @@ const initial_state = {
   total_demo: {},
   is_eu: false,
   is_logged: false,
+  is_gd_logged_in: false,
 };
 
 export const clientSlice = createSlice({
@@ -54,6 +55,9 @@ export const clientSlice = createSlice({
           [action.payload.loginid]: account,
         };
       }
+    },
+    setGdLoggedIn: (state, action) => {
+      state.is_gd_logged_in = action.payload;
     },
   },
 });

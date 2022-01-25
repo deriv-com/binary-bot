@@ -15,7 +15,7 @@ import { showDialog } from '../bot/tools';
 import config, { updateConfigCurrencies } from '../common/const';
 import { logoutAllTokens, generateLiveApiInstance, AppConstants, addTokenIfValid } from '../../common/appId';
 import { translate } from '../../common/i18n';
-import googleDrive from '../../common/integrations/GoogleDrive';
+import google_drive_util from '../../common/integrations/GoogleDrive';
 import { observer as globalObserver } from '../../common/utils/observer';
 import {
   getTokenList,
@@ -224,7 +224,7 @@ export default class View {
       })
         .then(() => {
           this.stop();
-          googleDrive.signOut();
+          google_drive_util.signOut();
           GTM.setVisitorId();
           removeTokens();
         })
