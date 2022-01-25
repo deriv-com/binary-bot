@@ -62,6 +62,13 @@ export const clientSlice = createSlice({
   },
 });
 
-export const { updateIsLooged, resetClient, updateActiveAccount, updateTokenList, updateBalance } = clientSlice.actions;
+export const {
+  updateIsLooged,
+  resetClient,
+  updateActiveAccount,
+  updateTokenList,
+  updateBalance,
+  setGdLoggedIn,
+} = clientSlice.actions;
 
 export default clientSlice.reducer;

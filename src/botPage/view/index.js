@@ -32,7 +32,7 @@ loginCheck().then(() => {
     window.dispatchEvent(new Event('resize'));
     GTM.init();
     TrackJS.configure({
-      userId: document.getElementById('active-account-name').value,
+      userId: document.getElementById('active-account-name')?.value,
     });
   });
 });

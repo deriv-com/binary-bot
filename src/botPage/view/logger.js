@@ -86,9 +86,10 @@ const waitForNotifications = () => {
 };
 
 const logHandler = () => {
-  const userId = document.getElementById('active-account-name').value;
-
-  TrackJS.configure({ userId });
+  const userId = document.getElementById('active-account-name')?.value;
+  if (userId) {
+    TrackJS.configure({ userId });
+  }
 
   waitForNotifications();
 };
