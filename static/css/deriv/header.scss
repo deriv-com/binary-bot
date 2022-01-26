@@ -580,13 +580,14 @@
                 padding: 3px 8px;
                 border-radius: 3px;
                 font-size: $FONT_SIZE_S;
+                font-weight: 700;
                 cursor: pointer;
 
                 &--active {
-                    background: var(--state-hover);
+                    background: var(--state-active);
                 }
                 &:hover {
-                    background: var(--state-hover);
+                    background: var(--state-active);
                 }
                 img {
                     width: 24px;
@@ -974,3 +975,4 @@
         height: unset;
     }
 }
+

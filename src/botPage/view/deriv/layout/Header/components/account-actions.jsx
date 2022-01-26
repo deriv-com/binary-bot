@@ -27,10 +27,10 @@ const AccountActions = ({ clientInfo }) => {
                     <img 
                         id="header__acc-icon" 
                         className="header__acc-icon" 
-                        src={`image/deriv/currency/ic-currency-${is_virtual ? "virtual" : currency.toLowerCase()}.svg`} 
+                        src={`image/deriv/currency/ic-currency-${is_virtual ? "virtual" : currency?.toLowerCase() || 'unknown'}.svg`} 
                     />
                     <div id="header__acc-balance" className="header__acc-balance">
-                        {balance.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[currency]?.fractional_digits ?? 2})}
+                    {currency ? balance.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[currency]?.fractional_digits ?? 2}) : 'No currency assigned'}  
                         <span className="symbols">&nbsp;{currency}</span>
                     </div>
                     <img 
@@ -51,3 +51,4 @@ const AccountActions = ({ clientInfo }) => {
 };
 
 export default AccountActions;
+

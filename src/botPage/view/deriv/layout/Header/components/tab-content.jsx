@@ -1,3 +1,4 @@
+
 import React from "react";
 import { translate } from "../../../../../../common/utils/tools";
 import { observer as globalObserver } from '../../../../../../common/utils/observer';
@@ -15,6 +16,7 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
         globalObserver.emit('ui.switch_account',token)
     }   
 
+
     return (
         <div className={`account__switcher-tabs-content ${isActive ? "" : "hide"}`} >
             <div className="account__switcher-accordion">
@@ -25,32 +27,47 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
                     </div>
                 </h3>
                 <div className={`account__switcher-list ${isAccordionOpen ? "open" : ""}`}>
-                    {clientInfo.tokenList.map((acc, index) => {
-                        const accBalanceInfo = clientInfo.balance?.accounts[acc.loginInfo.loginid];
-                        const currency = accBalanceInfo?.currency;
+                    {clientInfo.tokenList.map(({ loginInfo, token, accountName }, index) => {
+                        const { loginid, currency, is_virtual } = loginInfo;
+                        const accBalanceInfo = clientInfo.balance?.accounts[loginid];
                         const amount = accBalanceInfo?.balance.toLocaleString(undefined, { minimumFractionDigits: currencyNameMap[currency]?.fractional_digits ?? 2})
-
-                        return isReal !== Boolean(acc.loginInfo.is_virtual) && (
+                        
+                        return isReal !== Boolean(is_virtual) && (
                             <div 
                                 className={`account__switcher-acc ${index === 0 ? "account__switcher-acc--active" : ""}`}
-                                key={acc.accountName} 
+                                key={accountName} 
                                 onClick = {()=> {switchAccount(index)}}
                                 ref={el => item_ref.current[index] = el} 
                             >
-                                <input type="hidden" className="token"  value={acc.token}/>
+                                <input type="hidden" className="token"  value={token}/>
+                                
                                 <img 
-                                    src={`image/deriv/currency/ic-currency-${
-                                        acc.loginInfo.is_virtual ? "virtual" : acc.loginInfo.currency.toLowerCase()
-                                    }.svg`} 
+                                    src={`image/deriv/currency/ic-currency-${is_virtual ? "virtual" : currency?.toLowerCase() || "unknown"}.svg`}
                                 />
+                                {currency ? <>
                                 <span>
-                                    {acc.loginInfo.is_virtual ? translate("Demo") : (currencyNameMap[acc.loginInfo.currency]?.name || acc.loginInfo.currency)}
-                                    <div className="account__switcher-loginid">{acc.loginInfo.loginid}</div>
-                                </span>
-                                <span className="account__switcher-balance">
-                                    {amount}
-                                    <span className="symbols">&nbsp;{currency}</span>
-                                </span>
+                                        {is_virtual ? translate("Demo") : (currencyNameMap[currency]?.name || currency)}
+                                        <div className="account__switcher-loginid">{loginid}</div>
+                                    </span>
+                                    <span className={currency ?  "account__switcher-balance" : "acc-info__balance acc-info__balance--no-currency-text" }>
+                                        {currency ? amount : 'No currency assigned'}
+                                        <span className="symbols">&nbsp;{currency}</span>
+                                    </span>
+                                    </> : 
+                                    <span>
+                                    <span className={currency ?  "account__switcher-balance" : "acc-info__balance acc-info__balance--no-currency-text" }>
+                                        {currency ? amount : 'No currency assigned'}
+                                        <span className="symbols">&nbsp;{currency}</span>
+                                    </span>
+                                    <span>
+                                        {is_virtual ? translate("Demo") : (currencyNameMap[currency]?.name || currency)}
+                                        <div className="account__switcher-loginid">{loginid}</div>
+                                    </span>
+                                    </span>}
+                                    
+                                  
+                                 
+                               
                             </div>
                         )}
                     )}
@@ -67,3 +84,4 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
 }
 
 export default TabContent;
+
