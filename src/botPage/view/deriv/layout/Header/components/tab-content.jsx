@@ -44,19 +44,21 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
                                 <img 
                                     src={`image/deriv/currency/ic-currency-${is_virtual ? "virtual" : currency?.toLowerCase() || "unknown"}.svg`}
                                 />
+                                
+                                    
                                 {currency ? <>
                                 <span>
                                         {is_virtual ? translate("Demo") : (currencyNameMap[currency]?.name || currency)}
                                         <div className="account__switcher-loginid">{loginid}</div>
                                     </span>
                                     <span className={currency ?  "account__switcher-balance" : "acc-info__balance acc-info__balance--no-currency-text" }>
-                                        {currency ? amount : 'No currency assigned'}
+                                        {currency ? amount : translate('No currency assigned')}
                                         <span className="symbols">&nbsp;{currency}</span>
                                     </span>
                                     </> : 
                                     <span>
                                     <span className={currency ?  "account__switcher-balance" : "acc-info__balance acc-info__balance--no-currency-text" }>
-                                        {currency ? amount : 'No currency assigned'}
+                                        {currency ? amount : translate('No currency assigned')}
                                         <span className="symbols">&nbsp;{currency}</span>
                                     </span>
                                     <span>
@@ -64,8 +66,6 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
                                         <div className="account__switcher-loginid">{loginid}</div>
                                     </span>
                                     </span>}
-                                    
-                                  
                                  
                                
                             </div>
