@@ -216,21 +216,6 @@ export default class View {
       return [translate('Any unsaved changes will be lost.')];
     };
 
-    const logout = () => {
-      showDialog({
-        title: translate('Are you sure?'),
-        text: getAccountSwitchText(),
-        className: 'logout-dialog',
-      })
-        .then(() => {
-          this.stop();
-          google_drive_util.signOut();
-          GTM.setVisitorId();
-          removeTokens();
-        })
-        .catch(() => {});
-    };
-
     const removeTokens = () => {
       logoutAllTokens().then(() => {
         updateTokenList();
@@ -314,13 +299,12 @@ export default class View {
 
     $('#showSummary').click(showSummary);
 
-    $('#deriv__logout-btn, #logout, #toolbox-logout').click(() => {
-      saveBeforeUnload();
-      logout();
-    });
-
     globalObserver.register('ui.logout', () => {
+      saveBeforeUnload();
       $('.barspinner').show();
+      this.stop();
+      google_drive_util.logout();
+      GTM.setVisitorId();
       removeTokens();
     });
 

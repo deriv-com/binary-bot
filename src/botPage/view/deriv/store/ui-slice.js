@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initial_states = {
   show_tour: false,
   is_gd_ready: false,
+  is_bot_running: false,
 };
 
 export const uiSlice = createSlice({
@@ -15,10 +16,12 @@ export const uiSlice = createSlice({
     setGdReady: (state, action) => {
       state.is_gd_ready = action.payload;
     },
+    setIsBotRunning: (state, action) => {
+      state.is_bot_running = action.payload;
+    },
   },
 });
 
-export const { updateShowTour } = uiSlice.actions;
-export const { setGdReady } = uiSlice.actions;
+export const { updateShowTour, setGdReady, setIsBotRunning } = uiSlice.actions;
 
 export default uiSlice.reducer;
