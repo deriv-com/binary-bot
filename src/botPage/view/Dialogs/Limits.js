@@ -179,7 +179,7 @@ class LimitsContent extends PureComponent {
   }
   static props = {
     onSave: PropTypes.func,
-    api: PropTypes.instanceOf(LiveApi),
+    api: PropTypes.instanceOf(DerivAPIBasic),
   };
 }
 

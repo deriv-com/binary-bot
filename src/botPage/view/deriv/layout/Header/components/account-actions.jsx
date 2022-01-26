@@ -24,9 +24,15 @@ const AccountActions = () => {
     const dropdownRef = React.useRef();
 
     React.useEffect(()=>{
-        api.events.on('balance', response => {
-            dispatch(updateBalance(response.balance));
-        })
+        api.onMessage().subscribe(({ data }) => {
+            if( data.error?.code){
+                return
+            }
+            if (data?.msg_type === 'balance') {
+                dispatch(updateBalance(data.balance));
+            }
+        });
+        
     },[])
 
     React.useEffect(()=>{
@@ -40,13 +46,13 @@ const AccountActions = () => {
             dispatch(updateActiveAccount(active_token))
 
             api.authorize(active_token.token).then(() => {
-                api.send({ forget_all: 'balance' }).then(() => {
-                    api.send({
-                        balance: 1,
-                        account: 'all',
-                        subscribe: 1,
+                    api.send({ forget_all: 'balance' }).then(() => {
+                        api.send({
+                            balance: 1,
+                            account: 'all',
+                            subscribe: 1,
+                        });
                     });
-                });
             })
             .catch(()=>{
                 removeAllTokens();

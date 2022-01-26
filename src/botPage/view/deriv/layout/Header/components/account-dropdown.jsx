@@ -73,17 +73,6 @@ const AccountDropdown = React.forwardRef(({setIsAccDropdownOpen,virtual }, dropd
                     </span>
                 </div>
                 <Separator />
-                <div className="account__switcher-total">
-                    <div className="account__switcher-total-balance">
-                        <span className="account__switcher-total-balance-text">{translate("Total assets")}</span>
-                        <span className="account__switcher-total-balance-amount account__switcher-balance">
-                            {total}
-                            <span className="symbols">&nbsp;{totalCurrency}</span>
-                        </span>
-                    </div>
-                    <div className="account__switcher-total-text">{translate("Total assets in your Deriv accounts")}</div>
-                </div>
-                <Separator />
                 <div
                     id="deriv__logout-btn"
                     className="account__switcher-logout logout"
