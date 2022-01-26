@@ -28,24 +28,24 @@ const AccountDropdown = React.forwardRef(({setIsAccDropdownOpen,virtual }, dropd
         }
         window.addEventListener("click", handleClickOutside);
 
-
+        
         return () => window.removeEventListener("click", handleClickOutside);
     })
 
-    return(
+    return (
         <div className="account__switcher-dropdown-wrapper show" ref={dropdownRef}>
-        <div id="account__switcher-dropdown" className="account__switcher-dropdown" ref={container_ref}>
+            <div id="account__switcher-dropdown" className="account__switcher-dropdown" ref={container_ref}>
 
-            <div className="account__switcher-container">
-                <ul className="account__switcher-tabs">
-                    <li className={`account__switcher-tab ${activeTab === "real" ? "ui-tabs-active" : ""}`} 
-                        onClick={() => setActiveTab("real")}
+                <div className="account__switcher-container">
+                    <ul className="account__switcher-tabs">
+                        <li className={`account__switcher-tab ${activeTab === "real" ? "ui-tabs-active" : ""}`}
+                            onClick={() => setActiveTab("real")}
                         >
-                        <a>{translate("Real")}</a>
-                    </li>
-                    <li 
-                        className={`account__switcher-tab ${activeTab === "real" ? "" : "ui-tabs-active"}`} 
-                        onClick={() => setActiveTab("demo")}
+                            <a>{translate("Real")}</a>
+                        </li>
+                        <li
+                            className={`account__switcher-tab ${activeTab === "real" ? "" : "ui-tabs-active"}`}
+                            onClick={() => setActiveTab("demo")}
                         >
                         <a>{translate("Demo")}</a>
                     </li>
@@ -72,16 +72,26 @@ const AccountDropdown = React.forwardRef(({setIsAccDropdownOpen,virtual }, dropd
                         <span className="symbols">&nbsp;{activeTab ==="demo"? "USD": total_deriv.currency}</span>
                     </span>
                 </div>
-                <div className="account__switcher-total-text">{translate("Total assets in your Deriv accounts")}</div>
-            </div>
-            <Separator />
-            <div 
-                id="deriv__logout-btn"
-                className="account__switcher-logout logout"
-                onClick= {()=>{globalObserver.emit('ui.logout')}}   
+                <Separator />
+                <div className="account__switcher-total">
+                    <div className="account__switcher-total-balance">
+                        <span className="account__switcher-total-balance-text">{translate("Total assets")}</span>
+                        <span className="account__switcher-total-balance-amount account__switcher-balance">
+                            {total}
+                            <span className="symbols">&nbsp;{totalCurrency}</span>
+                        </span>
+                    </div>
+                    <div className="account__switcher-total-text">{translate("Total assets in your Deriv accounts")}</div>
+                </div>
+                <Separator />
+                <div
+                    id="deriv__logout-btn"
+                    className="account__switcher-logout logout"
+                    onClick={() => { globalObserver.emit('ui.logout') }}
                 >
-                <span className="account__switcher-logout-text">{translate("Log out")}</span>
-                <img className="account__switcher-logout-icon logout-icon" src="image/deriv/ic-logout.svg" />
+                    <span className="account__switcher-logout-text">{translate("Log out")}</span>
+                    <img className="account__switcher-logout-icon logout-icon" src="image/deriv/ic-logout.svg" />
+                </div>
             </div>
         </div>
         </div>

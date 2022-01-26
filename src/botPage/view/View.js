@@ -13,7 +13,14 @@ import { symbolPromise } from './shared';
 import TradeInfoPanel from './TradeInfoPanel';
 import { showDialog } from '../bot/tools';
 import config, { updateConfigCurrencies } from '../common/const';
-import { logoutAllTokens, generateLiveApiInstance, AppConstants, addTokenIfValid } from '../../common/appId';
+import { isVirtual } from '../common/tools';
+import {
+  logoutAllTokens,
+  getOAuthURL,
+  AppConstants,
+  addTokenIfValid,
+  generateDerivApiInstance,
+} from '../../common/appId';
 import { translate } from '../../common/i18n';
 import google_drive_util from '../../common/integrations/GoogleDrive';
 import { observer as globalObserver } from '../../common/utils/observer';
@@ -41,7 +48,7 @@ import { getActiveToken } from './deriv/utils';
 
 let chart;
 
-export const api = generateLiveApiInstance();
+export const api = generateDerivApiInstance();
 
 const tradingView = new TradingView();
 
@@ -415,8 +422,7 @@ export default class View {
         const elRunButton = el;
         elRunButton.removeAttribute('disabled');
       });
-
-      if (error.error && error.error.error.code === 'InvalidToken') {
+      if (error?.error?.code === 'InvalidToken') {
         removeAllTokens();
         updateTokenList();
         this.stop();

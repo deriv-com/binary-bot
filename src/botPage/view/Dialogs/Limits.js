@@ -1,4 +1,4 @@
-import { LiveApi } from 'binary-live-api';
+import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Dialog from './Dialog';
