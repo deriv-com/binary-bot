@@ -96,7 +96,8 @@ export default Engine =>
                 if (data?.msg_type === 'proposal') {
                     const { passthrough, proposal } = data;
                     if (
-                        this.data.proposals.findIndex(p => p.id === proposal.id) === -1 &&
+                        proposal &&
+                        this.data?.proposals?.findIndex(p => p.id === proposal.id) === -1 &&
                         !this.data.forgetProposalIds.includes(proposal.id)
                     ) {
                         // Add proposals based on the ID returned by the API.
