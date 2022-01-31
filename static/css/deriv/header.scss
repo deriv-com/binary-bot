@@ -13,7 +13,7 @@
     @include mobile {
         height: 40px;
     }
-
+   
     .is-login,
     .is-logout {
         display: none;
@@ -492,6 +492,7 @@
             }
         }
     }
+   
     .account {
         &__switcher {
             border-radius: 4px;
@@ -500,7 +501,7 @@
                 background: var(--general-main-2);
                 box-shadow: 0 8px 16px 0 var(--shadow-menu);
             }
-
+            
             &-dropdown {
                 &-wrapper {
                     @include mobile {
@@ -574,13 +575,13 @@
                     font-weight: normal;
                 }
             }
+           
             &-acc {
                 display: flex;
                 align-items: center;
                 padding: 3px 8px;
                 border-radius: 3px;
                 font-size: $FONT_SIZE_S;
-                font-weight: 700;
                 cursor: pointer;
 
                 &--active {
@@ -593,6 +594,11 @@
                     width: 24px;
                     height: 24px;
                     margin-right: 8px;
+                }
+                &-info {
+                    &__no-currency {
+                        font-weight: 700;
+                    }
                 }
             }
             &-loginid {
@@ -790,8 +796,10 @@
                 }
             }
         }
+
     }
 }
+
 
 .mobile {
     &__container {

@@ -51,13 +51,13 @@ const TabContent = ({ tab, clientInfo, isActive, setIsAccDropdownOpen}) => {
                                         {is_virtual ? translate("Demo") : (currencyNameMap[currency]?.name || currency)}
                                         <div className="account__switcher-loginid">{loginid}</div>
                                     </span>
-                                    <span className={currency ?  "account__switcher-balance" : "acc-info__balance acc-info__balance--no-currency-text" }>
+                                    <span className={currency ?  "account__switcher-balance" : "acc-info__balance account__switcher-acc-info__no-currency" }>
                                         {currency ? amount : translate('No currency assigned')}
                                         <span className="symbols">&nbsp;{currency}</span>
                                     </span>
                                     </> : 
                                     <span>
-                                    <span className={currency ?  "account__switcher-balance" : "acc-info__balance acc-info__balance--no-currency-text" }>
+                                    <span className={currency ?  "account__switcher-balance" : "acc-info__balance account__switcher-acc-info__no-currency" }>
                                         {currency ? amount : translate('No currency assigned')}
                                         <span className="symbols">&nbsp;{currency}</span>
                                     </span>
