@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "jquery-ui/ui/widgets/dialog";
-import _Blockly, { load } from "./blockly";
+import _Blockly, { checkForRequiredBlocks } from "./blockly";
 import Chart from "./Dialogs/Chart";
 import Limits from "./Dialogs/Limits";
 import IntegrationsDialog from "./Dialogs/IntegrationsDialog";
@@ -11,7 +11,7 @@ import logHandler from "./logger";
 import LogTable from "./LogTable";
 import { symbolPromise } from "./shared";
 import TradeInfoPanel from "./TradeInfoPanel";
-import config, { updateConfigCurrencies } from "../common/const";
+import { updateConfigCurrencies } from "../common/const";
 import { logoutAllTokens, AppConstants, addTokenIfValid, generateDerivApiInstance } from "../../common/appId";
 import { translate } from "../../common/i18n";
 import google_drive_util from "../../common/integrations/GoogleDrive";
@@ -24,12 +24,7 @@ import {
   syncWithDerivApp,
 } from "../../common/utils/storageManager";
 import GTM from "../../common/gtm";
-import {
-  getMissingBlocksTypes,
-  getDisabledMandatoryBlocks,
-  getUnattachedMandatoryPairs,
-  saveBeforeUnload,
-} from "./blockly/utils";
+import { saveBeforeUnload } from "./blockly/utils";
 
 // Deriv components
 import Main from "./deriv/layout/Main";
@@ -51,43 +46,6 @@ const applyToolboxPermissions = () => {
     [fn]();
 };
 
-const checkForRequiredBlocks = () => {
-  const displayError = errorMessage => {
-    const error = new Error(errorMessage);
-    globalObserver.emit("Error", error);
-  };
-
-  const blockLabels = { ...config.blockLabels };
-  const missingBlocksTypes = getMissingBlocksTypes();
-  const disabledBlocksTypes = getDisabledMandatoryBlocks().map(block => block.type);
-  const unattachedPairs = getUnattachedMandatoryPairs();
-
-  if (missingBlocksTypes.length) {
-    missingBlocksTypes.forEach(blockType =>
-      displayError(`"${blockLabels[blockType]}" ${translate("block should be added to the workspace")}.`)
-    );
-    return false;
-  }
-
-  if (disabledBlocksTypes.length) {
-    disabledBlocksTypes.forEach(blockType =>
-      displayError(`"${blockLabels[blockType]}" ${translate("block should be enabled")}.`)
-    );
-    return false;
-  }
-
-  if (unattachedPairs.length) {
-    unattachedPairs.forEach(pair =>
-      displayError(
-        `"${blockLabels[pair.childBlock]}" ${translate("must be added inside:")} "${blockLabels[pair.parentBlock]}"`
-      )
-    );
-    return false;
-  }
-
-  return true;
-};
-
 export default class View {
   constructor() {
     this.initPromise = new Promise(resolve => {
@@ -107,74 +65,7 @@ export default class View {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  setFileBrowser() {
-    const readFile = (f, dropEvent = {}) => {
-      const reader = new FileReader();
-      reader.onload = e => load(e.target.result, dropEvent);
-      reader.readAsText(f);
-    };
-
-    const handleFileSelect = e => {
-      let files;
-      let dropEvent;
-      if (e.type === "drop") {
-        e.stopPropagation();
-        e.preventDefault();
-        ({ files } = e.dataTransfer);
-        dropEvent = e;
-      } else {
-        ({ files } = e.target);
-      }
-      files = Array.from(files);
-      files.forEach(file => {
-        if (file.type.match("text/xml")) {
-          readFile(file, dropEvent);
-        } else {
-          globalObserver.emit("ui.log.info", `${translate("File is not supported:")} ${file.name}`);
-        }
-      });
-      $("#files").val("");
-    };
-
-    const handleDragOver = e => {
-      e.stopPropagation();
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "copy"; // eslint-disable-line no-param-reassign
-    };
-
-    const dropZone = document.body;
-
-    dropZone.addEventListener("dragover", handleDragOver, false);
-    dropZone.addEventListener("drop", handleFileSelect, false);
-
-    $("#files").on("change", handleFileSelect);
-
-    $("#open_btn")
-      .on("click", () => {
-        $.FileDialog({
-          // eslint-disable-line new-cap
-          accept: ".xml",
-          cancelButton: "Close",
-          dragMessage: "Drop files here",
-          dropheight: 400,
-          errorMessage: "An error occured while loading file",
-          multiple: false,
-          okButton: "OK",
-          readAs: "DataURL",
-          removeMessage: "Remove&nbsp;file",
-          title: "Load file",
-        });
-      })
-      .on("files.bs.filedialog", ev => {
-        handleFileSelect(ev.files);
-      })
-      .on("cancel.bs.filedialog", ev => {
-        handleFileSelect(ev);
-      });
-  }
   setElementActions() {
-    this.setFileBrowser();
     this.addBindings();
     this.addEventHandlers();
   }

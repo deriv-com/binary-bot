@@ -9,6 +9,73 @@ import { translate } from "../../../../../common/i18n";
 import {setIsBotRunning} from '../../store/ui-slice';
 import { observer as globalObserver } from '../../../../../common/utils/observer';
 import { useDispatch } from "react-redux";
+import { load } from "../../../blockly";
+
+const setFileBrowser = () => {
+  const readFile = (f, dropEvent = {}) => {
+    const reader = new FileReader();
+    reader.onload = e => load(e.target.result, dropEvent);
+    reader.readAsText(f);
+  };
+
+  const handleFileSelect = e => {
+    let files;
+    let dropEvent;
+    if (e.type === "drop") {
+      e.stopPropagation();
+      e.preventDefault();
+      ({ files } = e.dataTransfer);
+      dropEvent = e;
+    } else {
+      ({ files } = e.target);
+    }
+    files = Array.from(files);
+    files.forEach(file => {
+      if (file.type.match("text/xml")) {
+        readFile(file, dropEvent);
+      } else {
+        globalObserver.emit("ui.log.info", `${translate("File is not supported:")} ${file.name}`);
+      }
+    });
+    $("#files").val("");
+  };
+
+  const handleDragOver = e => {
+    e.stopPropagation();
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy"; // eslint-disable-line no-param-reassign
+  };
+
+  const dropZone = document.body;
+
+  dropZone.addEventListener("dragover", handleDragOver, false);
+  dropZone.addEventListener("drop", handleFileSelect, false);
+
+  $("#files").on("change", handleFileSelect);
+
+  $("#open_btn")
+    .on("click", () => {
+      $.FileDialog({
+        // eslint-disable-line new-cap
+        accept: ".xml",
+        cancelButton: "Close",
+        dragMessage: "Drop files here",
+        dropheight: 400,
+        errorMessage: "An error occured while loading file",
+        multiple: false,
+        okButton: "OK",
+        readAs: "DataURL",
+        removeMessage: "Remove&nbsp;file",
+        title: "Load file",
+      });
+    })
+    .on("files.bs.filedialog", ev => {
+      handleFileSelect(ev.files);
+    })
+    .on("cancel.bs.filedialog", ev => {
+      handleFileSelect(ev);
+    });
+}
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
@@ -29,6 +96,7 @@ const ToolBox = ({ blockly }) => {
   const { is_gd_logged_in } = useSelector(state => state.client);
 
   React.useEffect(() => {
+    setFileBrowser();
     globalObserver.register('bot.running', () => dispatch(setIsBotRunning(true)));
     globalObserver.register('bot.stop', () => dispatch(setIsBotRunning(false)));
     
