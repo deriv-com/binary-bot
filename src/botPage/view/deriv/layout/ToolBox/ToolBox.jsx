@@ -93,7 +93,7 @@ const ToolBox = ({ blockly }) => {
 
   const dispatch = useDispatch();
   const { is_gd_ready } = useSelector(state => state.ui);
-  const { is_gd_logged_in } = useSelector(state => state.client);
+  const { is_gd_logged_in, is_logged } = useSelector(state => state.client);
 
   React.useEffect(() => {
     setFileBrowser();
@@ -211,11 +211,15 @@ const ToolBox = ({ blockly }) => {
         onClick={() => blockly.cleanUp()}
       />
       {/* Needs Refactor ClientInfo Structure */}
-      <span className="toolbox-separator" />
-      <button id="showSummary" className="toolbox-button icon-summary" />
-      <button id="runButton" className="toolbox-button icon-run" />
-      <button id="stopButton" className="toolbox-button icon-stop" />
-      <button id="logButton" className="toolbox-button icon-info" />
+      {is_logged && (
+      <>
+        <span className="toolbox-separator" />
+        <button id="showSummary" className="toolbox-button icon-summary" />
+        <button id="runButton" className="toolbox-button icon-run" />
+        <button id="stopButton" className="toolbox-button icon-stop" />
+        <button id="logButton" className="toolbox-button icon-info" />
+      </>
+      )}
 
       <span className="toolbox-separator" />
       {/* Needs resizeable modal */}

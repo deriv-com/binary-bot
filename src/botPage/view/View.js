@@ -31,14 +31,6 @@ const tradingView = new TradingView();
 
 const integrationsDialog = new IntegrationsDialog();
 
-const applyToolboxPermissions = () => {
-  const fn = getTokenList().length ? "show" : "hide";
-  $("#runButton, #showSummary, #logButton")
-    [fn]()
-    .prevAll(".toolbox-separator:first")
-    [fn]();
-};
-
 export default class View {
   constructor() {
     this.initPromise = new Promise(resolve => {
@@ -49,7 +41,6 @@ export default class View {
           this.blockly.initPromise.then(() => {
             renderReactComponents(this.blockly);
             logHandler();
-            applyToolboxPermissions();
             this.setElementActions();
             resolve();
           });
