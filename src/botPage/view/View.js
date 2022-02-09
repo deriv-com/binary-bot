@@ -12,24 +12,17 @@ import LogTable from "./LogTable";
 import { symbolPromise } from "./shared";
 import TradeInfoPanel from "./TradeInfoPanel";
 import { updateConfigCurrencies } from "../common/const";
-import { logoutAllTokens, AppConstants, addTokenIfValid, generateDerivApiInstance } from "../../common/appId";
-import { translate } from "../../common/i18n";
+import { AppConstants, addTokenIfValid, generateDerivApiInstance } from "../../common/appId";
 import google_drive_util from "../../common/integrations/GoogleDrive";
 import { observer as globalObserver } from "../../common/utils/observer";
-import {
-  getTokenList,
-  removeAllTokens,
-  set as setStorage,
-  getToken,
-  syncWithDerivApp,
-} from "../../common/utils/storageManager";
+import { getTokenList, removeAllTokens, set as setStorage, getToken } from "../../common/utils/storageManager";
 import GTM from "../../common/gtm";
 import { saveBeforeUnload } from "./blockly/utils";
 
 // Deriv components
 import Main from "./deriv/layout/Main";
 import store from "./deriv/store";
-import { updateTokenList } from "./deriv/utils";
+import { updateTokenList, removeTokens } from "./deriv/utils";
 
 let chart;
 export const api = generateDerivApiInstance();
@@ -75,21 +68,6 @@ export default class View {
         e.preventDefault();
       }
       this.stop();
-    };
-
-    const removeTokens = () => {
-      logoutAllTokens().then(() => {
-        updateTokenList();
-        globalObserver.emit("ui.log.info", translate("Logged you out!"));
-        clearActiveTokens();
-        window.location.reload();
-      });
-    };
-
-    const clearActiveTokens = () => {
-      setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, "");
-      setStorage("active_loginid", null);
-      syncWithDerivApp();
     };
 
     $(".panelExitButton").click(function onClick() {

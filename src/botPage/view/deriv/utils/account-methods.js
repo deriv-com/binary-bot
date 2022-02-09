@@ -1,10 +1,12 @@
-import { AppConstants } from "../../../../common/appId";
+import { AppConstants, logoutAllTokens } from "../../../../common/appId";
 import {
   getTokenList,
   set as setStorage,
   get as getStorage,
   syncWithDerivApp,
 } from "../../../../common/utils/storageManager";
+import { translate } from "../../../../common/i18n";
+import { observer as globalObserver } from "../../../../common/utils/observer";
 
 export const isLoggedIn = () => !!getTokenList()?.length;
 
@@ -25,4 +27,19 @@ export const updateTokenList = () => {
       syncWithDerivApp();
     }
   }
+};
+
+export const clearActiveTokens = () => {
+  setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, "");
+  setStorage("active_loginid", null);
+  syncWithDerivApp();
+};
+
+export const removeTokens = () => {
+  logoutAllTokens().then(() => {
+    updateTokenList();
+    globalObserver.emit("ui.log.info", translate("Logged you out!"));
+    clearActiveTokens();
+    window.location.reload();
+  });
 };
