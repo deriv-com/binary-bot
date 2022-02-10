@@ -5,6 +5,7 @@ import Tour, { TourTargets } from '../../components/tour';
 import { get as getStorage, isDone } from '../../../../../common/utils/storageManager';
 import { updateShowTour } from '../../store/ui-slice';
 import Footer from '../Footer';
+import Header from "../Header";
 import ToolBox from '../ToolBox';
 import SidebarToggle from '../../components/SidebarToggle';
 
@@ -18,6 +19,7 @@ const Main = ({api, blockly}) => {
     }, []);
     return (
         <div className="main">
+            <Header />
             <TourTargets />
             <Tour />
             <ToolBox blockly={blockly} />
@@ -28,7 +30,6 @@ const Main = ({api, blockly}) => {
 };
 
 Main.propTypes = {
-    api: PropTypes.object.isRequired,
     blockly: PropTypes.object.isRequired,
 }
 export default Main;
