@@ -112,7 +112,12 @@ fieldGeneratorMapping.SUBMARKET_LIST = block => () => {
 
             submarketOptions.push(
                 ...Object.keys(submarkets)
-                    .map(e => [submarkets[e].name, e])
+                    .map(e => {
+                        if(e === 'smart_fx'){
+                            return [translate('Basket Indices'), e]
+                        }
+                        return[submarkets[e].name, e]
+                    })
                     // Filter out markets we don't have contracts for
                     .filter(submarket => !['energy'].includes(submarket[1]))
             );
