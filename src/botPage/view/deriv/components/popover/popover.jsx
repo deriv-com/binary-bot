@@ -8,6 +8,7 @@ const Popover = ({ children , content })=>{
         <span
             onMouseEnter={()=>{updateIsHovered(true)}}
             onMouseLeave={()=>{updateIsHovered(false)}}
+            onClick={()=>{updateIsHovered(false)}}
         >
         <TinyPopover 
             isOpen={is_hovered}
