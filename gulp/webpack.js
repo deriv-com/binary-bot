@@ -9,6 +9,12 @@ const { addToManifest } = require('./revision');
 
 const gen = env => {
     process.env.NODE_ENV = env;
+    const branch_index = process.argv.indexOf('--branch');
+    process.env.ARGS = process.argv
+    if(branch_index !== -1 && process.argv[branch_index + 1]){
+        process.env.BRANCH = process.argv[branch_index + 1];
+        process.env.PROJECT_NAME = 'binary-bot';
+    }
     return webpackStream(require('../webpack.config.web'), webpack).pipe(gulp.dest('www/js'));
 };
 
@@ -42,6 +48,13 @@ gulp.task(
 );
 
 gulp.task(
+    'webpack-gen-test',
+    gulp.series('clean-webpack', done => {
+        gen('test_link').on('end', () => done());
+    })
+);
+
+gulp.task(
     'webpack-dev',
     gulp.series('webpack-gen-dev', done => {
         addRev();
@@ -56,3 +69,4 @@ gulp.task(
         done();
     })
 );
+
