@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const webpack = require('webpack');
+const  $ = require("jquery");
 
 module.exports = {
   entry: path.join(__dirname, "src", "botPage", "view", "index.js"),
@@ -10,7 +12,22 @@ module.exports = {
     path: path.join(__dirname, "dist"),
     clean: true,
   },
+  resolve: {
+    alias: {
+      Styles: path.resolve(__dirname, 'src/botPage/view/styles'),
+    },
+  },
   mode: 'development',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'static'),
+    },
+    compress: true,
+    open: true,
+    port: 3000,
+    historyApiFallback: true,
+    hot: true,
+  },
   module: {
     rules: [
       {
@@ -60,5 +77,9 @@ module.exports = {
       patterns: [{ from: path.join(__dirname, "static"), to: "static" }],
     }),
     new Dotenv(),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+  })
   ],
 };

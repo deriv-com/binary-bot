@@ -6,10 +6,11 @@ import "notifyjs-browser";
 import "jquery-ui/ui/widgets/dialog";
 import store from "./deriv/store";
 import App from './deriv/app'
+import './styles/bot.scss'
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App /> 
   </Provider>,
   document.getElementById("main")
 );
