@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
 
         <link rel="apple-touch-icon" sizes="57x57" href="image/binary-style/favicons/apple-touch-icon-57x57.png">
@@ -22,23 +21,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="referrer" content="origin">
 
-        <style id="antiClickjack">
+        <!-- <style id="antiClickjack">
             body {
                 display: none !important;
             }
-        </style>
-        <script type="text/javascript">
+        </style> -->
+        <!-- <script type="text/javascript">
             if (self === top) {
                 var antiClickjack = document.getElementById("antiClickjack");
                 antiClickjack.parentNode.removeChild(antiClickjack);
             } else {
                 top.location = self.location;
             }
-        </script>
+        </script> -->
 
         <title>Binary Bot</title>
         {{> bundle_css }}
-        <link rel="stylesheet" href="css/binary.css">
+        <link rel="stylesheet" href="static/css/binary.css">
         {{> bot_css }}
     </head>
 
@@ -63,11 +62,11 @@
                 accept=".xml" multiple />
         </form>
 
-        <audio id="announcement" src="sound/announcement.ogg" autostart="false"></audio>
-        <audio id="earned-money" src="sound/coins.ogg" autostart="false"></audio>
-        <audio id="job-done" src="sound/job-done.ogg" autostart="false"></audio>
-        <audio id="error" src="sound/out-of-bounds.ogg" autostart="false"></audio>
-        <audio id="severe-error" src="sound/i-am-being-serious.ogg" autostart="false"></audio>
+        <audio id="announcement" src="static/sound/announcement.ogg" autostart="false"></audio>
+        <audio id="earned-money" src="static/sound/coins.ogg" autostart="false"></audio>
+        <audio id="job-done" src="static/sound/job-done.ogg" autostart="false"></audio>
+        <audio id="error" src="static/sound/out-of-bounds.ogg" autostart="false"></audio>
+        <audio id="severe-error" src="static/sound/i-am-being-serious.ogg" autostart="false"></audio>
 
         {{> bundle}} {{> bot}}
         <!-- Google Tag Manager (noscript) -->
@@ -79,8 +78,8 @@
             style="display: none; visibility: hidden;"></iframe>
         <div class="notifyjs-corner" style="bottom: 0px; right: 0px;"></div>
         <div class="notifyjs-corner" style="bottom: 0px; left: 0px;"></div>
-        <script>
+        <!-- <script>
             document.getElementById("localstorage-sync").src = window.location.hostname.includes("staging") ? "https://staging-app.deriv.com/localstorage-sync.html" : "https://app.deriv.com/localstorage-sync.html";
-        </script>
+        </script> -->
     </body>
 </html>
