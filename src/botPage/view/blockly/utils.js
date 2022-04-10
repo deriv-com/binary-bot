@@ -1,3 +1,6 @@
+import Blockly from 'blockly';
+
+
 import { fieldGeneratorMapping } from './blocks/shared';
 import { saveAs } from '../shared';
 import config from '../../common/const';

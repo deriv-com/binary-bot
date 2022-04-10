@@ -2,8 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const webpack = require('webpack');
-const  $ = require("jquery");
+const $ = require("jquery");
 
 module.exports = {
   entry: path.join(__dirname, "src", "botPage", "view", "index.js"),
@@ -17,14 +16,16 @@ module.exports = {
       Styles: path.resolve(__dirname, 'src/botPage/view/styles'),
     },
   },
-  mode: 'development',
+  mode: "development",
+  target: "web",
   devServer: {
     static: {
-      directory: path.join(__dirname, 'static'),
+      directory: path.join(__dirname, "static"),
     },
     compress: true,
     open: true,
-    port: 3000,
+    host: "localbot.binary.sx",
+    port: 80,
     historyApiFallback: true,
     hot: true,
   },
@@ -80,6 +81,6 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
-  })
+    })
   ],
 };

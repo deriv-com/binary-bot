@@ -1,3 +1,31 @@
+@import 'color';
+
+/* Binary constants */
+
+$COLOR_ORANGE: $secondaryBrandColor; // #e98024
+
+$COLOR_RED           : $negativeColor; // #c03
+$COLOR_YELLOW        : $noticeColor;   // #fef1cf
+$COLOR_DARK_GRAY     : #44484c;
+
+
+$BORDER_RADIUS: 3px; 
+
+$FONT_BASE: 1rem; 
+$FONT_SCALE: 1.15;
+
+// Use only these font sizes throughout the site
+$FONT_SIZE_XXL: $FONT_BASE * $FONT_SCALE * $FONT_SCALE * $FONT_SCALE; // 1.520875rem =~ 24px
+$FONT_SIZE_XL: $FONT_BASE * $FONT_SCALE * $FONT_SCALE;                // 1.3225rem   =~ 21px
+$FONT_SIZE_L: $FONT_BASE * $FONT_SCALE;                               // 1.15rem     =~ 18px
+$FONT_SIZE_N: $FONT_BASE;                                             // 1rem        =~ 16px
+$FONT_SIZE_S: calc($FONT_BASE / $FONT_SCALE);                               // .86957rem   =~ 14px
+$FONT_SIZE_XS: calc($FONT_BASE / $FONT_SCALE / $FONT_SCALE);                // .75614rem   =~ 12px
+$FONT_SIZE_XXS: calc($FONT_BASE / $FONT_SCALE / $FONT_SCALE / $FONT_SCALE); // .65752rem   =~ 10px
+
+
+
+
 /*------------------------------------*
  *  # Constants
  *------------------------------------*/
@@ -7,6 +35,9 @@
 /* COLOR PALETTE */
 
 /* colors */
+
+
+
 $color-black: #0e0e0e;
 $color-black-1: #333333;
 $color-black-3: #151717;
