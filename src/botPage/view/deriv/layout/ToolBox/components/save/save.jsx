@@ -3,7 +3,7 @@ import React from 'react';
 import LoadingButton from '../loading_button';
 import SAVE_LOAD_TYPE from '../../common';
 import useIsMounted from "../../../../../../../common/hooks/isMounted";
-import { cleanBeforeExport } from '../../../../../blockly/utils';
+// import { cleanBeforeExport } from '../../../../../blockly/utils';
 import * as style from '../../../../../style';
 import google_drive_util from '../../../../../../../common/integrations/GoogleDrive';
 import { observer as globalObserver } from '../../../../../../../common/utils/observer';
@@ -29,7 +29,7 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
 
         setLoading(true);
         const xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-        cleanBeforeExport(xml);
+        // cleanBeforeExport(xml);
         xml.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
         xml.setAttribute('collection', save_as_collection);
 

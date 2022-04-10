@@ -14,8 +14,8 @@ Blockly.FieldDropdown.prototype.render_ = function() {
         // Update arrow's colour.
         this.arrow_.style.fill = this.sourceBlock_.getColour();
     }
-    goog.dom.removeChildren(this.textElement_);
-    goog.dom.removeNode(this.imageElement_);
+    // goog.dom.removeChildren(this.textElement_);
+    // goog.dom.removeNode(this.imageElement_);
     this.imageElement_ = null;
 
     if (this.imageJson_) {
@@ -376,9 +376,9 @@ Blockly.WorkspaceAudio.prototype.preload = function() {
         sound.pause();
         // iOS can only process one sound at a time.  Trying to load more than one
         // corrupts the earlier ones.  Just load one and leave the others uncached.
-        if (goog.userAgent.IPAD || goog.userAgent.IPHONE) {
-            break;
-        }
+        // if (goog.userAgent.IPAD || goog.userAgent.IPHONE) {
+        //     break;
+        // }
     }
 };
 

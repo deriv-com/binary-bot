@@ -16,7 +16,7 @@ import {
     setIsHeaderLoaded,
     setShouldReloadWorkspace
 } from "../../../store/ui-slice";
-import Tour, { TourTargets } from "../../../components/tour";
+// import Tour ,{ TourTargets } from "../../../components/tour";
 import { addTokenIfValid, AppConstants } from "../../../../../../common/appId";
 import {
     getTokenList,
@@ -129,8 +129,8 @@ const AccountActions = () => {
                     />
                 </Modal>
             )}
-            <TourTargets />
-            <Tour />
+            {/* <TourTargets /> */}
+            {/* <Tour /> */}
         </React.Fragment>
     )
 };

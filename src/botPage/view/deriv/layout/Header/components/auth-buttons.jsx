@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { translate } from "../../../../../../common/i18n";
-import { saveBeforeUnload } from "../../../../blockly/utils";
+// import { saveBeforeUnload } from "../../../../blockly/utils";
 import { getOAuthURL } from "../../../../../../common/appId";
 import { useDispatch } from "react-redux";
 import { setIsHeaderLoaded } from "../../../store/ui-slice";
-import Tour, { TourTargets } from "../../../components/tour";
+// import Tour, { TourTargets } from "../../../components/tour";
 import { getRelatedDeriveOrigin } from "../../../utils";
 
 const AuthButtons = () => {
   const dispatch = useDispatch();
 
   const onLogin = () => {
-    saveBeforeUnload();
+    // saveBeforeUnload();
     document.location = getOAuthURL();
   };
 
@@ -37,8 +37,8 @@ const AuthButtons = () => {
       >
         {translate("Sign up")}
       </a>
-      <TourTargets />
-      <Tour />
+      {/* <TourTargets />
+      <Tour /> */}
     </div>
   );
 };

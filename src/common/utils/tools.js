@@ -1,4 +1,4 @@
-import RenderHTML from 'react-render-html';
+// import RenderHTML from 'react-render-html';
 import { TrackJS } from 'trackjs';
 import { translate as i18nTranslate } from '../../common/i18n';
 import { getLanguage } from '../../common/lang';
@@ -99,7 +99,7 @@ export const translate = (input, params = []) => {
         }
     });
 
-    return RenderHTML(translatedString);
+    return translatedString;
 };
 
 export const getExtension = () => {

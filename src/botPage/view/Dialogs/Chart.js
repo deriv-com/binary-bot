@@ -8,6 +8,7 @@ import {
     ToolbarWidget,
     Views,
 } from '@deriv/deriv-charts';
+
 import React, { PureComponent } from 'react';
 import { translate } from '../../../common/i18n';
 import Dialog from './Dialog';
