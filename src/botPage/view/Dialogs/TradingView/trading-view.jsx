@@ -1,7 +1,7 @@
 import React from 'react';
-import { translate } from '../../../common/i18n';
-import { iframe as iframeStyle } from '../style';
-import Dialog from './Dialog';
+import { translate } from '../../../../common/i18n';
+import { iframe as iframeStyle } from '../../style';
+import Dialog from '../Dialog';
 
 const chartWidth = 700;
 const chartHeight = 700;

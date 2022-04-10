@@ -1,12 +1,33 @@
-@import 'color';
-@import 'toolbox';
-@import './deriv/devices.scss';
-@import 'constants';
+@import 'Styles/color.scss';
+@import 'Styles/devices.scss';
+@import 'Styles/constants-deriv.scss';
 
 $STATIC_CIRCLE_DIAMETER: 0.5rem;
 $DYNAMIC_CIRCLE_DIAMETER: 1.5rem;
 $DISABLED_COLOR: #F2F2F2;
 $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
+
+@mixin toolbox-button-base {
+    background-color: $brand-gray;
+    color: $black;
+    padding: 0em;
+    width: 40px;
+    height: 40px;
+    font-size: 1.500em;
+}
+
+@mixin toolbox-button-focus {
+    outline: none;
+}
+
+@mixin toolbox-runButton-disabled {
+    background-color: $brand-gray;
+    color: $brand-dark-gray;
+}
+
+@mixin toolbox-runButton-hover {
+    background-color: $toolbox-btn-active;
+}
 
 @keyframes animate-circle {
     0% { 
