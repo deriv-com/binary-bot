@@ -5,7 +5,8 @@ import Dialog from "./Dialog";
 import { restrictInputCharacter } from "../shared";
 import * as style from "../style";
 import { getToken } from "StorageManager";
-import { showSpinnerInButton, removeSpinnerInButton, createUrl, translate } from "../../../common/utils/tools";
+import { showSpinnerInButton, removeSpinnerInButton, createUrl } from "../../../common/utils/tools";
+import {translate} from "Translate";
 
 class LimitsContent extends PureComponent {
   constructor() {

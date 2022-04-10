@@ -2,7 +2,7 @@ import React from 'react';
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
 import { get as getStorage, set as setStorage, syncWithDerivApp } from 'StorageManager';
 import { AppConstants, logoutAllTokens } from '../../../../../common/appId';
-import { translate } from '../../../../../common/utils/tools';
+import { translate } from "Translate";
 import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from '../../api';
 import { isLoggedIn, updateTokenList } from '../../utils';
 import { useDispatch } from 'react-redux';

@@ -1,4 +1,4 @@
-import { translate } from '../../../common/utils/tools';
+import { translate } from 'Translate';
 import { getRelatedDeriveOrigin } from './utils';
 
 export const supportedLanguages = {

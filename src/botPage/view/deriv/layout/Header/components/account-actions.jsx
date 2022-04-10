@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { translate } from "../../../../../../common/utils/tools";
+import { translate } from "Translate";
 import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
 import { currencyNameMap } from "../../../config";

@@ -1,5 +1,5 @@
 import React from "react";
-import { translate } from "../../../../../../common/utils/tools";
+import { translate } from "Translate";
 
 const NotificationsContainer = React.forwardRef(({ setIsOpen }, containerRef) => {
     const hideNotifications = e => !containerRef.current.contains(e.target) && setIsOpen(false);

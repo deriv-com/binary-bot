@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { translate } from '../../../../../../common/utils/tools';
+import { translate } from 'Translate';
 import { useLocation } from "react-router-dom";
 import { platforms } from '../../../config';
 

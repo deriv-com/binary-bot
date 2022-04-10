@@ -1,6 +1,6 @@
 import React from 'react';
 import { generateDerivLink } from "../../../utils";
-import { translate } from '../../../../../../common/utils/tools';
+import { translate } from "Translate";
 
 const MenuLinks = () => (
     <div className="header__menu-item header__menu-links client_logged_in">

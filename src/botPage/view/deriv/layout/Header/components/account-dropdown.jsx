@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AccountSwitchModal from "./account-switch-modal.jsx";
-import { translate } from "../../../../../../common/utils/tools";
+import { translate } from "Translate";
 import TabContent from "./tab-content.jsx";
 import { currencyNameMap } from "../../../config";
 import Modal from "../../../components/modal";

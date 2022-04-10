@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { translate } from '../../../../../../common/utils/tools';
+import { translate } from "Translate";
 import MenuLinks from './menu-links.jsx';
 import PlatformDropdown from './platform-dropdown.jsx';
 
