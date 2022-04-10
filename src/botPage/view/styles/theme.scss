@@ -85,6 +85,24 @@
     // Gradient
     --gradient-success: #{$gradient-color-green-1};
     --gradient-danger: #{$gradient-color-red-1};
+
+    button {
+        text-decoration: none;
+        text-align: center;
+        line-height: 100%;
+        text-transform: capitalize;
+        padding: 10px 25px;
+        display: inline-block;
+        font-weight: 400;
+        font-family: inherit;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+        border: 0;
+        background: #2e8836;
+        color: #fff;
+    }
+    
     .btn {
         @include deriv-btn('default', null);
     
