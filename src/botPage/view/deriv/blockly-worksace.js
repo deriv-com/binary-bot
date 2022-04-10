@@ -9,7 +9,7 @@ import {
   removeAllTokens,
 } from "../../../common/utils/storageManager";
 import { observer as globalObserver } from "../../../common/utils/observer";
-import { translate } from "../../../common/i18n";
+import { translate } from "Translate";
 import { logoutAllTokens, AppConstants } from "../../../common/appId";
 import IntegrationsDialog from "../Dialogs/IntegrationsDialog";
 import Chart from "../Dialogs/Chart";

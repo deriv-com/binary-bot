@@ -5,7 +5,7 @@ import Load from "./components/load";
 import Save from "./components/save";
 import Reset from "./components/reset";
 import Modal from "../../components/modal";
-import { translate } from "../../../../../common/i18n";
+import { translate } from "Translate";
 import { setIsBotRunning } from '../../store/ui-slice';
 import { observer as globalObserver } from '../../../../../common/utils/observer';
 import { isMobile } from "../../../../../common/utils/tools";

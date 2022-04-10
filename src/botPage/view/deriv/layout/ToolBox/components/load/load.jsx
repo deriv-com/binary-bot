@@ -3,7 +3,7 @@ import React from "react";
 import LoadingButton from "../loading_button";
 import SAVE_LOAD_TYPE from "../../common/";
 import * as style from "../../../../../style";
-import { translate } from "../../../../../../../common/i18n";
+import { translate } from "Translate";
 import google_drive_util from "../../../../../../../common/integrations/GoogleDrive";
 import useIsMounted from "../../../../../../../common/hooks/isMounted";
 

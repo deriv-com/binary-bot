@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import MessagePage from './message-page.jsx';
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 import { getRelatedDeriveOrigin } from '../../utils/index.js';
 
 const BotUnavailableMessage = () => {

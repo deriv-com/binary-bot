@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from '../../../../common/i18n';
+import { translate } from 'Translate';
 import { iframe as iframeStyle } from '../../style';
 import Dialog from '../Dialog';
 

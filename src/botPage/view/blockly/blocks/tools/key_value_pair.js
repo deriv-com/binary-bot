@@ -1,4 +1,4 @@
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 
 Blockly.Blocks.key_value_pair = {
     init() {

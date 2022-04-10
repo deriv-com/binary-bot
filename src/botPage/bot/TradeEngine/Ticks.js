@@ -1,5 +1,5 @@
 import { getLast } from '../../../common/utils/binary';
-import { translate } from '../../../common/i18n';
+import { translate } from 'Translate';
 import { getDirection, getLastDigit } from '../tools';
 import { expectPositiveInteger } from '../sanitize';
 import * as constants from './state/constants';

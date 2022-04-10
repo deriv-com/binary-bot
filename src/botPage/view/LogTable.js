@@ -2,7 +2,7 @@ import { Parser } from 'json2csv';
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 import { observer as globalObserver } from '../../common/utils/observer';
-import { translate } from '../../common/i18n';
+import { translate } from 'Translate';
 import { appendRow, saveAs } from './shared';
 
 const ColorFormatter = React.forwardRef((props, ref) => (

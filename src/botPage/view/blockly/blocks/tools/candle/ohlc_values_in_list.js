@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#2jo335
 import config from '../../../../../common/const';
-import { translate } from '../../../../../../common/i18n';
+import { translate } from 'Translate';
 import { expectValue } from '../../shared';
 
 Blockly.Blocks.ohlc_values_in_list = {

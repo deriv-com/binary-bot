@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { translate, init, xml as translateXml } from '../i18n';
+import { translate, init, xml as translateXml } from '.Translate';
 
 class Xml {
     constructor(el, children = {}) {

@@ -22,7 +22,7 @@ import {
     getPreviousStrat,
 } from './utils';
 import Interpreter from '../../bot/Interpreter';
-import { translate, xml as translateXml } from '../../../common/i18n';
+import { translate, xml as translateXml } from 'Translate';
 import { getLanguage } from '../../../common/lang';
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { showDialog } from '../../bot/tools';

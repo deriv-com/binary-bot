@@ -1,6 +1,6 @@
 // import RenderHTML from 'react-render-html';
 import { TrackJS } from 'trackjs';
-import { translate as i18nTranslate } from '../../common/i18n';
+import { translate as i18nTranslate } from 'Translate';
 import { getLanguage } from '../../common/lang';
 import AppIdMap from '../../common/appIdResolver';
 

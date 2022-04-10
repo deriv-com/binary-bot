@@ -1,4 +1,4 @@
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 
 Blockly.Blocks.notify_telegram = {
     init() {

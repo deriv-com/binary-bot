@@ -1,5 +1,5 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wupwb4
-import { translate } from '../../../../../../common/i18n';
+import { translate } from 'Translate';
 import { disable } from '../../../utils';
 
 Blockly.Blocks.interval = {

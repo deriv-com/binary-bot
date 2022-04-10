@@ -1,4 +1,4 @@
-import { translate } from "../../../common/i18n";
+import { translate } from "Translate";
 import { recoverFromError, doUntilDone } from "../tools";
 import { contractStatus, notify } from "../broadcast";
 import { DURING_PURCHASE } from "./state/constants";

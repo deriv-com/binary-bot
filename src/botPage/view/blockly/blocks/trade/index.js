@@ -1,5 +1,5 @@
 import { observer as globalObserver } from "../../../../../common/utils/observer";
-import { translate } from "../../../../../common/i18n";
+import { translate } from "Translate";
 import config from "../../../../common/const";
 import { setBlockTextColor, findTopParentBlock, deleteBlockIfExists } from "../../utils";
 import { defineContract } from "../images";

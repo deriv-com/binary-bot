@@ -1,5 +1,5 @@
 import { notify } from '../broadcast';
-import { translate } from '../../../common/i18n';
+import { translate } from 'Translate';
 import { observer as globalObserver } from '../../../common/utils/observer';
 
 export default Interface =>

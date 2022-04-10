@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { translate } from "../../../../../../common/i18n";
+import { translate } from "Translate";
 // import { saveBeforeUnload } from "../../../../blockly/utils";
 import { getOAuthURL } from "../../../../../../common/appId";
 import { useDispatch } from "react-redux";

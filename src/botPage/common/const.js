@@ -1,4 +1,4 @@
-import { translate } from "../../common/i18n";
+import { translate } from "Translate";
 import api from "../view/deriv/api";
 import { load as loadLang } from "../../common/lang";
 

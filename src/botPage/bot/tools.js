@@ -1,5 +1,5 @@
 import { getUTCTime } from "../../common/utils/tools";
-import { translate } from "../../common/i18n";
+import { translate } from "Translate";
 import { roundBalance } from "../common/tools";
 import { notify } from "./broadcast";
 

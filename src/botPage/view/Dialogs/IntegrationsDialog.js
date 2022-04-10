@@ -2,7 +2,7 @@ import React from 'react';
 import Dialog from './Dialog';
 import GoogleDriveIntegration from '../react-components/Integrations/GoogleDriveIntegration';
 import * as style from '../style';
-import { translate } from '../../../common/i18n';
+import { translate } from 'Translate';
 
 const IntegrationsContent = () => (
     <div id="integrations-dialog" className="dialog-content" style={style.content}>

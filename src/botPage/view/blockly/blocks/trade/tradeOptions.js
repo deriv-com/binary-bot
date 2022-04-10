@@ -9,7 +9,7 @@ import {
 } from '../shared';
 import { insideTrade } from '../../relationChecker';
 import { findTopParentBlock, hideInteractionsFromBlockly, getBlocksByType } from '../../utils';
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 import { observer as globalObserver } from '../../../../../common/utils/observer';
 import config from '../../../../common/const';
 

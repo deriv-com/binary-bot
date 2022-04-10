@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#2jo335
 import { mainScope } from '../../relationChecker';
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 
 Blockly.Blocks.tick = {
     init: function init() {

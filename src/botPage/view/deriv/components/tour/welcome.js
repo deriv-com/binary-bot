@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from "react-redux";
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 import { isMobile } from '../../../../../common/utils/tools';
 
 // [TODO]: Refactor direct DOM calls

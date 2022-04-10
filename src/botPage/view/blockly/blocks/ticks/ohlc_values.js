@@ -1,7 +1,7 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#2jo335
 import config from '../../../../common/const';
 import { mainScope } from '../../relationChecker';
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 import candleInterval, { getGranularity } from './candleInterval';
 
 Blockly.Blocks.ohlc_values = {

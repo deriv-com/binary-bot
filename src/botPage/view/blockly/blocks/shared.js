@@ -2,7 +2,7 @@ import { TrackJS } from "trackjs";
 import { oppositesToDropdown } from "../utils";
 import { symbolApi } from "../../shared";
 import config from "../../../common/const";
-import { translate } from "../../../../common/i18n";
+import { translate } from "Translate";
 import {
   get as getStorage,
   set as setStorage,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { translate } from '../../../../../../common/i18n';
+import { translate } from 'Translate';
 
 const AccountSwitchModal = ({ is_bot_running, onClose, onAccept }) => (
     <div className="logout-dialog">

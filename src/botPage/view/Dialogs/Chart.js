@@ -10,7 +10,7 @@ import {
 } from '@deriv/deriv-charts';
 
 import React, { PureComponent } from 'react';
-import { translate } from '../../../common/i18n';
+import { translate } from 'Translate';
 import Dialog from './Dialog';
 import ChartTicksService from '../../common/ChartTicksService';
 import { observer as globalObserver } from '../../../common/utils/observer';

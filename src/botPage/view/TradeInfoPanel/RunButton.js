@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from '../../../common/i18n';
+import { translate } from 'Translate';
 
 const RunButton = () => (
     <React.Fragment>

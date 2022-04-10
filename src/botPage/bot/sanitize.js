@@ -1,4 +1,4 @@
-import { translate } from '../../common/i18n';
+import { translate } from 'Translate';
 import { createError } from '../common/error';
 
 const isPositiveNumber = num => Number.isFinite(num) && num > 0;

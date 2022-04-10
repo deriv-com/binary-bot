@@ -1,5 +1,5 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#u8i287
-import { translate } from '../../../../../common/i18n';
+import { translate } from 'Translate';
 import { insideAfterPurchase } from '../../relationChecker';
 import config from '../../../../common/const';
 
