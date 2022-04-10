@@ -6,7 +6,7 @@ import { translate } from "../../../../../../common/utils/tools";
 import TabContent from "./tab-content.jsx";
 import { currencyNameMap } from "../../../config";
 import Modal from "../../../components/modal";
-import { observer as globalObserver } from '../../../../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { setShouldReloadWorkspace } from "../../../store/ui-slice.js";
 import { resetClient } from "../../../store/client-slice.js";
 import { AppConstants, logoutAllTokens } from "../../../../../../common/appId.js";

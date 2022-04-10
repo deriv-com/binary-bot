@@ -8,7 +8,7 @@ import {
   getToken,
   removeAllTokens,
 } from "StorageManager";
-import { observer as globalObserver } from "../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
 import { logoutAllTokens, AppConstants } from "../../../common/appId";
 import IntegrationsDialog from "../Dialogs/IntegrationsDialog";

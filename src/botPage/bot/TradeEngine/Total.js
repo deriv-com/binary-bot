@@ -2,7 +2,7 @@ import { translate } from 'Translate';
 import { roundBalance } from '../../common/tools';
 import { info, notify } from '../broadcast';
 import { createError } from '../../common/error';
-import { observer as globalObserver } from '../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 
 const skeleton = {
     totalProfit: 0,

@@ -1,5 +1,5 @@
 import { TrackJS } from "trackjs";
-import { observer as globalObserver } from "../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { isProduction } from "../../common/utils/tools";
 
 const log = (type, ...args) => {

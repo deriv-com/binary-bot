@@ -7,7 +7,7 @@ import Reset from "./components/reset";
 import Modal from "../../components/modal";
 import { translate } from "Translate";
 import { setIsBotRunning } from '../../store/ui-slice';
-import { observer as globalObserver } from '../../../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { isMobile } from "../../../../../common/utils/tools";
 import Popover from "../../components/popover/index";
 

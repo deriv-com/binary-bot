@@ -24,7 +24,7 @@ import {
 import Interpreter from '../../bot/Interpreter';
 import { translate, xml as translateXml } from 'Translate';
 import { getLanguage } from '../../../common/lang';
-import { observer as globalObserver } from '../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { showDialog } from '../../bot/tools';
 import GTM from '../../../common/gtm';
 import { parseQueryString, isProduction } from '../../../common/utils/tools';

@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { observer as globalObserver } from "../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
 import { roundBalance } from "../../common/tools";
 import useIsMounted from "../../../common/hooks/isMounted";

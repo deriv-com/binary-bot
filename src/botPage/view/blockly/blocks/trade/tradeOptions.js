@@ -10,7 +10,7 @@ import {
 import { insideTrade } from '../../relationChecker';
 import { findTopParentBlock, hideInteractionsFromBlockly, getBlocksByType } from '../../utils';
 import { translate } from 'Translate';
-import { observer as globalObserver } from '../../../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import config from '../../../../common/const';
 
 export default () => {

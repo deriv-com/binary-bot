@@ -1,4 +1,4 @@
-import { observer as globalObserver } from "../../../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
 import config from "../../../../common/const";
 import { setBlockTextColor, findTopParentBlock, deleteBlockIfExists } from "../../utils";

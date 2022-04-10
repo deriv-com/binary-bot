@@ -21,7 +21,7 @@ import { updateActiveAccount, updateActiveToken, updateIsLogged } from "../../st
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "../../../../../common/appId";
 import { parseQueryString } from "../../../../../common/utils/tools";
 import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
-import { observer as globalObserver } from "../../../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { getRelatedDeriveOrigin } from "../../utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 import api from "../../api";

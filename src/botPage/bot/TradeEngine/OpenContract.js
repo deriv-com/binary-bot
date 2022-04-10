@@ -2,7 +2,7 @@ import { roundBalance } from "../../common/tools";
 import { doUntilDone } from "../tools";
 import { contractStatus, contractSettled, contract as broadcastContract } from "../broadcast";
 import { sell, openContractReceived } from "./state/actions";
-import { observer } from "../../../common/utils/observer";
+import { observer } from "Observer";
 
 const AFTER_FINISH_TIMEOUT = 5;
 

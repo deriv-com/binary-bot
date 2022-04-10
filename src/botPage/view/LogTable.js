@@ -1,7 +1,7 @@
 import { Parser } from 'json2csv';
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
-import { observer as globalObserver } from '../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
 import { appendRow, saveAs } from './shared';
 

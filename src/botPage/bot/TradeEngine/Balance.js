@@ -1,6 +1,6 @@
 import { roundBalance } from "../../common/tools";
 import { info } from "../broadcast";
-import { observer as globalObserver } from "../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 
 export default Engine =>
   class Balance extends Engine {

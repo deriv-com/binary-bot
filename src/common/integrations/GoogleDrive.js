@@ -1,6 +1,6 @@
 /* global google,gapi */
 import { getLanguage } from '../lang';
-import { observer as globalObserver } from '../utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { translate, errLogger, loadExternalScript } from '../utils/tools';
 import GD_CONFIG from '../../botPage/common/google_drive_config';
 import { load } from '../../botPage/view/blockly';

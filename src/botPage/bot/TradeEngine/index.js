@@ -15,7 +15,7 @@ import Ticks from "./Ticks";
 import rootReducer from "./state/reducers";
 import * as constants from "./state/constants";
 import { start } from "./state/actions";
-import { observer as globalObserver } from "../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 
 const watchBefore = store =>
   watchScope({

@@ -17,7 +17,8 @@ module.exports = {
       Styles: path.resolve(__dirname, "src/botPage/view/styles"),
       Static: path.resolve(__dirname,'static'),
       Translate: path.resolve(__dirname,"src","common","i18n.js"),
-      StorageManager: path.resolve(__dirname,"src","common","utils","storageManager.js")
+      StorageManager: path.resolve(__dirname,"src","common","utils","storageManager.js"),
+      Observer: path.resolve(__dirname,"src","common","utils","observer.js"),
     },
     fallback: {
       https: require.resolve("https-browserify"),

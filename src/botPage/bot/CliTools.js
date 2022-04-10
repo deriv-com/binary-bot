@@ -1,4 +1,4 @@
-import Observer from "../../common/utils/observer";
+import Observer from "Observer";
 import Interpreter from "./Interpreter";
 import TicksService from "../common/TicksService";
 import api from "../view/deriv/api";

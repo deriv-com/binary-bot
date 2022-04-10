@@ -1,6 +1,6 @@
 import { notify } from '../broadcast';
 import { translate } from 'Translate';
-import { observer as globalObserver } from '../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 
 export default Interface =>
     class extends Interface {

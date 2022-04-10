@@ -9,7 +9,7 @@ import { currencyNameMap } from "../../../config";
 import { generateDerivLink, getRelatedDeriveOrigin } from "../../../utils";
 import Modal from "../../../components/modal";
 import AccountSwitchModal from "./account-switch-modal.jsx";
-import { observer as globalObserver } from "../../../../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import {
     setAccountSwitcherLoader,
     setAccountSwitcherToken,

@@ -1,6 +1,6 @@
 import crc32 from 'crc-32/crc32';
 import pako from 'pako';
-import { observer } from '../../common/utils/observer';
+import { observer } from 'Observer';
 import { getTokenList } from 'StorageManager';
 import { isProduction } from '../../common/utils/tools';
 

@@ -7,7 +7,7 @@ import { getTokenList } from "StorageManager";
 import { useDispatch } from "react-redux";
 import { setAccountSwitcherToken } from "../../../store/ui-slice";
 import classNames from "classnames";
-import { observer as globalObserver } from "../../../../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 
 const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
   const [isAccordionOpen, setIsAccordionOpen] = React.useState(true);

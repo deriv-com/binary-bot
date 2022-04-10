@@ -1,6 +1,6 @@
 import React from "react";
 import AnimateTrade from "./AnimateTrade";
-import { observer as globalObserver } from "../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
 import Summary from "./Summary";
 import TradeTable from "./TradeTable";

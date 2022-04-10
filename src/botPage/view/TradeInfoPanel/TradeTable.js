@@ -2,7 +2,7 @@
 import { Parser } from 'json2csv';
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
-import { observer as global_observer } from '../../../common/utils/observer';
+import { observer as global_observer } from 'Observer';
 import { appendRow, updateRow, saveAs, isNumber } from '../shared';
 import { translate } from 'Translate';
 import { roundBalance } from '../../common/tools';

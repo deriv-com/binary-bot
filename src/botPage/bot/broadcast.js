@@ -1,4 +1,4 @@
-import { observer as globalObserver } from '../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 
 export const contract = c => globalObserver.emit('bot.contract', c);
 

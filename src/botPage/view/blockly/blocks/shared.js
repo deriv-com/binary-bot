@@ -9,7 +9,7 @@ import {
   getTokenList,
   removeAllTokens,
 } from "StorageManager";
-import { observer as globalObserver } from "../../../../common/utils/observer";
+import { observer as globalObserver } from "Observer";
 import { isProduction } from "../../../../common/utils/tools";
 import api from "../../deriv/api";
 

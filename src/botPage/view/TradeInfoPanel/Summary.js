@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer as globalObserver } from '../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
 import * as style from '../style';
 

@@ -1,5 +1,5 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#tkcvmb
-import { observer as globalObserver } from '../../../../../common/utils/observer';
+import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
 import { deleteBlocksLoadedBy, loadRemote, recoverDeletedBlock } from '../../utils';
 
