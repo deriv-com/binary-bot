@@ -3,7 +3,7 @@ import { fieldGeneratorMapping } from "../shared";
 import { oppositesToDropdown } from "../../utils";
 import config from "../../../../common/const";
 import { translate } from "Translate";
-import { getActiveAccount } from "../../../../../common/utils/storageManager";
+import { getActiveAccount } from "StorageManager";
 
 export const marketDropdown = block => {
   block

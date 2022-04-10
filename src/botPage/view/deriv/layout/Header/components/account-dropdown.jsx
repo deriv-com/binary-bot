@@ -11,7 +11,7 @@ import { setShouldReloadWorkspace } from "../../../store/ui-slice.js";
 import { resetClient } from "../../../store/client-slice.js";
 import { AppConstants, logoutAllTokens } from "../../../../../../common/appId.js";
 import { updateTokenList } from "../../../utils/account-methods.js";
-import { set as setStorage, syncWithDerivApp } from "../../../../../../common/utils/storageManager.js";
+import { set as setStorage, syncWithDerivApp } from "StorageManager";
 
 const Separator = () => <div className="account__switcher-seperator"></div>;
 const getTotalDemo = (accounts) => {

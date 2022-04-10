@@ -31,7 +31,7 @@ import { parseQueryString, isProduction } from '../../../common/utils/tools';
 import { TrackJSError } from '../logger';
 import { createDataStore } from '../../bot/data-collection';
 import config from '../../common/const';
-import { getActiveAccount } from '../../../common/utils/storageManager';
+import { getActiveAccount } from 'StorageManager';
 import { getRelatedDeriveOrigin } from '../deriv/utils';
 
 const disableStrayBlocks = () => {

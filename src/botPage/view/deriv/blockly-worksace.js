@@ -7,7 +7,7 @@ import {
   syncWithDerivApp,
   getToken,
   removeAllTokens,
-} from "../../../common/utils/storageManager";
+} from "StorageManager";
 import { observer as globalObserver } from "../../../common/utils/observer";
 import { translate } from "Translate";
 import { logoutAllTokens, AppConstants } from "../../../common/appId";

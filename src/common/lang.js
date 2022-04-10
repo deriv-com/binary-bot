@@ -1,5 +1,5 @@
 import { parseQueryString } from '../common/utils/tools';
-import { set as setStorage, get as getStorage } from '../common/utils/storageManager';
+import { set as setStorage, get as getStorage } from 'StorageManager';
 import { setCookieLanguage } from '../common/utils/cookieManager';
 import { supportedLanguages, translate, init } from 'Translate';
 

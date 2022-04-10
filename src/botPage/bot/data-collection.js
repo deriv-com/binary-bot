@@ -1,7 +1,7 @@
 import crc32 from 'crc-32/crc32';
 import pako from 'pako';
 import { observer } from '../../common/utils/observer';
-import { getTokenList } from '../../common/utils/storageManager';
+import { getTokenList } from 'StorageManager';
 import { isProduction } from '../../common/utils/tools';
 
 export default class DataCollection {

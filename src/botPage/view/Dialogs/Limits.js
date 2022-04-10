@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Dialog from "./Dialog";
 import { restrictInputCharacter } from "../shared";
 import * as style from "../style";
-import { getToken } from "../../../common/utils/storageManager";
+import { getToken } from "StorageManager";
 import { showSpinnerInButton, removeSpinnerInButton, createUrl, translate } from "../../../common/utils/tools";
 
 class LimitsContent extends PureComponent {

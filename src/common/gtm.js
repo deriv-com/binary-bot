@@ -1,6 +1,6 @@
 import { getAppIdFallback } from './appId';
 import AppIdMap from './appIdResolver';
-import { getTokenList } from './utils/storageManager';
+import { getTokenList } from 'StorageManager';
 
 const GTM = (() => {
     const isGtmApplicable = () => Object.values(AppIdMap.production).includes(`${getAppIdFallback()}`);

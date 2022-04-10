@@ -5,7 +5,7 @@ import {
   get as getStorage,
   syncWithDerivApp,
   convertForDerivStore,
-} from "../../../../common/utils/storageManager";
+} from "StorageManager";
 
 export const isLoggedIn = () => !!getTokenList()?.length;
 

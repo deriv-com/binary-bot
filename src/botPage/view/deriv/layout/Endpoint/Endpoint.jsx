@@ -1,6 +1,6 @@
 import React from 'react';
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
-import { get as getStorage, set as setStorage, syncWithDerivApp } from '../../../../../common/utils/storageManager';
+import { get as getStorage, set as setStorage, syncWithDerivApp } from 'StorageManager';
 import { AppConstants, logoutAllTokens } from '../../../../../common/appId';
 import { translate } from '../../../../../common/utils/tools';
 import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from '../../api';

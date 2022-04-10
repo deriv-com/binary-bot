@@ -8,7 +8,7 @@ import {
   set as setStorage,
   getTokenList,
   removeAllTokens,
-} from "../../../../common/utils/storageManager";
+} from "StorageManager";
 import { observer as globalObserver } from "../../../../common/utils/observer";
 import { isProduction } from "../../../../common/utils/tools";
 import api from "../../deriv/api";

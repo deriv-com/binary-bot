@@ -9,7 +9,7 @@ import {
   getTokenList,
   removeAllTokens,
   syncWithDerivApp,
-} from "../../../../../common/utils/storageManager";
+} from "StorageManager";
 import {
   updateIsLogged,
   resetClient,

@@ -9,7 +9,7 @@ import {
 	isDone,
 	convertForDerivStore,
 	removeAllTokens,
-} from "../../../../../common/utils/storageManager";
+} from "StorageManager";
 import { setShouldReloadWorkspace, updateShowTour } from "../../store/ui-slice";
 import _Blockly from "../../../blockly";
 import ToolBox from "../ToolBox";

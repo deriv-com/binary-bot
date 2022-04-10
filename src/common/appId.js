@@ -4,7 +4,7 @@ import {
   getTokenList,
   removeAllTokens,
   set as setStorage,
-} from "../common/utils/storageManager";
+} from "StorageManager";
 import { parseQueryString } from "../common/utils/tools";
 import { getLanguage } from "./lang";
 import AppIdMap from "./appIdResolver";

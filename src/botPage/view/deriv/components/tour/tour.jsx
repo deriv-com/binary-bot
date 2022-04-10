@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import {
     set as setStorage,
     get as getStorage,
-} from '../../../../../common/utils/storageManager';
+} from 'StorageManager';
 import { translate } from 'Translate';
 import welcome from './welcome';
 import { isMobile } from '../../../../../common/utils/tools';

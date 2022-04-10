@@ -2,7 +2,7 @@ import filesaver from 'file-saver';
 import { AppConstants } from '../../common/appId';
 import _Symbol from '../common/symbolApi';
 import TicksService from '../common/TicksService';
-import { get as getStorage } from '../../common/utils/storageManager';
+import { get as getStorage } from 'StorageManager';
 import api from './deriv/api';
 
 export const symbolApi = new _Symbol(api);

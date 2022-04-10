@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { translate } from "../../../../../../common/utils/tools";
 import { currencyNameMap } from "../../../config";
 import { generateDerivLink } from "../../../utils";
-import { getTokenList } from "../../../../../../common/utils/storageManager";
+import { getTokenList } from "StorageManager";
 import { useDispatch } from "react-redux";
 import { setAccountSwitcherToken } from "../../../store/ui-slice";
 import classNames from "classnames";

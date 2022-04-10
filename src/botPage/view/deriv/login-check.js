@@ -1,6 +1,6 @@
 import { parseQueryString } from "../../../common/utils/tools";
 import { queryToObjectArray, addTokenIfValid, AppConstants } from "../../../common/appId";
-import { getTokenList, set as setStorage, get as getStorage } from "../../../common/utils/storageManager";
+import { getTokenList, set as setStorage, get as getStorage } from "StorageManager";
 
 export default function loginCheck() {
   return new Promise(resolve => {

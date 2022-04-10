@@ -21,7 +21,7 @@ import { addTokenIfValid, AppConstants } from "../../../../../../common/appId";
 import {
     getTokenList,
     set as setStorage
-} from "../../../../../../common/utils/storageManager";
+} from "StorageManager";
 import { updateActiveToken } from "../../../store/client-slice";
 import Popover from "../../../components/popover";
 
