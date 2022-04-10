@@ -19,7 +19,7 @@ import TradeInfoPanel from "../../../TradeInfoPanel";
 import { isLoggedIn } from "../../utils";
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from "../../store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "../../../../../common/appId";
-import { parseQueryString } from "../../../../../common/utils/tools";
+import { parseQueryString } from "Tools";
 import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
 import { observer as globalObserver } from "Observer";
 import { getRelatedDeriveOrigin } from "../../utils";

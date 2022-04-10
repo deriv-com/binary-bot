@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { observer as globalObserver } from 'Observer';
-import { durationToSecond } from '../../../common/utils/tools';
+import { durationToSecond } from 'Tools';
 import config from '../../common/const';
 import { symbolApi } from '../shared';
 import { translate } from 'Translate';

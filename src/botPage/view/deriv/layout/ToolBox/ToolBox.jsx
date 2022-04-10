@@ -8,7 +8,7 @@ import Modal from "../../components/modal";
 import { translate } from "Translate";
 import { setIsBotRunning } from '../../store/ui-slice';
 import { observer as globalObserver } from 'Observer';
-import { isMobile } from "../../../../../common/utils/tools";
+import { isMobile } from "Tools";
 import Popover from "../../components/popover/index";
 
 const ShowModal = ({ modal, onClose, class_name }) => {

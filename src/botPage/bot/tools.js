@@ -1,4 +1,4 @@
-import { getUTCTime } from "../../common/utils/tools";
+import { getUTCTime } from "Tools";
 import { translate } from "Translate";
 import { roundBalance } from "../common/tools";
 import { notify } from "./broadcast";

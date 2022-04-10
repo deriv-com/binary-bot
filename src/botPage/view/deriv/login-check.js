@@ -1,4 +1,4 @@
-import { parseQueryString } from "../../../common/utils/tools";
+import { parseQueryString } from "Tools";
 import { queryToObjectArray, addTokenIfValid, AppConstants } from "../../../common/appId";
 import { getTokenList, set as setStorage, get as getStorage } from "StorageManager";
 

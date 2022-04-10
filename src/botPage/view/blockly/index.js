@@ -27,7 +27,7 @@ import { getLanguage } from '../../../common/lang';
 import { observer as globalObserver } from 'Observer';
 import { showDialog } from '../../bot/tools';
 import GTM from '../../../common/gtm';
-import { parseQueryString, isProduction } from '../../../common/utils/tools';
+import { parseQueryString, isProduction } from 'Tools';
 import { TrackJSError } from '../logger';
 import { createDataStore } from '../../bot/data-collection';
 import config from '../../common/const';

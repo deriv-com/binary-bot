@@ -2,7 +2,7 @@ import crc32 from 'crc-32/crc32';
 import pako from 'pako';
 import { observer } from 'Observer';
 import { getTokenList } from 'StorageManager';
-import { isProduction } from '../../common/utils/tools';
+import { isProduction } from 'Tools';
 
 export default class DataCollection {
     constructor(workspace) {

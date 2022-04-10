@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import { durationToSecond } from "../../../common/utils/tools";
+import { durationToSecond } from "Tools";
 import { translate } from "Translate";
 import { createError } from "../../common/error";
 import { doUntilDone } from "../tools";

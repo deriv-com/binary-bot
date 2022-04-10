@@ -1,4 +1,4 @@
-import { parseQueryString } from '../common/utils/tools';
+import { parseQueryString } from 'Tools';
 import { set as setStorage, get as getStorage } from 'StorageManager';
 import { setCookieLanguage } from '../common/utils/cookieManager';
 import { supportedLanguages, translate, init } from 'Translate';

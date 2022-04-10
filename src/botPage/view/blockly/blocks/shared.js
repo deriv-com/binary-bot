@@ -10,7 +10,7 @@ import {
   removeAllTokens,
 } from "StorageManager";
 import { observer as globalObserver } from "Observer";
-import { isProduction } from "../../../../common/utils/tools";
+import { isProduction } from "Tools";
 import api from "../../deriv/api";
 
 let purchaseChoices = [[translate("Click to select"), ""]];

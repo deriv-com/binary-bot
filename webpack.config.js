@@ -19,6 +19,7 @@ module.exports = {
       Translate: path.resolve(__dirname,"src","common","i18n.js"),
       StorageManager: path.resolve(__dirname,"src","common","utils","storageManager.js"),
       Observer: path.resolve(__dirname,"src","common","utils","observer.js"),
+      Tools: path.resolve(__dirname,"src","common","utils","tools.js"),
     },
     fallback: {
       https: require.resolve("https-browserify"),

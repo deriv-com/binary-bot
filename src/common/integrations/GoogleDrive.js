@@ -2,7 +2,7 @@
 import { getLanguage } from '../lang';
 import { observer as globalObserver } from 'Observer';
 import { translate } from "Translate";
-import { errLogger, loadExternalScript } from '../utils/tools';
+import { errLogger, loadExternalScript } from 'Tools';
 import GD_CONFIG from '../../botPage/common/google_drive_config';
 import { load } from '../../botPage/view/blockly';
 import { TrackJSError } from '../../botPage/view/logger';

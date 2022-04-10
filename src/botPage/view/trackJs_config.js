@@ -1,4 +1,4 @@
-import { isProduction } from '../../common/utils/tools';
+import { isProduction } from 'Tools';
 
 export const trackjs_config = {
     token: process.env.TRACKJS_TOKEN,

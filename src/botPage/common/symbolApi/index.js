@@ -1,6 +1,6 @@
 import ActiveSymbols from './activeSymbols';
 import config from '../../common/const';
-import { getObjectValue } from '../../../common/utils/tools';
+import { getObjectValue } from 'Tools';
 import { getTokenList, removeAllTokens } from 'StorageManager';
 
 let parsed_asset_index;

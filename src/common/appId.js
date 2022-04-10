@@ -5,7 +5,7 @@ import {
   removeAllTokens,
   set as setStorage,
 } from "StorageManager";
-import { parseQueryString } from "../common/utils/tools";
+import { parseQueryString } from "Tools";
 import { getLanguage } from "./lang";
 import AppIdMap from "./appIdResolver";
 import GTM from "./gtm";

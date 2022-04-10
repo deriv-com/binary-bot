@@ -1,6 +1,6 @@
 import { TrackJS } from "trackjs";
 import { observer as globalObserver } from "Observer";
-import { isProduction } from "../../common/utils/tools";
+import { isProduction } from "Tools";
 
 const log = (type, ...args) => {
   if (type === "warn") {

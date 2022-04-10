@@ -7,7 +7,7 @@ import {
 } from 'StorageManager';
 import { translate } from 'Translate';
 import welcome from './welcome';
-import { isMobile } from '../../../../../common/utils/tools';
+import { isMobile } from 'Tools';
 
 const getTourState = () => !getStorage('closedTourPopup')
 const Tour = () => {

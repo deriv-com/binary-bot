@@ -2,7 +2,7 @@ import React from 'react';
 import renderHTML from 'react-render-html';
 import { useSelector } from "react-redux";
 import { useEffect } from 'react';
-import { isMobile } from '../../../../../common/utils/tools';
+import { isMobile } from 'Tools';
 
 const FirstStepTarget = () => (<div
     style={{
