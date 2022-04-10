@@ -1,0 +1,17 @@
+@import 'Styles/color';
+
+#save-dialog {
+    #collection {
+        padding: 1.2em;
+        border: 1px solid $brand-gray;
+        border-radius: 10px;
+        & .description {
+            margin-left: 21px;
+            margin-top: 0.2em;
+            margin-bottom: 0;
+        }
+	}
+	& .integration-option {
+        margin: 0.5em;
+    }
+}

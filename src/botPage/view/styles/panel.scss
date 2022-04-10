@@ -230,32 +230,13 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
             font-size: 75%;
             margin: 0.5em 0;
         }
-        .input-row {
-            margin: 1em 0;
-            
-            &.last {
-                margin-bottom: 0;
-            }
-        }
+        
     }
 }
 
-#load-dialog, #save-dialog {
+#load-dialog{
     .integration-option {
         margin: 0.5em;
-    }
-}
-
-#save-dialog {
-    #collection {
-        padding: 1.2em;
-        border: 1px solid $brand-gray;
-        border-radius: 10px;
-        & .description {
-            margin-left: 21px;
-            margin-top: 0.2em;
-            margin-bottom: 0;
-        }
     }
 }
 

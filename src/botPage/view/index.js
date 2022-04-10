@@ -6,7 +6,9 @@ import "notifyjs-browser";
 import "jquery-ui/ui/widgets/dialog";
 import store from "./deriv/store";
 import App from './deriv/app'
-import './styles/bot.scss'
+import 'Styles/color.scss'
+import 'Styles/chart.scss';
+import 'Styles/bot.scss';
 
 ReactDOM.render(
   <Provider store={store}>

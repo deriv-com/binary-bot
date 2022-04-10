@@ -2,7 +2,26 @@
 @import 'Styles/mixins.scss';
 @import 'Styles/fonts.scss';
 @import 'Styles/devices.scss';
-@import 'Styles/inline-icons.scss';
+
+%inline-icon {
+    @include colorIcon(var(--text-general), none);
+
+    &.active {
+        @include colorIcon(var(--text-prominent), none);
+    }
+    &.disabled {
+        @include colorIcon(var(--text-disabled), none);
+    }
+    &.white {
+        @include colorIcon(var(--text-prominent));
+    }
+    &.border_hover_color {
+        @include colorIcon(var(--text-prominent));
+    }
+    &.secondary {
+        @include colorIcon(var(--text-less-prominent));
+    }
+}
 
 #language-menu-modal {
     display: -webkit-box;

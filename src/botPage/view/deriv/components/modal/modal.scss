@@ -47,7 +47,7 @@
                 justify-content: center;
                 align-items: center;
                 color: $white;
-                padding:0;
+                padding:0 !important;
                 &::after {
                     content: "\00d7";
                     font-weight: 200;

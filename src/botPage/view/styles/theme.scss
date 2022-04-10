@@ -86,6 +86,18 @@
     --gradient-success: #{$gradient-color-green-1};
     --gradient-danger: #{$gradient-color-red-1};
 
+    input[type=radio]:checked+label, input[type=radio]:not(:checked)+label {
+        position: relative;
+        padding-left: 22px;
+        cursor: pointer;
+        line-height: 1em;
+        display: inline-block;
+    }
+    input[type=radio]:checked, input[type=radio]:not(:checked) {
+        position: absolute;
+        opacity: 0;
+    }
+
     button {
         text-decoration: none;
         text-align: center;
@@ -101,6 +113,28 @@
         border: 0;
         background: #2e8836;
         color: #fff;
+    }
+    .input-row {
+        margin: 1em 0;
+        
+        &.last {
+            margin-bottom: 0;
+        }
+    }
+    input, select, textarea {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        font-style: inherit;
+        padding: 2px 8px;
+        border: 1px solid #f2f2f2;
+        color: #000;
+        background: #fff;
+        border-radius: 4px;
+    }
+
+    .center-text {
+        text-align: center;
     }
     
     .btn {
@@ -125,4 +159,5 @@
             @include deriv-btn('large', null);
         }
     }
+    
 }
