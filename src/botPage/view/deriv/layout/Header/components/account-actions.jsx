@@ -7,7 +7,7 @@ import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
 import { currencyNameMap } from "../../../config";
 import { generateDerivLink, getRelatedDeriveOrigin } from "../../../utils";
-import Modal from "../../../components/modal";
+import Modal from "Components/modal";
 import AccountSwitchModal from "./account-switch-modal.jsx";
 import { observer as globalObserver } from "Observer";
 import {
@@ -16,14 +16,14 @@ import {
     setIsHeaderLoaded,
     setShouldReloadWorkspace
 } from "Store/ui-slice";
-// import Tour ,{ TourTargets } from "../../../components/tour";
+// import Tour ,{ TourTargets } from "Components/tour";
 import { addTokenIfValid, AppConstants } from "Common/appId";
 import {
     getTokenList,
     set as setStorage
 } from "StorageManager";
 import { updateActiveToken } from "Store/client-slice";
-import Popover from "../../../components/popover";
+import Popover from "Components/popover";
 
 const AccountActions = () => {
     const {

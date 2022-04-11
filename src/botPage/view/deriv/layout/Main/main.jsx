@@ -13,7 +13,7 @@ import {
 import { setShouldReloadWorkspace, updateShowTour } from "Store/ui-slice";
 import _Blockly from "BlocklyPath";
 import ToolBox from "../ToolBox";
-import SidebarToggle from "../../components/SidebarToggle";
+import SidebarToggle from "Components/SidebarToggle";
 import LogTable from "../../../LogTable";
 import TradeInfoPanel from "../../../TradeInfoPanel";
 import { isLoggedIn } from "../../utils";

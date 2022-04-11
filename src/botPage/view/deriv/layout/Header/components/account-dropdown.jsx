@@ -5,7 +5,7 @@ import AccountSwitchModal from "./account-switch-modal.jsx";
 import { translate } from "Translate";
 import TabContent from "./tab-content.jsx";
 import { currencyNameMap } from "../../../config";
-import Modal from "../../../components/modal";
+import Modal from "Components/modal";
 import { observer as globalObserver } from 'Observer';
 import { setShouldReloadWorkspace } from "Store/ui-slice.js";
 import { resetClient } from "Store/client-slice.js";

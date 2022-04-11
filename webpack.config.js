@@ -25,6 +25,7 @@ module.exports = {
       BlocklyPath: path.resolve(__dirname,"src","botPage","view","blockly"),
       Api: path.resolve(__dirname,"src","botPage","view","deriv","api"),
       Store:path.resolve(__dirname,"src","botPage","view","deriv","store"),
+      Components: path.resolve(__dirname,"src","botPage","view","deriv","components")
     },
     fallback: {
       https: require.resolve("https-browserify"),

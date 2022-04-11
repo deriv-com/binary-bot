@@ -4,7 +4,7 @@ import { translate } from "Translate";
 import { getOAuthURL } from "Common/appId";
 import { useDispatch } from "react-redux";
 import { setIsHeaderLoaded } from "Store/ui-slice";
-// import Tour, { TourTargets } from "../../../components/tour";
+// import Tour, { TourTargets } from "Components/tour";
 import { getRelatedDeriveOrigin } from "../../../utils";
 
 const AuthButtons = () => {
