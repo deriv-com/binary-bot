@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wupwb4
 import { translate } from 'Translate';
-import { mainScope } from '../../../relationChecker';
+import { mainScope } from 'BlocklyPath/relationChecker';
 
 Blockly.Blocks.timeout = {
     init: function init() {

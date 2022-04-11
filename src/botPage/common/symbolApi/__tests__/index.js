@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
-import api from "../../../view/deriv/api";
+import api from "Api";
 import _Symbol from "../index";
 
 describe("symbol", () => {

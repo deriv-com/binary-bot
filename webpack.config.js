@@ -21,7 +21,10 @@ module.exports = {
       Observer: path.resolve(__dirname,"src","common","utils","observer.js"),
       Tools: path.resolve(__dirname,"src","common","utils","tools.js"),
       Common: path.resolve(__dirname,"src", "common"),
-      CommonDeriv: path.resolve(__dirname,"src","botPage", "common")
+      CommonDeriv: path.resolve(__dirname,"src","botPage", "common"),
+      BlocklyPath: path.resolve(__dirname,"src","botPage","view","blockly"),
+      Api: path.resolve(__dirname,"src","botPage","view","deriv","api"),
+      Store:path.resolve(__dirname,"src","botPage","view","deriv","store"),
     },
     fallback: {
       https: require.resolve("https-browserify"),

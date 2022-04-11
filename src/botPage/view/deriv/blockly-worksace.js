@@ -1,4 +1,4 @@
-import config, { updateConfigCurrencies } from "../../../botPage/common/const";
+import config, { updateConfigCurrencies } from "CommonDeriv/const";
 import logHandler from "../../view/logger";
 import { updateTokenList } from "./utils";
 import {
@@ -10,7 +10,7 @@ import {
 } from "StorageManager";
 import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
-import { logoutAllTokens, AppConstants } from "../../../common/appId";
+import { logoutAllTokens, AppConstants } from "Common/appId";
 import IntegrationsDialog from "../Dialogs/IntegrationsDialog";
 import Chart from "../Dialogs/Chart";
 import TradingView from "../Dialogs/TradingView";
@@ -20,11 +20,11 @@ import {
   getMissingBlocksTypes,
   getDisabledMandatoryBlocks,
   getUnattachedMandatoryPairs,
-} from "../blockly/utils";
-import GTM from "../../../common/gtm";
-import google_drive_util from "../../../common/integrations/GoogleDrive";
-import { load } from "../../view/blockly";
-import api from "./api";
+} from "BlocklyPath/utils";
+import GTM from "Common/gtm";
+import google_drive_util from "Common/integrations/GoogleDrive";
+import { load } from "BlocklyPath";
+import api from "Api";
 
 const integrationsDialog = new IntegrationsDialog();
 const tradingView = new TradingView();

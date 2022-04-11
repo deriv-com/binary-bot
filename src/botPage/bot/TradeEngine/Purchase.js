@@ -3,7 +3,7 @@ import { getUUID, recoverFromError, doUntilDone } from '../tools';
 import { contractStatus, info, notify } from '../broadcast';
 import { purchaseSuccessful } from './state/actions';
 import { BEFORE_PURCHASE } from './state/constants';
-import GTM from '../../../common/gtm';
+import GTM from 'Common/gtm';
 
 let delay_index = 0;
 let purchase_reference;

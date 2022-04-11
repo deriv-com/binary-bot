@@ -16,8 +16,8 @@ import {
   updateActiveAccount,
   updateBalance,
   updateActiveToken
-} from "../../store/client-slice";
-import { setAccountSwitcherLoader, updateShowMessagePage } from "../../store/ui-slice";
+} from "Store/client-slice";
+import { setAccountSwitcherLoader, updateShowMessagePage } from "Store/ui-slice";
 import {
   DrawerMenu,
   AuthButtons,
@@ -26,7 +26,7 @@ import {
   AccountSwitcherLoader,
 } from "./components";
 import { queryToObjectArray } from "Common/appId";
-import api from "../../api";
+import api from "Api";
 
 const AccountSwitcher = () => {
   const { account_switcher_loader } = useSelector((state) => state.ui);

@@ -1,5 +1,5 @@
 import { parseQueryString } from "Tools";
-import { queryToObjectArray, addTokenIfValid, AppConstants } from "../../../common/appId";
+import { queryToObjectArray, addTokenIfValid, AppConstants } from "Common/appId";
 import { getTokenList, set as setStorage, get as getStorage } from "StorageManager";
 
 export default function loginCheck() {

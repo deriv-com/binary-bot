@@ -1,6 +1,6 @@
-import GTM from '../../../common/gtm';
+import GTM from 'Common/gtm';
 import { translate, translateLangToLang } from 'Translate';
-import { getLanguage } from '../../../common/lang';
+import { getLanguage } from 'Common/lang';
 import { save } from './utils';
 
 /* eslint-disable */

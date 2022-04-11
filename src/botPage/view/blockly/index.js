@@ -23,10 +23,10 @@ import {
 } from './utils';
 import Interpreter from '../../bot/Interpreter';
 import { translate, xml as translateXml } from 'Translate';
-import { getLanguage } from '../../../common/lang';
+import { getLanguage } from 'Common/lang';
 import { observer as globalObserver } from 'Observer';
 import { showDialog } from '../../bot/tools';
-import GTM from '../../../common/gtm';
+import GTM from 'Common/gtm';
 import { parseQueryString, isProduction } from 'Tools';
 import { TrackJSError } from '../logger';
 import { createDataStore } from '../../bot/data-collection';

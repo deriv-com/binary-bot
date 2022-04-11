@@ -10,21 +10,21 @@ import {
 	convertForDerivStore,
 	removeAllTokens,
 } from "StorageManager";
-import { setShouldReloadWorkspace, updateShowTour } from "../../store/ui-slice";
-import _Blockly from "../../../blockly";
+import { setShouldReloadWorkspace, updateShowTour } from "Store/ui-slice";
+import _Blockly from "BlocklyPath";
 import ToolBox from "../ToolBox";
 import SidebarToggle from "../../components/SidebarToggle";
 import LogTable from "../../../LogTable";
 import TradeInfoPanel from "../../../TradeInfoPanel";
 import { isLoggedIn } from "../../utils";
-import { updateActiveAccount, updateActiveToken, updateIsLogged } from "../../store/client-slice";
+import { updateActiveAccount, updateActiveToken, updateIsLogged } from "Store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "Common/appId";
 import { parseQueryString } from "Tools";
 import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
 import { observer as globalObserver } from "Observer";
 import { getRelatedDeriveOrigin } from "../../utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
-import api from "../../api";
+import api from "Api";
 
 const Main = () => {
 	const [blockly, setBlockly] = React.useState(null);

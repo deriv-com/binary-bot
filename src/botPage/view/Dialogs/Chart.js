@@ -12,9 +12,9 @@ import {
 import React, { PureComponent } from 'react';
 import { translate } from 'Translate';
 import Dialog from './Dialog';
-import ChartTicksService from '../../common/ChartTicksService';
+import ChartTicksService from 'CommonDeriv/ChartTicksService';
 import { observer as globalObserver } from 'Observer';
-import { getLanguage } from '../../../common/lang';
+import { getLanguage } from 'Common/lang';
 
 setSmartChartsPublicPath('./js/');
 

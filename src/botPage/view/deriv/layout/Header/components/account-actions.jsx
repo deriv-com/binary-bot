@@ -15,14 +15,14 @@ import {
     setAccountSwitcherToken,
     setIsHeaderLoaded,
     setShouldReloadWorkspace
-} from "../../../store/ui-slice";
+} from "Store/ui-slice";
 // import Tour ,{ TourTargets } from "../../../components/tour";
 import { addTokenIfValid, AppConstants } from "Common/appId";
 import {
     getTokenList,
     set as setStorage
 } from "StorageManager";
-import { updateActiveToken } from "../../../store/client-slice";
+import { updateActiveToken } from "Store/client-slice";
 import Popover from "../../../components/popover";
 
 const AccountActions = () => {

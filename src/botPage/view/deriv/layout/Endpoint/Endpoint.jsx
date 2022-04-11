@@ -3,10 +3,10 @@ import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
 import { get as getStorage, set as setStorage, syncWithDerivApp } from 'StorageManager';
 import { AppConstants, logoutAllTokens } from 'Common/appId';
 import { translate } from "Translate";
-import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from '../../api';
+import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from 'Api';
 import { isLoggedIn, updateTokenList } from '../../utils';
 import { useDispatch } from 'react-redux';
-import { resetClient } from '../../store/client-slice';
+import { resetClient } from 'Store/client-slice';
 
 const getError = (server) => {
 	return <>Unable to connect to <b>{server}</b>. Switching connection to default endpoint.</>

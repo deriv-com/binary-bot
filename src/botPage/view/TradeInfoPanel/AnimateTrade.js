@@ -2,8 +2,8 @@ import React from "react";
 import classNames from "classnames";
 import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
-import { roundBalance } from "../../common/tools";
-import useIsMounted from "../../../common/hooks/isMounted";
+import { roundBalance } from "CommonDeriv/tools";
+import useIsMounted from "Common/hooks/isMounted";
 import Stage from "./components/Stage";
 
 const INDICATOR_MESSAGES = {

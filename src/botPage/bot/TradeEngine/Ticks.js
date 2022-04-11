@@ -1,4 +1,4 @@
-import { getLast } from '../../../common/utils/binary';
+import { getLast } from 'Common/utils/binary';
 import { translate } from 'Translate';
 import { getDirection, getLastDigit } from '../tools';
 import { expectPositiveInteger } from '../sanitize';

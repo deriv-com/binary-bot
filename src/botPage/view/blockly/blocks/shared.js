@@ -1,7 +1,7 @@
 import { TrackJS } from "trackjs";
 import { oppositesToDropdown } from "../utils";
 import { symbolApi } from "../../shared";
-import config from "../../../common/const";
+import config from "CommonDeriv/const";
 import { translate } from "Translate";
 import {
   get as getStorage,

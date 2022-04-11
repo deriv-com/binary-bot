@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wupwb4
 import { translate } from 'Translate';
-import { disable } from '../../../utils';
+import { disable } from 'BlocklyPath/utils';
 
 Blockly.Blocks.interval = {
     init: function init() {

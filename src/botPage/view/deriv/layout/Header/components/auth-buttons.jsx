@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { translate } from "Translate";
-// import { saveBeforeUnload } from "../../../../blockly/utils";
+// import { saveBeforeUnload } from "BlocklyPath/utils";
 import { getOAuthURL } from "Common/appId";
 import { useDispatch } from "react-redux";
-import { setIsHeaderLoaded } from "../../../store/ui-slice";
+import { setIsHeaderLoaded } from "Store/ui-slice";
 // import Tour, { TourTargets } from "../../../components/tour";
 import { getRelatedDeriveOrigin } from "../../../utils";
 

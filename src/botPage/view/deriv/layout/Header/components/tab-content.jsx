@@ -5,7 +5,7 @@ import { currencyNameMap } from "../../../config";
 import { generateDerivLink } from "../../../utils";
 import { getTokenList } from "StorageManager";
 import { useDispatch } from "react-redux";
-import { setAccountSwitcherToken } from "../../../store/ui-slice";
+import { setAccountSwitcherToken } from "Store/ui-slice";
 import classNames from "classnames";
 import { observer as globalObserver } from "Observer";
 

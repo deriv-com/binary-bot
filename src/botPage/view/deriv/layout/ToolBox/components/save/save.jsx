@@ -3,7 +3,7 @@ import React from 'react';
 import LoadingButton from '../loading_button';
 import SAVE_LOAD_TYPE from '../utils';
 import useIsMounted from "Common/hooks/isMounted";
-// import { cleanBeforeExport } from '../../../../../blockly/utils';
+// import { cleanBeforeExport } from 'BlocklyPath/utils';
 import google_drive_util from 'Common/integrations/GoogleDrive';
 import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
