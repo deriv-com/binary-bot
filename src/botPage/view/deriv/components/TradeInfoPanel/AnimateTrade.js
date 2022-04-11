@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
-import { roundBalance } from "CommonDeriv/tools";
+import { roundBalance } from "Common/tools";
 import useIsMounted from "Common/hooks/isMounted";
 import Stage from "./components/Stage";
 

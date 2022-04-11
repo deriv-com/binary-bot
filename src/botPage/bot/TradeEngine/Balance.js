@@ -1,4 +1,4 @@
-import { roundBalance } from "../../common/tools";
+import { roundBalance } from "Common/tools";
 import { info } from "../broadcast";
 import { observer as globalObserver } from "Observer";
 

@@ -1,5 +1,5 @@
 import { translate } from 'Translate';
-import { roundBalance } from '../../common/tools';
+import { roundBalance } from 'Common/tools';
 import { info, notify } from '../broadcast';
 import { createError } from '../../common/error';
 import { observer as globalObserver } from 'Observer';

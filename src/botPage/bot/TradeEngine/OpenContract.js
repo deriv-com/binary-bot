@@ -1,4 +1,4 @@
-import { roundBalance } from "../../common/tools";
+import { roundBalance } from "Common/tools";
 import { doUntilDone } from "../tools";
 import { contractStatus, contractSettled, contract as broadcastContract } from "../broadcast";
 import { sell, openContractReceived } from "./state/actions";

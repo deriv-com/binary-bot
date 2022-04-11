@@ -5,7 +5,7 @@ import ReactDataGrid from 'react-data-grid';
 import { observer as global_observer } from 'Observer';
 import { appendRow, updateRow, saveAs, isNumber } from 'Shared';
 import { translate } from 'Translate';
-import { roundBalance } from 'CommonDeriv/tools';
+import { roundBalance } from 'Common/tools';
 
 // [Todo] remove styles
 export const greenLeftStyle = { color: 'green', float: 'left' };
