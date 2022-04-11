@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import LoadingButton from "../loading_button";
-import SAVE_LOAD_TYPE from "../../common/";
+import SAVE_LOAD_TYPE from "../utils";
 import { translate } from "Translate";
 import google_drive_util from "Common/integrations/GoogleDrive";
 import useIsMounted from "Common/hooks/isMounted";
