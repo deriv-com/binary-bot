@@ -2,10 +2,14 @@ import PropTypes from "prop-types";
 import React from "react";
 import LoadingButton from "../loading_button";
 import SAVE_LOAD_TYPE from "../../common/";
-import * as style from "../../../../../style";
 import { translate } from "Translate";
 import google_drive_util from "Common/integrations/GoogleDrive";
 import useIsMounted from "Common/hooks/isMounted";
+
+// [Todo] remove styles
+const contentStyle = {
+  marginTop: '0.5em',
+};
 
 const Load = ({ closeDialog, is_gd_logged_in }) => {
   const [load_type, setLoadType] = React.useState(SAVE_LOAD_TYPE.local);
@@ -35,7 +39,7 @@ const Load = ({ closeDialog, is_gd_logged_in }) => {
     <form
       id="load-dialog"
       className="dialog-content"
-      style={style.content}
+      style={contentStyle}
       onSubmit={onSubmit}
     >
       <div className="center-text input-row">

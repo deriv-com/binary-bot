@@ -3,10 +3,29 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Dialog from "./Dialog";
 import { restrictInputCharacter } from "../shared";
-import * as style from "../style";
 import { getToken } from "StorageManager";
 import { showSpinnerInButton, removeSpinnerInButton, createUrl } from "Tools";
 import {translate} from "Translate";
+
+// [Todo] remove styles
+const contentStyle = {
+  marginTop: '0.5em',
+};
+
+const dialogLayoutStyle = {
+  height   : 'auto',
+  width    : '25em',
+  resizable: false,
+};
+
+const errorStyle = {
+  color   : 'red',
+  fontSize: '0.8em',
+};
+
+const submitButtonStyle = {
+  textAlign: 'center',
+};
 
 class LimitsContent extends PureComponent {
   constructor() {
@@ -123,7 +142,7 @@ class LimitsContent extends PureComponent {
         action="javascript:;" // eslint-disable-line no-script-url
         onSubmit={() => this.submit()}
         className="dialog-content"
-        style={style.content}
+        style={contentStyle}
       >
         <p>
           {translate(
@@ -169,8 +188,8 @@ class LimitsContent extends PureComponent {
             data-lpignore={true}
           />
         </div>
-        {this.state.error && <p style={style.error}>{this.state.error}</p>}
-        <div className="input-row last" style={style.submitButton}>
+        {this.state.error && <p style={errorStyle}>{this.state.error}</p>}
+        <div className="input-row last" style={submitButtonStyle}>
           <button id="submit-trade-limits" type="submit">
             {translate("Start")}
           </button>
@@ -194,7 +213,7 @@ export default class Limits extends Dialog {
       "limits-dialog",
       translate("Trade Limitations"),
       <LimitsContent onSave={onSave} api={api} />,
-      style.dialogLayout
+      dialogLayoutStyle
     );
     this.registerCloseOnOtherDialog();
   }

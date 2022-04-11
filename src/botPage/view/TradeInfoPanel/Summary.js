@@ -1,7 +1,11 @@
 import React from 'react';
 import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
-import * as style from '../style';
+
+// [Todo] remove styles
+const greenStyle = { color: 'green' };
+const redStyle = { color: 'red' };
+
 
 const Summary = ({ accountID }) => {
     const [summary_info, setSummaryInfo] = React.useState({});
@@ -43,10 +47,10 @@ const Summary = ({ accountID }) => {
                     <td className="totalRuns">{totalRuns}</td>
                     <td className="totalStake">{totalStake}</td>
                     <td className="totalPayout">{totalPayout}</td>
-                    <td style={style.green} className="totalWins">
+                    <td style={greenStyle} className="totalWins">
                         {totalWins}
                     </td>
-                    <td style={style.red} className="totalLosses">
+                    <td style={redStyle} className="totalLosses">
                         {totalLosses}
                     </td>
                     <td style={profit_color} className="totalProfit">

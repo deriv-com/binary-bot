@@ -1,11 +1,15 @@
 import React from 'react';
 import Dialog from './Dialog';
 import GoogleDriveIntegration from '../react-components/Integrations/GoogleDriveIntegration';
-import * as style from '../style';
 import { translate } from 'Translate';
 
+// [Todo] remove styles
+const contentStyle = {
+    marginTop: '0.5em',
+};
+
 const IntegrationsContent = () => (
-    <div id="integrations-dialog" className="dialog-content" style={style.content}>
+    <div id="integrations-dialog" className="dialog-content" style={contentStyle}>
         <GoogleDriveIntegration />
     </div>
 );

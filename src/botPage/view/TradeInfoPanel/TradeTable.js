@@ -6,7 +6,12 @@ import { observer as global_observer } from 'Observer';
 import { appendRow, updateRow, saveAs, isNumber } from '../shared';
 import { translate } from 'Translate';
 import { roundBalance } from '../../common/tools';
-import * as style from '../style';
+
+// [Todo] remove styles
+export const greenLeftStyle = { color: 'green', float: 'left' };
+export const redLeftStyle = { color: 'red', float: 'left' };
+export const leftStyle = { float: 'left' };
+
 
 const getProfit = ({ sell_price, buy_price, currency }) => {
     if (isNumber(sell_price) && isNumber(buy_price)) {
@@ -25,8 +30,8 @@ const getTimestamp = date => {
     }`;
 };
 
-const ProfitColor = ({ value }) => <div style={value > 0 ? style.greenLeft : style.redLeft}>{value}</div>;
-const StatusFormat = ({ value }) => <div style={style.left}>{value}</div>;
+const ProfitColor = ({ value }) => <div style={value > 0 ? greenLeftStyle : redLeftStyle}>{value}</div>;
+const StatusFormat = ({ value }) => <div style={leftStyle}>{value}</div>;
 
 const TradeTable = ({ account_id, api }) => {
     const initial_state = { id: 0, rows: [] };

@@ -4,10 +4,19 @@ import LoadingButton from '../loading_button';
 import SAVE_LOAD_TYPE from '../../common';
 import useIsMounted from "Common/hooks/isMounted";
 // import { cleanBeforeExport } from '../../../../../blockly/utils';
-import * as style from '../../../../../style';
 import google_drive_util from 'Common/integrations/GoogleDrive';
 import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
+
+// [Todo] remove styles
+const contentStyle = {
+    marginTop: '0.5em',
+};
+
+const checkboxStyle = {
+    margin: '0em 0em 0em 0.5em',
+};
+
 
 const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
     const [is_loading, setLoading] = React.useState(false);
@@ -49,7 +58,7 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
             id="save-dialog"
             onSubmit={onSubmit}
             className="dialog-content"
-            style={style.content}
+            style={contentStyle}
         >
             <div className="input-row">
                 <input
@@ -98,7 +107,7 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
                     id="save-is-collection"
                     type="checkbox"
                     onChange={onChange}
-                    style={style.checkbox}
+                    style={checkboxStyle}
                 />
                 <label
                     title={translate(
