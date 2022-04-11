@@ -11,7 +11,7 @@ import {
 } from "StorageManager";
 import { observer as globalObserver } from "Observer";
 import { isProduction } from "Tools";
-import api from "../../deriv/api";
+import api from "Api";
 
 let purchaseChoices = [[translate("Click to select"), ""]];
 
