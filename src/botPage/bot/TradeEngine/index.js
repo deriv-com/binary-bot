@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { durationToSecond } from "Tools";
 import { translate } from "Translate";
-import { createError } from "../../common/error";
+import { createError } from "Common/error";
 import { doUntilDone } from "../tools";
 import { expectInitArg, expectTradeOptions } from "../sanitize";
 import Proposal from "./Proposal";

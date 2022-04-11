@@ -1,7 +1,7 @@
 import { translate } from 'Translate';
 import { roundBalance } from 'Common/tools';
 import { info, notify } from '../broadcast';
-import { createError } from '../../common/error';
+import { createError } from 'Common/error';
 import { observer as globalObserver } from 'Observer';
 
 const skeleton = {
