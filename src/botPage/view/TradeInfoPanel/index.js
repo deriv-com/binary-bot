@@ -6,8 +6,8 @@ import Summary from "./Summary";
 import TradeTable from "./TradeTable";
 import RunButton from "./RunButton";
 import ClearButton from "./ClearButton";
-import useIsMounted from "../../../common/hooks/isMounted";
-import api from "../deriv/api";
+import useIsMounted from "Common/hooks/isMounted";
+import api from "Api";
 
 const TradeInfoPanel = () => {
   const [account_id, setAccountId] = React.useState("");

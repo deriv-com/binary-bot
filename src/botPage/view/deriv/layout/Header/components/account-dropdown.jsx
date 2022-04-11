@@ -8,7 +8,7 @@ import { currencyNameMap } from "../../../config";
 import Modal from "Components/modal";
 import { observer as globalObserver } from 'Observer';
 import { setShouldReloadWorkspace } from "Store/ui-slice.js";
-import useLogout from "../../../../../../common/hooks/useLogout.js";
+import useLogout from "Common/hooks/useLogout.js";
 
 
 const Separator = () => <div className="account__switcher-seperator"></div>;

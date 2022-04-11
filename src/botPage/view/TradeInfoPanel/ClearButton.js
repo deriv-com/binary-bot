@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer as globalObserver } from 'Observer';
-import { showDialog } from '../../bot/tools';
+import { showDialog } from 'Bot/tools';
 import { translate } from "Translate";
 
 export default class ClearButton extends React.PureComponent {

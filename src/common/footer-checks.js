@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import api from "../botPage/view/deriv/api";
+import api from "Api";
 
 /* eslint-disable camelcase */
 export const isEuLandingCompany = landing_company => /^(maltainvest|malta|iom)$/.test(landing_company);

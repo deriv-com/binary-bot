@@ -11,7 +11,7 @@ import { getLanguage } from "./lang";
 import AppIdMap from "./appIdResolver";
 import GTM from "./gtm";
 import { getRelatedDeriveOrigin, updateTokenList } from '../botPage/view/deriv/utils';
-import api from "../botPage/view/deriv/api";
+import api from "Api";
 
 function getStorage(label) {
   return localStorage.getItem(label);

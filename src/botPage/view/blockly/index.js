@@ -21,15 +21,15 @@ import {
     updateRenamedFields,
     getPreviousStrat,
 } from './utils';
-import Interpreter from '../../bot/Interpreter';
+import Interpreter from 'Bot/Interpreter';
 import { translate, xml as translateXml } from 'Translate';
 import { getLanguage } from 'Common/lang';
 import { observer as globalObserver } from 'Observer';
-import { showDialog } from '../../bot/tools';
+import { showDialog } from 'Bot/tools';
 import GTM from 'Common/gtm';
 import { parseQueryString, isProduction } from 'Tools';
 import { TrackJSError } from '../logger';
-import { createDataStore } from '../../bot/data-collection';
+import { createDataStore } from 'Bot/data-collection';
 import config from "CommonDeriv/const";
 import { getActiveAccount } from 'StorageManager';
 import { getRelatedDeriveOrigin } from '../deriv/utils';

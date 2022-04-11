@@ -1,4 +1,4 @@
-import { doUntilDone } from "../bot/tools";
+import { doUntilDone } from "Bot/tools";
 import TicksService from "./TicksService";
 
 export default class ChartTicksService extends TicksService {

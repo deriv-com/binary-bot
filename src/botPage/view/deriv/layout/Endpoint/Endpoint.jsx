@@ -4,7 +4,7 @@ import { get as getStorage, set as setStorage } from 'StorageManager';
 import { translate } from "Translate";
 import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from 'Api';
 import { isLoggedIn } from '../../utils';
-import useLogout from '../../../../../common/hooks/useLogout';
+import useLogout from 'Common/hooks/useLogout';
 
 const getError = (server) => {
 	return <>Unable to connect to <b>{server}</b>. Switching connection to default endpoint.</>
