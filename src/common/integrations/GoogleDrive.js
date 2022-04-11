@@ -5,7 +5,7 @@ import { translate } from "Translate";
 import { errLogger, loadExternalScript } from 'Tools';
 import GD_CONFIG from 'CommonDeriv/google_drive_config';
 import { load } from 'BlocklyPath';
-import { TrackJSError } from '../../botPage/view/logger';
+import { TrackJSError } from 'Components/logger';
 import store from 'Store';
 import { setGdReady } from 'Store/ui-slice';
 import { setGdLoggedIn } from 'Store/client-slice';

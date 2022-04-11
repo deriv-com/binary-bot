@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from '../deriv/store';
+import store from 'Store';
 import DialogComponent from './DialogComponent';
 import { observer as globalObserver } from 'Observer';
 

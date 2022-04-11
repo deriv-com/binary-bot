@@ -12,17 +12,16 @@ import {
 } from "StorageManager";
 import { setShouldReloadWorkspace, updateShowTour } from "Store/ui-slice";
 import _Blockly from "BlocklyPath";
-import ToolBox from "../ToolBox";
+import ToolBox from "Components/toolbox";
 import SidebarToggle from "Components/SidebarToggle";
-import LogTable from "../../../LogTable";
-import TradeInfoPanel from "../../../TradeInfoPanel";
-import { isLoggedIn } from "../../utils";
+import LogTable from "Components/log-table";
+import TradeInfoPanel from "Components/TradeInfoPanel";
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from "Store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "Common/appId";
 import { parseQueryString } from "Tools";
-import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
+import initialize, { applyToolboxPermissions } from "Components/blockly-worksace";
 import { observer as globalObserver } from "Observer";
-import { getRelatedDeriveOrigin } from "../../utils";
+import { getRelatedDeriveOrigin, isLoggedIn } from "../../utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 import api from "Api";
 

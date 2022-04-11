@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from './Dialog';
-import GoogleDriveIntegration from '../react-components/Integrations/GoogleDriveIntegration';
+import GoogleDriveIntegration from 'Components/GoogleDriveIntegration';
 import { translate } from 'Translate';
 
 // [Todo] remove styles

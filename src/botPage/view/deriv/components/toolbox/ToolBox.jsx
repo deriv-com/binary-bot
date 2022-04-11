@@ -9,7 +9,7 @@ import { translate } from "Translate";
 import { setIsBotRunning } from 'Store/ui-slice';
 import { observer as globalObserver } from 'Observer';
 import { isMobile } from "Tools";
-import Popover from "../../components/popover/index";
+import Popover from "Components/popover/index";
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;

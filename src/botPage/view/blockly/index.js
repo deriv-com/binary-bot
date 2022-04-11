@@ -28,7 +28,7 @@ import { observer as globalObserver } from 'Observer';
 import { showDialog } from 'Bot/tools';
 import GTM from 'Common/gtm';
 import { parseQueryString, isProduction } from 'Tools';
-import { TrackJSError } from '../logger';
+import { TrackJSError } from 'Components/logger';
 import { createDataStore } from 'Bot/data-collection';
 import config from "CommonDeriv/const";
 import { getActiveAccount } from 'StorageManager';

@@ -3,9 +3,9 @@ import { Parser } from 'json2csv';
 import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 import { observer as global_observer } from 'Observer';
-import { appendRow, updateRow, saveAs, isNumber } from '../shared';
+import { appendRow, updateRow, saveAs, isNumber } from '../../../shared';
 import { translate } from 'Translate';
-import { roundBalance } from '../../common/tools';
+import { roundBalance } from '../../../../common/tools';
 
 // [Todo] remove styles
 export const greenLeftStyle = { color: 'green', float: 'left' };

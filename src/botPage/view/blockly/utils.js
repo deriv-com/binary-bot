@@ -6,7 +6,7 @@ import { saveAs } from '../shared';
 import config from "CommonDeriv/const";
 import { translate } from 'Translate';
 import { observer as globalObserver } from 'Observer';
-import { TrackJSError } from '../logger';
+import { TrackJSError } from 'Components/logger';
 
 export const isMainBlock = blockType => config.mainBlocks.indexOf(blockType) >= 0;
 
