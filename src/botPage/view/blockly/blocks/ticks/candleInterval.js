@@ -1,4 +1,4 @@
-import config from '../../../../common/const';
+import config from "CommonDeriv/const";
 import { translate } from 'Translate';
 
 export default function candleInterval(block) {

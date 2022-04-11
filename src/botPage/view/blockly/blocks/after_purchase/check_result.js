@@ -1,4 +1,4 @@
-import config from '../../../../common/const';
+import config from "CommonDeriv/const";
 import { insideAfterPurchase } from '../../relationChecker';
 import { translate } from 'Translate';
 

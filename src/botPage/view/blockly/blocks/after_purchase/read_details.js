@@ -1,7 +1,7 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#u8i287
 import { translate } from 'Translate';
 import { insideAfterPurchase } from '../../relationChecker';
-import config from '../../../../common/const';
+import config from "CommonDeriv/const";
 
 Blockly.Blocks.read_details = {
     init: function init() {

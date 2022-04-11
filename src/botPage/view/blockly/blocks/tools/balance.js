@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#kqvz7z
 import { translate } from 'Translate';
-import config from '../../../../common/const';
+import config from "CommonDeriv/const";
 
 Blockly.Blocks.balance = {
     init: function init() {

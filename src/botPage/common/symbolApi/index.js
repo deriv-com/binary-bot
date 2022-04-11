@@ -1,5 +1,5 @@
 import ActiveSymbols from './activeSymbols';
-import config from '../../common/const';
+import config from "CommonDeriv/const";
 import { getObjectValue } from 'Tools';
 import { getTokenList, removeAllTokens } from 'StorageManager';
 

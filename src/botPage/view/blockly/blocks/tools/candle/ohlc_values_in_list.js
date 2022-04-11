@@ -1,5 +1,5 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#2jo335
-import config from '../../../../../common/const';
+import config from "CommonDeriv/const";
 import { translate } from 'Translate';
 import { expectValue } from '../../shared';
 
