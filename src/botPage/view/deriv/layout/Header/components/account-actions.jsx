@@ -17,7 +17,7 @@ import {
     setShouldReloadWorkspace
 } from "../../../store/ui-slice";
 // import Tour ,{ TourTargets } from "../../../components/tour";
-import { addTokenIfValid, AppConstants } from "../../../../../../common/appId";
+import { addTokenIfValid, AppConstants } from "Common/appId";
 import {
     getTokenList,
     set as setStorage

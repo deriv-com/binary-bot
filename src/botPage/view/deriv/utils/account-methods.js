@@ -1,4 +1,4 @@
-import { AppConstants } from "../../../../common/appId";
+import { AppConstants } from "Common/appId";
 import {
   getTokenList,
   set as setStorage,

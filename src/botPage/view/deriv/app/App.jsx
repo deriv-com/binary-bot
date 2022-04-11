@@ -1,7 +1,7 @@
 import React from "react";
 import { TrackJS } from "trackjs";
 import trackjs_config from "../../trackJs_config";
-import GTM from "../../../../common/gtm";
+import GTM from "Common/gtm";
 import { symbolPromise } from "../../shared";
 import Routes from "../routes";
 

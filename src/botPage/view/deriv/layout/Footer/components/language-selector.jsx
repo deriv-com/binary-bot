@@ -1,7 +1,7 @@
 import React from "react";
 import { supportedLanguages } from "../../../config.js";
 import { translate } from "Translate";
-import { getLanguage } from "../../../../../../common/lang";
+import { getLanguage } from "Common/lang";
 
 const current_language = getLanguage();
 

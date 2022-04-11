@@ -9,7 +9,7 @@ import Modal from "../../../components/modal";
 import { observer as globalObserver } from 'Observer';
 import { setShouldReloadWorkspace } from "../../../store/ui-slice.js";
 import { resetClient } from "../../../store/client-slice.js";
-import { AppConstants, logoutAllTokens } from "../../../../../../common/appId.js";
+import { AppConstants, logoutAllTokens } from "Common/appId";
 import { updateTokenList } from "../../../utils/account-methods.js";
 import { set as setStorage, syncWithDerivApp } from "StorageManager";
 

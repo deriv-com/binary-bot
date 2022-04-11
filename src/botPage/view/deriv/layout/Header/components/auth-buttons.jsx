@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { translate } from "Translate";
 // import { saveBeforeUnload } from "../../../../blockly/utils";
-import { getOAuthURL } from "../../../../../../common/appId";
+import { getOAuthURL } from "Common/appId";
 import { useDispatch } from "react-redux";
 import { setIsHeaderLoaded } from "../../../store/ui-slice";
 // import Tour, { TourTargets } from "../../../components/tour";

@@ -20,6 +20,8 @@ module.exports = {
       StorageManager: path.resolve(__dirname,"src","common","utils","storageManager.js"),
       Observer: path.resolve(__dirname,"src","common","utils","observer.js"),
       Tools: path.resolve(__dirname,"src","common","utils","tools.js"),
+      Common: path.resolve(__dirname,"src", "common"),
+      CommonDeriv: path.resolve(__dirname,"src","botPage", "common")
     },
     fallback: {
       https: require.resolve("https-browserify"),

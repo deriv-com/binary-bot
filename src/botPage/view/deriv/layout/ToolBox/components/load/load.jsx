@@ -4,8 +4,8 @@ import LoadingButton from "../loading_button";
 import SAVE_LOAD_TYPE from "../../common/";
 import * as style from "../../../../../style";
 import { translate } from "Translate";
-import google_drive_util from "../../../../../../../common/integrations/GoogleDrive";
-import useIsMounted from "../../../../../../../common/hooks/isMounted";
+import google_drive_util from "Common/integrations/GoogleDrive";
+import useIsMounted from "Common/hooks/isMounted";
 
 const Load = ({ closeDialog, is_gd_logged_in }) => {
   const [load_type, setLoadType] = React.useState(SAVE_LOAD_TYPE.local);
