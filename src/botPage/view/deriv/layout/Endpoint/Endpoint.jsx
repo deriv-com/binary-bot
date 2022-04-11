@@ -3,7 +3,7 @@ import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
 import { get as getStorage, set as setStorage } from 'StorageManager';
 import { translate } from "Translate";
 import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from 'Api';
-import { isLoggedIn } from '../../utils';
+import { isLoggedIn } from 'Shared/utils';
 import useLogout from 'Common/hooks/useLogout';
 
 const getError = (server) => {

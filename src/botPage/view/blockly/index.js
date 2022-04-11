@@ -32,7 +32,7 @@ import { TrackJSError } from 'Components/logger';
 import { createDataStore } from 'Bot/data-collection';
 import config from "CommonDeriv/const";
 import { getActiveAccount } from 'StorageManager';
-import { getRelatedDeriveOrigin } from '../deriv/utils';
+import { getRelatedDeriveOrigin } from 'Shared/utils';
 
 const disableStrayBlocks = () => {
     const topBlocks = Blockly.mainWorkspace.getTopBlocks();

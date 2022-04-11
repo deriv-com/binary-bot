@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateDerivLink } from "../../../utils";
+import { generateDerivLink } from "Shared/utils";
 import { translate } from "Translate";
 
 const MenuLinks = () => (

@@ -24,7 +24,7 @@ import GTM from "Common/gtm";
 import google_drive_util from "Common/integrations/GoogleDrive";
 import { load } from "BlocklyPath";
 import api from "Api";
-import { updateTokenList } from "../../utils";
+import { updateTokenList } from "Shared/utils";
 
 const integrationsDialog = new IntegrationsDialog();
 const tradingView = new TradingView();

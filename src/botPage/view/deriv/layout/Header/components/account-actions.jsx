@@ -6,7 +6,7 @@ import { translate } from "Translate";
 import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
 import { currencyNameMap } from "../../../config";
-import { generateDerivLink, getRelatedDeriveOrigin } from "../../../utils";
+import { generateDerivLink, getRelatedDeriveOrigin } from "Shared/utils";
 import Modal from "Components/modal";
 import AccountSwitchModal from "./account-switch-modal.jsx";
 import { observer as globalObserver } from "Observer";

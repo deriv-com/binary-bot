@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { resetClient } from 'Store/client-slice';
-import { updateTokenList } from '../../botPage/view/deriv/utils';
+import { updateTokenList } from 'Shared/utils';
 import { AppConstants, logoutAllTokens } from 'Common/appId';
 import { set, syncWithDerivApp } from 'StorageManager';
 

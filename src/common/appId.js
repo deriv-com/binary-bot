@@ -10,7 +10,7 @@ import { parseQueryString } from "Tools";
 import { getLanguage } from "./lang";
 import AppIdMap from "./appIdResolver";
 import GTM from "./gtm";
-import { getRelatedDeriveOrigin, updateTokenList } from '../botPage/view/deriv/utils';
+import { getRelatedDeriveOrigin, updateTokenList } from 'Shared/utils';
 import api from "Api";
 
 function getStorage(label) {

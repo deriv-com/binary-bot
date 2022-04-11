@@ -1,4 +1,4 @@
-import { getRelatedDeriveOrigin } from "../../botPage/view/deriv/utils";
+import { getRelatedDeriveOrigin } from "Shared/utils";
 
 let store = {};
 let hasReadystateListener = false;

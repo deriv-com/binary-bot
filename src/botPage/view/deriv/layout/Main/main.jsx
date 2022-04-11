@@ -21,7 +21,7 @@ import { addTokenIfValid, AppConstants, queryToObjectArray } from "Common/appId"
 import { parseQueryString } from "Tools";
 import initialize, { applyToolboxPermissions } from "Components/blockly-worksace";
 import { observer as globalObserver } from "Observer";
-import { getRelatedDeriveOrigin, isLoggedIn } from "../../utils";
+import { getRelatedDeriveOrigin, isLoggedIn } from "Shared/utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 import api from "Api";
 

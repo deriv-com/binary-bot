@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
 import { isMobile, isDesktop, parseQueryString } from "Tools";
 import PlatformDropdown from "./components/platform-dropdown.jsx";
-import { isLoggedIn } from "../../utils";
-import { getActiveToken } from "../../utils";
+import { isLoggedIn, getActiveToken } from "Shared/utils";
 import {
   getTokenList,
   removeAllTokens,

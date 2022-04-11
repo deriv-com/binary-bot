@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { translate } from "Translate";
 import { currencyNameMap } from "../../../config";
-import { generateDerivLink } from "../../../utils";
+import { generateDerivLink } from "Shared/utils";
 import { getTokenList } from "StorageManager";
 import { useDispatch } from "react-redux";
 import { setAccountSwitcherToken } from "Store/ui-slice";

@@ -5,7 +5,7 @@ import { getOAuthURL } from "Common/appId";
 import { useDispatch } from "react-redux";
 import { setIsHeaderLoaded } from "Store/ui-slice";
 // import Tour, { TourTargets } from "Components/tour";
-import { getRelatedDeriveOrigin } from "../../../utils";
+import { getRelatedDeriveOrigin } from "Shared/utils";
 
 const AuthButtons = () => {
   const dispatch = useDispatch();

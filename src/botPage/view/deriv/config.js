@@ -1,5 +1,5 @@
 import { translate } from 'Translate';
-import { getRelatedDeriveOrigin } from './utils';
+import { getRelatedDeriveOrigin } from 'Shared/utils';
 
 export const supportedLanguages = {
     en: 'English',
