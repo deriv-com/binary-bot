@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AccountSwitchModal from "./account-switch-modal.jsx";
 import { translate } from "Translate";
 import TabContent from "./tab-content.jsx";
-import { currencyNameMap } from "../../../config";
+import { currencyNameMap } from "Shared/config";
 import Modal from "Components/modal";
 import { observer as globalObserver } from 'Observer';
 import { setShouldReloadWorkspace } from "Store/ui-slice.js";

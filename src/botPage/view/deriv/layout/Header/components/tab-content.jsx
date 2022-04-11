@@ -1,13 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { translate } from "Translate";
-import { currencyNameMap } from "../../../config";
-import { generateDerivLink } from "Shared/utils";
-import { getTokenList } from "StorageManager";
-import { useDispatch } from "react-redux";
-import { setAccountSwitcherToken } from "Store/ui-slice";
+import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
+import { translate } from "Translate";
+import { getTokenList } from "StorageManager";
 import { observer as globalObserver } from "Observer";
+import { currencyNameMap } from "Shared/config";
+import { generateDerivLink } from "Shared/utils";
+import { setAccountSwitcherToken } from "Store/ui-slice";
 
 const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
   const [isAccordionOpen, setIsAccordionOpen] = React.useState(true);

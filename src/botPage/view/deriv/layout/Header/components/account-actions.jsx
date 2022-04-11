@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { translate } from "Translate";
 import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
-import { currencyNameMap } from "../../../config";
+import { currencyNameMap } from "Shared/config";
 import { generateDerivLink, getRelatedDeriveOrigin } from "Shared/utils";
 import Modal from "Components/modal";
 import AccountSwitchModal from "./account-switch-modal.jsx";

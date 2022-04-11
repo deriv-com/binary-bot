@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { translate } from 'Translate';
 import { useLocation } from "react-router-dom";
-import { platforms } from '../../../config';
+import { platforms } from 'Shared/config';
 
 const PlatformDropdown = React.forwardRef(({ hideDropdown, setIsPlatformSwitcherOpen }, platformDropdownRef) => {
     const location = useLocation();

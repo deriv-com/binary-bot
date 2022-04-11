@@ -1,5 +1,5 @@
 import React from "react";
-import { supportedLanguages } from "../../../config.js";
+import { supportedLanguages } from "Shared/config";
 import { translate } from "Translate";
 import { getLanguage } from "Common/lang";
 
