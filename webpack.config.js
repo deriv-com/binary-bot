@@ -25,7 +25,7 @@ module.exports = {
       BlocklyPath: path.resolve(__dirname,"src","view","blockly"),
       Api: path.resolve(__dirname,"src","view","api"),
       Store:path.resolve(__dirname,"src","view","store"),
-      Components: path.resolve(__dirname,"src","view","deriv","components"),
+      Components: path.resolve(__dirname,"src","view","components"),
       Bot: path.resolve(__dirname,"src","bot"),
       Shared: path.resolve(__dirname,"src","shared"),
     },
