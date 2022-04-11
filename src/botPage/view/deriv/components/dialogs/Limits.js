@@ -5,7 +5,7 @@ import Dialog from "./Dialog";
 import { getToken } from "StorageManager";
 import { showSpinnerInButton, removeSpinnerInButton, createUrl } from "Tools";
 import {translate} from "Translate";
-import { restrictInputCharacter } from "../../../shared";
+import { restrictInputCharacter } from "Shared";
 
 // [Todo] remove styles
 const contentStyle = {

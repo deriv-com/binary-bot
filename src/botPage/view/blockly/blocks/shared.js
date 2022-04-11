@@ -1,6 +1,6 @@
 import { TrackJS } from "trackjs";
 import { oppositesToDropdown } from "../utils";
-import { symbolApi } from "../../shared";
+import { symbolApi } from "Shared";
 import config from "CommonDeriv/const";
 import { translate } from "Translate";
 import {

@@ -1,6 +1,6 @@
 import { translate } from 'Translate';
 import config from "CommonDeriv/const";
-import { symbolApi } from '../../../shared';
+import { symbolApi } from 'Shared';
 import { setInputList, marketDefPlaceHolders, marketToTradeOption } from './tools';
 import { duration, payout, prediction, barrierOffsetGenerator } from './components';
 

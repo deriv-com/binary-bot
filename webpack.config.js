@@ -26,7 +26,8 @@ module.exports = {
       Api: path.resolve(__dirname,"src","botPage","view","deriv","api"),
       Store:path.resolve(__dirname,"src","botPage","view","deriv","store"),
       Components: path.resolve(__dirname,"src","botPage","view","deriv","components"),
-      Bot: path.resolve(__dirname,"src","botPage","bot")
+      Bot: path.resolve(__dirname,"src","botPage","bot"),
+      Shared: path.resolve(__dirname,"src","shared"),
     },
     fallback: {
       https: require.resolve("https-browserify"),

@@ -2,7 +2,7 @@ import Blockly from 'blockly';
 
 
 import { fieldGeneratorMapping } from './blocks/shared';
-import { saveAs } from '../shared';
+import { saveAs } from 'Shared';
 import config from "CommonDeriv/const";
 import { translate } from 'Translate';
 import { observer as globalObserver } from 'Observer';

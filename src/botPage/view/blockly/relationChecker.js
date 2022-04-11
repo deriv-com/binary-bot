@@ -2,7 +2,7 @@
 import { observer as globalObserver } from 'Observer';
 import { durationToSecond } from 'Tools';
 import config from "CommonDeriv/const";
-import { symbolApi } from '../shared';
+import { symbolApi } from 'Shared';
 import { translate } from 'Translate';
 import { findTopParentBlock, disable, enable, expandDuration } from './utils';
 

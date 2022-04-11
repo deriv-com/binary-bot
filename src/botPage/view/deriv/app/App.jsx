@@ -2,7 +2,7 @@ import React from "react";
 import { TrackJS } from "trackjs";
 import trackjs_config from "../../trackJs_config";
 import GTM from "Common/gtm";
-import { symbolPromise } from "../../shared";
+import { symbolPromise } from "Shared";
 import Routes from "../routes";
 
 // Todo create symbol slice and update/add info from here;
