@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { historyToTicks, getLast } from "../../common/utils/binary";
+import { historyToTicks, getLast } from "Common/utils/binary";
 import { observer as globalObserver } from "Observer";
 import { doUntilDone, getUUID } from "Bot/tools";
 

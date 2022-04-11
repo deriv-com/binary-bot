@@ -1,6 +1,6 @@
 import filesaver from 'file-saver';
 import { AppConstants } from 'Common/appId';
-import _Symbol from 'CommonDeriv/symbolApi';
+import _Symbol from 'Common/symbolApi';
 import TicksService from 'CommonDeriv/TicksService';
 import { get as getStorage } from 'StorageManager';
 import api from 'Api';

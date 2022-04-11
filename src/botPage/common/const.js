@@ -1,6 +1,6 @@
 import { translate } from "Translate";
-import api from "../view/deriv/api";
-import { load as loadLang } from "../../common/lang";
+import api from "Api";
+import { load as loadLang } from "Common/lang";
 
 loadLang();
 
