@@ -3,7 +3,7 @@ import Blockly from 'blockly';
 
 import { fieldGeneratorMapping } from './blocks/shared';
 import { saveAs } from 'Shared';
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { translate } from 'Translate';
 import { observer as globalObserver } from 'Observer';
 import { TrackJSError } from 'Components/logger';

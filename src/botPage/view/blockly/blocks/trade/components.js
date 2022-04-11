@@ -1,7 +1,7 @@
 import { caution } from "../images";
 import { fieldGeneratorMapping } from "../shared";
 import { oppositesToDropdown } from "BlocklyPath/utils";
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { translate } from "Translate";
 import { getActiveAccount } from "StorageManager";
 

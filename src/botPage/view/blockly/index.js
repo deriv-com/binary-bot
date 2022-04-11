@@ -30,7 +30,7 @@ import GTM from 'Common/gtm';
 import { parseQueryString, isProduction } from 'Tools';
 import { TrackJSError } from 'Components/logger';
 import { createDataStore } from 'Bot/data-collection';
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { getActiveAccount } from 'StorageManager';
 import { getRelatedDeriveOrigin } from 'Shared/utils';
 

@@ -12,7 +12,7 @@ import {
 import React, { PureComponent } from 'react';
 import { translate } from 'Translate';
 import Dialog from './Dialog';
-import ChartTicksService from 'CommonDeriv/ChartTicksService';
+import ChartTicksService from 'Common/ChartTicksService';
 import { observer as globalObserver } from 'Observer';
 import { getLanguage } from 'Common/lang';
 

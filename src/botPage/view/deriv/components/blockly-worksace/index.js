@@ -1,4 +1,4 @@
-import config, { updateConfigCurrencies } from "CommonDeriv/const";
+import config, { updateConfigCurrencies } from "Shared/const";
 import logHandler from "Components/logger";
 import {
   getTokenList,

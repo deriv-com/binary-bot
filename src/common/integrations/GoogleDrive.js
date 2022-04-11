@@ -3,7 +3,7 @@ import { getLanguage } from '../lang';
 import { observer as globalObserver } from 'Observer';
 import { translate } from "Translate";
 import { errLogger, loadExternalScript } from 'Tools';
-import GD_CONFIG from 'CommonDeriv/google_drive_config';
+import GD_CONFIG from './google_drive_config';
 import { load } from 'BlocklyPath';
 import { TrackJSError } from 'Components/logger';
 import store from 'Store';

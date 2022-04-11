@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#3qghes
 import { translate } from 'Translate';
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { expectValue } from '../shared';
 
 Blockly.Blocks.macda = {

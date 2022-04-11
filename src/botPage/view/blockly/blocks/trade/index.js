@@ -1,6 +1,6 @@
 import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { setBlockTextColor, findTopParentBlock, deleteBlockIfExists } from "BlocklyPath/utils";
 import { defineContract } from "../images";
 import { updatePurchaseChoices, fieldGeneratorMapping, dependentFieldMapping } from "../shared";

@@ -1,5 +1,5 @@
 import { translate } from 'Translate';
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { symbolApi } from 'Shared';
 import { setInputList, marketDefPlaceHolders, marketToTradeOption } from './tools';
 import { duration, payout, prediction, barrierOffsetGenerator } from './components';

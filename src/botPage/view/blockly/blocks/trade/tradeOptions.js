@@ -11,7 +11,7 @@ import { insideTrade } from '../../relationChecker';
 import { findTopParentBlock, hideInteractionsFromBlockly, getBlocksByType } from '../../utils';
 import { translate } from 'Translate';
 import { observer as globalObserver } from 'Observer';
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 
 export default () => {
     Blockly.Blocks.tradeOptions = {

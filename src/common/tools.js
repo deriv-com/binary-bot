@@ -1,4 +1,4 @@
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 
 export const roundBalance = ({ currency, balance }) => {
     const point = config.lists.CRYPTO_CURRENCIES.includes(currency) ? 8 : 2;

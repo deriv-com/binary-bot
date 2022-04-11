@@ -1,6 +1,6 @@
 import Observer from "Observer";
 import Interpreter from "./Interpreter";
-import TicksService from "../common/TicksService";
+import TicksService from "Common/TicksService";
 import api from "../view/deriv/api";
 
 

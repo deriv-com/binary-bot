@@ -1,7 +1,7 @@
 import JSInterpreter from "js-interpreter";
 import { createScope } from "./CliTools";
 import Interface from "./Interface";
-import { clone } from "../common/clone";
+import { clone } from "Common/clone";
 import { observer as globalObserver } from "Observer";
 
 /* eslint-disable func-names, no-underscore-dangle */

@@ -1,4 +1,4 @@
-import config from "CommonDeriv/const";
+import config from "Shared/const";
 import { insideAfterPurchase } from '../../relationChecker';
 import { translate } from 'Translate';
 
