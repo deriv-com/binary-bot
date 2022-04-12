@@ -1,8 +1,11 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const webpack = require("webpack");
+const StylelintPlugin = require('stylelint-webpack-plugin');
+const _ESLintPlugin = require('eslint-webpack-plugin');
+
 const $ = require("jquery");
 
 module.exports = {
@@ -14,20 +17,19 @@ module.exports = {
   },
   resolve: {
     alias: {
-      Styles: path.resolve(__dirname, "src/view/styles"),
-      Static: path.resolve(__dirname,'static'),
-      Translate: path.resolve(__dirname,"src","common","i18n.js"),
-      StorageManager: path.resolve(__dirname,"src","common","utils","storageManager.js"),
-      Observer: path.resolve(__dirname,"src","common","utils","observer.js"),
-      Tools: path.resolve(__dirname,"src","common","utils","tools.js"),
-      Common: path.resolve(__dirname,"src", "common"),
-      CommonDeriv: path.resolve(__dirname,"src", "common"),
-      BlocklyPath: path.resolve(__dirname,"src","view","blockly"),
       Api: path.resolve(__dirname,"src","view","api"),
-      Store:path.resolve(__dirname,"src","view","store"),
-      Components: path.resolve(__dirname,"src","view","components"),
+      BlocklyPath: path.resolve(__dirname,"src","view","blockly"),
       Bot: path.resolve(__dirname,"src","bot"),
+      Common: path.resolve(__dirname,"src", "common"),
+      Components: path.resolve(__dirname,"src","view","components"),
+      Observer: path.resolve(__dirname,"src","common","utils","observer.js"),
       Shared: path.resolve(__dirname,"src","shared"),
+      Static: path.resolve(__dirname,'static'),
+      StorageManager: path.resolve(__dirname,"src","common","utils","storageManager.js"),
+      Store:path.resolve(__dirname,"src","view","store"),
+      Styles: path.resolve(__dirname, "src/view/styles"),
+      Tools: path.resolve(__dirname,"src","common","utils","tools.js"),
+      Translate: path.resolve(__dirname,"src","common","i18n.js"),
     },
     fallback: {
       https: require.resolve("https-browserify"),
@@ -101,6 +103,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "index.html"),
+    }),
+    new _ESLintPlugin({
+      overrideConfigFile: path.resolve(__dirname, '.eslintrc'),
+      context: path.resolve(__dirname, '../src/js'),
+      files: '**/*.js',
     }),
     new CopyPlugin({
       patterns: [{ from: path.join(__dirname, "static"), to: "static" }],

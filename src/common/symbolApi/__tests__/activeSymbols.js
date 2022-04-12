@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { expect } from "chai";
 import deep from "deep-diff";
-import ActiveSymbols from "../activeSymbols";
 import api from "Api";
+import ActiveSymbols from "../activeSymbols";
 /*
  There is a market called forex, which has a submarket
  called major_pairs, which has a symbol called frxEURUSD

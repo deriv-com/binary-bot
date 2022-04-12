@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from 'Store';
-import DialogComponent from './DialogComponent';
 import { observer as globalObserver } from 'Observer';
+import DialogComponent from './DialogComponent';
 
 export default class Dialog {
     constructor(id, title, content, options = {}) {

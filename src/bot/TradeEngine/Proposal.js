@@ -1,7 +1,7 @@
+import { TrackJSError } from "Components/logger";
 import { translate } from "Translate";
 import { tradeOptionToProposal, doUntilDone } from "../tools";
 import { proposalsReady, clearProposals } from "./state/actions";
-import { TrackJSError } from "Components/logger";
 
 export default Engine =>
   class Proposal extends Engine {

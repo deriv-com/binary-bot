@@ -1,8 +1,8 @@
 import JSInterpreter from "js-interpreter";
-import { createScope } from "./CliTools";
-import Interface from "./Interface";
 import { clone } from "Common/clone";
 import { observer as globalObserver } from "Observer";
+import { createScope } from "./CliTools";
+import Interface from "./Interface";
 
 /* eslint-disable func-names, no-underscore-dangle */
 JSInterpreter.prototype.takeStateSnapshot = function() {

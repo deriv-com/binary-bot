@@ -1,17 +1,17 @@
+import api from "Api";
 import {
   addToken,
   removeToken,
   getTokenList,
   removeAllTokens,
   set as setStorage,
-  syncWithDerivApp
+  syncWithDerivApp,
 } from "StorageManager";
 import { parseQueryString } from "Tools";
-import { getLanguage } from "./lang";
-import AppIdMap from "./appIdResolver";
-import GTM from "./gtm";
 import { getRelatedDeriveOrigin, updateTokenList } from 'Shared/utils';
-import api from "Api";
+import AppIdMap from "./appIdResolver";
+import { getLanguage } from "./lang";
+import GTM from "./gtm";
 
 function getStorage(label) {
   return localStorage.getItem(label);

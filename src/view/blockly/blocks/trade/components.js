@@ -1,9 +1,9 @@
-import { caution } from "../images";
-import { fieldGeneratorMapping } from "../shared";
 import { oppositesToDropdown } from "BlocklyPath/utils";
 import config from "Shared/const";
 import { translate } from "Translate";
 import { getActiveAccount } from "StorageManager";
+import { caution } from "../images";
+import { fieldGeneratorMapping } from "../shared";
 
 export const marketDropdown = block => {
   block

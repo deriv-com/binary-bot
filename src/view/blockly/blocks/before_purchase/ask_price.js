@@ -1,7 +1,7 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#pbvgpo
-import { insideBeforePurchase } from '../../relationChecker';
 import { translate } from 'Translate';
 import { getPurchaseChoices } from '../shared';
+import { insideBeforePurchase } from '../../relationChecker';
 
 Blockly.Blocks.ask_price = {
     init: function init() {

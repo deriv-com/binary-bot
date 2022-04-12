@@ -1,4 +1,16 @@
 import { TrackJS } from 'trackjs';
+import Interpreter from 'Bot/Interpreter';
+import { translate, xml as translateXml } from 'Translate';
+import { getLanguage } from 'Common/lang';
+import { observer as globalObserver } from 'Observer';
+import { showDialog } from 'Bot/tools';
+import GTM from 'Common/gtm';
+import { parseQueryString, isProduction } from 'Tools';
+import { TrackJSError } from 'Components/logger';
+import { createDataStore } from 'Bot/data-collection';
+import config from "Shared/const";
+import { getActiveAccount } from 'StorageManager';
+import { getRelatedDeriveOrigin } from 'Shared/utils';
 import './customBlockly';
 import blocks from './blocks';
 import {
@@ -21,18 +33,6 @@ import {
     updateRenamedFields,
     getPreviousStrat,
 } from './utils';
-import Interpreter from 'Bot/Interpreter';
-import { translate, xml as translateXml } from 'Translate';
-import { getLanguage } from 'Common/lang';
-import { observer as globalObserver } from 'Observer';
-import { showDialog } from 'Bot/tools';
-import GTM from 'Common/gtm';
-import { parseQueryString, isProduction } from 'Tools';
-import { TrackJSError } from 'Components/logger';
-import { createDataStore } from 'Bot/data-collection';
-import config from "Shared/const";
-import { getActiveAccount } from 'StorageManager';
-import { getRelatedDeriveOrigin } from 'Shared/utils';
 
 const disableStrayBlocks = () => {
     const topBlocks = Blockly.mainWorkspace.getTopBlocks();
@@ -415,6 +415,7 @@ export default class _Blockly {
 
         if (currency_field && active_account) {
             currency_field.text_ = active_account?.currency;
+            /* eslint no-underscore-dangle: ["error", { "allow": ["text_","render_"] }] */
             currency_field.render_();
         }
     }

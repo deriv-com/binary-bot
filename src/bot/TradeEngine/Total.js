@@ -1,8 +1,8 @@
 import { translate } from 'Translate';
-import { roundBalance } from 'Common/tools';
-import { info, notify } from '../broadcast';
 import { createError } from 'Common/error';
+import { roundBalance } from 'Common/tools';
 import { observer as globalObserver } from 'Observer';
+import { info, notify } from '../broadcast';
 
 const skeleton = {
     totalProfit: 0,

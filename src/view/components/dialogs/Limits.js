@@ -1,11 +1,11 @@
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import Dialog from "./Dialog";
 import { getToken } from "StorageManager";
 import { showSpinnerInButton, removeSpinnerInButton, createUrl } from "Tools";
 import {translate} from "Translate";
 import { restrictInputCharacter } from "Shared";
+import Dialog from "./Dialog";
 
 // [Todo] remove styles
 const contentStyle = {

@@ -1,10 +1,11 @@
+
 import { configureStore } from '@reduxjs/toolkit';
-import clientSlice from './client-slice';
-import uiSlice from './ui-slice';
+import client_slice from './client-slice';
+import ui_slice from './ui-slice';
 
 export default configureStore({
     reducer: {
-        client: clientSlice,
-        ui: uiSlice,
+        client: client_slice,
+        ui: ui_slice,
     },
 });

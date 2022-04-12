@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#pbvgpo
-import { insideBeforePurchase } from '../../relationChecker';
 import { translate } from 'Translate';
+import { insideBeforePurchase } from '../../relationChecker';
 import { getPurchaseChoices } from '../shared';
 
 Blockly.Blocks.payout = {

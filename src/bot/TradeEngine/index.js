@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { durationToSecond } from "Tools";
+import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
 import { createError } from "Common/error";
 import { doUntilDone } from "../tools";
@@ -15,7 +16,6 @@ import Ticks from "./Ticks";
 import rootReducer from "./state/reducers";
 import * as constants from "./state/constants";
 import { start } from "./state/actions";
-import { observer as globalObserver } from "Observer";
 
 const watchBefore = store =>
   watchScope({

@@ -10,10 +10,6 @@ import {
 import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
 import { logoutAllTokens, AppConstants } from "Common/appId";
-import IntegrationsDialog from "../dialogs/IntegrationsDialog";
-import Chart from "../dialogs/Chart";
-import TradingView from "../dialogs/TradingView";
-import Limits from "../dialogs/Limits";
 import {
   saveBeforeUnload,
   getMissingBlocksTypes,
@@ -25,6 +21,10 @@ import google_drive_util from "Common/integrations/GoogleDrive";
 import { load } from "BlocklyPath";
 import api from "Api";
 import { updateTokenList } from "Shared/utils";
+import IntegrationsDialog from "../dialogs/IntegrationsDialog";
+import Chart from "../dialogs/Chart";
+import TradingView from "../dialogs/TradingView";
+import Limits from "../dialogs/Limits";
 
 const integrationsDialog = new IntegrationsDialog();
 const tradingView = new TradingView();

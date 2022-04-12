@@ -1,12 +1,10 @@
 import Blockly from 'blockly';
-
-
-import { fieldGeneratorMapping } from './blocks/shared';
 import { saveAs } from 'Shared';
 import config from "Shared/const";
 import { translate } from 'Translate';
 import { observer as globalObserver } from 'Observer';
 import { TrackJSError } from 'Components/logger';
+import { fieldGeneratorMapping } from './blocks/shared';
 
 export const isMainBlock = blockType => config.mainBlocks.indexOf(blockType) >= 0;
 

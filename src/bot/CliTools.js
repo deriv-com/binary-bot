@@ -1,7 +1,7 @@
-import Observer from "Observer";
-import Interpreter from "./Interpreter";
-import TicksService from "Common/TicksService";
 import api from "Api";
+import Observer from "Observer";
+import TicksService from "Common/TicksService";
+import Interpreter from "./Interpreter";
 
 
 export const createScope = () => {

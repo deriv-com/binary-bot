@@ -6,11 +6,7 @@
       "jsx": true
     }
   },
-  "extends": [
-    "binary",
-    "plugin:import/errors",
-    "plugin:import/warnings"
-  ],
+  "extends": ["binary", "plugin:import/errors", "plugin:import/warnings"],
   "env": {
     "es6": true,
     "browser": true,
@@ -23,31 +19,52 @@
     "jest": false,
     "dataLayer": false
   },
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "import/no-extraneous-dependencies": 0,
     "linebreak-style": 0,
-    "key-spacing" : 0,
+    "key-spacing": 0,
     "camelcase": 0,
     "no-param-reassign": 0,
     "indent": 0,
     "quotes": 0,
-    "prefer-destructuring": ["error", {
-      "array": false,
-      "object": false
-    }, {
-      "enforceForRenamedProperties": false
-    }]
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": false,
+        "object": false
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
+    ]
   },
   "settings": {
     "react": {
       "createClass": "createReactClass", // Regex for Component Factory to use, default to "createReactClass"
-      "pragma": "React",  // Pragma to use, default to "React"
+      "pragma": "React", // Pragma to use, default to "React"
       "version": "15.0" // React version, default to the latest React stable release
+    },
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["Api","./src/view/api"],
+          ["BlocklyPath","./src/view/blockly"],
+          ["Bot","./src/bot"],
+          ["Common","./src/common"],
+          ["Components","./src/view/components"],
+          ["Observer","./src/common/utils/observer.js"],
+          ["Shared","./src/shared"],
+          ["Static","./static"],
+          ["StorageManager","./src/common/utils/storageManager.js"],
+          ["Store", "./src/view/store"],
+          ["Styles","./src/view/styles"],
+          ["Tools", "./src/common/utils/tools.js"],
+          ["Translate","./src/common/i18n.js"]
+        ]
+      }
     }
   }
 }

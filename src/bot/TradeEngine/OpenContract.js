@@ -1,8 +1,8 @@
 import { roundBalance } from "Common/tools";
+import { observer } from "Observer";
 import { doUntilDone } from "../tools";
 import { contractStatus, contractSettled, contract as broadcastContract } from "../broadcast";
 import { sell, openContractReceived } from "./state/actions";
-import { observer } from "Observer";
 
 const AFTER_FINISH_TIMEOUT = 5;
 

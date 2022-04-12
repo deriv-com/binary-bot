@@ -1,6 +1,6 @@
 import config from "Shared/const";
-import { insideAfterPurchase } from '../../relationChecker';
 import { translate } from 'Translate';
+import { insideAfterPurchase } from '../../relationChecker';
 
 Blockly.Blocks.contract_check_result = {
     init: function init() {

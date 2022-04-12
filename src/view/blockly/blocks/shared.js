@@ -1,5 +1,4 @@
 import { TrackJS } from "trackjs";
-import { oppositesToDropdown } from "../utils";
 import { symbolApi } from "Shared";
 import config from "Shared/const";
 import { translate } from "Translate";
@@ -12,6 +11,7 @@ import {
 import { observer as globalObserver } from "Observer";
 import { isProduction } from "Tools";
 import api from "Api";
+import { oppositesToDropdown } from "../utils";
 
 let purchaseChoices = [[translate("Click to select"), ""]];
 

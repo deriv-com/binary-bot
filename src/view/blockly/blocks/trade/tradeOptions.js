@@ -1,3 +1,6 @@
+import { translate } from 'Translate';
+import { observer as globalObserver } from 'Observer';
+import config from "Shared/const";
 import { setInputList, updateInputList, getParentValue } from './tools';
 import {
     haveContractsForSymbol,
@@ -9,9 +12,7 @@ import {
 } from '../shared';
 import { insideTrade } from '../../relationChecker';
 import { findTopParentBlock, hideInteractionsFromBlockly, getBlocksByType } from '../../utils';
-import { translate } from 'Translate';
-import { observer as globalObserver } from 'Observer';
-import config from "Shared/const";
+
 
 export default () => {
     Blockly.Blocks.tradeOptions = {

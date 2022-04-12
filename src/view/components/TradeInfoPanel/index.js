@@ -1,13 +1,13 @@
 import React from "react";
-import AnimateTrade from "./AnimateTrade";
 import { observer as globalObserver } from "Observer";
 import { translate } from "Translate";
+import useIsMounted from "Common/hooks/isMounted";
+import api from "Api";
+import AnimateTrade from "./AnimateTrade";
 import Summary from "./Summary";
 import TradeTable from "./TradeTable";
 import RunButton from "./RunButton";
 import ClearButton from "./ClearButton";
-import useIsMounted from "Common/hooks/isMounted";
-import api from "Api";
 
 const TradeInfoPanel = () => {
   const [account_id, setAccountId] = React.useState("");

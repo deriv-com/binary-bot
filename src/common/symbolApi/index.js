@@ -1,7 +1,7 @@
-import ActiveSymbols from './activeSymbols';
 import config from "Shared/const";
 import { getObjectValue } from 'Tools';
 import { getTokenList, removeAllTokens } from 'StorageManager';
+import ActiveSymbols from './activeSymbols';
 
 let parsed_asset_index;
 
