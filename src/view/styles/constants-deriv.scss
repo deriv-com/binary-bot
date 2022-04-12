@@ -1,11 +1,12 @@
 @import 'color';
 
 /* Binary constants */
+/* [Todo] remove font-size and use theme font-size */
 
-$COLOR_ORANGE: $secondaryBrandColor; // #e98024
+$COLOR_ORANGE: $secondaryBrandColor; 
 
-$COLOR_RED           : $negativeColor; // #c03
-$COLOR_YELLOW        : $noticeColor;   // #fef1cf
+$COLOR_RED           : $negativeColor; 
+$COLOR_YELLOW        : $noticeColor;  
 $COLOR_DARK_GRAY     : #44484c;
 
 
@@ -14,14 +15,13 @@ $BORDER_RADIUS: 3px;
 $FONT_BASE: 1rem; 
 $FONT_SCALE: 1.15;
 
-// Use only these font sizes throughout the site
-$FONT_SIZE_XXL: $FONT_BASE * $FONT_SCALE * $FONT_SCALE * $FONT_SCALE; // 1.520875rem =~ 24px
-$FONT_SIZE_XL: $FONT_BASE * $FONT_SCALE * $FONT_SCALE;                // 1.3225rem   =~ 21px
-$FONT_SIZE_L: $FONT_BASE * $FONT_SCALE;                               // 1.15rem     =~ 18px
-$FONT_SIZE_N: $FONT_BASE;                                             // 1rem        =~ 16px
-$FONT_SIZE_S: calc($FONT_BASE / $FONT_SCALE);                               // .86957rem   =~ 14px
-$FONT_SIZE_XS: calc($FONT_BASE / $FONT_SCALE / $FONT_SCALE);                // .75614rem   =~ 12px
-$FONT_SIZE_XXS: calc($FONT_BASE / $FONT_SCALE / $FONT_SCALE / $FONT_SCALE); // .65752rem   =~ 10px
+$FONT_SIZE_XXL: $FONT_BASE * $FONT_SCALE * $FONT_SCALE * $FONT_SCALE; 
+$FONT_SIZE_XL: $FONT_BASE * $FONT_SCALE * $FONT_SCALE;
+$FONT_SIZE_L: $FONT_BASE * $FONT_SCALE;
+$FONT_SIZE_N: $FONT_BASE;
+$FONT_SIZE_S: calc($FONT_BASE / $FONT_SCALE);
+$FONT_SIZE_XS: calc($FONT_BASE / $FONT_SCALE / $FONT_SCALE);
+$FONT_SIZE_XXS: calc($FONT_BASE / $FONT_SCALE / $FONT_SCALE / $FONT_SCALE);
 
 
 
@@ -147,7 +147,6 @@ $COLOR_CORAL_RED: #ff444f;
 $COLOR_SKY_BLUE: #2196f3;
 $COLOR_WHITE: #ffffff;
 $COLOR_BLUE: #1c5ae3;
-// Light theme
 $COLOR_LIGHT_BLACK_1: rgba(0, 0, 0, 0.8);
 $COLOR_LIGHT_BLACK_2: rgba(0, 0, 0, 0.4);
 $COLOR_LIGHT_BLACK_3: rgba(0, 0, 0, 0.16);
@@ -163,7 +162,6 @@ $COLOR_LIGHT_GRAY_5: #c2c2c2;
 $COLOR_LIGHT_GREEN_GRADIENT: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(0, 148, 117, 0.16));
 $COLOR_LIGHT_RED_GRADIENT: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(227, 28, 75, 0.16));
 $COLOR_LIGHT_WHITE_GRADIENT: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-// Dark theme
 $COLOR_DARK_BLACK_GRADIENT: linear-gradient(to right, rgba(16, 19, 32, 1), rgba(16, 19, 32, 0));
 $COLOR_DARK_BLUE_1: #0b0e18;
 $COLOR_DARK_BLUE_2: #101320;

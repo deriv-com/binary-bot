@@ -1,5 +1,4 @@
 @import 'color';
-// @import 'fontello';
 @import 'index';
 @import 'devices.scss';
 
@@ -19,15 +18,15 @@ body {
 }
 
 #server-status .online {
-    background-color: green;
+    background-color: var(--text-profit-success);
 }
 
 #server-status .connecting {
-    background-color: yellow;
+    background-color: var(--text-warning);
 }
 
 #server-status .offline {
-    background-color: red;
+    background-color: var(--text-loss-danger);
 }
 
 #server-status span {
@@ -117,7 +116,7 @@ body {
     top: 0em;
     opacity: 0.1;
     left: 0em;
-    background: black;
+    background: var(--general-main-1);
 }
 
 #stopButton, #summaryStopButton {

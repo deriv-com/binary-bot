@@ -245,10 +245,10 @@
 .server-time {
     display: inline-flex;
     align-self: center;
-    // margin-right: 1em;
+    /* margin-right: 1em; */
     padding: 0 1em;
-    // @include typeface(--small-left-normal-black);
-    @include typeface(--small-left-light-black); // normal looks bolder comparing to app.deriv.com
+    /* @include typeface(--small-left-normal-black); */
+    @include typeface(--small-left-light-black); /* normal looks bolder comparing to app.deriv.com */
     color: var(--text-general);
 
     &--is-mobile {

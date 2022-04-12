@@ -4,6 +4,9 @@
 
 .blocklyTreeRow {
     box-shadow: inset 0 -0.063em 0 0 #dedede;
+    margin-bottom: 0px !important;
+    height: 1.9em !important;
+    padding-top: 0.250em;
 }
 
 .blocklyText {
@@ -63,7 +66,11 @@
     border-right: 0.063em solid;
     width: 11em;
     transition: width 0.3s ease-in-out;
-    @media(max-width: $desktop-width) {
+    z-index: 99 !important;
+    left: -100%;
+    overflow-x: hidden !important;
+    
+    @media (max-width: $desktop-width) {
         width: 0;
         &__toolbox-open {
             width: 11em;
@@ -116,18 +123,6 @@
 .blocklyScrollbarVertical,
 .blocklyScrollbarHorizontal {
     display: none;
-}
-
-.blocklyTreeRow {
-    margin-bottom: 0px !important;
-    height: 1.9em !important;
-    padding-top: 0.250em;
-}
-
-.blocklyToolboxDiv {
-    z-index: 99 !important;
-    left: -100%;
-    overflow-x: hidden !important;
 }
 
 .blocklySvg {

@@ -12,15 +12,12 @@
     .empty-category,
     .cq-filter,
     .cq-lookup-input>input,
-    .category-title,
-    .empty-category {
+    .category-title {
         font-size: 0.8em;
+        padding: 0 0.8em 0.8em;
     }
     .category-title {
         font-weight: bold;
-    }
-    .empty-category {
-        padding: 0 0.8em 0.8em;
     }
     .category.category-has-subtitle {
         padding-top: 4em

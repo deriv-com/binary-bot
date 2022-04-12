@@ -116,7 +116,7 @@
     z-index: 0;
     overflow: auto;
 
-    #runButton[disabled], #runButton[disabled]:hover, #stopButton[disabled], #stopButton[disabled] {
+    #runButton[disabled], #runButton[disabled]:hover, #stopButton[disabled], #stopButton[disabled]:hover {
         @include toolbox-runButton-disabled;
     }
 
@@ -133,7 +133,7 @@
     }
 
     .box.is-dragover {
-        background-color: grey;
+        background-color: var(--general-section-1);
     }
 
     .toolbox-separator {

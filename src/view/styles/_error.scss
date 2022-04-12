@@ -1,7 +1,7 @@
 .message-page {
     &__container {
         text-align: center;
-        background-color: white;
+        background-color: var(--general-main-1);
         z-Index: 100;
         position: absolute;
         width: 100%;
@@ -16,7 +16,7 @@
             position: absolute;
         }
         &__header {
-            color: black;
+            color: var(--brand-dark-grey);
             font-weight: 700;
             font-size: 32px;
         }
@@ -50,8 +50,8 @@
     border: 2px solid #999999;
     box-sizing: border-box;
     border-radius: 4px;
-    background-color: white;
-    color: black;
+    background-color: var(--general-main-1);
+    color: var(--brand-dark-grey);
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;

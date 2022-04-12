@@ -1,5 +1,5 @@
 @import "Styles/devices";
-// [Todo] remove the font-size from constatns-deriv and use theme font-size
+/* [Todo] remove the font-size from constatns-deriv and use theme font-size */
 @import "Styles/constants-deriv";
 
 .header {
@@ -32,6 +32,9 @@
     }
     &__menu {
         &-left {
+            > * {
+                align-self: center;
+            }
             @include mobile {
                 border-right: 1px solid var(--general-section-1);
             }
@@ -79,9 +82,8 @@
 
             a {
                 display: flex;
-                font-weight: 300; // todo: should be normal(400), try to figure out why it looks bolder than on app.deriv.com
+                font-weight: 300; /* todo: should be normal(400), try to figure out why it looks bolder than on app.deriv.com */
                 vertical-align: middle;
-                // height: 50px;    // todo: 50px used in SmartTrader to overlap the border-bottom of the header, don't think we need it
                 max-width: 150px;
                 text-decoration: none;
                 letter-spacing: 0;
@@ -129,11 +131,6 @@
                     max-height: 80%;
                     margin-right:10px;
                 }
-            }
-        }
-        &-left {
-            > * {
-                align-self: center;
             }
         }
     }
@@ -266,7 +263,7 @@
         @include mobile {
             margin-right: 0;
             position: unset;
-            z-index: 999; //override toolbox z-index: 99;
+            z-index: 999; /* override toolbox z-index: 99; */
         }
 
         &-icon {
@@ -557,8 +554,8 @@
                 background: var(--general-main-2);
                 border-radius: 4px;
                 box-shadow: 0 8px 16px 0 var(--shadow-menu);
-
                 @include mobile {
+                    flex-direction: column;
                     position: unset;
                 }
             }
@@ -671,11 +668,6 @@
                         align-items: center;
                         justify-content: space-between;
                     }
-                }
-            }
-            &-dropdown {
-                @include mobile {
-                    flex-direction: column;
                 }
             }
             &-container {

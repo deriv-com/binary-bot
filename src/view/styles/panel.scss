@@ -72,6 +72,10 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
     border-radius: 4px;
     border: 1px solid $brand-gray;
     box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.1);
+    .react-grid-Row .react-grid-Cell:last-child, 
+    .react-grid-Row .react-grid-Cell:nth-last-child(2) {
+        text-align: right;
+    }
     .content-row {
         margin-bottom: 1em;
     }
@@ -80,7 +84,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
     }
     #sync-warning {
         font-size: 11px;
-        color: lightgray;
+        color: #d3d3d3 ;
     }
     .summary-toolbox {
         text-align: center;
@@ -154,8 +158,8 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
 }
 
 .dialog-content {
-    padding: 0 15px 15px 15px;
-    background: white;
+    padding: 0 15px 15px;
+    background: $white;
     cursor: default;
 }
 
@@ -172,7 +176,6 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
     background: #d9edf7;
 }
 
-// ReactGrid
 .ui-widget {
     .react-grid-Main {
         outline: none;
@@ -197,13 +200,6 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
     }
 }
 
-#summaryPanel {
-    .react-grid-Row .react-grid-Cell:last-child, 
-    .react-grid-Row .react-grid-Cell:nth-last-child(2) {
-        text-align: right;
-    }
-}
-
 #tradeInfo {
     margin-bottom: 10px;
 }
@@ -216,7 +212,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
     font-size: 1rem;
     height: 1.85rem !important;
     margin-top: 0.25rem;
-    font-family: "IBM Plex Sans",sans-serif;
+    font-family: 'IBM Plex Sans,sans-serif';
 }
 
 .form--sc-views__input .sc-input {
@@ -267,9 +263,10 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
         width: 100%;
 
         h2 {
-            color: $black;
+            color: var(--general-main-1);;
             font-size: 20px;
-            margin: 0 0 0.2em 0;
+            margin: 0;
+            margin-bottom: 0.2em;
         }
         .left {
             width: 60%;
@@ -372,7 +369,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
         }
 
         .circle {
-            &::after {
+            &:after {
                 content: '';
                 position: absolute;
                 width: $STATIC_CIRCLE_DIAMETER;
@@ -388,7 +385,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
             }
 
             &.active {
-                &::before {
+                &:before {
                     content: '';
                     position: absolute;
                     width: $DYNAMIC_CIRCLE_DIAMETER;
@@ -405,7 +402,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
             }
 
             &.complete {
-                &::after {
+                &:after {
                     border: 0.25em solid $COLOR_ORANGE;
                 }
             }
@@ -423,7 +420,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
 
             visibility: hidden;
 
-            &::before {
+            &:before {
                 content: '';
                 position: absolute;
                 top: -8px;
@@ -454,14 +451,14 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
             width: calc(100% - 6.5rem);
         }
 
-        &::after {
+        &:after {
             content: '';
             position: absolute;
             height: 4px;
         }
 
         &.active {
-            &::after {
+            &:after {
                 background-color: $COLOR_ORANGE;
                 width: 50%;
                 animation: animate-progress 0.5s 1;
@@ -470,7 +467,7 @@ $ANIMATOR_CIRCLE_POSITION_TOP: 44%;
         }
 
         &.complete {
-            &::after {
+            &:after {
                 background-color: $COLOR_ORANGE;
                 width: 100%;
                 animation: animate-progress-complete 0.5s 1;

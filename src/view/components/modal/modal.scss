@@ -17,7 +17,6 @@
         height: auto;
         background: $white;
         border: 1px solid #ddd;
-        background: $white;
         color: #333;
         padding: 5px;
         border-radius: 3px;
@@ -30,7 +29,7 @@
         border-bottom-right-radius: 3px;
         background: #2a3052;
         color: $white;
-        font-family: roboto, sans-serif;
+        font-family: 'roboto, sans-serif';
         font-weight: 400;
         padding: 0.4em;
         padding-left: 1em;
@@ -48,8 +47,8 @@
                 align-items: center;
                 color: $white;
                 padding:0 !important;
-                &::after {
-                    content: "\00d7";
+                &:after {
+                    content: '\00d7';
                     font-weight: 200;
                 }
             }

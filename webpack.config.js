@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const StylelintPlugin = require('stylelint-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const _ESLintPlugin = require('eslint-webpack-plugin');
 
 const $ = require("jquery");
@@ -109,6 +109,7 @@ module.exports = {
       context: path.resolve(__dirname, '../src/js'),
       files: '**/*.js',
     }),
+    new StyleLintPlugin({ fix: true }),
     new CopyPlugin({
       patterns: [{ from: path.join(__dirname, "static"), to: "static" }],
     }),
