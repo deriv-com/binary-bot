@@ -51,7 +51,7 @@
       "alias": {
         "map": [
           ["Api","./src/view/api"],
-          ["BlocklyPath","./src/view/blockly"],
+          ["BlocklyPath","./src/bot/blockly"],
           ["Bot","./src/bot"],
           ["Common","./src/common"],
           ["Components","./src/view/components"],
@@ -62,7 +62,7 @@
           ["Store", "./src/view/store"],
           ["Styles","./src/view/styles"],
           ["Tools", "./src/common/utils/tools.js"],
-          ["Translate","./src/common/i18n.js"]
+          ["Translate","./src/common/utils/translate"]
         ]
       }
     }

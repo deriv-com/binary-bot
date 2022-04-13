@@ -18,7 +18,7 @@ module.exports = {
   resolve: {
     alias: {
       Api: path.resolve(__dirname,"src","view","api"),
-      BlocklyPath: path.resolve(__dirname,"src","view","blockly"),
+      BlocklyPath: path.resolve(__dirname,"src","bot","blockly"),
       Bot: path.resolve(__dirname,"src","bot"),
       Common: path.resolve(__dirname,"src", "common"),
       Components: path.resolve(__dirname,"src","view","components"),
