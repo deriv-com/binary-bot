@@ -29,7 +29,7 @@ module.exports = {
       Store:path.resolve(__dirname,"src","view","store"),
       Styles: path.resolve(__dirname, "src/view/styles"),
       Tools: path.resolve(__dirname,"src","common","utils","tools.js"),
-      Translate: path.resolve(__dirname,"src","common","i18n.js"),
+      Translate: path.resolve(__dirname,"src","common","utils","translate"),
     },
     fallback: {
       https: require.resolve("https-browserify"),

@@ -1,6 +1,6 @@
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
 import AppIdMap from "Common/appIdResolver";
-import { supportedLanguages } from "Translate";
+import { supportedLanguages } from "Common/i18n";
 import { setCookieLanguage } from "Common/utils/cookieManager";
 
 function getStorage(label) {

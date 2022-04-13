@@ -1,17 +1,14 @@
 /* eslint-disable import/prefer-default-export */
-import { translate as i18nTranslate } from 'Translate';
+
+import { translate as i18nTranslate } from '../i18n';
 
 export const translate = (input, params = []) => {
-    if (!params.length) return i18nTranslate(input);
-    const stringToBeTranslated = input.replace(/\{\$([0-9])\}/gi, '%$1');
-
-    let translatedString = i18nTranslate(stringToBeTranslated);
-
+    let item = i18nTranslate(input)
+    if (!params.length) return item;
     params.forEach((replacement, index) => {
-        if (translatedString && typeof translatedString === 'string') {
-            translatedString = translatedString.replaceAll(`{$${index}}`, replacement);
+        if (item && typeof item === 'string') {
+            item = item.replaceAll(`{$${index}}`, replacement);
         }
     });
-
-    return translatedString;
+    return item;
 };

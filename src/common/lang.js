@@ -1,7 +1,8 @@
 import { parseQueryString } from 'Tools';
 import { set as setStorage, get as getStorage } from 'StorageManager';
-import { supportedLanguages, translate, init } from 'Translate';
-import { setCookieLanguage } from '../common/utils/cookieManager';
+import { supportedLanguages, init } from './i18n';
+import { setCookieLanguage } from './utils/cookieManager';
+import {translate} from './utils/translate';
 
 export const getLanguage = () => {
     const queryLang = parseQueryString().l;

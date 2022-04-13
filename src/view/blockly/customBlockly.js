@@ -1,5 +1,6 @@
 import GTM from 'Common/gtm';
-import { translate, translateLangToLang } from 'Translate';
+import { translateLangToLang } from 'Common/i18n';
+import {translate} from 'Translate';
 import { getLanguage } from 'Common/lang';
 import { save } from './utils';
 

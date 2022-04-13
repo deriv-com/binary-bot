@@ -1,6 +1,7 @@
 import { TrackJS } from 'trackjs';
 import Interpreter from 'Bot/Interpreter';
-import { translate, xml as translateXml } from 'Translate';
+import {translate} from 'Translate'
+import { xml as translateXml } from 'Common/i18n';
 import { getLanguage } from 'Common/lang';
 import { observer as globalObserver } from 'Observer';
 import { showDialog } from 'Bot/tools';
