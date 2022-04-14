@@ -93,16 +93,19 @@ const addBlocklyTranslation = () => {
     $.ajaxPrefilter(options => {
         options.async = true; // eslint-disable-line no-param-reassign
     });
+    const lang_obj = Object.freeze({
+        'ach': 'en',
+        'zh_cn':'zh-hans',
+        'zh_tw': 'zh-hant'
+    })
     let lang = getLanguage();
-    if (lang === 'ach') {
-        lang = 'en';
-    } else if (lang === 'zh_cn') {
-        lang = 'zh-hans';
-    } else if (lang === 'zh_tw') {
-        lang = 'zh-hant';
+    if(Object.keys(lang_obj).includes(lang)){
+        lang = lang_obj(lang)
     }
     return new Promise(resolve => {
-        $.getScript(`translations/${lang}.js`, resolve);
+        // [Todo] resolve the language issue
+        // $.getScript(`translations/${lang}.js`, resolve);
+        resolve()
     });
 };
 
@@ -341,7 +344,6 @@ export default class _Blockly {
                         });
                     }
                 });
-
                 const renderInstance = render(workspace);
                 window.addEventListener('resize', renderInstance, false);
                 renderInstance();
