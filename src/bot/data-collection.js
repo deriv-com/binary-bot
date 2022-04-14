@@ -93,7 +93,7 @@ export default class DataCollection {
     setStrategyContent(strategyContent) {
         this.strategyContent = strategyContent;
     }
-
+    /* eslint-disable class-methods-use-this */
     cleanXmlDom = xmlDom => {
         const uselessAttributes = ['x', 'y'];
         const updatedDom = xmlDom;
@@ -106,9 +106,9 @@ export default class DataCollection {
         removeAttributesRecursively(updatedDom);
         return updatedDom;
     };
-
+    /* eslint-disable class-methods-use-this */
     getHash = string => btoa(crc32.str(string));
-
+    /* eslint-disable class-methods-use-this */
     getLoginId = () => {
         const tokenList = getTokenList();
 
@@ -118,7 +118,7 @@ export default class DataCollection {
 
         return null;
     };
-
+    /* eslint-disable class-methods-use-this */
     getUTCDate = () => {
         const date = new Date();
         const utcDate = Date.UTC(

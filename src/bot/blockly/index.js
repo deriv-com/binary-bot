@@ -96,7 +96,7 @@ const addBlocklyTranslation = () => {
     const lang_obj = Object.freeze({
         'ach': 'en',
         'zh_cn':'zh-hans',
-        'zh_tw': 'zh-hant'
+        'zh_tw': 'zh-hant',
     })
     let lang = getLanguage();
     if(Object.keys(lang_obj).includes(lang)){

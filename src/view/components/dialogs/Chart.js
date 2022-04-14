@@ -72,7 +72,7 @@ class ChartContent extends PureComponent {
             }
         });
     }
-
+    /* eslint-disable class-methods-use-this */
     getKey = request => {
         const key = `${request.ticks_history}-${request.granularity}`;
         return key;
@@ -115,7 +115,7 @@ class ChartContent extends PureComponent {
         }
         delete this.listeners[requsestKey];
     }
-
+    /* eslint-disable class-methods-use-this */
     renderTopWidgets = () => <span />;
 
     renderToolbarWidgets = () => (
