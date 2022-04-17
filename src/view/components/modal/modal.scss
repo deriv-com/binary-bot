@@ -4,10 +4,16 @@
 .modal {
     position: fixed;
     display: flex;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    @include mobile{
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+    @include desktop{
+        top: 15vh;
+        left: 30vw;
+    }
     z-index: 10000;
     align-items: center;
     justify-content: center;

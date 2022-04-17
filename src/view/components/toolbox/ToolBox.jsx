@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Load from "./components/load";
 import Save from "./components/save";
 import Reset from "./components/reset";
+import TradingView from './components/trading-view';
 import Modal from "../../components/modal";
 import { translate } from "Translate";
 import { setIsBotRunning } from 'Store/ui-slice';
@@ -14,8 +15,9 @@ import Popover from "Components/popover/index";
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
   const { component: Component, props, title,resizeable } = modal;
+
   return (
-    <Modal onClose={onClose} title={title} class_name={class_name} resizeable={resizeable} >
+    <Modal onClose={onClose} {...{class_name,resizeable,title}} >
       <Component {...props} />
     </Modal>
   );
@@ -92,6 +94,14 @@ const ToolBox = ({ blockly }) => {
         onCloseModal,
         blockly,
       },
+    },
+    tradingView: {
+      component: TradingView,
+      title: translate("Trading View"),
+      props: {
+        onCloseModal,
+      },
+      resizeable: true,
     },
   };
   return (
@@ -202,6 +212,9 @@ const ToolBox = ({ blockly }) => {
         <button
           id="tradingViewButton"
           className="toolbox-button icon-trading-view"
+          onClick={() => {
+            onShowModal("tradingView");
+          }}
         />
       </Popover>
       {should_show_modal && (

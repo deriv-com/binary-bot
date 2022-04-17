@@ -1,0 +1,14 @@
+@import "Styles/devices";
+
+.modal-tradingView{
+	@include desktop{
+		.modal__container{
+			width: 700px ;
+			height: 700px ;
+		}
+		.modal__content{
+			width: 100%;
+			height: calc(100% - 50px);
+		}
+	}
+}
