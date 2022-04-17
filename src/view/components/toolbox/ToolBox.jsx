@@ -13,9 +13,9 @@ import Popover from "Components/popover/index";
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
-  const { component: Component, props, title } = modal;
+  const { component: Component, props, title,resizeable } = modal;
   return (
-    <Modal onClose={onClose} title={title} class_name={class_name}>
+    <Modal onClose={onClose} title={title} class_name={class_name} resizeable={resizeable} >
       <Component {...props} />
     </Modal>
   );

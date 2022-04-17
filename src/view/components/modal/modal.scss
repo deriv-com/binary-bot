@@ -20,6 +20,7 @@
         color: #333;
         padding: 5px;
         border-radius: 3px;
+        position: relative;
         @include mobile {
             width: 90vw;
         }
@@ -29,7 +30,7 @@
         border-bottom-right-radius: 3px;
         background: #2a3052;
         color: $white;
-        font-family: 'roboto, sans-serif';
+        font-family: "roboto, sans-serif";
         font-weight: 400;
         padding: 0.4em;
         padding-left: 1em;
@@ -46,9 +47,9 @@
                 justify-content: center;
                 align-items: center;
                 color: $white;
-                padding:0 !important;
+                padding: 0 !important;
                 &:after {
-                    content: '\00d7';
+                    content: "\00d7";
                     font-weight: 200;
                 }
             }
@@ -59,43 +60,69 @@
             margin: 1em 0;
         }
     }
-    &-reset{
-        & .modal__container{
+    &-reset {
+        & .modal__container {
             width: 600px;
         }
-        & .reset__footer{
-            border-top:1px solid #ddd;
+        & .reset__footer {
+            border-top: 1px solid #ddd;
             margin-top: 0.5em;
             padding: 0.8em 1em 0.5em 0.4em;
             width: 100%;
-            display:flex;
+            display: flex;
             justify-content: end;
-            & button{
+            & button {
                 height: 40px;
                 margin: 5px;
                 float: right;
             }
         }
     }
-    &-logout, &-account-switcher{
+    &-logout,
+    &-account-switcher {
         background: #aaaaaa4d;
-        & .logout-dialog{
-            padding:0 10px;
+        & .logout-dialog {
+            padding: 0 10px;
         }
-        & .modal__container{
+        & .modal__container {
             width: 600px;
         }
-        & .ui-widget-content{
-            border:unset;
+        & .ui-widget-content {
+            border: unset;
         }
-        & .ui-dialog-buttonset{
+        & .ui-dialog-buttonset {
             display: flex;
             justify-content: flex-end;
         }
-        & .button-primary{
+        & .button-primary {
             height: 38px;
             margin-left: 5px;
         }
     }
-    
+    &__resize {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 20px;
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        &-icon {
+            width: 10px;
+            height: 10px;           
+        }
+        &-e {
+            cursor: e-resize;
+        }
+        &-nw {
+            cursor: nw-resize;
+            border-right: solid 2px var(--brand-dark-grey);
+            border-bottom: solid 2px var(--brand-dark-grey);
+        }
+        &-se {
+            cursor: se-resize;
+        }
+        &-s {
+            cursor: s-resize;
+        }
+    }
 }
