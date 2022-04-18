@@ -8,13 +8,11 @@ import {
     ToolbarWidget,
     Views,
 } from '@deriv/deriv-charts';
-
 import React, { PureComponent } from 'react';
-import { translate } from 'Translate';
+import api from "Api"
 import ChartTicksService from 'Common/ChartTicksService';
 import { observer as globalObserver } from 'Observer';
 import { getLanguage } from 'Common/lang';
-import Dialog from './Dialog';
 
 setSmartChartsPublicPath('./js/');
 
@@ -29,13 +27,10 @@ export const BarrierTypes = {
     NOTOUCH    : 'NONE_SINGLE',
 };
 
-const chartWidth = 600;
-const chartHeight = 600;
-
-class ChartContent extends PureComponent {
+// [Todo] Refactor chart to functional component
+class Chart extends PureComponent {
     constructor(props) {
         super(props);
-        const { api } = props;
         this.settings = { language: getLanguage() };
         this.ticksService = new ChartTicksService(api);
         this.listeners = [];
@@ -169,12 +164,4 @@ class ChartContent extends PureComponent {
     }
 }
 
-export default class Chart extends Dialog {
-    constructor(api) {
-        super('chart-dialog', translate('Chart'), <ChartContent api={api} />, {
-            width    : chartWidth,
-            height   : chartHeight,
-            resizable: false,
-        });
-    }
-}
+export default Chart;

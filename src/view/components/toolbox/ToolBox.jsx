@@ -13,6 +13,7 @@ import { observer as globalObserver } from 'Observer';
 import { isMobile } from "Tools";
 import Popover from "Components/popover/index";
 import ExportButton from "./components/export-button";
+import Chart from "./components/chart";
 
 
 const ShowModal = ({ modal, onClose, class_name }) => {
@@ -105,6 +106,14 @@ const ToolBox = ({ blockly }) => {
         onCloseModal,
       },
       resizeable: true,
+    },
+    chart: {
+      component: Chart,
+      title: translate("Chart"),
+      props: {
+        onCloseModal,
+      },
+      resizeable: false,
     },
     logTable: {
       component: LogTable,
@@ -224,6 +233,9 @@ const ToolBox = ({ blockly }) => {
         <button
           id="chartButton"
           className="toolbox-button icon-chart-line"
+          onClick={() => {
+            onShowModal("chart");
+          }}
         />
       </Popover>
       <Popover content={translate("Show Trading View")} position="bottom">

@@ -22,11 +22,9 @@ import { load } from "BlocklyPath";
 import api from "Api";
 import { updateTokenList } from "Shared/utils";
 import IntegrationsDialog from "../dialogs/IntegrationsDialog";
-import Chart from "../dialogs/Chart";
 import Limits from "../dialogs/Limits";
 
 const integrationsDialog = new IntegrationsDialog();
-let chart;
 
 const checkForRequiredBlocks = () => {
   const displayError = errorMessage => {
@@ -189,14 +187,6 @@ const addBindings = blockly => {
     });
 
   $("#integrations").click(() => integrationsDialog.open());
-
-  $("#chartButton").click(() => {
-    if (!chart) {
-      chart = new Chart(api);
-    }
-
-    chart.open();
-  });
 
   const exportContent = {};
   exportContent.summaryPanel = () => {

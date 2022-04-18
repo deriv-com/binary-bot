@@ -1,0 +1,14 @@
+@import "Styles/devices";
+
+.modal-chart{
+	@include desktop{
+		.modal__container{
+			width: 600px ;
+			height: 600px ;
+		}
+		.modal__content{
+			width: 100%;
+			height: calc(100% - 50px);
+		}
+	}
+}
