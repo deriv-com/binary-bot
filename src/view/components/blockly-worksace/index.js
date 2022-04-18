@@ -228,11 +228,6 @@ const addBindings = blockly => {
     addExportButtonToPanel("summaryPanel");
   };
 
-  $("#logButton").click(() => {
-    $("#logPanel").dialog("open");
-    addExportButtonToPanel("logPanel");
-  });
-
   $("#showSummary").click(showSummary);
 
   globalObserver.register("ui.logout", () => {

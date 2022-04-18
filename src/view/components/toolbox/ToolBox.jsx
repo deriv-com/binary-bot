@@ -5,19 +5,22 @@ import Load from "./components/load";
 import Save from "./components/save";
 import Reset from "./components/reset";
 import TradingView from './components/trading-view';
+import LogTable from './components/log-table';
 import Modal from "../../components/modal";
 import { translate } from "Translate";
 import { setIsBotRunning } from 'Store/ui-slice';
 import { observer as globalObserver } from 'Observer';
 import { isMobile } from "Tools";
 import Popover from "Components/popover/index";
+import ExportButton from "./components/export-button";
+
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
-  const { component: Component, props, title,resizeable } = modal;
+  const { component: Component, props, title,resizeable,rightComponent } = modal;
 
   return (
-    <Modal onClose={onClose} {...{class_name,resizeable,title}} >
+    <Modal onClose={onClose} {...{class_name,resizeable,title,rightComponent}} >
       <Component {...props} />
     </Modal>
   );
@@ -102,6 +105,15 @@ const ToolBox = ({ blockly }) => {
         onCloseModal,
       },
       resizeable: true,
+    },
+    logTable: {
+      component: LogTable,
+      title: translate("Log"),
+      props: {
+        onCloseModal,
+      },
+      resizeable: true,
+      rightComponent: <ExportButton onClick={()=>{globalObserver.emit("log.export")}}/>
     },
   };
   return (
@@ -198,7 +210,13 @@ const ToolBox = ({ blockly }) => {
         tooltip={translate("Stop the bot")}
       />
       <Popover content={translate("Show log")} position="bottom">
-        <button id="logButton" className="toolbox-button icon-info" />
+        <button 
+        id="logButton" 
+        className="toolbox-button icon-info"
+        onClick={()=>{
+          onShowModal("logTable")
+        }}
+         />
       </Popover>
       {has_active_token && <span className="toolbox-separator" />}
       {/* Needs resizeable modal */}

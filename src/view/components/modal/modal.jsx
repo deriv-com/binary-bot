@@ -7,7 +7,7 @@ const Modal = ({
   children,
   title,
   onClose,
-  action,
+  rightComponent,
   class_name,
   resizeable,
 }) => {
@@ -23,51 +23,51 @@ const Modal = ({
       }
       window.addEventListener("click", handleModalClickOutside);
     }
-    const modal = modal_container_ref.current;
-    const modal_wrapper = modal_ref.current; 
-    if(resizeable && isDesktop()){
-      const resizer = modal.querySelector(".modal__resize");
-      function Resize(e) {
-        modal.style.width = e.clientX - modal_wrapper.offsetLeft + "px";
-        modal.style.height = e.clientY - modal_wrapper.offsetTop + "px";
-      }
+    // const modal = modal_container_ref.current;
+    // const modal_wrapper = modal_ref.current; 
+    // if(resizeable && isDesktop()){
+    //   const resizer = modal.querySelector(".modal__resize");
+    //   function Resize(e) {
+    //     modal.style.width = e.clientX - modal_wrapper.offsetLeft + "px";
+    //     modal.style.height = e.clientY - modal_wrapper.offsetTop + "px";
+    //   }
 
-      function stopResize(e) {
-        window.removeEventListener("mousedown", initResize);
-        window.removeEventListener("mousemove", Resize);
-        window.removeEventListener("mouseup", stopResize)
-        window.removeEventListener("click",stopResize)
+    //   function stopResize(e) {
+    //     window.removeEventListener("mousedown", initResize);
+    //     window.removeEventListener("mousemove", Resize);
+    //     window.removeEventListener("mouseup", stopResize)
+    //     window.removeEventListener("click",stopResize)
 
-      }
+    //   }
 
-      function initResize() {
-        window.addEventListener("mousemove", Resize);
-        window.addEventListener("mouseup", stopResize);
-      }
+    //   function initResize() {
+    //     window.addEventListener("mousemove", Resize);
+    //     window.addEventListener("mouseup", stopResize);
+    //   }
 
-      resizer.addEventListener("mousedown", initResize);
+    //   resizer.addEventListener("mousedown", initResize);
 
-    }
-    function dragModal(e){
-      modal_wrapper.style.top = `${e.clientY -  modal.offsetTop}px`
-      modal_wrapper.style.left = `${e.clientX - modal.offsetLeft}px`
-    }
+    // }
+    // function dragModal(e){
+    //   modal_wrapper.style.top = `${e.clientY -  modal.offsetTop}px`
+    //   modal_wrapper.style.left = `${e.clientX - modal.offsetLeft}px`
+    // }
 
-    function dragModalAction(e){
-      window.addEventListener("mousemove",dragModal)
-    }
-    function removedragModalAction(){
-      window.removeEventListener("mousemove",dragModal)
-      window.removeEventListener("mousedown", dragModalAction);
-      window.removeEventListener("mouseup",removedragModalAction)
-      window.removeEventListener("click",removedragModalAction)
-    }
-    if(isDesktop()){
-      const header = modal.querySelector('.modal__header');
-      header.addEventListener("mousedown",dragModalAction);
-      window.addEventListener("mouseup", removedragModalAction)
-      window.addEventListener("click",removedragModalAction)
-    }
+    // function dragModalAction(e){
+    //   window.addEventListener("mousemove",dragModal)
+    // }
+    // function removedragModalAction(){
+    //   window.removeEventListener("mousemove",dragModal)
+    //   window.removeEventListener("mousedown", dragModalAction);
+    //   window.removeEventListener("mouseup",removedragModalAction)
+    //   window.removeEventListener("click",removedragModalAction)
+    // }
+    // if(isDesktop()){
+    //   const header = modal.querySelector('.modal__header');
+    //   header.addEventListener("mousedown",dragModalAction);
+    //   window.addEventListener("mouseup", removedragModalAction)
+    //   window.addEventListener("click",removedragModalAction)
+    // }
     
     return () => {
       window.removeEventListener("click", handleModalClickOutside);
@@ -83,7 +83,7 @@ const Modal = ({
         <div className="modal__header">
           <div className="modal__header-title">{title}</div>
           <div className="modal__header-right">
-            <div className="modal__header-right-action">{action}</div>
+            <div className="modal__header-right-action">{rightComponent}</div>
             <button className="modal__header-right-close" onClick={onClose} />
           </div>
         </div>
