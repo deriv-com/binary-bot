@@ -4,19 +4,21 @@ import { translate } from "Translate";
 import { getOAuthURL } from "Common/appId";
 import { useDispatch } from "react-redux";
 import { setIsHeaderLoaded } from "Store/ui-slice";
-// import Tour, { TourTargets } from "Components/tour";
 import { getRelatedDeriveOrigin } from "Shared/utils";
 
-const AuthButtons = () => {
+const AuthButtons = ({ getTourTarget }) => {
   const dispatch = useDispatch();
-
   const onLogin = () => {
     // saveBeforeUnload();
     document.location = getOAuthURL();
   };
 
+  const ref = React.useRef();
+
   useEffect(() => {
     dispatch(setIsHeaderLoaded(true));
+    getTourTarget(ref.current);
+
   }, []);
 
   return (
@@ -34,11 +36,10 @@ const AuthButtons = () => {
         target="_blank"
         rel="noopener noreferrer"
         href={`https://deriv.${getRelatedDeriveOrigin().extension}/signup/`}
+        ref={ref}
       >
         {translate("Sign up")}
       </a>
-      {/* <TourTargets />
-      <Tour /> */}
     </div>
   );
 };

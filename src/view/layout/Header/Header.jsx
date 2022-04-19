@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
 import { isMobile, isDesktop, parseQueryString } from "Tools";
@@ -14,9 +14,12 @@ import {
   resetClient,
   updateActiveAccount,
   updateBalance,
-  updateActiveToken
+  updateActiveToken,
 } from "Store/client-slice";
-import { setAccountSwitcherLoader, updateShowMessagePage } from "Store/ui-slice";
+import {
+  setAccountSwitcherLoader,
+  updateShowMessagePage,
+} from "Store/ui-slice";
 import {
   DrawerMenu,
   AuthButtons,
@@ -24,10 +27,11 @@ import {
   MenuLinks,
   AccountSwitcherLoader,
 } from "./components";
+import Tour, { TourTargets } from "Components/tour";
 import { queryToObjectArray } from "Common/appId";
 import api from "Api";
 
-const AccountSwitcher = () => {
+const AccountSwitcher = ({ getTourTarget }) => {
   const { account_switcher_loader } = useSelector((state) => state.ui);
   const { is_logged } = useSelector((state) => state.client);
   const query_string = parseQueryString();
@@ -43,15 +47,15 @@ const AccountSwitcher = () => {
   }
   if (account_switcher_loader) {
     return (
-      <div className="header__menu-right-loader">
+      <div  className="header__menu-right-loader">
         <AccountSwitcherLoader />
       </div>
     );
   }
 
-  if (is_logged) return <AccountActions />;
+  if (is_logged) return <AccountActions    getTourTarget={getTourTarget} />;
 
-  return <AuthButtons />;
+  return <AuthButtons getTourTarget={getTourTarget}/>;
 };
 
 const Header = () => {
@@ -61,11 +65,17 @@ const Header = () => {
   const [showDrawerMenu, updateShowDrawerMenu] = React.useState(false);
   const platformDropdownRef = React.useRef();
   const { is_logged, active_token } = useSelector((state) => state.client);
-  const { is_bot_running } = useSelector(state => state.ui);
+  const { is_bot_running, is_header_loaded, is_workspace_ready } = useSelector((state) => state.ui);
+  const [tour_target, setTourTarget] = useState();
+
   const dispatch = useDispatch();
   const hideDropdown = (e) =>
     !platformDropdownRef.current.contains(e.target) &&
     setIsPlatformSwitcherOpen(false);
+
+  const getTourTarget = (target) => {
+    setTourTarget(target);
+  };
 
   React.useEffect(() => {
     api.onMessage().subscribe(({ data }) => {
@@ -81,7 +91,7 @@ const Header = () => {
     const active_token = getActiveToken(token_list);
     const landing_company = active_token?.loginInfo.landing_company_name;
 
-    dispatch(updateShowMessagePage(landing_company === 'maltainvest'));
+    dispatch(updateShowMessagePage(landing_company === "maltainvest"));
 
     if (!active_token) {
       removeAllTokens();
@@ -89,24 +99,27 @@ const Header = () => {
       dispatch(setAccountSwitcherLoader(false));
     }
     if (active_token) {
-      api.authorize(active_token.token).then((account) => {
-        if (account?.error?.code) return;
-        dispatch(updateActiveToken(active_token.token))
-        dispatch(updateActiveAccount(account.authorize));
-        dispatch(setAccountSwitcherLoader(false));
+      api
+        .authorize(active_token.token)
+        .then((account) => {
+          if (account?.error?.code) return;
+          dispatch(updateActiveToken(active_token.token));
+          dispatch(updateActiveAccount(account.authorize));
+          dispatch(setAccountSwitcherLoader(false));
 
-        api.send({ forget_all: "balance" }).then(() => {
-          api.send({
-            balance: 1,
-            account: "all",
-            subscribe: 1,
+          api.send({ forget_all: "balance" }).then(() => {
+            api.send({
+              balance: 1,
+              account: "all",
+              subscribe: 1,
+            });
           });
+        })
+        .catch(() => {
+          removeAllTokens();
+          dispatch(resetClient());
+          dispatch(setAccountSwitcherLoader(true));
         });
-      }).catch(() => {
-        removeAllTokens();
-        dispatch(resetClient());
-        dispatch(setAccountSwitcherLoader(true));
-      });
       syncWithDerivApp();
     }
   }, [active_token]);
@@ -116,18 +129,20 @@ const Header = () => {
   }, [is_logged]);
 
   React.useEffect(() => {
-    window.addEventListener('beforeunload', onBeforeUnload, { capture: true });
-    return (() => {
-      window.removeEventListener('beforeunload', onBeforeUnload, { capture: true });
-    })
-  }, [is_bot_running])
+    window.addEventListener("beforeunload", onBeforeUnload, { capture: true });
+    return () => {
+      window.removeEventListener("beforeunload", onBeforeUnload, {
+        capture: true,
+      });
+    };
+  }, [is_bot_running]);
 
   const onBeforeUnload = (e) => {
-    if(is_bot_running) {
+    if (is_bot_running) {
       e.preventDefault();
       e.returnValue = true;
     }
-  }
+  };
 
   return (
     <div className="header">
@@ -172,7 +187,7 @@ const Header = () => {
           />
         )}
         <div className="header__menu-right">
-          <AccountSwitcher />
+          <AccountSwitcher getTourTarget={getTourTarget} />
         </div>
       </div>
       {showDrawerMenu && (
@@ -184,6 +199,12 @@ const Header = () => {
           platformDropdownRef={platformDropdownRef}
           is_logged={is_logged}
         />
+      )}
+      {is_header_loaded && is_workspace_ready && (
+        <>
+          <TourTargets tour_target={tour_target} />
+          <Tour />         
+        </>
       )}
     </div>
   );

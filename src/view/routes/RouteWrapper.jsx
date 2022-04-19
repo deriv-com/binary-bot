@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 
-const RouteWrapper = ({ path, component: component }) => (
+const RouteWrapper = ({ path, component }) => (
   <React.Fragment>
     <Header />
     <Route path={path} component={component} />
@@ -14,7 +14,7 @@ const RouteWrapper = ({ path, component: component }) => (
 
 RouteWrapper.propTypes = {
   path: PropTypes.string.isRequired,
-  component: PropTypes.func.isRequired
+  component: PropTypes.func.isRequired,
 }
 
 export default RouteWrapper;

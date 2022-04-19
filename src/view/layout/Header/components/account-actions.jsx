@@ -14,9 +14,8 @@ import {
     setAccountSwitcherLoader,
     setAccountSwitcherToken,
     setIsHeaderLoaded,
-    setShouldReloadWorkspace
+    setShouldReloadWorkspace,
 } from "Store/ui-slice";
-// import Tour ,{ TourTargets } from "Components/tour";
 import { addTokenIfValid, AppConstants } from "Common/appId";
 import {
     getTokenList,
@@ -25,21 +24,24 @@ import {
 import { updateActiveToken } from "Store/client-slice";
 import Popover from "Components/popover";
 
-const AccountActions = () => {
+const AccountActions = ({ getTourTarget }) => {
     const {
         currency,
         is_virtual,
         balance,
         active_token,
-        active_account_name
+        active_account_name,
     } = useSelector(state => state.client);
     const { account_switcher_token, is_bot_running } = useSelector(state => state.ui);
     const [is_acc_dropdown_open, setIsAccDropdownOpen] = React.useState(false);
     const dropdownRef = React.useRef();
     const dispatch = useDispatch();
 
+    const ref = React.useRef(null);
+
     useEffect(() => {
         dispatch(setIsHeaderLoaded(true));
+        getTourTarget(ref.current);
     }, []);
 
     const onAccept = () => {
@@ -99,6 +101,7 @@ const AccountActions = () => {
             </a>
             <div className="header__divider mobile-hide"></div>
             <div
+                ref={ref}
                 id="acc_switcher"
                 className={classNames('header__menu-item header__menu-acc', { disabled: is_bot_running })}
                 onClick={() => !is_bot_running && setIsAccDropdownOpen(!is_acc_dropdown_open)}
@@ -129,8 +132,6 @@ const AccountActions = () => {
                     />
                 </Modal>
             )}
-            {/* <TourTargets /> */}
-            {/* <Tour /> */}
         </React.Fragment>
     )
 };
