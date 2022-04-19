@@ -1,4 +1,3 @@
-// import RenderHTML from 'react-render-html';
 import { TrackJS } from 'trackjs';
 import { getLanguage } from '../../common/lang';
 import AppIdMap from '../../common/appIdResolver';

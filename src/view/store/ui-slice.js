@@ -9,6 +9,7 @@ const initial_states = {
   account_switcher_token: "",
   is_header_loaded: false,
   should_reload_workspace: true,
+  is_workspace_ready: false,
 };
 
 export const uiSlice = createSlice({
@@ -39,6 +40,9 @@ export const uiSlice = createSlice({
     setShouldReloadWorkspace: (state, action) => {
       state.should_reload_workspace = action.payload;
     },
+    setIsWorkspaceReady: (state, action) => {
+      state.is_workspace_ready = action.payload;
+    },
   },
 });
 
@@ -51,6 +55,7 @@ export const {
   setAccountSwitcherToken,
   setIsHeaderLoaded,
   setShouldReloadWorkspace,
+  setIsWorkspaceReady,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
