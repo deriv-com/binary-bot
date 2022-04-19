@@ -14,7 +14,6 @@ import { setShouldReloadWorkspace, updateShowTour, setIsWorkspaceReady } from "S
 import _Blockly from "BlocklyPath";
 import ToolBox from "Components/toolbox";
 import SidebarToggle from "Components/SidebarToggle";
-import LogTable from "Components/log-table";
 import TradeInfoPanel from "Components/TradeInfoPanel";
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from "Store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "Common/appId";
@@ -134,7 +133,6 @@ const Main = () => {
 					<div id="blocklyDiv" style={{ position: 'absolute' }}></div>
 					<SidebarToggle />
 				</div>
-				{blockly && <LogTable />}
 				{blockly && <TradeInfoPanel />}
 			</div>
 		</div>

@@ -4,18 +4,23 @@ import { useSelector, useDispatch } from "react-redux";
 import Load from "./components/load";
 import Save from "./components/save";
 import Reset from "./components/reset";
+import TradingView from './components/trading-view';
+import LogTable from './components/log-table';
 import Modal from "../../components/modal";
 import { translate } from "Translate";
 import { setIsBotRunning } from 'Store/ui-slice';
 import { observer as globalObserver } from 'Observer';
 import { isMobile } from "Tools";
 import Popover from "Components/popover/index";
+import ExportButton from "./components/export-button";
+
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
-  const { component: Component, props, title } = modal;
+  const { component: Component, props, title,resizeable,rightComponent } = modal;
+
   return (
-    <Modal onClose={onClose} title={title} class_name={class_name}>
+    <Modal onClose={onClose} {...{class_name,resizeable,title,rightComponent}} >
       <Component {...props} />
     </Modal>
   );
@@ -92,6 +97,23 @@ const ToolBox = ({ blockly }) => {
         onCloseModal,
         blockly,
       },
+    },
+    tradingView: {
+      component: TradingView,
+      title: translate("Trading View"),
+      props: {
+        onCloseModal,
+      },
+      resizeable: true,
+    },
+    logTable: {
+      component: LogTable,
+      title: translate("Log"),
+      props: {
+        onCloseModal,
+      },
+      resizeable: true,
+      rightComponent: <ExportButton onClick={()=>{globalObserver.emit("log.export")}}/>
     },
   };
   return (
@@ -188,7 +210,13 @@ const ToolBox = ({ blockly }) => {
         tooltip={translate("Stop the bot")}
       />
       <Popover content={translate("Show log")} position="bottom">
-        <button id="logButton" className="toolbox-button icon-info" />
+        <button 
+        id="logButton" 
+        className="toolbox-button icon-info"
+        onClick={()=>{
+          onShowModal("logTable")
+        }}
+         />
       </Popover>
       {has_active_token && <span className="toolbox-separator" />}
       {/* Needs resizeable modal */}
@@ -202,6 +230,9 @@ const ToolBox = ({ blockly }) => {
         <button
           id="tradingViewButton"
           className="toolbox-button icon-trading-view"
+          onClick={() => {
+            onShowModal("tradingView");
+          }}
         />
       </Popover>
       {should_show_modal && (

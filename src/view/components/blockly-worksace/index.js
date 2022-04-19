@@ -23,11 +23,9 @@ import api from "Api";
 import { updateTokenList } from "Shared/utils";
 import IntegrationsDialog from "../dialogs/IntegrationsDialog";
 import Chart from "../dialogs/Chart";
-import TradingView from "../dialogs/TradingView";
 import Limits from "../dialogs/Limits";
 
 const integrationsDialog = new IntegrationsDialog();
-const tradingView = new TradingView();
 let chart;
 
 const checkForRequiredBlocks = () => {
@@ -200,10 +198,6 @@ const addBindings = blockly => {
     chart.open();
   });
 
-  $("#tradingViewButton").click(() => {
-    tradingView.open();
-  });
-
   const exportContent = {};
   exportContent.summaryPanel = () => {
     globalObserver.emit("summary.export");
@@ -233,11 +227,6 @@ const addBindings = blockly => {
       .dialog("open");
     addExportButtonToPanel("summaryPanel");
   };
-
-  $("#logButton").click(() => {
-    $("#logPanel").dialog("open");
-    addExportButtonToPanel("logPanel");
-  });
 
   $("#showSummary").click(showSummary);
 

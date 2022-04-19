@@ -20,14 +20,15 @@
     ]
   },
   "scripts": {
-    "test": "eslint src/",
     "test:stylelint": "stylelint \"./src/**/*.s(a|c)ss\"",
+    "test:eslint": "eslint src/",
+    "test": "npm run test:stylelint && npm run test:eslint",
+    "start": "npm run test && sudo webpack-dev-server --config ./webpack.config.js",
     "release": "d() { test -z $1 && echo 'Please specify branch.' && exit 1; (git show-branch $1) || exit 1;  git stash; git checkout $1; npm i; rm -rf branch/$1; mkdir -p branch/$1 ; gulp build-min --test --branch $1; cp -r www/ branch/$1; cp www/index.html www/404.html; gulp release-branch --branch $1;}; d",
     "release-production": "d() { git stash; git checkout master; npm i;gulp build-min;gulp release-master;}; d",
     "build": "webpack --config webpack.config.cli.js",
     "build-min": "gulp build-min",
-    "build-webpack": "webpack --config webpack.config.js",
-    "start": "npm run test && sudo webpack-dev-server --config ./webpack.config.js"
+    "build-webpack": "webpack --config webpack.config.js"
   },
   "husky": {
     "hooks": {
