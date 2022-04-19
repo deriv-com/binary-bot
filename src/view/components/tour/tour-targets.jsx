@@ -1,8 +1,6 @@
 import React from 'react';
-import renderHTML from 'react-render-html';
+import ReactDOM from 'react-dom'
 import { useSelector } from "react-redux";
-import { useEffect } from 'react';
-import { isMobile } from 'Tools';
 
 const FirstStepTarget = () => (<div
     style={{
@@ -25,47 +23,35 @@ const SecontStepTarget = () => (<div
 />);
 
 const ThirdStepTarget = () => {
-    const style = 'top:23%;left:10%;position:absolute;';
-    return createReactNode('third-step-target', style, 'blocklyTreeRoot', 'blocklyToolboxDiv');
+    const style = {top: '23%', left: "10%",  position:'absolute'}
+    const tour_target = document.getElementsByClassName('blocklyTreeRoot')[0];
+    return createReactNode("third-step-target", style, tour_target);
 };
 
-const ForthStepTarget = () => {
+
+const ForthStepTarget = ({ tour_target }) => {
     const { is_logged } = useSelector((state) => state.client);
-    const step = document.getElementById('forth-step-target');
-    if(step) return null;
+    const style = {top: '50px', left: is_logged ? "84%" : "90%",  position:'absolute'}
+    return createReactNode(
+      "forth-step-target",
+      style,
+      tour_target
+    );
+  };
+  
+  function createReactNode(id, style, tour_target) {
+    const new_account_position = React.createElement("div", { id, style });
+    return tour_target && ReactDOM.createPortal(new_account_position, tour_target) || null;
+  }
+  
 
-    const style =
-        `top:50px;
-         left: ${is_logged ? '84%' : '90%'};
-         position:absolute;`;
-    return createReactNode('forth-step-target', style, is_logged ?
-        'acc_switcher' : 'btn__signup', is_logged ?
-        'header__menu-right' : 'header__btn');
-};
-
-function createReactNode(id, style, current_node, parent_node) {
-    const new_account_position = document.createElement('div');
-    new_account_position.id = id;
-    new_account_position.style = style;
-    const current_account_position = document.getElementById(current_node)
-        ?? document.getElementsByClassName(current_node)[0];
-    const parentDiv = document.getElementById(parent_node)
-        ?? document.getElementsByClassName(parent_node)[0];
-
-    parentDiv?.insertBefore?.(new_account_position, current_account_position);
-    return renderHTML(new_account_position.outerHTML);
-}
-
-const TourTargets = () => {
-    const { is_header_loaded } = useSelector(state => state.ui);
-    
-    return is_header_loaded &&
-        <div>
-            <FirstStepTarget />
-            <SecontStepTarget />
-            <ThirdStepTarget />
-            <ForthStepTarget />
-        </div>
-};
+  const TourTargets = ({ tour_target }) => (
+    <div>
+      <FirstStepTarget />
+      <SecontStepTarget />
+      <ThirdStepTarget />
+      <ForthStepTarget tour_target={tour_target} />
+    </div>
+  );
 
 export default TourTargets;

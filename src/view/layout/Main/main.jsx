@@ -10,7 +10,7 @@ import {
 	convertForDerivStore,
 	removeAllTokens,
 } from "StorageManager";
-import { setShouldReloadWorkspace, updateShowTour } from "Store/ui-slice";
+import { setShouldReloadWorkspace, updateShowTour, setIsWorkspaceReady } from "Store/ui-slice";
 import _Blockly from "BlocklyPath";
 import ToolBox from "Components/toolbox";
 import SidebarToggle from "Components/SidebarToggle";
@@ -21,14 +21,14 @@ import { parseQueryString } from "Tools";
 import initialize, { applyToolboxPermissions } from "Components/blockly-worksace";
 import { observer as globalObserver } from "Observer";
 import { getRelatedDeriveOrigin, isLoggedIn } from "Shared/utils";
-import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 import api from "Api";
+import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 
 const Main = () => {
 	const [blockly, setBlockly] = React.useState(null);
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { should_reload_workspace } = useSelector(state => state.ui);
+	const { should_reload_workspace  } = useSelector(state => state.ui);
 
 	React.useEffect(() => {
 		if (should_reload_workspace) {
@@ -62,6 +62,7 @@ const Main = () => {
 			Date.now() >
 			(parseInt(getStorage("closedTourPopup")) || 0) + 24 * 60 * 60 * 1000;
 		dispatch(updateShowTour(isDone("welcomeFinished") || days_passed));
+
 	}
 
 	const loginCheck = async () => {
@@ -103,10 +104,12 @@ const Main = () => {
 				setStorage("client.accounts", JSON.stringify(convertForDerivStore(token_list)));
 			}
 			resolve();
+
 		});
+		
 	}
 
-	const initializeBlockly = (blockly) => {
+	const initializeBlockly = (blockly) => {		
 		initialize(blockly)
 			.then(() => {
 				$(".show-on-load").show();
@@ -115,7 +118,9 @@ const Main = () => {
 				TrackJS.configure({
 					userId: document.getElementById("active-account-name")?.value,
 				});
+				dispatch(setIsWorkspaceReady(true));
 			})
+
 	}
 
 	return (
