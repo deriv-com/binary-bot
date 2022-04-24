@@ -1,5 +1,3 @@
-@import 'Styles/color';
-
 @font-face {
 	font-family: 'binarybot';
 	src: url('Static/font/binarybot.eot?61837987');
@@ -71,15 +69,7 @@
 		  background: url("Static/image/expand_more.svg") no-repeat center;
 	  }
   }
-  .icon-clear {
-	  &:before {
-		  content: ' ';
-	  }
-	  background: url("Static/image/clear.svg") no-repeat center;
-	  &:disabled {
-		  background: url("Static/image/clear-disabled.svg") no-repeat center;
-	  }
-  }
+  
   .icon-integrations {
 	  &:before {
 		  content: ' ';
@@ -88,8 +78,8 @@
   }
 
   @mixin toolbox-button-base {
-    background-color: $brand-gray;
-    color: $black;
+    background-color: var(--brand-grey);
+    color: var(--brand-black);
     padding: 0em;
     width: 40px;
     height: 40px;
@@ -101,17 +91,17 @@
 }
 
 @mixin toolbox-runButton-disabled {
-    background-color: $brand-gray;
-    color: $brand-dark-gray;
+    background-color: var(--brand-grey);
+    color: var(--brand-grey-dark);
 }
 
 @mixin toolbox-runButton-hover {
-    background-color: $toolbox-btn-active;
+    background-color: var(--toolbox-btn-active);
 }
 
 #toolbox {
-    background-color: $brand-gray;
-    border-bottom: 1px solid $brand-dark-gray;
+    background-color: var(--brand-grey);
+    border-bottom: 1px solid var(--brand-grey-dark);
     padding: 0 3px;
     z-index: 0;
     overflow: auto;
@@ -137,7 +127,7 @@
     }
 
     .toolbox-separator {
-        background-color: $brand-dark-gray;
+        background-color: var(--brand-grey-dark);
         display: inline-block;
         height: 15px;
         margin: 0 5px;

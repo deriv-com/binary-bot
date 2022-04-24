@@ -1,0 +1,184 @@
+@import 'Styles/devices';
+
+$STATIC_CIRCLE_DIAMETER: 0.5rem;
+$DYNAMIC_CIRCLE_DIAMETER: 1.5rem;
+$ANIMATOR_CIRCLE_POSITION_TOP: 44%;
+
+.animator-tooltip {
+    p {
+        font-size: 11px;
+        text-align: center;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background-color: var(--brand-notice-color);
+    }
+
+    &.running {
+        p {
+            color: #468847;
+            background-color: #DFF0D8;
+            border-color: #D6E9C6;
+        }
+    }
+}
+
+.trade-animator {
+    min-width: 19.5rem;
+    max-width: 767px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+
+    &__indicator-message {
+        display: flex;
+        justify-content: center;
+
+        div {
+            @extend .animator-tooltip;
+        }
+    }
+
+    &__stages {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        min-height: 5rem;
+        margin-top: 0.5rem;
+    }
+
+    &__stage {
+        min-width: 6.5rem;
+        text-align: center;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &:first-child {
+            margin-left: 5rem;
+        }
+
+        &:nth-child(3) {
+            margin-right: 5rem;
+        }
+
+        @include mobile {
+            &:first-child {
+                margin-left: 0;
+            }
+            &:nth-child(3) {
+                margin-right: 0;
+            }
+        }
+
+        .title {
+            font-size: 11px;
+        }
+
+        .circle {
+            &:after {
+                content: '';
+                position: absolute;
+                width: $STATIC_CIRCLE_DIAMETER;
+                height: $STATIC_CIRCLE_DIAMETER;
+                border-radius: 100%;
+                border: 0.25rem solid var(--brand-grey);
+                display: block;
+                background-color: var(--brand-grey);
+                right: 50%;
+                top: $ANIMATOR_CIRCLE_POSITION_TOP;
+                transform: translate(50%, -50%);
+                z-index: 1;
+            }
+
+            &.active {
+                &:before {
+                    content: '';
+                    position: absolute;
+                    width: $DYNAMIC_CIRCLE_DIAMETER;
+                    height: $DYNAMIC_CIRCLE_DIAMETER;
+                    background-color: var(--color-orange-light);
+                    border-radius: 100%;
+                    opacity: 0.32;
+                    animation: animate-circle 0.8s infinite;
+                    transform: translate(-50%, -50%);
+                    top: $ANIMATOR_CIRCLE_POSITION_TOP;
+                    animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+                    z-index: 1;
+                }
+            }
+
+            &.complete {
+                &:after {
+                    border: 0.25em solid var(--brand-orange-light);
+                }
+            }
+        }
+
+        .tooltip {
+            padding: 4px;
+            background-color: var(--brand-notice-color);
+            border-radius: 4px;
+            position: relative;
+
+            p {
+                font-size: 11px;
+            }
+
+            visibility: hidden;
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: -8px;
+                transform: translate(-50%, -50%);
+                border: 10px solid var(--brand-notice-color);
+                border-top-color: transparent;
+                border-left-color: transparent;
+                border-right-color: transparent;
+            }
+
+            &.active {
+                visibility: visible;
+                animation: slide-tooltip 0.8s 1;
+            }
+        }
+    }
+
+    &__progress-bar {
+        position: absolute;
+        height: 4px;
+        background-color: var(--brand-grey);
+        left: 50%;
+        top: $ANIMATOR_CIRCLE_POSITION_TOP;
+        transform: translate(-50%, -50%);
+        width: calc(100% - 16.5rem);
+
+        @include mobile {
+            width: calc(100% - 6.5rem);
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            height: 4px;
+        }
+
+        &.active {
+            &:after {
+                background-color: var(--brand-orange-light);
+                width: 50%;
+                animation: animate-progress 0.5s 1;
+                animation-fill-mode: forwards;
+            }
+        }
+
+        &.complete {
+            &:after {
+                background-color: var(--brand-orange-light);
+                width: 100%;
+                animation: animate-progress-complete 0.5s 1;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+}

@@ -194,13 +194,6 @@
         }
     }
 }
-
-/*
- * Tooltip colors
- * @param $color - color property
- * Usage example:
-   @include tooltipColor($COLOR_RED);
- */
 @mixin tooltipColor($color) {
     &:before {
         background: $color;

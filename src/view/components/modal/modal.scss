@@ -1,5 +1,4 @@
 @import "Styles/devices";
-@import "Styles/color";
 
 .modal {
     position: fixed;
@@ -21,7 +20,7 @@
     &__container {
         width: 25em;
         height: auto;
-        background: $white;
+        background: var(--general-main-1);
         border: 1px solid #ddd;
         color: #333;
         padding: 5px;
@@ -32,10 +31,10 @@
         }
     }
     &__header {
-        border: 1px solid #2a3052;
+        border: 1px solid var(--brand-blue);
         border-bottom-right-radius: 3px;
-        background: #2a3052;
-        color: $white;
+        background: var(--brand-blue);
+        color: var(--general-main-1);
         font-family: "roboto, sans-serif";
         font-weight: 400;
         padding: 0.4em;
@@ -49,12 +48,12 @@
             &-close {
                 width: 1.5em;
                 height: 1.5em;
-                background: #2e8836;
+                background: var(--brand-btn);
                 border-radius: 3px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: $white;
+                color: var(--general-main-1);
                 padding: 0 !important;
                 &:after {
                     content: "\00d7";

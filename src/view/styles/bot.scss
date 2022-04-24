@@ -1,4 +1,3 @@
-@import 'color';
 @import 'index';
 @import 'devices.scss';
 
@@ -93,18 +92,18 @@ body {
 }
 
 .btn-primary {
-    color: $white !important;
+    color: var(--general-main-1) !important;
     text-decoration: none !important;
-    background: $brand-btn !important;
-    border-color: $brand-btn !important;
+    background: var(--brand-btn) !important;
+    border-color: var(--brand-btn) !important;
 }
 
 .btn-primary:active,
 .btn-primary:hover {
-    color: $white !important;
+    color: var(--general-main-1) !important;
     text-decoration: none !important;
-    background-color: $brand-btn-active !important;
-    border-color: $brand-btn-active !important;
+    background-color: var(--brand-btn-active) !important;
+    border-color: var(--brand-btn-active) !important;
 }
 
 .blocker {

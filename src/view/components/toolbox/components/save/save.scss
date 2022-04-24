@@ -1,9 +1,8 @@
-@import 'Styles/color';
 
 #save-dialog {
     #collection {
         padding: 1.2em;
-        border: 1px solid $brand-gray;
+        border: 1px solid var(--brand-grey);
         border-radius: 10px;
         & .description {
             margin-left: 21px;

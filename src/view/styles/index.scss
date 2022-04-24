@@ -1,5 +1,4 @@
 @import "constants-deriv";
-@import "color";
 @import "theme";
 @import "fonts";
 @import "devices";
@@ -111,7 +110,7 @@ a:hover {
         }
 
         .error {
-            color: $COLOR_RED;
+            color: var(--brad-red);
             margin-bottom: 0;
         }
     }

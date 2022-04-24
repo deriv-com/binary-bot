@@ -1,0 +1,23 @@
+@import 'Styles/devices';
+@import 'Styles/constants-deriv';
+@import 'Styles/panel';
+
+@include desktop{
+	.modal__container{
+		width: 700px ;
+		height: 730px;
+	}
+	.modal__content{
+		width: 100%;
+		height: calc(100% - 50px);
+		overflow: scroll
+	}
+}
+.react-grid-HeaderCell {
+	font-size: 11px;
+	border-bottom: 1px solid var(--brand-grey);
+	border-right: 1px solid var(--brand-grey);
+	padding-left: 8px !important;
+	display: flex !important;
+	align-items: center;
+}

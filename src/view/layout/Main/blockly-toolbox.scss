@@ -1,20 +1,19 @@
-@import 'Styles/color';
-@import 'Styles/devices.scss';
-@import 'Styles/constants-deriv.scss';
+@import 'Styles/devices';
+@import 'Styles/constants-deriv';
 
 .blocklyTreeRow {
-    box-shadow: inset 0 -0.063em 0 0 #dedede;
+    box-shadow: inset 0 -0.063em 0 0 var(--brand-grey-dark);
     margin-bottom: 0px !important;
     height: 1.9em !important;
     padding-top: 0.250em;
 }
 
 .blocklyText {
-    fill: $black !important;
+    fill: var(--brand-black) !important;
 }
 
 .blocklyTreeSelected .blocklyTreeLabel {
-    color: $white !important;
+    color: var(--general-main-1) !important;
 }
 
 .blocklyTreeRow.blocklyTreeSelected .blocklyTreeIcon.blocklyTreeIconOpen, 
@@ -33,19 +32,19 @@
 }
 
 .blocklyTreeRow.blocklyTreeSelected {
-    background-color: #2a3052 !important;
+    background-color: var(--brand-blue) !important;
 }
 
 .blocklyTreeRow:not(.blocklyTreeSelected):hover {
-    background-color: $brand-dark-gray !important;
+    background-color: var(--brand-grey-dark) !important;
 }
 
 .blocklyToolboxDiv .blocklyTreeRow {
-    color: $black;
+    color: var(--brand-black);
 }
 
 .blocklyEditableText tspan {
-    fill: $black !important;
+    fill: var(--brand-black) !important;
 }
 
 .blocklyEditableText rect {
@@ -53,16 +52,16 @@
 }
 
 .blocklyFlyoutBackground {
-    fill: $white !important;
+    fill: var(--general-main-1) !important;
     fill-opacity: 1 !important;
-    stroke: $brand-dark-gray;
+    stroke: var(--brand-grey-dark);
     stroke-width: 0.063em;
 }
 
 .blocklyToolboxDiv {
-    background-color: $brand-gray !important;
+    background-color: var(--brand-grey) !important;
     border-width: thin;
-    color: $brand-dark-gray;
+    color: var(--brand-grey-dark);
     border-right: 0.063em solid;
     width: 11em;
     transition: width 0.3s ease-in-out;
@@ -84,11 +83,11 @@
     top: auto;
     height: calc(100vh - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT});
     width: 20px;
-    background: $brand-gray;
+    background: var(--brand-grey);
     justify-content: center;
     align-items: center;
     transition: left 0.3s ease-in-out;
-    border-right: 1px solid $brand-dark-gray;
+    border-right: 1px solid var(--brand-grey-dark);
 
     span img {
         transform: rotate(270deg);
@@ -112,7 +111,7 @@
 }
 
 .blocklyIconShape {
-    fill: #2a3052 !important;
+    fill: var(--brand-blue) !important;
 }
 
 .blocklyIconGroup:not(:hover),
