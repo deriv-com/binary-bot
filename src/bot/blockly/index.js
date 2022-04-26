@@ -103,8 +103,9 @@ const addBlocklyTranslation = () => {
         lang = lang_obj(lang)
     }
     return new Promise(resolve => {
-        // [Todo] resolve the language issue
-        // $.getScript(`translations/${lang}.js`, resolve);
+        const script = document.createElement('script');
+        script.setAttribute('src', `translations/${lang}.js`);
+        document.body.appendChild(script);
         resolve()
     });
 };

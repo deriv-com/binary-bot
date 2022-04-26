@@ -120,6 +120,7 @@
     "concat-stream": "^2.0.0",
     "core-js": "^2.6.5",
     "crc-32": "^1.2.0",
+    "download": "^8.0.0",
     "gh-pages": "^3.2.3",
     "js-cookie": "^3.0.1",
     "mobx": "^6.3.12",
