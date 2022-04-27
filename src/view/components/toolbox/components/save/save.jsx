@@ -4,7 +4,7 @@ import LoadingButton from '../loading_button';
 import SAVE_LOAD_TYPE from '../utils';
 import useIsMounted from "Common/hooks/isMounted";
 // import { cleanBeforeExport } from 'BlocklyPath/utils';
-import google_drive_util from 'Common/integrations/GoogleDrive';
+import google_drive_util from '../google-drive/google-drive-utils';
 import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
 

@@ -17,14 +17,11 @@ import {
   getUnattachedMandatoryPairs,
 } from "BlocklyPath/utils";
 import GTM from "Common/gtm";
-import google_drive_util from "Common/integrations/GoogleDrive";
 import { load } from "BlocklyPath";
 import api from "Api";
 import { updateTokenList } from "Shared/utils";
-import IntegrationsDialog from "../dialogs/IntegrationsDialog";
 import Limits from "../dialogs/Limits";
-
-const integrationsDialog = new IntegrationsDialog();
+import google_drive_util from "../toolbox/components/google-drive/google-drive-utils";
 
 const checkForRequiredBlocks = () => {
   const displayError = errorMessage => {
@@ -185,8 +182,6 @@ const addBindings = blockly => {
       closeText: "",
       classes: { "ui-dialog-titlebar-close": "icon-close" },
     });
-
-  $("#integrations").click(() => integrationsDialog.open());
 
   const exportContent = {};
   exportContent.summaryPanel = () => {

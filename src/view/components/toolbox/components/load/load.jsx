@@ -3,7 +3,7 @@ import React from "react";
 import LoadingButton from "../loading_button";
 import SAVE_LOAD_TYPE from "../utils";
 import { translate } from "Translate";
-import google_drive_util from "Common/integrations/GoogleDrive";
+import google_drive_util from "../google-drive/google-drive-utils";
 import useIsMounted from "Common/hooks/isMounted";
 
 // [Todo] remove styles

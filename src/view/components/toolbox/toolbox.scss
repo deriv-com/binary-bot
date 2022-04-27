@@ -69,13 +69,6 @@
 		  background: url("Static/image/expand_more.svg") no-repeat center;
 	  }
   }
-  
-  .icon-integrations {
-	  &:before {
-		  content: ' ';
-	  }
-	  background: url("Static/image/google_drive.svg") no-repeat center;
-  }
 
   @mixin toolbox-button-base {
     background-color: var(--brand-grey);

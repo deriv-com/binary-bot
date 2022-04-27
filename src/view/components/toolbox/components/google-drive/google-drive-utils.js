@@ -3,12 +3,12 @@ import { observer as globalObserver } from 'Observer';
 import { translate } from "Translate";
 import { errLogger, loadExternalScript } from 'Tools';
 import { load } from 'BlocklyPath';
+import { getLanguage } from 'Common/lang';
 import { TrackJSError } from 'Components/logger';
 import store from 'Store';
 import { setGdReady } from 'Store/ui-slice';
 import { setGdLoggedIn } from 'Store/client-slice';
-import GD_CONFIG from './google_drive_config';
-import { getLanguage } from '../lang';
+import GD_CONFIG from './google-drive-config';
 
 const getPickerLanguage = () => {
     const language = getLanguage();
