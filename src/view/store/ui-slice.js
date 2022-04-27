@@ -10,6 +10,8 @@ const initial_states = {
   is_header_loaded: false,
   should_reload_workspace: true,
   is_workspace_ready: false,
+  show_loading: true,
+  loading_type: "full",
 };
 
 export const uiSlice = createSlice({
@@ -43,6 +45,10 @@ export const uiSlice = createSlice({
     setIsWorkspaceReady: (state, action) => {
       state.is_workspace_ready = action.payload;
     },
+    setShowLoading: (state,action) =>{
+      state.show_loading = action.payload.show_loading;
+      state.loading_type = action.payload.loading_type;
+    },
   },
 });
 
@@ -56,6 +62,8 @@ export const {
   setIsHeaderLoaded,
   setShouldReloadWorkspace,
   setIsWorkspaceReady,
+  setShowLoading,
 } = uiSlice.actions;
+
 
 export default uiSlice.reducer;

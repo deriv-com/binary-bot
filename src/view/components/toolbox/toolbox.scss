@@ -128,13 +128,3 @@
         width: 2px;        
     }
 }
-
-button {
-    & > .barspinner.white {
-        position: relative;
-        margin: 3px auto;
-        height: 13px;
-        top: initial;
-        left: initial;  
-    }
-}

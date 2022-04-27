@@ -20,8 +20,8 @@ import GTM from "Common/gtm";
 import { load } from "BlocklyPath";
 import api from "Api";
 import { updateTokenList } from "Shared/utils";
-import Limits from "../dialogs/Limits";
 import google_drive_util from "../toolbox/components/google-drive/google-drive-utils";
+import Limits from "../dialogs/Limits";
 
 const checkForRequiredBlocks = () => {
   const displayError = errorMessage => {
