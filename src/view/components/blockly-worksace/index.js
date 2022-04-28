@@ -17,7 +17,7 @@ import {
   getUnattachedMandatoryPairs,
 } from "BlocklyPath/utils";
 import GTM from "Common/gtm";
-import { load } from "BlocklyPath";
+import { load, resetAccount } from "BlocklyPath";
 import api from "Api";
 import { updateTokenList } from "Shared/utils";
 import google_drive_util from "../toolbox/components/google-drive/google-drive-utils";
@@ -283,7 +283,7 @@ const addBindings = blockly => {
   globalObserver.register("bot.reload", () => {
     blockly.initPromise.then(() => {
       updateConfigCurrencies().then(() => {
-        blockly.resetAccount();
+        resetAccount();
       })
     });
   })

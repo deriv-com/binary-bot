@@ -16,7 +16,7 @@ import './customBlockly';
 import blocks from './blocks';
 import {
     isMainBlock,
-    save,
+    save as saveFile,
     disable,
     deleteBlocksLoadedBy,
     addLoadersFirst,
@@ -127,7 +127,7 @@ const overrideBlocklyDefaultShape = () => {
                             '<xml xmlns="http://www.w3.org/1999/xhtml" collection="false"></xml>'
                         );
                         xml.appendChild(Blockly.Xml.blockToDom(this));
-                        save('binary-bot-block', true, xml);
+                        saveFile('binary-bot-block', true, xml);
                     },
                 });
             };
@@ -161,6 +161,43 @@ const repaintDefaultColours = () => {
     Blockly.Blocks.variables.HUE = '#DEDEDE';
     Blockly.Blocks.procedures.HUE = '#DEDEDE';
 };
+
+export const zoomOnPlusMinus = (zoomIn) => {
+    const metrics = Blockly.mainWorkspace.getMetrics();
+    if (zoomIn) {
+        Blockly.mainWorkspace.zoom(metrics.viewWidth / 2, metrics.viewHeight / 2, 1);
+    } else {
+        Blockly.mainWorkspace.zoom(metrics.viewWidth / 2, metrics.viewHeight / 2, -1);
+    }
+}
+
+export const cleanUp = () => {
+    Blockly.Events.setGroup(true);
+    const topBlocks = Blockly.mainWorkspace.getTopBlocks(true);
+    let cursorY = 0;
+    topBlocks.forEach(block => {
+        if (block.getSvgRoot().style.display !== 'none') {
+            const xy = block.getRelativeToSurfaceXY();
+            block.moveBy(-xy.x, cursorY - xy.y);
+            block.snapToGrid();
+            cursorY =
+                block.getRelativeToSurfaceXY().y + block.getHeightWidth().height + Blockly.BlockSvg.MIN_BLOCK_Y;
+        }
+    });
+    Blockly.Events.setGroup(false);
+    // Fire an event to allow scrollbars to resize.
+    Blockly.mainWorkspace.resizeContents();
+}
+
+export const resetWorkspace = () => {
+    importFile('xml/main.xml').then(dom => {
+        Blockly.Events.setGroup('reset');
+        Blockly.mainWorkspace.clear();
+        Blockly.Xml.domToWorkspace(dom.getElementsByTagName('xml')[0], Blockly.mainWorkspace);
+        Blockly.Events.setGroup(false);
+        cleanUp();
+    });
+}
 
 export const load = (blockStr, dropEvent = {}) => {
     const unrecognisedMsg = () => translate('Unrecognized file format');
@@ -306,6 +343,40 @@ export const loadBlocks = (xml, dropEvent = {}) => {
     );
 };
 
+export const resetAccount = () => {
+    const all_blocks = Blockly?.mainWorkspace?.getAllBlocks();
+    const trade_option_block = all_blocks.find(block => block.type === 'tradeOptions');
+    const currency_field = trade_option_block.getField('CURRENCY_LIST');
+    const active_account = getActiveAccount();
+
+    if (currency_field && active_account) {
+        currency_field.text_ = active_account?.currency;
+        /* eslint no-underscore-dangle: ["error", { "allow": ["text_","render_"] }] */
+        currency_field.render_();
+    }
+};
+
+export const redo = () => {
+    Blockly.mainWorkspace.undo(true);
+}
+
+export const undo = () => {
+    Blockly.Events.setGroup('undo');
+    Blockly.mainWorkspace.undo();
+    Blockly.Events.setGroup(false);
+}
+
+export const save = (arg) => {
+    const { filename, collection } = arg;
+
+    saveBeforeUnload();
+
+    const xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    cleanBeforeExport(xml);
+
+    saveFile(filename, collection, xml);
+}
+
 export default class _Blockly {
     constructor() {
         this.generatedJs = '';
@@ -353,7 +424,7 @@ export default class _Blockly {
                         repaintDefaultColours();
                         overrideBlocklyDefaultShape();
                         Blockly.Xml.domToWorkspace(dom, workspace);
-                        this.zoomOnPlusMinus();
+                        zoomOnPlusMinus();
                         disposeBlocksWithLoaders();
                         setTimeout(() => {
                             saveBeforeUnload();
@@ -392,66 +463,7 @@ export default class _Blockly {
             });
         });
     }
-    /* eslint-disable class-methods-use-this */
-    zoomOnPlusMinus(zoomIn) {
-        const metrics = Blockly.mainWorkspace.getMetrics();
-        if (zoomIn) {
-            Blockly.mainWorkspace.zoom(metrics.viewWidth / 2, metrics.viewHeight / 2, 1);
-        } else {
-            Blockly.mainWorkspace.zoom(metrics.viewWidth / 2, metrics.viewHeight / 2, -1);
-        }
-    }
-    resetWorkspace() {
-        importFile('xml/main.xml').then(dom => {
-            Blockly.Events.setGroup('reset');
-            Blockly.mainWorkspace.clear();
-            Blockly.Xml.domToWorkspace(dom.getElementsByTagName('xml')[0], Blockly.mainWorkspace);
-            Blockly.Events.setGroup(false);
-            this.cleanUp();
-        });
-    }
 
-    resetAccount() {
-        const all_blocks = Blockly?.mainWorkspace?.getAllBlocks();
-        const trade_option_block = all_blocks.find(block => block.type === 'tradeOptions');
-        const currency_field = trade_option_block.getField('CURRENCY_LIST');
-        const active_account = getActiveAccount();
-
-        if (currency_field && active_account) {
-            currency_field.text_ = active_account?.currency;
-            /* eslint no-underscore-dangle: ["error", { "allow": ["text_","render_"] }] */
-            currency_field.render_();
-        }
-    }
-    /* eslint-disable class-methods-use-this */
-    cleanUp() {
-        Blockly.Events.setGroup(true);
-        const topBlocks = Blockly.mainWorkspace.getTopBlocks(true);
-        let cursorY = 0;
-        topBlocks.forEach(block => {
-            if (block.getSvgRoot().style.display !== 'none') {
-                const xy = block.getRelativeToSurfaceXY();
-                block.moveBy(-xy.x, cursorY - xy.y);
-                block.snapToGrid();
-                cursorY =
-                    block.getRelativeToSurfaceXY().y + block.getHeightWidth().height + Blockly.BlockSvg.MIN_BLOCK_Y;
-            }
-        });
-        Blockly.Events.setGroup(false);
-        // Fire an event to allow scrollbars to resize.
-        Blockly.mainWorkspace.resizeContents();
-    }
-    /* eslint-disable class-methods-use-this */
-    save(arg) {
-        const { filename, collection } = arg;
-
-        saveBeforeUnload();
-
-        const xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-        cleanBeforeExport(xml);
-
-        save(filename, collection, xml);
-    }
     run(limitations = {}) {
         disableStrayBlocks();
         let code;
@@ -536,16 +548,6 @@ export default class _Blockly {
             this.interpreter.stop();
             this.interpreter = null;
         }
-    }
-    /* eslint-disable class-methods-use-this */
-    undo() {
-        Blockly.Events.setGroup('undo');
-        Blockly.mainWorkspace.undo();
-        Blockly.Events.setGroup(false);
-    }
-    /* eslint-disable class-methods-use-this */
-    redo() {
-        Blockly.mainWorkspace.undo(true);
     }
     /* eslint-disable class-methods-use-this */
     hasStarted() {

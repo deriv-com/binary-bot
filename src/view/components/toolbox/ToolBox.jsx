@@ -16,6 +16,7 @@ import ExportButton from "./components/export-button";
 import Chart from "./components/chart";
 import GoogleDrive from "./components/google-drive";
 import GD_CONFIG from './components/google-drive/google-drive-config';
+import {zoomOnPlusMinus, cleanUp, undo, redo} from 'BlocklyPath';
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
@@ -73,13 +74,13 @@ const ToolBox = ({ blockly }) => {
       if (e.which === Keys.zoomOut && e.ctrlKey) {
         // Ctrl + -
         e.preventDefault();
-        blockly?.zoomOnPlusMinus(false);
+        zoomOnPlusMinus(false);
         return;
       }
       if (e.which === Keys.zoomIn && e.ctrlKey) {
         // Ctrl + +
         e.preventDefault();
-        blockly?.zoomOnPlusMinus(true);
+        zoomOnPlusMinus(true);
         return;
       }
     });
@@ -108,7 +109,6 @@ const ToolBox = ({ blockly }) => {
       props: {
         closeDialog: onCloseModal,
         is_gd_logged_in,
-        blockly,
       },
     },
     googleDrive: {
@@ -221,7 +221,7 @@ const ToolBox = ({ blockly }) => {
         <button
           id="undo"
           className="toolbox-button icon-undo"
-          onClick={() => blockly.undo()}
+          onClick={undo}
         />
       </Popover>
       <Popover
@@ -231,7 +231,7 @@ const ToolBox = ({ blockly }) => {
         <button
           id="redo"
           className="toolbox-button icon-redo"
-          onClick={() => blockly.redo()}
+          onClick={redo}
         />
       </Popover>
       <span className="toolbox-separator" />
@@ -242,7 +242,7 @@ const ToolBox = ({ blockly }) => {
         <button
           id="zoomIn"
           className="toolbox-button icon-zoom-in"
-          onClick={() => blockly.zoomOnPlusMinus(true)}
+          onClick={() => zoomOnPlusMinus(true)}
         />
       </Popover>
       <Popover
@@ -252,7 +252,7 @@ const ToolBox = ({ blockly }) => {
         <button
           id="zoomOut"
           className="toolbox-button icon-zoom-out"
-          onClick={() => blockly.zoomOnPlusMinus(false)}
+          onClick={() => zoomOnPlusMinus(false)}
         />
       </Popover>
       <Popover
@@ -262,7 +262,7 @@ const ToolBox = ({ blockly }) => {
         <button
           id="rearrange"
           className="toolbox-button icon-sort"
-          onClick={() => blockly.cleanUp()}
+          onClick={cleanUp}
         />
       </Popover>
       {/* Needs Refactor ClientInfo Structure */}

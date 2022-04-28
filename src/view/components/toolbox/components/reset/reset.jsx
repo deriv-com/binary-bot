@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { translate } from "Translate";
+import {cleanUp, resetWorkspace} from "BlocklyPath";
 
 const Reset = ({ blockly, onCloseModal }) => {
 
   const onSubmit = () => {
     blockly.stop();
-    blockly.resetWorkspace();
-    setTimeout(() => blockly.cleanUp(), 0);
+    resetWorkspace();
+    setTimeout(() => cleanUp(), 0);
     onCloseModal();
   };
 

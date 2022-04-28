@@ -7,6 +7,7 @@ import useIsMounted from "Common/hooks/isMounted";
 import google_drive_util from '../google-drive/google-drive-utils';
 import { observer as globalObserver } from 'Observer';
 import { translate } from 'Translate';
+import {save} from 'BlocklyPath';
 
 // [Todo] remove styles
 const contentStyle = {
@@ -18,7 +19,7 @@ const checkboxStyle = {
 };
 
 
-const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
+const Save = ({ closeDialog, is_gd_logged_in }) => {
     const [is_loading, setLoading] = React.useState(false);
     const [file_name, setFileName] = React.useState('binary-bot');
     const [save_type, setSaveType] = React.useState(SAVE_LOAD_TYPE.local);
@@ -31,7 +32,7 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
         e.preventDefault();
 
         if (save_type === SAVE_LOAD_TYPE.local) {
-            blockly.save({ file_name, save_as_collection });
+            save({ file_name, save_as_collection });
             closeDialog();
             return;
         }
@@ -134,7 +135,6 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
 };
 
 Save.propTypes = {
-    blockly: PropTypes.object.isRequired,
     closeDialog: PropTypes.func.isRequired,
     is_gd_logged_in: PropTypes.bool.isRequired,
 };
