@@ -5,6 +5,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const _ESLintPlugin = require('eslint-webpack-plugin');
+const SaveRemoteFilePlugin = require('./src/plugins/SaveRemoteFile');
 
 const $ = require("jquery");
 
@@ -123,5 +124,15 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
     }),
+    new SaveRemoteFilePlugin(
+      ['en', 'id', 'it', 'vi', 'pl', 'ru', 'pt', 'es', 'fr', 'zh-hans', 'zh-hant'].map(lang => {
+        const url = `https://blockly-demo.appspot.com/static/msg/js/${lang}.js?_=${Date.now()}`;
+        return {
+          url,
+          filepath: `./translations/${lang}.js`,
+          lang,
+        }
+      })
+    )
   ],
 };
