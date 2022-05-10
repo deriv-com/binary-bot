@@ -62,7 +62,7 @@ const Header = () => {
   const [showDrawerMenu, updateShowDrawerMenu] = React.useState(false);
   const platformDropdownRef = React.useRef();
   const { is_logged, active_token } = useSelector((state) => state.client);
-  const { is_bot_running } = useSelector(state => state.ui);
+  const { is_bot_running, hide_official_branding } = useSelector(state => state.ui);
   const dispatch = useDispatch();
   const hideDropdown = (e) =>
     !platformDropdownRef.current.contains(e.target) &&
@@ -124,7 +124,7 @@ const Header = () => {
   }, [is_bot_running])
 
   const onBeforeUnload = (e) => {
-    if(is_bot_running) {
+    if (is_bot_running) {
       e.preventDefault();
       e.returnValue = true;
     }
@@ -133,37 +133,40 @@ const Header = () => {
   return (
     <div className="header">
       <div id="deriv__header" className="header__menu-items">
+
         {isDesktop() && (
           <div className="header__menu-left">
-            {isPlatformSwitcherOpen && (
-              <PlatformDropdown
-                hideDropdown={hideDropdown}
-                ref={platformDropdownRef}
-                setIsPlatformSwitcherOpen={setIsPlatformSwitcherOpen}
-              />
-            )}
-            <div
-              id="platform__switcher"
-              className="header__menu-item platform__switcher"
-              onClick={() => setIsPlatformSwitcherOpen(!isPlatformSwitcherOpen)}
-            >
-              <img
-                className="header__logo"
-                src="image/deriv/brand/ic-brand-binarybot.svg"
-              />
-              <div className="platform__switcher-header">Binary Bot</div>
-              <img
-                id="platform__switcher-expand"
-                className={classNames("header__icon header__expand", {
-                  open: isPlatformSwitcherOpen,
-                })}
-                src="image/deriv/ic-chevron-down-bold.svg"
-              />
-            </div>
-            {is_logged && <MenuLinks />}
+            {!hide_official_branding && <React.Fragment>
+              {isPlatformSwitcherOpen && (
+                <PlatformDropdown
+                  hideDropdown={hideDropdown}
+                  ref={platformDropdownRef}
+                  setIsPlatformSwitcherOpen={setIsPlatformSwitcherOpen}
+                />
+              )}
+              <div
+                id="platform__switcher"
+                className="header__menu-item platform__switcher"
+                onClick={() => setIsPlatformSwitcherOpen(!isPlatformSwitcherOpen)}
+              >
+                <img
+                  className="header__logo"
+                  src="image/deriv/brand/ic-brand-binarybot.svg"
+                />
+                <div className="platform__switcher-header">Binary Bot</div>
+                <img
+                  id="platform__switcher-expand"
+                  className={classNames("header__icon header__expand", {
+                    open: isPlatformSwitcherOpen,
+                  })}
+                  src="image/deriv/ic-chevron-down-bold.svg"
+                />
+              </div>
+              {is_logged && <MenuLinks />}
+            </React.Fragment>}
           </div>
         )}
-        {isMobile() && (
+        {!hide_official_branding && isMobile() ? (
           <img
             className="btn__close header__hamburger"
             src="image/deriv/ic-hamburger.svg"
@@ -171,7 +174,7 @@ const Header = () => {
               updateShowDrawerMenu(true);
             }}
           />
-        )}
+        ) : <span></span>}
         <div className="header__menu-right">
           <AccountSwitcher />
         </div>

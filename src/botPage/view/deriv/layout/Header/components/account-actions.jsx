@@ -33,7 +33,7 @@ const AccountActions = () => {
         active_token,
         active_account_name
     } = useSelector(state => state.client);
-    const { account_switcher_token, is_bot_running } = useSelector(state => state.ui);
+    const { account_switcher_token, is_bot_running, hide_official_branding } = useSelector(state => state.ui);
     const [is_acc_dropdown_open, setIsAccDropdownOpen] = React.useState(false);
     const dropdownRef = React.useRef();
     const dispatch = useDispatch();
@@ -90,13 +90,13 @@ const AccountActions = () => {
 
     return (
         <React.Fragment>
-            <Notifications />
+            {!hide_official_branding && <Notifications />}
             {/* [Todo] Needs to remove input after add client info to blockly */}
             <input type="hidden" id="active-token" value={active_token} />
             <input type="hidden" id="active-account-name" value={active_account_name} />
-            <a className="url-account-details header__account header__menu-item mobile-hide" href={generateDerivLink('account')}>
+            {!hide_official_branding && <a className="url-account-details header__account header__menu-item mobile-hide" href={generateDerivLink('account')}>
                 <img className="header__icon-button" id="header__account-settings" src="image/deriv/ic-user-outline.svg" />
-            </a>
+            </a>}
             <div className="header__divider mobile-hide"></div>
             <div
                 id="acc_switcher"
@@ -115,7 +115,7 @@ const AccountActions = () => {
                     setIsAccDropdownOpen={setIsAccDropdownOpen}
                 />}
 
-            <a className="url-cashier-deposit btn btn--primary header__deposit mobile-hide" href={`${getRelatedDeriveOrigin().origin}/cashier/deposit`}>{translate("Deposit")}</a>
+            {!hide_official_branding && <a className="url-cashier-deposit btn btn--primary header__deposit mobile-hide" href={`${getRelatedDeriveOrigin().origin}/cashier/deposit`}>{translate("Deposit")}</a>}
             {account_switcher_token && (
                 <Modal
                     title={translate('Are you sure?')}

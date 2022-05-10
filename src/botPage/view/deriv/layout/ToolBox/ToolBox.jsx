@@ -35,7 +35,7 @@ const ToolBox = ({ blockly }) => {
   const has_active_token = useSelector(state => !!state.client?.active_token);
 
   const dispatch = useDispatch();
-  const { is_gd_ready } = useSelector(state => state.ui);
+  const { is_gd_ready, hide_official_branding } = useSelector(state => state.ui);
   const { is_gd_logged_in } = useSelector(state => state.client);
 
   React.useEffect(() => {
@@ -198,20 +198,23 @@ const ToolBox = ({ blockly }) => {
           className="toolbox-button icon-chart-line"
         />
       </Popover>
-      <Popover content={translate("Show Trading View")} position="bottom">
+
+      {!hide_official_branding && <Popover content={translate("Show Trading View")} position="bottom">
         <button
           id="tradingViewButton"
           className="toolbox-button icon-trading-view"
         />
-      </Popover>
-      {should_show_modal && (
-        <ShowModal
-          modal={MODALS[selected_modal]}
-          onClose={onCloseModal}
-          class_name={selected_modal}
-        />
-      )}
-    </div>
+      </Popover>}
+      {
+        should_show_modal && (
+          <ShowModal
+            modal={MODALS[selected_modal]}
+            onClose={onCloseModal}
+            class_name={selected_modal}
+          />
+        )
+      }
+    </div >
   );
 };
 
