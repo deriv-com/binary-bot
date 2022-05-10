@@ -28,17 +28,6 @@ export const load = () => {
     if (typeof $ !== 'function') return; // Adding this check to skip unit test
     const lang = getLanguage();
 
-    $('#select_language li:not(:first)').click(function click() {
-        const newLang = $(this).attr('class');
-        document.location.search = `l=${newLang}`;
-    });
-
-    $('.language').text(
-        $(`.${lang}`)
-            .hide()
-            .text()
-    );
-
     if (lang === 'ach') {
         // eslint-disable-next-line no-underscore-dangle
         window._jipt = [['project', 'binary-bot']];
