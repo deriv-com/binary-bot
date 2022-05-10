@@ -42,7 +42,7 @@ export const uiSlice = createSlice({
     },
     setHideBranding: (state, action) => {
       state.hide_official_branding = action.payload;
-    }
+    },
   },
 });
 
@@ -55,7 +55,7 @@ export const {
   setAccountSwitcherToken,
   setIsHeaderLoaded,
   setShouldReloadWorkspace,
-  setHideBranding
+  setHideBranding,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
