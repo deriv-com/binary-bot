@@ -13,7 +13,7 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
   const [isAccordionOpen, setIsAccordionOpen] = React.useState(true);
   const dispatch = useDispatch();
   const { accounts, active_account_name } = useSelector((state) => state.client);
-  const { show_bot_unavailable_page } = useSelector((state) => state.ui);
+  const { show_bot_unavailable_page, hide_official_branding } = useSelector((state) => state.ui);
   const item_ref = React.useRef([]);
   const isReal = tab === "real";
   const token_list = getTokenList();
@@ -32,7 +32,7 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
       setIsAccDropdownOpen(false);
     }
   }
-  
+
   return (
     <div className={`account__switcher-tabs-content ${isActive ? "" : "hide"}`}>
       <div className="account__switcher-accordion">
@@ -42,7 +42,7 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
         >
           <div className="account__switcher-accordion-header-text">
             <span>
-              {translate(isReal ? "Deriv Accounts" : "Demo Accounts")}
+              {translate(isReal ? hide_official_branding ? "Accounts" : "Deriv Accounts" : "Demo Accounts")}
             </span>
             <img
               className={`header__expand ${isAccordionOpen ? "open" : ""}`}
@@ -98,7 +98,7 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
                 )
               );
             })}
-          {isReal && (
+          {!hide_official_branding && isReal && (
             <a
               href={generateDerivLink("redirect", "action=add_account")}
               rel="noopener noreferrer"
