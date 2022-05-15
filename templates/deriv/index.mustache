@@ -49,6 +49,11 @@
         {{> ../partials/loading }}
         <div id="main"></div>
 
+        <form id="fileUploadForm" style="display: none;">
+            <input data-i18n-title="Open an already saved XML file and retrieve its blocks" type="file" id="files"
+                accept=".xml" multiple />
+        </form>
+
         <!-- TODO move to separate component after routes refacotr -->
         <audio id="announcement" autostart="false" preload="auto">
             <source src="sound/announcement.ogg" type="audio/ogg" />
