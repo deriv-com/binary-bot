@@ -29,6 +29,19 @@ const AnimateTrade = () => {
   const [contract_status, setContractStatus] = React.useState(CONTRACT_STATUS.not_running);
   const isMounted = useIsMounted();
 
+  const onStop = () => {
+    setIndicatorMessage(
+      globalObserver.getState("isRunning") ? INDICATOR_MESSAGES.stopping : INDICATOR_MESSAGES.stopped
+    );
+  };
+
+  const onClickRun = () => {
+    setIndicatorMessage(INDICATOR_MESSAGES.starting);
+    setContractStatus(CONTRACT_STATUS.not_running);
+    globalObserver.emit("summary.disable_clear");
+    globalObserver.register("contract.status", animateStage);
+  }
+
   React.useEffect(() => {
     globalObserver.register("reset_animation", resetSummary);
     globalObserver.register("summary.clear", resetSummary);
@@ -39,21 +52,15 @@ const AnimateTrade = () => {
     globalObserver.register("bot.stop", () => {
       if (isMounted()) setIndicatorMessage(INDICATOR_MESSAGES.stopped);
     });
-    $("#stopButton").on("click", () => {
-      setIndicatorMessage(
-        globalObserver.getState("isRunning") ? INDICATOR_MESSAGES.stopping : INDICATOR_MESSAGES.stopped
-      );
-    });
+    const stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener("click", onStop);
 
-    $("#runButton").on("click", () => {
-      setIndicatorMessage(INDICATOR_MESSAGES.starting);
-      setContractStatus(CONTRACT_STATUS.not_running);
-      globalObserver.emit("summary.disable_clear");
-      globalObserver.register("contract.status", animateStage);
-    });
+    const runButton = document.getElementById("runButton");
+    runButton.addEventListener("click",onClickRun);
+
     return () => {
-      $("#stopButton").off("click");
-      $("#runButton").off("click");
+      stopButton.removeEventListener("click", onStop);
+      runButton.removeEventListener("click", onClickRun);
     };
   }, []);
 
