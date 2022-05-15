@@ -49,13 +49,11 @@ export const oauthLogin = (done = () => 0) => {
     const tokenObjectList = queryToObjectArray(queryStr);
 
   if (tokenObjectList.length) {
-    $("#main").hide();
     addTokenIfValid(tokenObjectList[0].token, tokenObjectList).then(() => {
       const accounts = getTokenList();
       if (accounts.length) {
         setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, accounts[0].token);
       }
-      document.location = "bot.html";
     });
   } else {
     done();
