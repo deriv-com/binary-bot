@@ -14,7 +14,6 @@ import { logoutAllTokens, AppConstants } from "../../../common/appId";
 import IntegrationsDialog from "../Dialogs/IntegrationsDialog";
 import Chart from "../Dialogs/Chart";
 import TradingView from "../Dialogs/TradingView";
-import Limits from "../Dialogs/Limits";
 import {
   saveBeforeUnload,
   getMissingBlocksTypes,
@@ -268,19 +267,7 @@ const addBindings = (blockly) => {
       setTimeout(() => $("#stopButton").triggerHandler("click"));
       return;
     }
-
-    const token = document.getElementById("active-token").value;
-    const tokenObj = getToken(token);
-
-    if (tokenObj && tokenObj.hasTradeLimitation) {
-      const limits = new Limits(api);
-      limits
-        .getLimits()
-        .then(startBot)
-        .catch(() => {});
-    } else {
-      startBot();
-    }
+    startBot();
   })
   addEvent("stopButton", (e)=>{
     stop(e);
