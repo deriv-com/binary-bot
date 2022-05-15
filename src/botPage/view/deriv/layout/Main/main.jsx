@@ -111,7 +111,6 @@ const Main = () => {
 	const initializeBlockly = (blockly) => {
 		initialize(blockly)
 			.then(() => {
-				$(".show-on-load").show();
 				$(".barspinner").hide();
 				window.dispatchEvent(new Event("resize"));
 				TrackJS.configure({
