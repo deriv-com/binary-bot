@@ -1,7 +1,7 @@
 import { parseQueryString } from '../common/utils/tools';
 import { set as setStorage, get as getStorage } from '../common/utils/storageManager';
 import { setCookieLanguage } from '../common/utils/cookieManager';
-import { supportedLanguages, translate, init } from './i18n';
+import { supportedLanguages, init } from './i18n';
 
 export const getLanguage = () => {
     const queryLang = parseQueryString().l || getStorage('lang');
@@ -9,19 +9,6 @@ export const getLanguage = () => {
     setStorage('lang', lang);
     setCookieLanguage(lang);
     return lang;
-};
-
-const addUiLang = () => {
-    $('[data-i18n-text]').each(function each() {
-        const el = $(this);
-        const contents = el.contents();
-
-        el.text(translate($(this).attr('data-i18n-text'))).append(contents);
-    });
-
-    document.querySelectorAll('[data-i18n-title]').forEach(titleNode => {
-        titleNode.setAttribute('title', translate(titleNode.getAttribute('data-i18n-title')));
-    });
 };
 
 export const load = () => {
@@ -34,12 +21,10 @@ export const load = () => {
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = `${document.location.protocol}//cdn.crowdin.com/jipt/jipt.js`;
-        $('body').append(script);
+        document.body.appendChild(script)
     }
 
     init(lang);
-
-    addUiLang();
 };
 
 export const showBanner = () => {
