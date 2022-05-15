@@ -53,7 +53,7 @@ class LimitsContent extends PureComponent {
   updateMaxLosses() {
     return new Promise((resolve, reject) => {
       const { api } = this.props;
-      const $startButton = $("#submit-trade-limits");
+      const $startButton = document.getElementById('submit-trade-limits');
       const initialText = $startButton.text();
 
       showSpinnerInButton($startButton);
