@@ -14,13 +14,11 @@ import IntegrationsDialog from "../Dialogs/IntegrationsDialog";
 import Chart from "../Dialogs/Chart";
 import TradingView from "../Dialogs/TradingView";
 import {
-  saveBeforeUnload,
   getMissingBlocksTypes,
   getDisabledMandatoryBlocks,
   getUnattachedMandatoryPairs,
 } from "../blockly/utils";
 import GTM from "../../../common/gtm";
-import google_drive_util from "../../../common/integrations/GoogleDrive";
 import { load } from "../../view/blockly";
 import api from "./api";
 
@@ -133,29 +131,28 @@ const setFileBrowser = () => {
 const setElementActions = (blockly) => {
   setFileBrowser();
   addBindings(blockly);
-  addEventHandlers(blockly);
+  addEventHandlers();
+};
+
+const clearActiveTokens = () => {
+  setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, "");
+  setStorage("active_loginid", null);
+  syncWithDerivApp();
+};
+
+export const removeTokens = () => {
+  logoutAllTokens().then(() => {
+    updateTokenList();
+    globalObserver.emit("ui.log.info", translate("Logged you out!"));
+    clearActiveTokens();
+    // Todo: Need to remove this reload, and add logic to clear redux state.
+    // Need to stop the barspinner once removed this
+    window.location.reload();
+  });
 };
 
 const addBindings = (blockly) => {
-  globalObserver.register("blockly.stop",()=>stopBlockly(blockly));
-
-  const removeTokens = () => {
-    logoutAllTokens().then(() => {
-      updateTokenList();
-      globalObserver.emit("ui.log.info", translate("Logged you out!"));
-      clearActiveTokens();
-
-      // Todo: Need to remove this reload, and add logic to clear redux state.
-      // Need to stop the barspinner once removed this
-      window.location.reload();
-    });
-  };
-
-  const clearActiveTokens = () => {
-    setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, "");
-    setStorage("active_loginid", null);
-    syncWithDerivApp();
-  };
+  globalObserver.register("blockly.stop",()=>{blockly.stop()});
 
   $(".panelExitButton").click(function onClick() {
     $(this).parent().hide();
@@ -191,15 +188,6 @@ const addBindings = (blockly) => {
     $("#logPanel").dialog("open");
   });
 
-  globalObserver.register("ui.logout", () => {
-    saveBeforeUnload();
-    $(".barspinner").show();
-    stopBlockly(blockly);
-    google_drive_util.logout();
-    GTM.setVisitorId();
-    removeTokens();
-  });
-
   const startBot = (limitations) => {
     const elRunButtons = document.querySelectorAll(
       "#runButton, #summaryRunButton"
@@ -232,7 +220,7 @@ const addBindings = (blockly) => {
   });
 
   globalObserver.register("ui.switch_account", () => {
-    stopBlockly(blockly);
+    globalObserver.emit("blockly.stop")
     GTM.setVisitorId();
   });
 
@@ -244,9 +232,8 @@ const addBindings = (blockly) => {
     });
   });
 };
-const stopBlockly = (blockly) => blockly.stop();
 
-const addEventHandlers = (blockly) => {
+const addEventHandlers = () => {
   const getRunButtonElements = () =>
     document.querySelectorAll("#runButton, #summaryRunButton");
   const getStopButtonElements = () =>
@@ -270,7 +257,7 @@ const addEventHandlers = (blockly) => {
     if (error?.error?.code === "InvalidToken") {
       removeAllTokens();
       updateTokenList();
-      stopBlockly(blockly);
+      globalObserver.emit("blockly.stop")
     }
   });
 
