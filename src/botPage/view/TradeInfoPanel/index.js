@@ -8,6 +8,8 @@ import RunButton from "./RunButton";
 import ClearButton from "./ClearButton";
 import useIsMounted from "../../../common/hooks/isMounted";
 import api from "../deriv/api";
+import ExportButton from "../Dialogs/export-button.jsx";
+
 
 const TradeInfoPanel = () => {
   const [account_id, setAccountId] = React.useState("");
@@ -19,7 +21,7 @@ const TradeInfoPanel = () => {
     globalObserver.register("bot.info", ({ accountID: account_id_param }) => {
       if (isMounted()) {
         if (!account_id_list.includes(account_id_param)) {
-          setAccountIdList(prevList => [...prevList, account_id_param]);
+          setAccountIdList((prevList) => [...prevList, account_id_param]);
         }
         if (!account_id) {
           setAccountId(account_id_param);
@@ -29,17 +31,27 @@ const TradeInfoPanel = () => {
   }, []);
 
   return (
-    <span id="summaryPanel" className="draggable-dialog" title={translate("Summary")}>
+    <span
+      id="summaryPanel"
+      className="draggable-dialog"
+      title={translate("Summary")}
+    >
       <div>
         <div className="content">
           <div className="content-row">
             <div className="summary-toolbox">
               <RunButton />
-              <ClearButton />
             </div>
           </div>
           <div className="content-row">
             <AnimateTrade />
+          </div>
+          <div className="summary-toolbox table-actions">
+            <ExportButton
+              className="icon-save-summary"
+              onClick={() => globalObserver.emit("summary.export")}
+            />
+            <ClearButton />
           </div>
           <div className="content-row">
             <div>

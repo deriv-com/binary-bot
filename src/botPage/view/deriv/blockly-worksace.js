@@ -193,36 +193,11 @@ const addBindings = (blockly) => {
   });
   addEvent("tradingViewButton", () => tradingView.open());
 
-  const exportContent = {};
-  exportContent.summaryPanel = () => {
-    globalObserver.emit("summary.export");
-  };
-
-  exportContent.logPanel = () => {
-    globalObserver.emit("log.export");
-  };
-
-  const addExportButtonToPanel = (panelId) => {
-    const buttonHtml =
-      '<button class="icon-save" style="position:absolute;top:50%;margin:-10px 0 0 0;right:2em;padding:0.2em"></button>';
-    const $button = $(buttonHtml);
-    const panelSelector = `[aria-describedby="${panelId}"]`;
-    if (!$(`${panelSelector} .icon-save`).length) {
-      $button.insertBefore(`${panelSelector} .icon-close`);
-      $(`${panelSelector} .icon-close`).blur();
-      $($(`${panelSelector} .icon-save`)).click(() => {
-        exportContent[panelId]();
-      });
-    }
-  };
-
   const showSummary = () => {
     $("#summaryPanel").dialog("option", "minWidth", 770).dialog("open");
-    addExportButtonToPanel("summaryPanel");
   };
   addEvent("logButton", () => {
     $("#logPanel").dialog("open");
-    addExportButtonToPanel("logPanel");
   });
   addEvent("showSummary",showSummary);
 
