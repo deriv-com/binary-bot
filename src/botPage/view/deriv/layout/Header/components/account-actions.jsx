@@ -14,7 +14,8 @@ import {
     setAccountSwitcherLoader,
     setAccountSwitcherToken,
     setIsHeaderLoaded,
-    setShouldReloadWorkspace
+    setShouldReloadWorkspace,
+    setShowLoading
 } from "../../../store/ui-slice";
 import Tour, { TourTargets } from "../../../components/tour";
 import { addTokenIfValid, AppConstants } from "../../../../../../common/appId";
@@ -46,7 +47,7 @@ const AccountActions = () => {
         dispatch(setAccountSwitcherToken(''));
         globalObserver.emit("ui.switch_account", account_switcher_token);
         dispatch(setAccountSwitcherLoader(true));
-        $(".barspinner").show();
+        dispatch(setShowLoading(true))
         const tokenList = getTokenList();
         setStorage('tokenList', '');
 
@@ -58,7 +59,7 @@ const AccountActions = () => {
                 setStorage('active_loginid', next_active_account.accountName);
                 dispatch(updateActiveToken(next_active_account.token));
                 dispatch(setShouldReloadWorkspace(true));
-                $('.barspinner').hide();
+                dispatch(setShowLoading(false))
             }
         })
     }

@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setShowLoading } from '../../store/ui-slice';
 const NotFound = () => {
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
-    // Todo: Remove jquery
-    $(".barspinner").hide();
+    dispatch(setShowLoading(false));
   }, [])
+  
   return (
     <div className="page-not-found">
       <div className="page-not-found__inner">

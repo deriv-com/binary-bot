@@ -7,7 +7,7 @@ import TabContent from "./tab-content.jsx";
 import { currencyNameMap } from "../../../config";
 import Modal from "../../../components/modal";
 import { observer as globalObserver } from "../../../../../../common/utils/observer";
-import { setShouldReloadWorkspace } from "../../../store/ui-slice.js";
+import { setShouldReloadWorkspace, setShowLoading } from "../../../store/ui-slice.js";
 import useLogout from "../../../../../../common/hooks/useLogout.js";
 import { saveBeforeUnload } from "../../../../blockly/utils.js";
 import GTM from "../../../../../../common/gtm.js";
@@ -57,7 +57,7 @@ const AccountDropdown = React.forwardRef((props, dropdownRef) => {
       logout();
     } else {
       saveBeforeUnload();
-      $(".barspinner").show();
+      dispatch(setShowLoading(true))
       globalObserver.emit("blockly.stop");
       google_drive_util.logout();
       GTM.setVisitorId();

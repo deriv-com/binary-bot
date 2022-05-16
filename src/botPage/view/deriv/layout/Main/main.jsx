@@ -10,7 +10,7 @@ import {
 	convertForDerivStore,
 	removeAllTokens,
 } from "../../../../../common/utils/storageManager";
-import { setShouldReloadWorkspace, updateShowTour } from "../../store/ui-slice";
+import { setShouldReloadWorkspace, updateShowTour, setShowLoading } from "../../store/ui-slice";
 import _Blockly from "../../../blockly";
 import ToolBox from "../ToolBox";
 import SidebarToggle from "../../components/SidebarToggle";
@@ -109,7 +109,7 @@ const Main = () => {
 	const initializeBlockly = (blockly) => {
 		initialize(blockly)
 			.then(() => {
-				$(".barspinner").hide();
+				dispatch(setShowLoading(false))
 				window.dispatchEvent(new Event("resize"));
 				TrackJS.configure({
 					userId: document.getElementById("active-account-name")?.value,
