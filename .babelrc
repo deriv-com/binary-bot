@@ -32,7 +32,8 @@
       "@babel/plugin-proposal-class-properties",
       {
         "useBuiltIns": "usage",
-        "corejs": "2.6.5"
+        "corejs": "2.6.5",
+        "loose": "true"
       }
     ]
   ]
