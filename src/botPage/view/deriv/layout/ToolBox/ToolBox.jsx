@@ -21,10 +21,10 @@ const ShowModal = ({ modal, onClose, class_name }) => {
   );
 };
 
-const ToolboxButton = ({ label, tooltip, classes, id, position = 'bottom' }) => {
+const ToolboxButton = ({ label, tooltip, classes, id, onClick, position = 'bottom'}) => {
   return <span id={id}>
     <Popover content={tooltip} position={position}>
-      <button className={classes}>{label}</button>
+      <button onClick={onClick} className={classes}>{label}</button>
     </Popover>
   </span>
 }
@@ -180,10 +180,12 @@ const ToolBox = ({ blockly }) => {
       <ToolboxButton
         id="runButton"
         classes="toolbox-button icon-run"
+        onClick={()=>globalObserver.emit("blockly.start")}
         tooltip={translate("Run the bot")}
       />
       <ToolboxButton
         id="stopButton"
+        onClick={()=>{globalObserver.emit("blockly.stop")}}
         classes="toolbox-button icon-stop"
         tooltip={translate("Stop the bot")}
       />

@@ -146,12 +146,7 @@ const setElementActions = (blockly) => {
 };
 
 const addBindings = (blockly) => {
-  const stop = (e) => {
-    if (e) {
-      e.preventDefault();
-    }
-    stopBlockly(blockly);
-  };
+  globalObserver.register("blockly.stop",()=>stopBlockly(blockly));
 
   const removeTokens = () => {
     logoutAllTokens().then(() => {
@@ -261,33 +256,15 @@ const addBindings = (blockly) => {
     showSummary();
     blockly.run(limitations);
   };
-  addEvent("runButton",() => {
+
+  globalObserver.register("blockly.start",() => {
     // setTimeout is needed to ensure correct event sequence
     if (!checkForRequiredBlocks()) {
-      setTimeout(() => $("#stopButton").triggerHandler("click"));
+      setTimeout(() => globalObserver.emit("blockly.stop"));
       return;
     }
     startBot();
-  })
-  addEvent("stopButton", (e)=>{
-    stop(e);
   });
-
-  $('[aria-describedby="summaryPanel"]').on(
-    "click",
-    "#summaryRunButton",
-    () => {
-      $("#runButton").trigger("click");
-    }
-  );
-
-  $('[aria-describedby="summaryPanel"]').on(
-    "click",
-    "#summaryStopButton",
-    () => {
-      $("#stopButton").trigger("click");
-    }
-  );
 
   globalObserver.register("ui.switch_account", () => {
     stopBlockly(blockly);
