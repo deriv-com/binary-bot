@@ -108,19 +108,6 @@ export const getExtension = () => {
     return host !== extension ? extension : '';
 };
 
-export const showSpinnerInButton = $buttonElement => {
-    $buttonElement
-        .html(() => {
-            const barspinner = $('<div class="barspinner white" />');
-            Array.from(new Array(5)).forEach((x, i) => {
-                const rect = $(`<div class="rect${i + 1}" />`);
-                barspinner.append(rect);
-            });
-            return barspinner;
-        })
-        .prop('disabled', true);
-};
-
 export const removeSpinnerInButton = ($buttonElement, initialText) => {
     $buttonElement.html(() => initialText).prop('disabled', false);
 };

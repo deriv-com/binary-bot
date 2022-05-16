@@ -20,7 +20,7 @@ import { isLoggedIn } from "../../utils";
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from "../../store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "../../../../../common/appId";
 import { parseQueryString } from "../../../../../common/utils/tools";
-import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
+import initialize from "../../blockly-worksace";
 import { observer as globalObserver } from "../../../../../common/utils/observer";
 import { getRelatedDeriveOrigin } from "../../utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
@@ -48,7 +48,6 @@ const Main = () => {
 		if (should_reload_workspace && blockly) {
 			globalObserver.emit("bot.reload")
 			dispatch(setShouldReloadWorkspace(false));
-			applyToolboxPermissions();
 		}
 	}, [should_reload_workspace]);
 
@@ -87,7 +86,6 @@ const Main = () => {
 						dispatch(updateIsLogged(isLoggedIn()));
 						history.replace('/');
 						api.send({ balance: 1, account: 'all' }).catch(() => {})
-						applyToolboxPermissions();
 						resolve();
 					});
 				}

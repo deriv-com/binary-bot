@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import Load from "./components/load";
 import Save from "./components/save";
 import Reset from "./components/reset";
 import Modal from "../../components/modal";
 import { translate } from "../../../../../common/i18n";
-import { setIsBotRunning } from '../../store/ui-slice';
-import { observer as globalObserver } from '../../../../../common/utils/observer';
+import { setIsBotRunning } from "../../store/ui-slice";
+import { observer as globalObserver } from "../../../../../common/utils/observer";
 import { isMobile } from "../../../../../common/utils/tools";
 import Popover from "../../components/popover/index";
 
@@ -21,28 +22,41 @@ const ShowModal = ({ modal, onClose, class_name }) => {
   );
 };
 
-const ToolboxButton = ({ label, tooltip, classes, id, onClick, position = 'bottom'}) => {
-  return <span id={id}>
+const ToolboxButton = ({
+  label,
+  tooltip,
+  classes,
+  id,
+  onClick,
+  position = "bottom",
+}) => {
+  return (
+    <span id={id}>
     <Popover content={tooltip} position={position}>
-      <button onClick={onClick} className={classes}>{label}</button>
+        <button onClick={onClick} className={classes}>
+          {label}
+        </button>
     </Popover>
   </span>
-}
+  );
+};
 
 const ToolBox = ({ blockly }) => {
   const [should_show_modal, setShowModal] = React.useState(false);
   const [selected_modal, updateSelectedModal] = React.useState("");
-  const has_active_token = useSelector(state => !!state.client?.active_token);
+  const has_active_token = useSelector((state) => !!state.client?.active_token);
 
   const dispatch = useDispatch();
-  const { is_gd_ready } = useSelector(state => state.ui);
-  const { is_gd_logged_in } = useSelector(state => state.client);
+  const { is_gd_ready } = useSelector((state) => state.ui);
+  const { is_gd_logged_in } = useSelector((state) => state.client);
 
   React.useEffect(() => {
-    globalObserver.register('bot.running', () => dispatch(setIsBotRunning(true)));
-    globalObserver.register('bot.stop', () => dispatch(setIsBotRunning(false)));
+    globalObserver.register("bot.running", () =>
+      dispatch(setIsBotRunning(true))
+    );
+    globalObserver.register("bot.stop", () => dispatch(setIsBotRunning(false)));
 
-    const Keys = Object.freeze({ "zoomIn": 187, "zoomOut": 189 })
+    const Keys = Object.freeze({ zoomIn: 187, zoomOut: 189 });
     document.body.addEventListener("keydown", (e) => {
       if (e.which === Keys.zoomOut && e.ctrlKey) {
         // Ctrl + -
@@ -96,7 +110,8 @@ const ToolBox = ({ blockly }) => {
   };
   return (
     <div id="toolbox">
-      <Popover content={translate("Reset the blocks to their initial state")}
+      <Popover
+        content={translate("Reset the blocks to their initial state")}
         position="bottom"
       >
         <button
@@ -106,9 +121,11 @@ const ToolBox = ({ blockly }) => {
             onShowModal("reset");
           }}
         />
-
       </Popover>
-      <Popover content={translate("Load new blocks (xml file)")} position="bottom">
+      <Popover
+        content={translate("Load new blocks (xml file)")}
+        position="bottom"
+      >
         <button
           id="load-xml"
           className="toolbox-button icon-browse"
@@ -117,7 +134,10 @@ const ToolBox = ({ blockly }) => {
           }}
         />
       </Popover>
-      <Popover content={translate("Save the existing blocks (xml file)")} position="bottom">
+      <Popover
+        content={translate("Save the existing blocks (xml file)")}
+        position="bottom"
+      >
         <button
           id="save-xml"
           className="toolbox-button icon-save"
@@ -127,7 +147,12 @@ const ToolBox = ({ blockly }) => {
         />
       </Popover>
       {is_gd_ready && (
-        <Popover content={translate("Connect Binary Bot to your Google Drive to easily save and re-use your blocks")} position="bottom">
+        <Popover
+          content={translate(
+            "Connect Binary Bot to your Google Drive to easily save and re-use your blocks"
+          )}
+          position="bottom"
+        >
           <button
             id="integrations"
             className="toolbox-button icon-integrations"
@@ -136,14 +161,20 @@ const ToolBox = ({ blockly }) => {
       )}
 
       <span className="toolbox-separator" />
-      <Popover content={translate("Undo the changes (Ctrl+Z)")} position="bottom">
+      <Popover
+        content={translate("Undo the changes (Ctrl+Z)")}
+        position="bottom"
+      >
         <button
           id="undo"
           className="toolbox-button icon-undo"
           onClick={() => blockly.undo()}
         />
       </Popover>
-      <Popover content={translate("Redo the changes (Ctrl+Shift+Z)")} position="bottom">
+      <Popover
+        content={translate("Redo the changes (Ctrl+Shift+Z)")}
+        position="bottom"
+      >
         <button
           id="redo"
           className="toolbox-button icon-redo"
@@ -151,21 +182,30 @@ const ToolBox = ({ blockly }) => {
         />
       </Popover>
       <span className="toolbox-separator" />
-      <Popover content={translate("Zoom In (Ctrl + +)")} position={isMobile() ? "left" : "bottom"}>
+      <Popover
+        content={translate("Zoom In (Ctrl + +)")}
+        position={isMobile() ? "left" : "bottom"}
+      >
         <button
           id="zoomIn"
           className="toolbox-button icon-zoom-in"
           onClick={() => blockly.zoomOnPlusMinus(true)}
         />
       </Popover>
-      <Popover content={translate("Zoom Out (Ctrl + -)")} position={isMobile() ? "left" : "bottom"}>
+      <Popover
+        content={translate("Zoom Out (Ctrl + -)")}
+        position={isMobile() ? "left" : "bottom"}
+      >
         <button
           id="zoomOut"
           className="toolbox-button icon-zoom-out"
           onClick={() => blockly.zoomOnPlusMinus(false)}
         />
       </Popover>
-      <Popover content={translate("Rearrange Vertically")} position={isMobile() ? "left" : "bottom"}>
+      <Popover
+        content={translate("Rearrange Vertically")}
+        position={isMobile() ? "left" : "bottom"}
+      >
         <button
           id="rearrange"
           className="toolbox-button icon-sort"
@@ -173,32 +213,39 @@ const ToolBox = ({ blockly }) => {
         />
       </Popover>
       {/* Needs Refactor ClientInfo Structure */}
-      <span className="toolbox-separator" />
-      <Popover content={translate("Show/hide the summary pop-up")} position="bottom">
-        <button id="showSummary" className="toolbox-button icon-summary" />
+      <span className={classNames("toolbox-separator",{"toolbox-hide":!has_active_token})} />
+      <Popover
+        content={translate("Show/hide the summary pop-up")}
+        position="bottom"
+      >
+        <button 
+        id="showSummary"
+        className={classNames("toolbox-button icon-summary",{"toolbox-hide":!has_active_token})}
+        />
       </Popover>
       <ToolboxButton
         id="runButton"
-        classes="toolbox-button icon-run"
+        classes={classNames("toolbox-button icon-run",{"toolbox-hide":!has_active_token})}
         onClick={()=>globalObserver.emit("blockly.start")}
         tooltip={translate("Run the bot")}
       />
       <ToolboxButton
         id="stopButton"
         onClick={()=>{globalObserver.emit("blockly.stop")}}
-        classes="toolbox-button icon-stop"
+        classes={classNames("toolbox-button icon-stop",{"toolbox-hide":!has_active_token})}
         tooltip={translate("Stop the bot")}
       />
-      <Popover content={translate("Show log")} position="bottom">
-        <button id="logButton" className="toolbox-button icon-info" />
+      <Popover 
+        content={translate("Show log")}
+        position="bottom"
+        className={classNames({"toolbox-hide":!has_active_token})}
+        >
+        <button id="logButton" className={classNames("toolbox-button icon-info",{"toolbox-hide":!has_active_token})} />
       </Popover>
-      {has_active_token && <span className="toolbox-separator" />}
+      <span className="toolbox-separator" />
       {/* Needs resizeable modal */}
       <Popover content={translate("Show chart")} position="bottom">
-        <button
-          id="chartButton"
-          className="toolbox-button icon-chart-line"
-        />
+        <button id="chartButton" className="toolbox-button icon-chart-line" />
       </Popover>
       <Popover content={translate("Show Trading View")} position="bottom">
         <button

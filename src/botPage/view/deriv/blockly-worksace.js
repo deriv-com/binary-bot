@@ -2,7 +2,6 @@ import config, { updateConfigCurrencies } from "../../../botPage/common/const";
 import logHandler from "../../view/logger";
 import { updateTokenList } from "./utils";
 import {
-  getTokenList,
   set as setStorage,
   syncWithDerivApp,
   getToken,
@@ -82,14 +81,6 @@ const checkForRequiredBlocks = () => {
 
   return true;
 };
-
-export function applyToolboxPermissions() {
-  const fn = getTokenList().length ? "show" : "hide";
-  $("#runButton, #showSummary, #logButton")
-    [fn]()
-    .prevAll(".toolbox-separator:first")
-    [fn]();
-}
 
 const setFileBrowser = () => {
   const readFile = (f, dropEvent = {}) => {
@@ -199,7 +190,6 @@ const addBindings = (blockly) => {
   addEvent("logButton", () => {
     $("#logPanel").dialog("open");
   });
-  addEvent("showSummary",showSummary);
 
   globalObserver.register("ui.logout", () => {
     saveBeforeUnload();
@@ -330,7 +320,6 @@ const initialize = (blockly) =>
     updateConfigCurrencies().then(() => {
       updateTokenList();
       logHandler();
-      applyToolboxPermissions();
       setElementActions(blockly);
       resolve();
     });
