@@ -4,6 +4,7 @@ import trackjs_config from "../../trackJs_config";
 import GTM from "../../../../common/gtm";
 import { symbolPromise } from "../../shared";
 import Routes from "../routes";
+import Loading from "../layout/Main/loading.jsx";
 
 // Todo create symbol slice and update/add info from here;
 const App = () => {
@@ -20,7 +21,7 @@ const App = () => {
     });
   }, [])
 
-  if (!has_symbols) return null; // Todo: add fallback
+  if (!has_symbols) return <Loading/>; // Todo: add fallback
 
   return (
     <Routes />

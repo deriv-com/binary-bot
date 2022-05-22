@@ -10,7 +10,7 @@ import {
 	convertForDerivStore,
 	removeAllTokens,
 } from "../../../../../common/utils/storageManager";
-import { setShouldReloadWorkspace, updateShowTour } from "../../store/ui-slice";
+import { setShouldReloadWorkspace, updateShowTour, setShowLoading } from "../../store/ui-slice";
 import _Blockly from "../../../blockly";
 import ToolBox from "../ToolBox";
 import SidebarToggle from "../../components/SidebarToggle";
@@ -20,7 +20,7 @@ import { isLoggedIn } from "../../utils";
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from "../../store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "../../../../../common/appId";
 import { parseQueryString } from "../../../../../common/utils/tools";
-import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
+import initialize from "../../blockly-worksace";
 import { observer as globalObserver } from "../../../../../common/utils/observer";
 import { getRelatedDeriveOrigin } from "../../utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
@@ -48,7 +48,6 @@ const Main = () => {
 		if (should_reload_workspace && blockly) {
 			globalObserver.emit("bot.reload")
 			dispatch(setShouldReloadWorkspace(false));
-			applyToolboxPermissions();
 		}
 	}, [should_reload_workspace]);
 
@@ -87,7 +86,6 @@ const Main = () => {
 						dispatch(updateIsLogged(isLoggedIn()));
 						history.replace('/');
 						api.send({ balance: 1, account: 'all' }).catch(() => {})
-						applyToolboxPermissions();
 						resolve();
 					});
 				}
@@ -111,8 +109,7 @@ const Main = () => {
 	const initializeBlockly = (blockly) => {
 		initialize(blockly)
 			.then(() => {
-				$(".show-on-load").show();
-				$(".barspinner").hide();
+				dispatch(setShowLoading(false))
 				window.dispatchEvent(new Event("resize"));
 				TrackJS.configure({
 					userId: document.getElementById("active-account-name")?.value,

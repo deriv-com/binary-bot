@@ -14,7 +14,6 @@ const NetworkStatus = () => {
                 return;
             }
             if (data?.msg_type === 'website_status') {
-                $('.web-status').trigger('notify-hide');
                 const { website_status } = data;
                 if(website_status?.message) {
                     $.notify(website_status.message, {

@@ -1,10 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic";
 import { get as getStorage, set as setStorage } from '../../../../../common/utils/storageManager';
 import { translate } from '../../../../../common/utils/tools';
 import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from '../../api';
 import { isLoggedIn } from '../../utils';
 import useLogout from '../../../../../common/hooks/useLogout';
+import { setShowLoading } from '../../store/ui-slice';
 
 const getError = (server) => {
 	return <>Unable to connect to <b>{server}</b>. Switching connection to default endpoint.</>
@@ -17,10 +19,10 @@ const Endpoint = () => {
 	const [has_error, setError] = React.useState('');
 	const [is_connected, setConnected] = React.useState(false);
 	const logout = useLogout();
-
-
+	const dispatch = useDispatch();
+	
 	React.useEffect(() => {
-		$(".barspinner").hide();
+		dispatch(setShowLoading(false));
 		setServer(getStorage('config.server_url') || getDefaultEndpoint().url);
 		setAppId(getStorage('config.app_id') || getDefaultEndpoint().appId);
 	}, [])

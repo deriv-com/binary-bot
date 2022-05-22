@@ -5,6 +5,7 @@ import { Table, Column, CellMeasurerCache } from 'react-virtualized';
 import { observer as globalObserver } from '../../common/utils/observer';
 import { translate } from '../../common/i18n';
 import { appendRow, saveAs } from './shared';
+import ExportButton from "./Dialogs/export-button.jsx";
 
 const Logtable = () => {
     const [id, setId] = React.useState(0);
@@ -40,8 +41,8 @@ const Logtable = () => {
         });
         const data = json2csvParser.parse(rows);
 
-        saveAs({ data, filename: 'logs.csv', type: 'text/csv;charset=utf-8' });
-    };
+    saveAs({ data, filename: "logs.csv", type: "text/csv;charset=utf-8" });
+  };
 
     const notify = log => {
         if (!log) return;
@@ -132,6 +133,10 @@ const Logtable = () => {
                             </div>
                         </div>
                     </div>
+                    <ExportButton
+                      className="icon-save-log"
+                      onClick={() => globalObserver.emit("log.export")}
+                  />
                 </div>
             </div>
         </span>
