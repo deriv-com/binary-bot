@@ -29,11 +29,12 @@ const ToolboxButton = ({
   id,
   onClick,
   position = "bottom",
+  is_bot_running,
 }) => {
   return (
     <span id={id}>
     <Popover content={tooltip} position={position}>
-        <button onClick={onClick} className={classes}>
+        <button onClick={onClick} className={classes} disabled={is_bot_running}>
           {label}
         </button>
     </Popover>
@@ -47,7 +48,7 @@ const ToolBox = ({ blockly }) => {
   const has_active_token = useSelector((state) => !!state.client?.active_token);
 
   const dispatch = useDispatch();
-  const { is_gd_ready } = useSelector((state) => state.ui);
+  const { is_gd_ready, is_bot_running } = useSelector((state) => state.ui);
   const { is_gd_logged_in } = useSelector((state) => state.client);
 
   React.useEffect(() => {
@@ -219,22 +220,33 @@ const ToolBox = ({ blockly }) => {
         position="bottom"
       >
         <button 
-        id="showSummary"
-        className={classNames("toolbox-button icon-summary",{"toolbox-hide":!has_active_token})}
+          id="showSummary"
+          className={classNames("toolbox-button icon-summary",{"toolbox-hide":!has_active_token})}
         />
       </Popover>
-      <ToolboxButton
-        id="runButton"
-        classes={classNames("toolbox-button icon-run",{"toolbox-hide":!has_active_token})}
-        onClick={()=>globalObserver.emit("blockly.start")}
-        tooltip={translate("Run the bot")}
-      />
-      <ToolboxButton
-        id="stopButton"
-        onClick={()=>{globalObserver.emit("blockly.stop")}}
-        classes={classNames("toolbox-button icon-stop",{"toolbox-hide":!has_active_token})}
-        tooltip={translate("Stop the bot")}
-      />
+      <span id="runButton">
+        <Popover 
+          content={translate("Run the bot")} 
+          position="bottom"
+        >
+            <button 
+              onClick={()=>globalObserver.emit("blockly.start")} 
+              className={classNames("toolbox-button icon-run",{"toolbox-hide":!has_active_token})}
+              disabled={is_bot_running}
+            />
+        </Popover>
+      </span>
+      <span id="stopButton">
+        <Popover 
+          content={translate("Stop the bot")} 
+          position="bottom"
+        >
+          <button 
+              onClick={()=>{globalObserver.emit("blockly.stop")}} 
+              className={classNames("toolbox-button icon-stop",{"toolbox-hide":!has_active_token})}
+          />
+        </Popover>
+      </span>
       <Popover 
         content={translate("Show log")}
         position="bottom"

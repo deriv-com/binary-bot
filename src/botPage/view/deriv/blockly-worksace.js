@@ -184,6 +184,7 @@ const addBindings = (blockly) => {
   const showSummary = () => {
     $("#summaryPanel").dialog("option", "minWidth", 770).dialog("open");
   };
+  addEvent("showSummary",showSummary);
   addEvent("logButton", () => {
     $("#logPanel").dialog("open");
   });
