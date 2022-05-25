@@ -32,6 +32,7 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
       setIsAccDropdownOpen(false);
     }
   }
+  
 
   return (
     <div className={`account__switcher-tabs-content ${isActive ? "" : "hide"}`}>
@@ -56,7 +57,13 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
           {accounts && Object.keys(accounts)
             .sort((acc, acc1) => { return acc === active_account_name ? -1 : (acc1 === active_account_name ? 1 : 0) })
             .map((acc, index) => {
-              const account = accounts[acc]
+              const account = accounts[acc];
+              const has_currency = !!account.currency;
+              const display_balance = account?.balance?.toLocaleString(undefined, {
+                minimumFractionDigits:
+                  currencyNameMap[account.currency]
+                    ?.fractional_digits ?? 2,
+              }) || 0;
               return (
                 isReal !== Boolean(account.demo_account) && (
                   <div
@@ -73,28 +80,22 @@ const TabContent = ({ tab, isActive, setIsAccDropdownOpen }) => {
                       src={`image/deriv/currency/ic-currency-${accounts[acc].demo_account
                         ? "virtual"
                         : account.currency?.toLowerCase()
-                        }.svg`}
+                        || "unknown"}.svg`}
                     />
                     <span>
                       {accounts[acc].demo_account
                         ? translate("Demo")
                         : currencyNameMap[account.currency]?.name ||
-                        account.currency}
+                        account.currency || translate("No currency assigned")}
                       <div className="account__switcher-loginid">
                         {acc}
                       </div>
                     </span>
                     <span className="account__switcher-balance">
-                      {account?.balance?.toLocaleString(undefined, {
-                        minimumFractionDigits:
-                          currencyNameMap[account.currency]
-                            ?.fractional_digits ?? 2,
-                      })}
+                      {has_currency && display_balance}
                       <span className="symbols">
                         &nbsp;
-                        {account?.currency === "UST"
-                          ? "USDT"
-                          : account?.currency}
+                        {account?.currency === "UST" ? "USDT" : account?.currency}
                       </span>
                     </span>
                   </div>
