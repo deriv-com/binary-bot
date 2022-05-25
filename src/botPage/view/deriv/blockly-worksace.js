@@ -153,11 +153,7 @@ export const removeTokens = () => {
 
 const addBindings = (blockly) => {
   globalObserver.register("blockly.stop",()=>{blockly.stop()});
-
-  $(".panelExitButton").click(function onClick() {
-    $(this).parent().hide();
-  });
-
+  
   $(".draggable-dialog")
     .hide()
     .dialog({
