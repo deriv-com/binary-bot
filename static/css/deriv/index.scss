@@ -43,6 +43,12 @@ a:hover {
     }
 }
 .ui-dialog {
+    .ui-button { 
+        background: var(--button-primary-default) !important;
+        &:hover {
+            background: var(--button-primary-hover) !important;
+        }
+    }
     @include mobile {
         width: 90vw !important;
     }

@@ -41,7 +41,7 @@
             &-close {
                 width: 1.5rem;
                 height: 1.5rem;
-                background: #2e8836;
+                background: var(--button-primary-default);
                 border-radius: 3px;
                 display: flex;
                 justify-content: center;
@@ -54,6 +54,9 @@
                     font-weight: 200;
                     font-size: 18px;
                     margin-top: -2px;
+                }
+                &:hover {
+                    background: var(--button-primary-hover);
                 }
             }
         }
