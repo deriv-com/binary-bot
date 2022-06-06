@@ -52,15 +52,23 @@ const AnimateTrade = () => {
     globalObserver.register("bot.stop", () => {
       if (isMounted()) setIndicatorMessage(INDICATOR_MESSAGES.stopped);
     });
-    const stopButton = document.getElementById('stopButton');
-    stopButton.addEventListener("click", onStop);
 
-    const runButton = document.getElementById("runButton");
-    runButton.addEventListener("click",onClickRun);
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'complete') {
+        const stopButton = document.getElementById('stopButton');
+        stopButton.addEventListener("click", onStop);
+    
+        const runButton = document.getElementById("runButton");
+        runButton.addEventListener("click",onClickRun);
+        const summaryRunButton = document.getElementById("summaryRunButton");
+        summaryRunButton.addEventListener("click",onClickRun);
+      }
+  });
 
     return () => {
       stopButton.removeEventListener("click", onStop);
       runButton.removeEventListener("click", onClickRun);
+      summaryRunButton.removeEventListener("click", onClickRun);
     };
   }, []);
 
