@@ -7,7 +7,7 @@ import { doUntilDone } from "../tools";
 import { expectInitArg, expectTradeOptions } from "../sanitize";
 import Proposal from "./Proposal";
 import Total from "./Total";
-import Balance from "./Balance";
+import { observeBalance } from "./Balance";
 import OpenContract from "./OpenContract";
 import Sell from "./Sell";
 import Purchase from "./Purchase";
@@ -62,7 +62,7 @@ const watchScope = ({ store, stopScope, passScope, passFlag }) => {
   });
 };
 
-export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Proposal(Ticks(Total(class {}))))))) {
+export default class TradeEngine extends Purchase(Sell(OpenContract(Proposal(Ticks(Total(class {})))))) {
   constructor($scope) {
     super();
     this.api = $scope.api;
@@ -141,7 +141,7 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
 
   observe() {
     this.observeOpenContract();
-    this.observeBalance();
+    observeBalance(this.accountInfo);
     this.observeProposals();
   }
 

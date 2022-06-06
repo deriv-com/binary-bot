@@ -1,6 +1,7 @@
 import { notify } from '../broadcast';
 import { translate } from '../../../common/i18n';
 import { observer as globalObserver } from '../../../common/utils/observer';
+import { getBalance } from '../TradeEngine/Balance';
 
 export default Interface =>
     class extends Interface {
@@ -28,7 +29,7 @@ export default Interface =>
                 notify        : args => globalObserver.emit('Notify', args),
                 notifyTelegram: this.notifyTelegram,
                 getTotalRuns  : () => this.tradeEngine.getTotalRuns(),
-                getBalance    : type => this.tradeEngine.getBalance(type),
+                getBalance    : type => getBalance(type),
                 getTotalProfit: toString =>
                     this.tradeEngine.getTotalProfit(toString, this.tradeEngine.tradeOptions.currency),
             };
