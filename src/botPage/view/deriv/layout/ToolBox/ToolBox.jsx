@@ -45,10 +45,11 @@ const ToolboxButton = ({
 const ToolBox = ({ blockly }) => {
   const [should_show_modal, setShowModal] = React.useState(false);
   const [selected_modal, updateSelectedModal] = React.useState("");
+  const [is_loading_balance, setIsLoadingBalance] = React.useState(true);
   const has_active_token = useSelector((state) => !!state.client?.active_token);
 
   const dispatch = useDispatch();
-  const { is_gd_ready, is_bot_running } = useSelector((state) => state.ui);
+  const { is_gd_ready, is_bot_running, account_switcher_loader } = useSelector((state) => state.ui);
   const { is_gd_logged_in } = useSelector((state) => state.client);
 
   React.useEffect(() => {
@@ -74,6 +75,12 @@ const ToolBox = ({ blockly }) => {
     });
   }, []);
 
+  React.useEffect(() => {
+    setIsLoadingBalance(true);
+    if(!account_switcher_loader){
+      setIsLoadingBalance(false);
+    }
+  });
   const onCloseModal = () => {
     setShowModal(false);
     updateSelectedModal("");
@@ -231,7 +238,7 @@ const ToolBox = ({ blockly }) => {
         >
             <button 
               onClick={()=>globalObserver.emit("blockly.start")} 
-              className={classNames("toolbox-button icon-run",{"toolbox-hide":!has_active_token})}
+              className={classNames("toolbox-button icon-run",{"toolbox-hide":!has_active_token || is_loading_balance})}
               disabled={is_bot_running}
             />
         </Popover>
