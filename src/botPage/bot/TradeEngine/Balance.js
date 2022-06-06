@@ -5,8 +5,7 @@ import api from "../../view/deriv/api";
 
 export const getBalance = (type) => {
   const balance = globalObserver.getState("balance");
-  const balance_str = `${balance}`;
-  return type === "STR" ? balance_str : Number(balance);
+  return type === "STR" ? `${balance}` : Number(balance);
 }
 
 export const observeBalance = (accountInfo) => {
