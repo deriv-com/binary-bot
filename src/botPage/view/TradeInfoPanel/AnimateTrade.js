@@ -53,17 +53,13 @@ const AnimateTrade = () => {
       if (isMounted()) setIndicatorMessage(INDICATOR_MESSAGES.stopped);
     });
 
-    document.addEventListener('readystatechange', () => {
-      if (document.readyState === 'complete') {
-        const stopButton = document.getElementById('stopButton');
-        stopButton.addEventListener("click", onStop);
-    
-        const runButton = document.getElementById("runButton");
-        runButton.addEventListener("click",onClickRun);
-        const summaryRunButton = document.getElementById("summaryRunButton");
-        summaryRunButton.addEventListener("click",onClickRun);
-      }
-  });
+    const stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener("click", onStop);
+
+    const runButton = document.getElementById("runButton");
+    runButton.addEventListener("click",onClickRun);
+    const summaryRunButton = document.getElementById("summaryRunButton");
+    summaryRunButton.addEventListener("click",onClickRun);
 
     return () => {
       stopButton.removeEventListener("click", onStop);
