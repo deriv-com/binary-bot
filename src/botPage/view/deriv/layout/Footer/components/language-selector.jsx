@@ -6,8 +6,10 @@ import { getLanguage } from "../../../../../../common/lang";
 const current_language = getLanguage();
 
 const LanguageModal = ({toggleModal}) => (
-    <div id="language-menu-modal" onClick={()=>toggleModal(false)}>
-        <div className="language-menu" onClick={e => e.stopPropagation()}>
+    <div id="language-menu-modal" onClick={()=> { toggleModal(false)}}>
+        <div className="language-menu" onClick={e => { 
+            e.stopPropagation()
+            e.preventDefault()}}>
             <div className="language-menu-header">
                 <span>{translate("Language settings")}</span>
                 <span

@@ -125,8 +125,7 @@ const AccountDropdown = React.forwardRef((props, dropdownRef) => {
             id="deriv__logout-btn"
             className="account__switcher-logout logout"
             onClick={() => {
-              if (show_bot_unavailable_page) onLogout();
-              else updaetShowLogoutModal(true);
+              show_bot_unavailable_page ? onLogout() : updaetShowLogoutModal(true);
             }}
           >
             <span className="account__switcher-logout-text">

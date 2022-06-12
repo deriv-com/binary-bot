@@ -5,7 +5,7 @@ import { observer as globalObserver } from "../../../common/utils/observer";
 const RunButton = () => (
   <React.Fragment>
     <button
-      title="Run the bot"
+      title={translate("Run the bot")}
       id="summaryRunButton"
       className="toolbox-button icon-run"
       onClick={() => globalObserver.emit("blockly.start")}
