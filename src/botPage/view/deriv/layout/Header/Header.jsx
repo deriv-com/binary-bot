@@ -100,7 +100,6 @@ const Header = () => {
           api.send({
             balance: 1,
             account: "all",
-            subscribe: 1,
           })
             .then(() => { })
             .catch(() => { });
