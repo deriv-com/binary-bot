@@ -345,7 +345,7 @@ export const getContractsAvailableForSymbolFromApi = async underlyingSymbol => {
     }
   } catch (e) {
     if (isProduction()) {
-      TrackJS.addMetadata("getContractsAvailableForSymbolFromApi Error", e.message);
+      TrackJS.addMetadata("getContractsAvailableForSymbolFromApi Error", (e?.error?.message || e?.message));
     }
   }
   return contractsForSymbol;
