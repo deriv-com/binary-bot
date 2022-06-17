@@ -18,6 +18,7 @@ const Logtable = () => {
     const min_height = 550;
     const cache = new CellMeasurerCache({
         defaultHeight: 35,
+        fixedHeight: true,
     });
 
     const columns = [

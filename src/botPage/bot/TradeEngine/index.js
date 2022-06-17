@@ -62,7 +62,7 @@ const watchScope = ({ store, stopScope, passScope, passFlag }) => {
   });
 };
 
-export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Proposal(Ticks(Total(class {}))))))) {
+export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Proposal(Ticks(Total(class { }))))))) {
   constructor($scope) {
     super();
     this.api = $scope.api;
@@ -125,7 +125,7 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
                 currency: balance.currency,
               });
               resolve();
-            })
+            }).catch(() => { })
           } else {
             resolve();
           }
