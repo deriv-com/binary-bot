@@ -123,7 +123,7 @@
     "react-draggable": "^4.4.4",
     "react-virtualized": "^9.22.3",
     "react-content-loader": "^6.1.0",
-    "react-redux": "^7.2.6",
+    "react-redux": "^8.0.2",
     "react-render-html": "^0.6.0",
     "react-router-dom": "^5.3.0",
     "react-tiny-popover": "^7.0.1",
