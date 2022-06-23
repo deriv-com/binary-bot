@@ -61,7 +61,7 @@ export default class TicksService {
       this.active_symbols_promise = new Promise(resolve => {
         this.getActiveSymbols().then(activeSymbols => {
           this.pipSizes = activeSymbols
-            .reduce((s, i) => s.set(i.symbol, +(+i.pip).toExponential().substring(3)), new Map())
+            ?.reduce((s, i) => s.set(i.symbol, +(+i.pip).toExponential().substring(3)), new Map())
             .toObject();
           resolve(this.pipSizes);
         });
@@ -71,19 +71,26 @@ export default class TicksService {
   }
   getActiveSymbols = () =>
     new Promise(resolve => {
-      const tokenList = getTokenList();
-      this.api.authorize(tokenList[0].token).then(() => {
-        // eslint-disable-next-line camelcase
-        this.api.send({ active_symbols: 'brief' }).then(({ active_symbols }) =>
+      const token = getTokenList()?.token;
+
+      if (token) {
+        this.api.authorize(token).then(() => {
           // eslint-disable-next-line camelcase
-          resolve(active_symbols)
-        ).catch(err => {
+          this.api.send({ active_symbols: 'brief' }).then(({ active_symbols }) =>
+            // eslint-disable-next-line camelcase
+            resolve(active_symbols)
+          ).catch(err => {
+            globalObserver.emit('Error', err);
+          });
+        }).catch(err => {
           globalObserver.emit('Error', err);
-        });
-      }).catch(err => {
-        globalObserver.emit('Error', err);
-      })
+        })
+      } else {
+        resolve();
+      }
+
     });
+
   request(options) {
     const { symbol, granularity } = options;
 
