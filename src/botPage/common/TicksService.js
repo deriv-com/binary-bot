@@ -86,7 +86,13 @@ export default class TicksService {
           globalObserver.emit('Error', err);
         })
       } else {
-        resolve();
+        // eslint-disable-next-line camelcase
+        this.api.send({ active_symbols: 'brief' }).then(({ active_symbols }) =>
+          // eslint-disable-next-line camelcase
+          resolve(active_symbols)
+        ).catch(err => {
+          globalObserver.emit('Error', err);
+        });
       }
 
     });
