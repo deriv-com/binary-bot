@@ -31,9 +31,7 @@ export default () => {
                 if (block && block.type === 'trade' && ev.workspaceId === Blockly.mainWorkspace.id) {
                     const symbol = block.getFieldValue('SYMBOL_LIST');
                     if (!symbol) return;
-
                     this.pollForContracts(symbol).then(contracts => {
-                        globalObserver.setState({ symbol }); // initialize the symbol in global observer if available
                         this.updateBarrierOffsetBlocks(contracts, false, false); // false false to maintain user's values on import
                         this.updatePredictionBlocks(contracts);
                         this.updateDurationLists(contracts, false, false); // false false to maintain user's values on import
@@ -44,11 +42,9 @@ export default () => {
                 if (!ev.oldParentId && ev.newParentId) {
                     const movedBlock = Blockly.mainWorkspace.getBlockById(ev.blockId);
                     const topParentBlock = findTopParentBlock(movedBlock);
-
                     if (topParentBlock && topParentBlock.type === 'trade') {
                         const symbol = topParentBlock.getFieldValue('SYMBOL_LIST');
                         if (!symbol) return;
-
                         const getNestedTradeOptions = block => {
                             if (/^tradeOptions/.test(block.type)) {
                                 this.pollForContracts(symbol).then(contracts => {
@@ -70,7 +66,6 @@ export default () => {
                 if (this.parentBlock_ !== null) {
                     const symbol = getParentValue(this, 'SYMBOL_LIST');
                     if (!symbol) return;
-
                     this.pollForContracts(symbol).then(contracts => {
                         if (ev.name === 'SYMBOL_LIST' && ev.oldValue !== ev.newValue) {
                             globalObserver.setState({ symbol: ev.newValue });
@@ -108,12 +103,10 @@ export default () => {
             disableRunButton(true);
             return new Promise(resolve => {
                 const contractsForSymbol = haveContractsForSymbol(symbol);
-
                 const resolveContracts = resolveObj => {
                     disableRunButton(false);
                     resolve(resolveObj);
                 };
-
                 if (!contractsForSymbol) {
                     // Register an event and use as a lock to avoid spamming API
                     const event = `contractsLoaded.${symbol}`;
@@ -146,20 +139,16 @@ export default () => {
             getBlocksByType(this.type).forEach(tradeOptionsBlock => {
                 if (tradeOptionsBlock.disabled) return;
                 if (updateOnly.length && !updateOnly.includes(tradeOptionsBlock.id)) return;
-
                 const predictionInput = tradeOptionsBlock.getInput('PREDICTION');
                 if (!predictionInput) return;
-
                 const tradeType = getParentValue(tradeOptionsBlock, 'TRADETYPE_LIST');
                 const predictionRange = getPredictionForContracts(contracts, tradeType);
-
                 hideInteractionsFromBlockly(() => {
                     if (!predictionRange.length) {
                         tradeOptionsBlock.removeInput('PREDICTION');
                         return;
                     }
                     predictionInput.setVisible(true);
-
                     // Attach shadow block with API-returned prediction-value (only if user hasn't defined a value)
                     if (!predictionInput.connection.isConnected()) {
                         predictionInput.attachShadowBlock(predictionRange[0], 'NUM', 'math_number');
@@ -171,7 +160,6 @@ export default () => {
             getBlocksByType(this.type).forEach(tradeOptionsBlock => {
                 if (tradeOptionsBlock.disabled) return;
                 if (updateOnly.length && !updateOnly.includes(tradeOptionsBlock.id)) return;
-
                 const tradeType = getParentValue(tradeOptionsBlock, 'TRADETYPE_LIST');
                 const selectedDuration = tradeOptionsBlock.getFieldValue('DURATIONTYPE_LIST');
                 const selectedBarrierTypes = [
@@ -179,7 +167,6 @@ export default () => {
                     tradeOptionsBlock.getFieldValue('SECONDBARRIEROFFSETTYPE_LIST'),
                 ];
                 const barriers = getBarriersForContracts(contracts, tradeType, selectedDuration, selectedBarrierTypes);
-
                 hideInteractionsFromBlockly(() => {
                     const revealBarrierBlock = (barrierValue, inputName) => {
                         const barrierInput = tradeOptionsBlock.getInput(inputName);
@@ -195,11 +182,9 @@ export default () => {
                             }
                         }
                     };
-
                     const barrierOffsetNames = ['BARRIEROFFSET', 'SECONDBARRIEROFFSET'];
                     const barrierLabels = [translate('High barrier'), translate('Low barrier')];
                     const removeInput = inputName => tradeOptionsBlock.removeInput(inputName);
-
                     const updateList = (list, options) => {
                         if (!list) return;
                         const prevSelectedType = options.find(option => option[1] === list.getValue());
@@ -213,17 +198,14 @@ export default () => {
                             list.setValue(list.menuGenerator_[0][1]); // eslint-disable-line no-underscore-dangle
                         }
                     };
-
                     if (!barriers.values.length) {
                         barrierOffsetNames.forEach(removeInput);
                         return;
                     }
-
                     barriers.values.forEach((barrierValue, index) => {
                         const typeList = tradeOptionsBlock.getField(`${barrierOffsetNames[index]}TYPE_LIST`);
                         const typeInput = tradeOptionsBlock.getInput(barrierOffsetNames[index]);
                         const absoluteType = [[translate('Absolute'), 'absolute']];
-
                         if (selectedDuration === 'd') {
                             updateList(typeList, absoluteType);
                         } else if (barriers.allowBothTypes || barriers.allowAbsoluteType) {
@@ -231,7 +213,6 @@ export default () => {
                         } else {
                             updateList(typeList, config.barrierTypes);
                         }
-
                         if (typeInput?.fieldRow && Array.isArray(typeInput.fieldRow)) {
                             if (barriers.values.length === 1) {
                                 typeInput.fieldRow[0].setText(`${translate('Barrier')}:`);
@@ -249,20 +230,17 @@ export default () => {
             getBlocksByType(this.type).forEach(tradeOptionsBlock => {
                 if (tradeOptionsBlock.disabled) return;
                 if (updateOnly.length && !updateOnly.includes(tradeOptionsBlock.id)) return;
-
                 const tradeType = getParentValue(tradeOptionsBlock, 'TRADETYPE_LIST');
                 const durationTypeList = tradeOptionsBlock.getField('DURATIONTYPE_LIST');
                 const selectedDuration = durationTypeList.getValue();
                 const durations = getDurationsForContracts(contracts, tradeType);
                 const durationOptions = durations.map(duration => [duration.label, duration.unit]);
-
                 hideInteractionsFromBlockly(() => {
                     // Prevent UI flickering by only updating field only if options have changed
                     // eslint-disable-next-line no-underscore-dangle
                     if (JSON.stringify(durationTypeList.menuGenerator_) !== JSON.stringify(durationOptions)) {
                         durationTypeList.menuGenerator_ = durationOptions; // eslint-disable-line no-underscore-dangle
                     }
-
                     // Set duration to previous selected duration (required for imported strategies)
                     // eslint-disable-next-line no-underscore-dangle
                     const prevSelectedDuration = durationTypeList.menuGenerator_.find(d => d[1] === selectedDuration);
@@ -275,7 +253,6 @@ export default () => {
                         // eslint-disable-next-line no-underscore-dangle
                         durationTypeList.setValue(durationTypeList.menuGenerator_[0][1]);
                     }
-
                     // Attach shadow block with min value (only when user hasn't already attached another output block)
                     if (durations.length) {
                         const durationInput = tradeOptionsBlock.getInput('DURATION');
@@ -284,7 +261,6 @@ export default () => {
                         } else if (setMinDuration) {
                             const connectedBlock = durationInput.connection.targetBlock();
                             const minDuration = durations.find(d => d.unit === selectedDuration);
-
                             if (connectedBlock.isShadow() && minDuration) {
                                 connectedBlock.setFieldValue(minDuration.minimum, 'NUM');
                             }
@@ -297,7 +273,6 @@ export default () => {
             getBlocksByType(this.type).forEach(tradeOptionsBlock => {
                 if (tradeOptionsBlock.disabled) return;
                 if (updateOnly.length && !updateOnly.includes(tradeOptionsBlock.id)) return;
-
                 const newValue = tradeOptionsBlock.getFieldValue(barrierFieldName);
                 const otherBarrierListName = () => {
                     if (barrierFieldName === 'BARRIEROFFSETTYPE_LIST') {
@@ -305,7 +280,6 @@ export default () => {
                     }
                     return 'BARRIEROFFSETTYPE_LIST';
                 };
-
                 const otherBarrierList = tradeOptionsBlock.getField(otherBarrierListName());
                 if (otherBarrierList) {
                     const otherBarrierType = otherBarrierList.getValue();
@@ -323,24 +297,19 @@ export default () => {
         },
     };
     Blockly.Blocks.tradeOptions_payout = Blockly.Blocks.tradeOptions;
-
     Blockly.JavaScript.tradeOptions = block => {
         const durationValue = Blockly.JavaScript.valueToCode(block, 'DURATION', Blockly.JavaScript.ORDER_ATOMIC) || '0';
         const durationType = block.getFieldValue('DURATIONTYPE_LIST');
         const currency = block.getFieldValue('CURRENCY_LIST');
         const amount = Blockly.JavaScript.valueToCode(block, 'AMOUNT', Blockly.JavaScript.ORDER_ATOMIC) || '0';
-
         const isVisibleField = field => block.getInput(field) && block.getInput(field).isVisible();
-
         let predictionValue = 'undefined';
         let barrierOffsetValue = 'undefined';
         let secondBarrierOffsetValue = 'undefined';
-
         if (isVisibleField('PREDICTION')) {
             predictionValue =
                 Blockly.JavaScript.valueToCode(block, 'PREDICTION', Blockly.JavaScript.ORDER_ATOMIC) || '0';
         }
-
         const getBarrierValue = (barrierOffsetType, value) => {
             // Variables should not be encapsulated in quotes
             if (/^(\d+(\.\d+)?)$/.test(value)) {
@@ -348,7 +317,6 @@ export default () => {
             }
             return barrierOffsetType === 'absolute' ? value : `'${barrierOffsetType}' + ${value}`;
         };
-
         if (isVisibleField('BARRIEROFFSET')) {
             const barrierOffsetType = block.getFieldValue('BARRIEROFFSETTYPE_LIST');
             const value =
@@ -361,7 +329,6 @@ export default () => {
                 Blockly.JavaScript.valueToCode(block, 'SECONDBARRIEROFFSET', Blockly.JavaScript.ORDER_ATOMIC) || '0';
             secondBarrierOffsetValue = getBarrierValue(barrierOffsetType, value);
         }
-
         const code = `
             Bot.start({
             limitations: BinaryBotPrivateLimitations,

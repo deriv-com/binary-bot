@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     ChartMode,
     DrawTools,
@@ -9,12 +8,12 @@ import {
     ToolbarWidget,
     Views,
 } from '@deriv/deriv-charts';
+import React, { PureComponent } from 'react';
 import { translate } from '../../../common/i18n';
 import Dialog from './Dialog';
 import ChartTicksService from '../../common/ChartTicksService';
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { getLanguage } from '../../../common/lang';
-import api from '../deriv/api';
 
 setSmartChartsPublicPath('./js/');
 
@@ -29,124 +28,100 @@ export const BarrierTypes = {
     NOTOUCH: 'NONE_SINGLE',
 };
 
-const ChartContent = () => {
-    const [show, setVisibility] = React.useState(true);
-    const [state, setState] = React.useState({
-        chart_type: 'mountain',
-        granularity: 0,
-        high: undefined,
-        low: undefined,
-        symbol: globalObserver.getState('symbol'),
-        should_barrier_display: false,
-    });
-    const ticksService = new ChartTicksService(api);
-    const listeners = [];
+const chartWidth = 600;
+const chartHeight = 600;
 
-
-    React.useEffect(() => {
-        globalObserver.register('bot.init', initializeBot);
-        globalObserver.register('bot.contract', updateContract)
-        return () => {
-            globalObserver.unregister('bot.init', initializeBot);
-            globalObserver.unregister('bot.contract', updateContract);
-        }
-    }, [state.symbol])
-
-    const initializeBot = symbol => {
-        if (symbol && state.symbol !== symbol) {
-            setVisibility(false);
-            setState({
-                ...state,
-                symbol,
-            })
-            setTimeout(() => {
-                setVisibility(true);
-            }, 500)
-        }
+class ChartContent extends PureComponent {
+    constructor(props) {
+        super(props);
+        const { api } = props;
+        this.settings = { language: getLanguage() };
+        this.ticksService = new ChartTicksService(api);
+        this.listeners = [];
+        this.chartId = 'binary-bot-chart';
+        this.state = {
+            chartType: 'mountain',
+            granularity: 0,
+            barrierType: undefined,
+            high: undefined,
+            low: undefined,
+            symbol: globalObserver.getState('symbol'),
+        };
+        this.shouldBarrierDisplay = false;
     }
 
-    const updateContract = contract => {
-        if (!contract) return;
-        if (contract?.is_sold) {
-            setState({
-                ...state,
-                should_barrier_display: false,
-            })
-        } else {
-            const updated_state = {
-                ...state,
-                barriers: BarrierTypes[contract.contract_type],
-            };
-
-            if (contract?.barrier) updated_state.high = contract.barrier;
-            if (contract?.high_barrier) {
-                updated_state.high = contract.high_barrier;
-                updated_state.low = contract.low;
+    componentDidMount() {
+        globalObserver.register('bot.init', s => {
+            if (s && this.state.symbol !== s) {
+                this.setState({ symbol: s });
             }
-            setState(updated_state);
-        }
+        });
+
+        globalObserver.register('bot.contract', c => {
+            if (c) {
+                if (c.is_sold) {
+                    this.shouldBarrierDisplay = false;
+                    this.setState({ barrierType: null });
+                } else {
+                    this.setState({ barrierType: BarrierTypes[c.contract_type] });
+                    if (c.barrier) this.setState({ high: c.barrier });
+                    if (c.high_barrier) this.setState({ high: c.high_barrier, low: c.low_barrier });
+                    this.shouldBarrierDisplay = true;
+                }
+            }
+        });
     }
 
-    const getKey = request => `${request.ticks_history}-${request.granularity}`;
-    const requestAPI = (data) => ticksService.api.send(data);
+    getKey = request => {
+        const key = `${request.ticks_history}-${request.granularity}`;
+        return key;
+    };
 
-    const requestSubscribe = (request, callback) => {
-        const {
-            ticks_history: symbol,
-            style: dataType,
-            granularity,
-        } = request;
+    requestAPI(data) {
+        return this.ticksService.api.send(data);
+    }
 
+    requestSubscribe(request, callback) {
+        const { ticks_history: symbol, style: dataType, granularity } = request;
         if (dataType === 'candles') {
-            listeners[getKey(request)] = ticksService.monitor({
+            this.listeners[this.getKey(request)] = this.ticksService.monitor({
                 symbol,
                 granularity,
                 callback,
             });
         } else {
-            listeners[getKey(request)] = ticksService.monitor({
+            this.listeners[this.getKey(request)] = this.ticksService.monitor({
                 symbol,
                 callback,
             });
         }
     }
 
-    const requestForget = (request) => {
-        const {
-            ticks_history: symbol,
-            style: dataType,
-            granularity,
-        } = request;
-
-        const requested_key = getKey(request);
+    requestForget(request) {
+        const { ticks_history: symbol, style: dataType, granularity } = request;
+        const requsestKey = this.getKey(request);
         if (dataType === 'candles') {
-            ticksService.stopMonitor({
+            this.ticksService.stopMonitor({
                 symbol,
                 granularity,
-                key: listeners[requested_key],
+                key: this.listeners[requsestKey],
             });
         } else {
-            ticksService.stopMonitor({
+            this.ticksService.stopMonitor({
                 symbol,
-                key: listeners[requested_key],
+                key: this.listeners[requsestKey],
             });
         }
-        delete listeners[requested_key];
+        delete this.listeners[requsestKey];
     }
 
-    const renderTopWidgets = () => <span />;
+    renderTopWidgets = () => <span />;
 
-    const renderToolbarWidgets = () => (
+    renderToolbarWidgets = () => (
         <ToolbarWidget>
             <ChartMode
-                onChartType={chart_type => setState({
-                    ...state,
-                    chart_type,
-                })}
-                onGranularity={granularity => setState({
-                    ...state,
-                    granularity,
-                })}
+                onChartType={chartType => this.setState({ chartType })}
+                onGranularity={granularity => this.setState({ granularity })}
             />
             <StudyLegend searchInputClassName="data-hj-whitelist" />
             <DrawTools />
@@ -155,33 +130,49 @@ const ChartContent = () => {
         </ToolbarWidget>
     );
 
-    if (!show) return null;
+    render() {
+        const barriers = this.shouldBarrierDisplay
+            ? [
+                {
+                    shade: this.state.barrierType,
+                    shadeColor: '#0000ff',
+                    color: '#c03',
+                    relative: false,
+                    draggable: false,
+                    lineStyle: 'dotted',
+                    hidePriceLines: false,
+                    high: parseFloat(this.state.high),
+                    low: parseFloat(this.state.low),
+                },
+            ]
+            : [];
 
-    return (
-        <SmartChart
-            barriers={[]}
-            chartControlsWidgets={null}
-            chartType={state.chart_type}
-            enabledChartFooter={false}
-            granularity={state.granularity}
-            id="binary-bot-chart"
-            isMobile={false}
-            requestAPI={requestAPI}
-            requestForget={requestForget}
-            requestSubscribe={requestSubscribe}
-            settings={{ language: getLanguage() }}
-            symbol={state.symbol}
-            toolbarWidget={renderToolbarWidgets}
-            topWidgets={renderTopWidgets}
-        />
-    )
+        return (
+            <SmartChart
+                barriers={barriers}
+                chartControlsWidgets={null}
+                chartType={this.state.chartType}
+                enabledChartFooter={false}
+                granularity={this.state.granularity}
+                id={this.chartId}
+                isMobile={false}
+                requestAPI={this.requestAPI.bind(this)}
+                requestForget={this.requestForget.bind(this)}
+                requestSubscribe={this.requestSubscribe.bind(this)}
+                settings={this.settings}
+                symbol={this.state.symbol}
+                toolbarWidget={this.renderToolbarWidgets}
+                topWidgets={this.renderTopWidgets}
+            />
+        );
+    }
 }
 
 export default class Chart extends Dialog {
-    constructor() {
-        super('chart-dialog', translate('Chart'), <ChartContent />, {
-            width: 600,
-            height: 600,
+    constructor(api) {
+        super('chart-dialog', translate('Chart'), <ChartContent api={api} />, {
+            width: chartWidth,
+            height: chartHeight,
             resizable: false,
         });
     }
