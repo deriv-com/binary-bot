@@ -5,12 +5,12 @@ import { clone } from "../common/clone";
 import { observer as globalObserver } from "../../common/utils/observer";
 
 /* eslint-disable func-names, no-underscore-dangle */
-JSInterpreter.prototype.takeStateSnapshot = function() {
+JSInterpreter.prototype.takeStateSnapshot = function () {
   const new_state_stack = clone(this.state_stack, undefined, undefined, undefined, true);
   return new_state_stack;
 };
 
-JSInterpreter.prototype.restoreStateSnapshot = function(snapshot) {
+JSInterpreter.prototype.restoreStateSnapshot = function (snapshot) {
   this.state_stack = clone(snapshot, undefined, undefined, undefined, true);
   if (this.state_stack?.length) {
     this.global_object = this.state_stack[0]?.scope?.object;
@@ -38,7 +38,7 @@ const shouldRestartOnError = (bot, error_name = "") =>
   !unrecoverable_errors.includes(error_name) && botInitialized(bot) && bot.tradeEngine.options.shouldRestartOnError;
 
 const shouldStopOnError = (bot, error_name = "") => {
-  const stop_errors = ["SellNotAvailableCustom","ContractBuyValidationError", "CustomInvalidProposal"];
+  const stop_errors = ["SellNotAvailableCustom", "ContractBuyValidationError", "CustomInvalidProposal"];
   if (stop_errors.includes(error_name) && botInitialized(bot)) {
     return true;
   }
