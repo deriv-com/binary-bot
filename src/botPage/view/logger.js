@@ -40,19 +40,9 @@ export class TrackJSError extends Error {
 
 const notifyError = error => {
   if (!error) return;
-  const {message} =  trackJSTrack(error);
+  const { message } = trackJSTrack(error);
   notify({ className: "error", message, position: isMobile() ? 'left' : 'right' });
-<<<<<<< HEAD
-
-  if (isProduction()) {
-    if (!default_errors_to_ignore.includes(code)) {
-      TrackJS.track(code);
-    }
-  }
-};
-=======
 }
->>>>>>> upstream/master
 
 const waitForNotifications = () => {
   const notifList = ["success", "info", "warn", "error"];
