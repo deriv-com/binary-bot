@@ -170,4 +170,6 @@ Try ```sudo npm start```instead of ```npm start```
 
 ### <a name='q3'>3. Cannot access the site</a>
  Make sure to use HTTP instead of HTTPS: https://localbot.binary.sx  => http://localbot.binary.sx
+ 
+ # HOW TO LOAD ON LINUX PLESK SERVER? 
 
