@@ -4,26 +4,10 @@ import classNames from "classnames";
 import { isMobile, isDesktop, parseQueryString } from "../../../../../common/utils/tools";
 import PlatformDropdown from "./components/platform-dropdown.jsx";
 import { isLoggedIn, getActiveToken } from "../../utils";
-import {
-  getTokenList,
-  removeAllTokens,
-  syncWithDerivApp,
-} from "../../../../../common/utils/storageManager";
-import {
-  updateIsLogged,
-  resetClient,
-  updateActiveAccount,
-  updateBalance,
-  updateActiveToken,
-} from "../../store/client-slice";
+import { getTokenList, removeAllTokens, syncWithDerivApp } from "../../../../../common/utils/storageManager";
+import { updateIsLogged, resetClient, updateActiveAccount, updateBalance, updateActiveToken } from "../../store/client-slice";
 import { setAccountSwitcherLoader, updateShowMessagePage } from "../../store/ui-slice";
-import {
-  DrawerMenu,
-  AuthButtons,
-  AccountActions,
-  MenuLinks,
-  AccountSwitcherLoader,
-} from "./components";
+import { DrawerMenu, AuthButtons, AccountActions, MenuLinks, AccountSwitcherLoader } from "./components";
 import { queryToObjectArray } from "../../../../../common/appId";
 import api from "../../api";
 import config from "../../../../../app.config";
@@ -90,12 +74,14 @@ const Header = () => {
       dispatch(resetClient());
       dispatch(setAccountSwitcherLoader(false));
     }
-    if (active_storage_token) {
+
+    if (active_storage_token  && !is_logged) {
       api.authorize(active_storage_token.token).then((account) => {
         if (account?.error?.code) return;
         dispatch(updateActiveToken(active_storage_token.token))
         dispatch(updateActiveAccount(account.authorize));
         dispatch(setAccountSwitcherLoader(false));
+        
         if (!globalObserver.getState('is_subscribed_to_balance')) {
           api.send({
             balance: 1,
@@ -119,7 +105,7 @@ const Header = () => {
       });
       syncWithDerivApp();
     }
-  }, [active_token]);
+  }, [active_token, is_logged]);
 
   React.useEffect(() => {
     dispatch(updateIsLogged(isLoggedIn()));
