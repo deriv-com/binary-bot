@@ -11,9 +11,8 @@ const log = (type, ...args) => {
     console.log(...args); // eslint-disable-line no-console
   }
   const date = new Date();
-  const timestamp = `${date.toISOString().split("T")[0]} ${date.toTimeString().slice(0, 8)} ${
-    date.toTimeString().split(" ")[1]
-  }`;
+  const timestamp = `${date.toISOString().split("T")[0]} ${date.toTimeString().slice(0, 8)} ${date.toTimeString().split(" ")[1]
+    }`;
   globalObserver.emit("bot.notify", { type, timestamp, message: args.join(":") });
 };
 
@@ -25,7 +24,7 @@ const notify = ({ className, message, position = "left", sound = "silent" }) => 
 
   if (sound !== "silent" && !isIOS()) {
     const audio = document.getElementById(sound);
-    if(!audio && !audio.play) return;
+    if (!audio && !audio.play) return;
     audio.play().catch(() => { });
   }
 };
@@ -41,7 +40,7 @@ export class TrackJSError extends Error {
 
 const notifyError = error => {
   if (!error) return;
-  const {message} =  trackJSTrack(error);
+  const { message } = trackJSTrack(error);
   notify({ className: "error", message, position: isMobile() ? 'left' : 'right' });
 }
 
@@ -52,11 +51,11 @@ const waitForNotifications = () => {
 
   globalObserver.register("Error", notifyError);
 
-    notifList.forEach(className =>
-        globalObserver.register(`ui.log.${className}`, message =>
-            notify({ className, message, position: isMobile() ? 'left' : 'right' })
-        )
-    );
+  notifList.forEach(className =>
+    globalObserver.register(`ui.log.${className}`, message =>
+      notify({ className, message, position: isMobile() ? 'left' : 'right' })
+    )
+  );
 };
 
 const logHandler = () => {

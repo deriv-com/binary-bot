@@ -1,5 +1,5 @@
-import config, { updateConfigCurrencies } from "../../../botPage/common/const";
-import logHandler from "../../view/logger";
+import config, { updateConfigCurrencies } from "../../common/const";
+import logHandler from "../logger";
 import { updateTokenList } from "./utils";
 import {
   getTokenList,
@@ -23,7 +23,7 @@ import {
 } from "../blockly/utils";
 import GTM from "../../../common/gtm";
 import google_drive_util from "../../../common/integrations/GoogleDrive";
-import { load } from "../../view/blockly";
+import { load } from "../blockly";
 import api from "./api";
 
 const integrationsDialog = new IntegrationsDialog();
@@ -70,9 +70,9 @@ const checkForRequiredBlocks = () => {
 export function applyToolboxPermissions() {
   const fn = getTokenList().length ? "show" : "hide";
   $("#runButton, #showSummary, #logButton")
-    [fn]()
+  [fn]()
     .prevAll(".toolbox-separator:first")
-    [fn]();
+  [fn]();
 };
 
 const setFileBrowser = () => {
@@ -283,7 +283,7 @@ const addBindings = blockly => {
       limits
         .getLimits()
         .then(startBot)
-        .catch(() => {});
+        .catch(() => { });
     } else {
       startBot();
     }

@@ -16,13 +16,12 @@ import ToolBox from "../ToolBox";
 import SidebarToggle from "../../components/SidebarToggle";
 import LogTable from "../../../LogTable";
 import TradeInfoPanel from "../../../TradeInfoPanel";
-import { isLoggedIn } from "../../utils";
+import { isLoggedIn, getRelatedDeriveOrigin } from "../../utils";
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from "../../store/client-slice";
 import { addTokenIfValid, AppConstants, queryToObjectArray } from "../../../../../common/appId";
 import { parseQueryString } from "../../../../../common/utils/tools";
-import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
+import initialize, { applyToolboxPermissions } from "../../blockly-workspace";
 import { observer as globalObserver } from "../../../../../common/utils/observer";
-import { getRelatedDeriveOrigin } from "../../utils";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 import api from "../../api";
 
@@ -34,6 +33,7 @@ const Main = () => {
 
 	React.useEffect(() => {
 		if (should_reload_workspace) {
+			// eslint-disable-next-line no-underscore-dangle
 			const _blockly = new _Blockly();
 			setBlockly(_blockly);
 			init(_blockly);
@@ -52,9 +52,7 @@ const Main = () => {
 		}
 	}, [should_reload_workspace]);
 
-	const init = (blockly) => {
-		blockly?.initPromise;
-
+	const init = () => {
 		const local_storage_sync = document.getElementById("localstorage-sync");
 		if (local_storage_sync) {
 			local_storage_sync.src = `${getRelatedDeriveOrigin().origin}/localstorage-sync.html`
@@ -66,50 +64,48 @@ const Main = () => {
 		dispatch(updateShowTour(isDone("welcomeFinished") || days_passed));
 	}
 
-	const loginCheck = async () => {
-		return new Promise(resolve => {
-			const queryStr = parseQueryString();
-			const tokenObjectList = queryToObjectArray(queryStr);
+	const loginCheck = async () => new Promise(resolve => {
+		const queryStr = parseQueryString();
+		const tokenObjectList = queryToObjectArray(queryStr);
 
-			if (!Array.isArray(getTokenList())) {
-				removeAllTokens();
-			}
+		if (!Array.isArray(getTokenList())) {
+			removeAllTokens();
+		}
 
-			if (!getTokenList().length) {
-				if (tokenObjectList.length) {
-					addTokenIfValid(tokenObjectList[0].token, tokenObjectList).then(() => {
-						const accounts = getTokenList();
-						if (accounts.length) {
-							setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, accounts[0].token);
-							dispatch(updateActiveToken(accounts[0].token));
-							dispatch(updateActiveAccount(accounts[0].loginInfo));
-						}
-						dispatch(updateIsLogged(isLoggedIn()));
-						history.replace('/');
-						api.send({ balance: 1, account: 'all' }).catch(() => {})
-						applyToolboxPermissions();
-						resolve();
-					});
-				}
-				const active_account = getStorage("active_loginid") || "";
-				let token_list = [];
-				if (getStorage("client.accounts")?.length) {
-					token_list = JSON.parse(getStorage("client.accounts"));
-				}
-				if (active_account && token_list.length) {
-					const active_token = token_list.find(account => account.accountName === active_account).token;
-					setStorage("activeToken", active_token);
+		if (!getTokenList().length) {
+			if (tokenObjectList.length) {
+				addTokenIfValid(tokenObjectList[0].token, tokenObjectList).then(() => {
+					const accounts = getTokenList();
+					if (accounts.length) {
+						setStorage(AppConstants.STORAGE_ACTIVE_TOKEN, accounts[0].token);
+						dispatch(updateActiveToken(accounts[0].token));
+						dispatch(updateActiveAccount(accounts[0].loginInfo));
+					}
+					dispatch(updateIsLogged(isLoggedIn()));
+					history.replace('/');
+					api.send({ balance: 1, account: 'all' }).catch(() => { })
+					applyToolboxPermissions();
 					resolve();
-				}
-				setStorage("tokenList", JSON.stringify(token_list));
-				setStorage("client.accounts", JSON.stringify(convertForDerivStore(token_list)));
+				});
 			}
-			resolve();
-		});
-	}
+			const active_account = getStorage("active_loginid") || "";
+			let token_list = [];
+			if (getStorage("client.accounts")?.length) {
+				token_list = JSON.parse(getStorage("client.accounts"));
+			}
+			if (active_account && token_list.length) {
+				const active_token = token_list.find(account => account.accountName === active_account).token;
+				setStorage("activeToken", active_token);
+				resolve();
+			}
+			setStorage("tokenList", JSON.stringify(token_list));
+			setStorage("client.accounts", JSON.stringify(convertForDerivStore(token_list)));
+		}
+		resolve();
+	});
 
-	const initializeBlockly = (blockly) => {
-		initialize(blockly)
+	const initializeBlockly = (_blockly) => {
+		initialize(_blockly)
 			.then(() => {
 				$(".show-on-load").show();
 				$(".barspinner").hide();
