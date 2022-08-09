@@ -2,6 +2,7 @@ import { Map } from "immutable";
 import { historyToTicks, getLast } from "../../common/utils/binary";
 import { observer as globalObserver } from "../../common/utils/observer";
 import { doUntilDone, getUUID } from "../bot/tools";
+import { isLoggedIn } from "../view/deriv/utils";
 
 const parseTick = tick => ({
   epoch: +tick.epoch,
@@ -58,19 +59,41 @@ export default class TicksService {
 
     if (!this.active_symbols_promise) {
       this.active_symbols_promise = new Promise(resolve => {
-        this.api.send({ active_symbols: "brief" }).then(r => {
-          const { active_symbols: symbols } = r;
-          this.pipSizes = symbols.reduce((accumulator, currSymbol) => {
-            // eslint-disable-next-line no-param-reassign
-            accumulator[currSymbol.symbol] = `${currSymbol.pip}`.length - 2;
-            return accumulator;
-          }, {});
+        this.getActiveSymbols().then((activeSymbols = []) => {
+          this.pipSizes = activeSymbols
+            ?.reduce((s, i) => s.set(i.symbol, +(+i.pip).toExponential().substring(3)), new Map())
+            .toObject();
           resolve(this.pipSizes);
+        }).catch(error => {
+          globalObserver.emit("Error", error);
         });
       });
     }
     return this.active_symbols_promise;
   }
+
+  getActiveSymbols = () =>
+    new Promise(resolve => {
+
+      const getSymbols = () => {
+        this.api.send({ active_symbols: 'brief' }).then(({ active_symbols }) =>
+          // eslint-disable-next-line camelcase
+          resolve(active_symbols)
+        ).catch(err => {
+          globalObserver.emit('Error', err);
+        });
+      }
+
+      if (isLoggedIn()) {
+        this.api.expectResponse('authorize').then(() => {
+          getSymbols();
+        })
+      } else {
+        getSymbols();
+      }
+
+    });
+
   request(options) {
     const { symbol, granularity } = options;
 

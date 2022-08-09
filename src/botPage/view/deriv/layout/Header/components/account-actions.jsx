@@ -5,8 +5,7 @@ import { useDispatch } from "react-redux";
 import { translate } from "../../../../../../common/utils/tools";
 import Notifications from "./notifications.jsx";
 import AccountDropdown from "./account-dropdown.jsx";
-import { currencyNameMap } from "../../../config";
-import { generateDerivLink, getRelatedDeriveOrigin } from "../../../utils";
+import { generateDerivLink } from "../../../utils";
 import Modal from "../../../components/modal";
 import AccountSwitchModal from "./account-switch-modal.jsx";
 import { observer as globalObserver } from "../../../../../../common/utils/observer";
@@ -24,6 +23,7 @@ import {
 } from "../../../../../../common/utils/storageManager";
 import { updateActiveToken } from "../../../store/client-slice";
 import Popover from "../../../components/popover";
+import config from "../../../../../../app.config";
 
 const AccountActions = () => {
     const {
@@ -122,7 +122,9 @@ const AccountActions = () => {
                     setIsAccDropdownOpen={setIsAccDropdownOpen}
                 />}
 
-            <a className="url-cashier-deposit btn btn--primary header__deposit mobile-hide" href={`${getRelatedDeriveOrigin().origin}/cashier/deposit`}>{translate("Deposit")}</a>
+            {config.deposit.visible && <a className="url-cashier-deposit btn btn--primary header__deposit mobile-hide" href={config.deposit.url}>
+                {config.deposit.label}
+            </a>}
             {account_switcher_token && (
                 <Modal
                     title={translate('Are you sure?')}

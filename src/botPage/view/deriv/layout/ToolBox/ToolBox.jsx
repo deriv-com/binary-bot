@@ -10,10 +10,12 @@ import { setIsBotRunning } from '../../store/ui-slice';
 import { observer as globalObserver } from '../../../../../common/utils/observer';
 import { isMobile } from "../../../../../common/utils/tools";
 import Popover from "../../components/popover/index";
+import config from "../../../../../app.config";
 
 const ShowModal = ({ modal, onClose, class_name }) => {
   if (!modal) return;
   const { component: Component, props, title } = modal;
+  // eslint-disable-next-line consistent-return
   return (
     <Modal onClose={onClose} title={title} class_name={class_name}>
       <Component {...props} />
@@ -21,13 +23,11 @@ const ShowModal = ({ modal, onClose, class_name }) => {
   );
 };
 
-const ToolboxButton = ({ label, tooltip, classes, id, position = 'bottom' }) => {
-  return <span id={id}>
-    <Popover content={tooltip} position={position}>
-      <button className={classes}>{label}</button>
-    </Popover>
-  </span>
-}
+const ToolboxButton = ({ label, tooltip, classes, id, position = 'bottom' }) => <span id={id}>
+  <Popover content={tooltip} position={position}>
+    <button className={classes}>{label}</button>
+  </Popover>
+</span>
 
 const ToolBox = ({ blockly }) => {
   const [should_show_modal, setShowModal] = React.useState(false);
@@ -42,19 +42,20 @@ const ToolBox = ({ blockly }) => {
     globalObserver.register('bot.running', () => dispatch(setIsBotRunning(true)));
     globalObserver.register('bot.stop', () => dispatch(setIsBotRunning(false)));
 
-    const Keys = Object.freeze({ "zoomIn": 187, "zoomOut": 189 })
+    const Keys = Object.freeze({ zoomIn: "=", zoomOut: "-" });
     document.body.addEventListener("keydown", (e) => {
-      if (e.which === Keys.zoomOut && e.ctrlKey) {
+      if (e.key === Keys.zoomOut && e.ctrlKey) {
         // Ctrl + -
         e.preventDefault();
+        // eslint-disable-next-line no-unused-expressions
         blockly?.zoomOnPlusMinus(false);
         return;
       }
-      if (e.which === Keys.zoomIn && e.ctrlKey) {
+      if (e.key === Keys.zoomIn && e.ctrlKey) {
         // Ctrl + +
         e.preventDefault();
+        // eslint-disable-next-line no-unused-expressions
         blockly?.zoomOnPlusMinus(true);
-        return;
       }
     });
   }, []);
@@ -198,12 +199,12 @@ const ToolBox = ({ blockly }) => {
           className="toolbox-button icon-chart-line"
         />
       </Popover>
-      <Popover content={translate("Show Trading View")} position="bottom">
+      {config.trading_view_chart.url && <Popover content={translate("Show Trading View")} position="bottom">
         <button
           id="tradingViewButton"
           className="toolbox-button icon-trading-view"
         />
-      </Popover>
+      </Popover>}
       {should_show_modal && (
         <ShowModal
           modal={MODALS[selected_modal]}

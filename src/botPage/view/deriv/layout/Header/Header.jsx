@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
 import { isMobile, isDesktop, parseQueryString } from "../../../../../common/utils/tools";
 import PlatformDropdown from "./components/platform-dropdown.jsx";
-import { isLoggedIn } from "../../utils";
-import { getActiveToken } from "../../utils";
+import { isLoggedIn, getActiveToken } from "../../utils";
 import {
   getTokenList,
   removeAllTokens,
@@ -15,7 +14,7 @@ import {
   resetClient,
   updateActiveAccount,
   updateBalance,
-  updateActiveToken
+  updateActiveToken,
 } from "../../store/client-slice";
 import { setAccountSwitcherLoader, updateShowMessagePage } from "../../store/ui-slice";
 import {
@@ -27,6 +26,8 @@ import {
 } from "./components";
 import { queryToObjectArray } from "../../../../../common/appId";
 import api from "../../api";
+import config from "../../../../../app.config";
+import { observer as globalObserver } from "../../../../../common/utils/observer";
 
 const AccountSwitcher = () => {
   const { account_switcher_loader } = useSelector((state) => state.ui);
@@ -95,16 +96,22 @@ const Header = () => {
         dispatch(updateActiveToken(active_storage_token.token))
         dispatch(updateActiveAccount(account.authorize));
         dispatch(setAccountSwitcherLoader(false));
-
-        api.send({ forget_all: "balance" }).then(() => {
+        if (!globalObserver.getState('is_subscribed_to_balance')) {
           api.send({
             balance: 1,
             account: "all",
             subscribe: 1,
+          }).then(({ balance }) => {
+            globalObserver.setState({
+              balance: Number(balance.balance),
+              currency: balance.currency,
+              is_subscribed_to_balance: true,
+            });
+          }).catch((e) => {
+            globalObserver.emit("Error", e);
           })
-            .then(() => { })
-            .catch(() => { });
-        });
+        }
+
       }).catch(() => {
         removeAllTokens();
         dispatch(resetClient());
@@ -151,9 +158,9 @@ const Header = () => {
             >
               <img
                 className="header__logo"
-                src="image/deriv/brand/ic-brand-binarybot.svg"
+                src={config.app_logo}
               />
-              <div className="platform__switcher-header">Binary Bot</div>
+              <div className="platform__switcher-header">{config.app_title}</div>
               <img
                 id="platform__switcher-expand"
                 className={classNames("header__icon header__expand", {
