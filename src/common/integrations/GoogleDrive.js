@@ -59,7 +59,7 @@ class GoogleDriveUtil {
                     .then(
                         () => {
                             this.auth = gapi.auth2.getAuthInstance();
-                            if(this.auth) {
+                            if (this.auth) {
                                 this.auth.isSignedIn.listen(is_logged_in => this.updateLoginStatus(is_logged_in));
                                 this.updateLoginStatus(this.auth.isSignedIn.get());
                                 store.dispatch(setGdReady(true));
@@ -120,9 +120,7 @@ class GoogleDriveUtil {
                 afterAuthCallback()
                     .then(() => {
                         const view = new google.picker.DocsView();
-                        view.setIncludeFolders(true)
-                            .setSelectFolderEnabled(true)
-                            .setMimeTypes(mime_type);
+                        view.setIncludeFolders(true).setSelectFolderEnabled(true).setMimeTypes(mime_type);
 
                         const picker = new google.picker.PickerBuilder();
                         picker
