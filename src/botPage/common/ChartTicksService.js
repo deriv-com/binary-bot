@@ -1,5 +1,6 @@
-import { doUntilDone } from '../bot/tools';
-import TicksService from './TicksService';
+import { observer as globalObserver } from "../../common/utils/observer";
+import { doUntilDone } from "../bot/tools";
+import TicksService from "./TicksService";
 
 export default class ChartTicksService extends TicksService {
     observe() {
@@ -41,17 +42,19 @@ export default class ChartTicksService extends TicksService {
             granularity: granularity ? Number(granularity) : undefined,
             style,
         };
-
         return new Promise((resolve, reject) => {
             doUntilDone(() => this.api.send(request_object))
                 .then(r => {
-                    if (style === 'ticks') {
+                    if (style === "ticks") {
                         this.updateTicksAndCallListeners(symbol, r);
                     } else {
                         this.updateCandlesAndCallListeners([symbol, Number(granularity)], r);
                     }
                 })
-                .catch(reject);
+                .catch(e => {
+                    reject(e);
+                    globalObserver.emit("Error", e);
+                });
         });
     }
 }

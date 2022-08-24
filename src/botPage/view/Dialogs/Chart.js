@@ -87,7 +87,9 @@ const ChartContent = () => {
     };
 
     const getKey = request => `${request.ticks_history}-${request.granularity}`;
-    const requestAPI = data => ticksService.api.send(data);
+    const requestAPI = (data) => ticksService.api.send(data).catch(e => {
+        globalObserver.emit('Error', e);
+    });
 
     const requestSubscribe = (request, callback) => {
         const { ticks_history: symbol, style: dataType, granularity } = request;

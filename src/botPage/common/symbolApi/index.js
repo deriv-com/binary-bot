@@ -68,7 +68,8 @@ export default class _Symbol {
                 this.api
                     .authorize(token_list[0].token)
                     .then(() => getActiveSymbolsLogic())
-                    .catch(() => {
+                    .catch((e) => {
+                        globalObserver.emit('Error', e);
                         removeAllTokens();
                         getActiveSymbolsLogic();
                     });
