@@ -20,9 +20,7 @@
         "release-production": "d() { git stash; git checkout master; npm i;gulp build-min;gulp release-master;}; d",
         "build": "webpack --config webpack.config.cli.js",
         "build-min": "gulp build-min",
-        "prepare": "husky install",
-        "lint": "prettier --watch ./src",
-        "format": "prettier --write ./src"
+        "prepare": "husky install"
     },
     "author": "Binary.com",
     "license": "MIT",
