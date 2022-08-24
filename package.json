@@ -13,12 +13,6 @@
             "tools.js"
         ]
     },
-    "lint-staged": {
-        "*.js": [
-            "eslint",
-            "git add"
-        ]
-    },
     "scripts": {
         "start": "gulp watch",
         "test": "eslint src/",
@@ -29,11 +23,6 @@
         "prepare": "husky install",
         "lint": "prettier --watch ./src",
         "format": "prettier --write ./src"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     },
     "author": "Binary.com",
     "license": "MIT",
