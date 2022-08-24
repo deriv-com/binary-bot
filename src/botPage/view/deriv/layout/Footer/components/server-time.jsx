@@ -1,6 +1,6 @@
-import React from "react";
-import api from "../../../api";
-import  Popover from '../../../components/popover';
+import React from 'react';
+import api from '../../../api';
+import Popover from '../../../components/popover';
 
 const ServerTime = () => {
     const [hasApiResponse, setHasApiResponse] = React.useState(false);
@@ -48,9 +48,11 @@ const ServerTime = () => {
 
     return (
         <Popover content={<>{dateString}</>}>
-            <div id="server-time" className="server-time">{dateString}</div>
+            <div id='server-time' className='server-time'>
+                {dateString}
+            </div>
         </Popover>
-    )
+    );
 };
 
 export default ServerTime;

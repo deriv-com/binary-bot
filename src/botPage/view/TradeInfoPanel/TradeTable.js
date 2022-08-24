@@ -183,17 +183,19 @@ const TradeTable = ({ account_id, api }) => {
             return to_data_row;
         });
 
-        const json2csvParser = new Parser({ fields: [
-            'id',
-            'timestamp',
-            'reference',
-            'contract_type',
-            'entry_tick',
-            'exit_tick',
-            'buy_price',
-            'sell_price',
-            'profit',
-        ] });
+        const json2csvParser = new Parser({
+            fields: [
+                'id',
+                'timestamp',
+                'reference',
+                'contract_type',
+                'entry_tick',
+                'exit_tick',
+                'buy_price',
+                'sell_price',
+                'profit',
+            ],
+        });
         const data = json2csvParser.parse(to_data_rows);
 
         saveAs({ data, filename: 'logs.csv', type: 'text/csv;charset=utf-8' });
@@ -211,16 +213,16 @@ const TradeTable = ({ account_id, api }) => {
 
         return (
             <React.Fragment key={dataKey}>
-                <div className="ReactVirtualized__Table__headerTruncatedText">{label}</div>
+                <div className='ReactVirtualized__Table__headerTruncatedText'>{label}</div>
                 {!isLastColumn && (
                     <Draggable
-                        axis="x"
-                        defaultClassName="DragHandle"
-                        defaultClassNameDragging="DragHandleActive"
+                        axis='x'
+                        defaultClassName='DragHandle'
+                        defaultClassNameDragging='DragHandleActive'
                         position={{ x: 0 }}
                         zIndex={999}
                     >
-                        <span className="DragHandleIcon" />
+                        <span className='DragHandleIcon' />
                     </Draggable>
                 )}
             </React.Fragment>

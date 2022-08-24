@@ -9,7 +9,6 @@ export const getLanguage = () => {
     setStorage('lang', lang);
     setCookieLanguage(lang);
     return lang;
-    
 };
 
 const addUiLang = () => {
@@ -34,11 +33,7 @@ export const load = () => {
         document.location.search = `l=${newLang}`;
     });
 
-    $('.language').text(
-        $(`.${lang}`)
-            .hide()
-            .text()
-    );
+    $('.language').text($(`.${lang}`).hide().text());
 
     if (lang === 'ach') {
         // eslint-disable-next-line no-underscore-dangle
