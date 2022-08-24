@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo \"[husky]: performing precommit\"
+echo \"[husky]: performing pre-commit checks\"
 npm test
+echo \"[husky]: all the tests were passed\"
 npx lint-staged
 echo \"[husky]: pre-commit check successful\"
