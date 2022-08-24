@@ -65,22 +65,22 @@ class GoogleDriveUtil {
                                 store.dispatch(setGdReady(true));
                             }
                         },
-                        (error) => {
-                            if (error.error === "idpiframe_initialization_failed" && error.details.includes('Cookies')) {
+                        error => {
+                            if (
+                                error.error === 'idpiframe_initialization_failed' &&
+                                error.details.includes('Cookies')
+                            ) {
                                 $.notify(
                                     translate(
-                                        "There was an error initialising Google Drive. Cookies are not enabled in current environment."
+                                        'There was an error initialising Google Drive. Cookies are not enabled in current environment.'
                                     ),
-                                    { position: "bottom left" }
+                                    { position: 'bottom left' }
                                 );
                             } else {
-                                errLogger(
-                                    error,
-                                    translate("There was an error initialising Google Drive.")
-                                );
+                                errLogger(error, translate('There was an error initialising Google Drive.'));
                             }
                         }
-                    )
+                    );
             },
             onerror: error => errLogger(error, translate('There was an error loading Google Drive libraries')),
         });
