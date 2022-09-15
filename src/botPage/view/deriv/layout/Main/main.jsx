@@ -24,9 +24,6 @@ import initialize, { applyToolboxPermissions } from "../../blockly-worksace";
 import { observer as globalObserver } from "../../../../../common/utils/observer";
 import BotUnavailableMessage from "../Error/bot-unavailable-message-page.jsx";
 import api from "../../api";
-import Helmet from "react-helmet";
-import { getLanguage } from '../../../../../common/lang';
-import { translate } from '../../../../../common/utils/tools';
 
 const Main = () => {
 	const [blockly, setBlockly] = React.useState(null);
@@ -126,19 +123,6 @@ const Main = () => {
 
 	return (
 		<div className="main">
-			<Helmet
-				htmlAttributes={{
-					lang: getLanguage(),
-				}}
-				title={translate('Bot trading |  Automated trading system – Deriv')}
-				defer={false}
-				meta={[
-					{
-						name: 'description',
-						content: translate('Automate your trades with Deriv’s bot trading platform, no coding needed. Trade now on forex, synthetic indices, commodities, stock indices, and more.'),
-					},
-				]}
-        	/>
 			<BotUnavailableMessage />
 			<div id="bot-blockly">
 				{blockly && <ToolBox blockly={blockly} />}

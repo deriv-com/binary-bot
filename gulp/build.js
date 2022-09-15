@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const mustache = require('gulp-mustache');
 const { getManifest } = require('./revision');
-import { translate } from "../src/common/i18n";
 require('./static');
 require('./bundle');
 require('./webpack');
@@ -15,8 +14,6 @@ const getConfig = prefix => ({
     index_css: `<link href="css/${getManifest('index.css')}" rel="stylesheet" />`,
     bot_css: `<link href="css/${getManifest('bot.css')}" rel="stylesheet" />`,
     binary_style_img: 'image/binary-style',
-    seo_title: translate('Bot trading |  Automated trading system – Deriv'),
-    seo_description: translate('Automate your trades with Deriv’s bot trading platform, no coding needed. Trade now on forex, synthetic indices, commodities, stock indices, and more.'),
     gtm_iframe:
         '<!-- Google Tag Manager (noscript) --> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P97C2DZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <!-- End Google Tag Manager (noscript) -->',
 });
@@ -65,6 +62,8 @@ gulp.task(
         'copy-binary-style-img',
         'copy-js',
         'pull-blockly-translations',
+        'i18n',
+        'i18n-html',
         done => {
             genHtml(true);
             done();
@@ -84,6 +83,8 @@ gulp.task(
         'copy-virtualized-style-css',
         'copy-binary-style-img',
         'copy-js',
-        'pull-blockly-translations'
+        'pull-blockly-translations',
+        'i18n',
+        'i18n-html',
     )
 );
