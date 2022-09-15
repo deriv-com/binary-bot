@@ -227,11 +227,17 @@ const addBindings = blockly => {
     }
   };
 
+  // TODO need to change this to react temp fixed with jquery
+  
   const showSummary = () => {
-    $("#summaryPanel")
-      .dialog("option", "minWidth", 770)
-      .dialog("open");
-    addExportButtonToPanel("summaryPanel");
+    if ($("div[aria-describedby='summaryPanel']").css('display') === "block") {
+      $('div[aria-describedby="summaryPanel"] .ui-icon-closethick').click();
+    } else {
+      $("#summaryPanel")
+        .dialog("option", "minWidth", 770)
+        .dialog("open");
+      addExportButtonToPanel("summaryPanel");
+    }
   };
 
   $("#logButton").click(() => {
