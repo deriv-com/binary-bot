@@ -44,46 +44,48 @@ class GoogleDriveUtil {
         loadExternalScript(this.api_url)
             .then(this.init)
             .catch(err => errLogger(err, translate('There was an error loading Google API script.')));
+            console.log(client_id, api_key, app_id, api_url);
+
     }
 
     init = () => {
-        gapi.load(this.auth_scope, {
-            callback: () => {
-                gapi.client
-                    .init({
-                        apiKey: this.api_key,
-                        clientId: this.client_id,
-                        scope: this.scope,
-                        discoveryDocs: this.discovery_docs,
-                    })
-                    .then(
-                        () => {
-                            this.auth = gapi.auth2.getAuthInstance();
-                            if(this.auth) {
-                                this.auth.isSignedIn.listen(is_logged_in => this.updateLoginStatus(is_logged_in));
-                                this.updateLoginStatus(this.auth.isSignedIn.get());
-                                store.dispatch(setGdReady(true));
-                            }
-                        },
-                        (error) => {
-                            if (error.error === "idpiframe_initialization_failed" && error.details.includes('Cookies')) {
-                              $.notify(
-                                translate(
-                                  "To use Google Drive, enable cookies in your browser settings."
-                                ),
-                                { position: "bottom left" }
-                              );
-                            } else{
-                              errLogger(
-                                error,
-                                translate("There was an error initialising Google Drive.")
-                              );
-                            }
-                          }
-                        )
-            },
-            onerror: error => errLogger(error, translate('There was an error loading Google Drive libraries')),
-        });
+        // gapi.load(this.auth_scope, {
+        //     callback: () => {
+        //         gapi.client
+        //             .init({
+        //                 apiKey: this.api_key,
+        //                 clientId: this.client_id,
+        //                 scope: this.scope,
+        //                 discoveryDocs: this.discovery_docs,
+        //             })
+        //             .then(
+        //                 () => {
+        //                     this.auth = gapi.auth2.getAuthInstance();
+        //                     if(this.auth) {
+        //                         this.auth.isSignedIn.listen(is_logged_in => this.updateLoginStatus(is_logged_in));
+        //                         this.updateLoginStatus(this.auth.isSignedIn.get());
+        //                         store.dispatch(setGdReady(true));
+        //                     }
+        //                 },
+        //                 (error) => {
+        //                     if (error.error === "idpiframe_initialization_failed" && error.details.includes('Cookies')) {
+        //                       $.notify(
+        //                         translate(
+        //                           "To use Google Drive, enable cookies in your browser settings."
+        //                         ),
+        //                         { position: "bottom left" }
+        //                       );
+        //                     } else{
+        //                       errLogger(
+        //                         error,
+        //                         translate("There was an error initialising Google Drive.")
+        //                       );
+        //                     }
+        //                   }
+        //                 )
+        //     },
+        //     onerror: error => errLogger(error, translate('There was an error loading Google Drive libraries')),
+        // });
     };
 
     updateLoginStatus(is_logged_in) {
