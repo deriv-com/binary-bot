@@ -44,8 +44,8 @@ const GoogleDriveIntegration = () => {
                     //
                     client_id: process.env.GD_CLIENT_ID,
                     // client_id: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
-                    // API_KEY: process.env.GD_API_KEY,
-                    // APP_ID: process.env.GD_APP_ID,
+                    API_KEY: process.env.GD_API_KEY,
+                    APP_ID: process.env.GD_APP_ID,
                     API_URL: 'https://accounts.google.com/gsi/client',
                     redirect_uri: "https://your.domain/code_callback_endpoint",
                     // // AUTH_SCOPE: 'client:auth2:picker',

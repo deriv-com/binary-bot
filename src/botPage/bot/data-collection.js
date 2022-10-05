@@ -3,8 +3,6 @@ import pako from 'pako';
 import { observer } from '../../common/utils/observer';
 import { getTokenList } from '../../common/utils/storageManager';
 import { isProduction } from '../../common/utils/tools';
-import { useDispatch } from "react-redux";
-import { setIsWorkspaceRendered } from "../view/deriv/store/ui-slice";
 
 export default class DataCollection {
     constructor(workspace) {
@@ -15,13 +13,7 @@ export default class DataCollection {
             observer.register('bot.contract', contract => this.trackTransaction(contract));
             observer.register('bot.running', () => this.trackRun());
         }
-        // const dispatch = useDispatch();
-        console.log('this.workspace.rendered', this.workspace.rendered);
-        // if(this.workspace.rendered){
-        //     dispatch(setIsWorkspaceRendered(true));
-        // }
     }
-    // DataCollection.prototype.workspace = this.workspace;
 
     IS_PENDING = false;
     IS_PROCESSED = true;

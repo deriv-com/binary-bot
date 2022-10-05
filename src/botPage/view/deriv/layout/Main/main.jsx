@@ -27,15 +27,12 @@ import api from "../../api";
 import Helmet from "react-helmet";
 import { getLanguage } from '../../../../../common/lang';
 import { translate } from '../../../../../common/utils/tools';
-import DataCollection from '../../../../bot/data-collection';
 
 const Main = () => {
 	const [blockly, setBlockly] = React.useState(null);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { should_reload_workspace } = useSelector(state => state.ui);
-	// const data_collection = new DataCollection();
-	// console.log('data_collection', data_collection);
 
 
 	React.useEffect(() => {
@@ -47,13 +44,9 @@ const Main = () => {
 			loginCheck().then(() => {
 				initializeBlockly(_blockly);
 			})
-			.then(()=> {
-				console.log('0', Blockly.mainWorkspace?.rendered)
-			})
-			// }).then(setTimeout(()=> console.log('0', Blockly.mainWorkspace), 3000))
 			dispatch(setShouldReloadWorkspace(false));
 		}
-	},[]);
+	}, []);
 
 	React.useEffect(() => {
 		if (should_reload_workspace && blockly) {
@@ -129,21 +122,8 @@ const Main = () => {
 				TrackJS.configure({
 					userId: document.getElementById("active-account-name")?.value,
 				});
-				console.log('2 Blockly.mainWorkspace', Blockly.mainWorkspace.rendered);
-			})
-			.then(()=>{
-				console.log('3 Blockly.mainWorkspace', Blockly.mainWorkspace.rendered);
 			})
 	}
-// 	const workspace_ref = React.useRef();
-// 	  document.addEventListener('readystatechange', () => {
-//     if (document.readyState === 'complete') {
-//         const has_workspace = !!document.querySelector("#blocklyDiv")
-// 		workspace_ref.current = has_workspace;
-//         console.log('has_workspace', has_workspace, 'workspace_ref.current', workspace_ref.current);
-//     }
-// });
-
 
 	return (
 		<div className="main">
@@ -162,10 +142,7 @@ const Main = () => {
         	/>
 			<BotUnavailableMessage />
 			<div id="bot-blockly">
-				{/* {blockly && <ToolBox blockly={blockly} hasWorkspace={!!document.querySelector(".blocklyWorkspace")} />} */}
 				{blockly && <ToolBox blockly={blockly} />}
-				{/* {blockly && <ToolBox blockly={blockly} hasWorkspace={workspace_ref.current} />} */}
-				{/* Blockly workspace will be injected here */}
 				<div id="blocklyArea">
 					<div id="blocklyDiv" style={{ position: 'absolute' }}></div>
 					<SidebarToggle />
