@@ -8,6 +8,7 @@ import { TrackJSError } from '../../botPage/view/logger';
 import store from '../../botPage/view/deriv/store';
 import { setGdReady } from '../../botPage/view/deriv/store/ui-slice';
 import { setGdLoggedIn } from '../../botPage/view/deriv/store/client-slice';
+import decodeJwtResponse from 'jwt-decode';
 
 const getPickerLanguage = () => {
     const language = getLanguage();
@@ -44,53 +45,39 @@ class GoogleDriveUtil {
         loadExternalScript(this.api_url)
             .then(this.init)
             .catch(err => errLogger(err, translate('There was an error loading Google API script.')));
-            console.log(client_id, api_key, app_id, api_url);
-
     }
 
+    handleCredentialResponse(response) {
+        // decodeJwtResponse() is a custom function
+        // to decode the credential response.
+        const response_payload = decodeJwtResponse(response.credential);
+        this.profile = response_payload;
+        this.updateLoginStatus(true);
+        store.dispatch(setGdLoggedIn(true));
+        this.is_authorized = true;
+    }
     init = () => {
-        // gapi.load(this.auth_scope, {
-        //     callback: () => {
-        //         gapi.client
-        //             .init({
-        //                 apiKey: this.api_key,
-        //                 clientId: this.client_id,
-        //                 scope: this.scope,
-        //                 discoveryDocs: this.discovery_docs,
-        //             })
-        //             .then(
-        //                 () => {
-        //                     this.auth = gapi.auth2.getAuthInstance();
-        //                     if(this.auth) {
-        //                         this.auth.isSignedIn.listen(is_logged_in => this.updateLoginStatus(is_logged_in));
-        //                         this.updateLoginStatus(this.auth.isSignedIn.get());
-        //                         store.dispatch(setGdReady(true));
-        //                     }
-        //                 },
-        //                 (error) => {
-        //                     if (error.error === "idpiframe_initialization_failed" && error.details.includes('Cookies')) {
-        //                       $.notify(
-        //                         translate(
-        //                           "To use Google Drive, enable cookies in your browser settings."
-        //                         ),
-        //                         { position: "bottom left" }
-        //                       );
-        //                     } else{
-        //                       errLogger(
-        //                         error,
-        //                         translate("There was an error initialising Google Drive.")
-        //                       );
-        //                     }
-        //                   }
-        //                 )
-        //     },
-        //     onerror: error => errLogger(error, translate('There was an error loading Google Drive libraries')),
-        // });
+            store.dispatch(setGdReady(true));
+            google.accounts.id.initialize({
+                //!TODO
+                // client_id: GD_CONFIG.CLIENT_ID,
+                client_id: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
+                callback: (response) => this.handleCredentialResponse(response)
+            })
+            google.accounts.id.renderButton( document.getElementById("signIn"),
+                {
+                    type: "standard",
+                    theme: "outline", 
+                    size: "large", 
+                    text: "signin",
+                    shape: "rectangular", 
+                    logo_alignment: "left", 
+                    width: "200", 
+                    locale: getPickerLanguage() 
+                })
     };
 
     updateLoginStatus(is_logged_in) {
-        if (is_logged_in) this.profile = this.auth.currentUser.get().getBasicProfile();
-        else this.profile = null;
 
         store.dispatch(setGdLoggedIn(is_logged_in));
         this.is_authorized = is_logged_in;
@@ -101,25 +88,16 @@ class GoogleDriveUtil {
             if (this.is_authorized) {
                 resolve();
                 return;
+            }else{
+                reject();
             }
-            this.auth
-                .signIn({ prompt: 'select_account' })
-                .then(resolve)
-                .catch(response => {
-                    if (response.error === 'access_denied') {
-                        globalObserver.emit(
-                            'ui.log.warn',
-                            translate('Please grant permission to view and manage your Google Drive files')
-                        );
-                        return;
-                    }
-                    if (response.error !== 'popup_closed_by_user') reject(response);
-                });
         });
     }
 
     logout() {
-        if (this.is_authorized) this.auth.signOut();
+        if (this.is_authorized) {
+            store.dispatch(setGdLoggedIn(false));
+        }
     }
 
     createFilePickerView({
