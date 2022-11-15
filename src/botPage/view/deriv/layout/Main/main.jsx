@@ -34,7 +34,6 @@ const Main = () => {
 	const history = useHistory();
 	const { should_reload_workspace } = useSelector(state => state.ui);
 
-
 	React.useEffect(() => {
 		if (should_reload_workspace) {
 			// eslint-disable-next-line no-underscore-dangle
@@ -143,6 +142,7 @@ const Main = () => {
 			<BotUnavailableMessage />
 			<div id="bot-blockly">
 				{blockly && <ToolBox blockly={blockly} />}
+				{/* Blockly workspace will be injected here */}
 				<div id="blocklyArea">
 					<div id="blocklyDiv" style={{ position: 'absolute' }}></div>
 					<SidebarToggle />
