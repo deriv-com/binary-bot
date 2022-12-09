@@ -90,7 +90,7 @@ gulp.task(
         remoteSrc(
             blocklyLanguages.map(lang => `${lang}.js?_=${Date.now()}`),
             {
-                base: 'https://blockly-demo.appspot.com/static/build/msg/',
+                base: 'https://blockly-demo.appspot.com/static/msg/js/',
             }
         )
             .pipe(rename(path => (path.extname = '.js')))
