@@ -100,41 +100,65 @@ class GoogleDriveUtil {
         }
     }
 
-    createFilePickerView({
-        title,
-        afterAuthCallback,
-        mime_type,
-        pickerCallback,
-        generalCallback,
-        rejectCallback,
-        generalRejectCallback,
-    }) {
-        this.authorise()
-            .then(() => {
-                afterAuthCallback()
-                    .then(() => {
-                        const view = new google.picker.DocsView();
-                        view.setIncludeFolders(true)
-                            .setSelectFolderEnabled(true)
-                            .setMimeTypes(mime_type);
+    createFilePickerView = async(
+        // {
+        // title,
+        // afterAuthCallback,
+        // mime_type,
+        // pickerCallback,
+        // generalCallback,
+        // rejectCallback,
+        // generalRejectCallback,
+    // }
+    ) => {
+        const tokenClient = google.accounts.oauth2.initTokenClient({
+            client_id: '421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com',
+            scope: this.auth_scope,
+            callback: '', // defined later
+          });
+        //   console.log(tokenClient)
 
-                        const picker = new google.picker.PickerBuilder();
-                        picker
-                            .setOrigin(`${window.location.protocol}//${window.location.host}`)
-                            .setTitle(translate(title))
-                            .addView(view)
-                            .setLocale(getPickerLanguage())
-                            .setAppId(this.app_id)
-                            .setOAuthToken(gapi.auth.getToken().access_token)
-                            .setDeveloperKey(this.api_key)
-                            .setCallback(pickerCallback)
-                            .build()
-                            .setVisible(true);
-                        if (typeof generalCallback === 'function') generalCallback();
-                    })
-                    .catch(rejectCallback);
-            })
-            .catch(generalRejectCallback);
+        console.log('google', new window.google.picker);
+        const view = new google.picker.View(google.picker.ViewId.DOCS);
+        view.setMimeTypes('image/png,image/jpeg,image/jpg');
+        const picker = new google.picker.PickerBuilder()
+            // .enableFeature(google.picker.Feature.NAV_HIDDEN)
+            // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+            .setDeveloperKey(GD_CONFIG.API_KEY)
+            .setAppId(GD_CONFIG.APP_ID)
+            .setOAuthToken(await tokenClient) //?
+            .addView(view)
+            .addView(new google.picker.DocsUploadView())
+            // .setCallback(pickerCallback)
+            .build();
+        picker.setVisible(true);
+        console.log('picker', picker)
+        // this.authorise()
+        //     .then(() => {
+        //         afterAuthCallback()
+        //             .then(() => {
+        //                 const view = new google.picker.DocsView();
+        //                 view.setIncludeFolders(true)
+        //                     .setSelectFolderEnabled(true)
+        //                     .setMimeTypes(mime_type);
+
+        //                 const picker = new google.picker.PickerBuilder();
+        //                 picker
+        //                     .setOrigin(`${window.location.protocol}//${window.location.host}`)
+        //                     .setTitle(translate(title))
+        //                     .addView(view)
+        //                     .setLocale(getPickerLanguage())
+        //                     .setAppId(this.app_id)
+        //                     .setOAuthToken(gapi.auth.getToken().access_token)
+        //                     .setDeveloperKey(this.api_key)
+        //                     .setCallback(pickerCallback)
+        //                     .build()
+        //                     .setVisible(true);
+        //                 if (typeof generalCallback === 'function') generalCallback();
+        //             })
+        //             .catch(rejectCallback);
+        //     })
+        //     .catch(generalRejectCallback);
     }
 
     createFilePicker() {
@@ -178,25 +202,25 @@ class GoogleDriveUtil {
                 } else if (data.action === google.picker.Action.CANCEL) reject();
             };
 
-            this.createFilePickerView({
-                title: translate('Select a Binary Bot strategy'),
-                afterAuthCallback: gapi.client.drive.files.list,
-                mime_type: ['text/xml', 'application/xml'],
-                pickerCallback: userPickedFile,
-                generalCallback: resolve,
-                rejectCallback: err => {
-                    if (err.status && err.status === 401) this.logout();
+            // this.createFilePickerView({
+            //     title: translate('Select a Binary Bot strategy'),
+            //     afterAuthCallback: gapi.client.drive.files.list,
+            //     mime_type: ['text/xml', 'application/xml'],
+            //     pickerCallback: userPickedFile,
+            //     generalCallback: resolve,
+            //     rejectCallback: err => {
+            //         if (err.status && err.status === 401) this.logout();
 
-                    const error = new TrackJSError(
-                        'GoogleDrive',
-                        translate('There was an error listing files from Google Drive'),
-                        err
-                    );
-                    globalObserver.emit('Error', error);
-                    reject(error);
-                },
-                generalRejectCallback: reject,
-            });
+            //         const error = new TrackJSError(
+            //             'GoogleDrive',
+            //             translate('There was an error listing files from Google Drive'),
+            //             err
+            //         );
+            //         globalObserver.emit('Error', error);
+            //         reject(error);
+            //     },
+            //     generalRejectCallback: reject,
+            // });
         });
     }
 
