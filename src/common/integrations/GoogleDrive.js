@@ -56,25 +56,29 @@ class GoogleDriveUtil {
         store.dispatch(setGdLoggedIn(true));
         this.is_authorized = true;
     }
+
     init = () => {
+        console.log('GD_CONFIG.CLIENT_ID', GD_CONFIG.CLIENT_ID);
             store.dispatch(setGdReady(true));
-            google.accounts.id.initialize({
-                //!TODO
-                // client_id: GD_CONFIG.CLIENT_ID,
-                client_id: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
-                callback: (response) => this.handleCredentialResponse(response)
-            })
-            google.accounts.id.renderButton( document.getElementById("signIn"),
-                {
-                    type: "standard",
-                    theme: "outline", 
-                    size: "large", 
-                    text: "signin",
-                    shape: "rectangular", 
-                    logo_alignment: "left", 
-                    width: "200", 
-                    locale: getPickerLanguage() 
+            window.onGoogleLibraryLoad = () => {
+                google.accounts.id.initialize({
+                    //!TODO
+                    client_id: GD_CONFIG.CLIENT_ID,
+                    // client_id: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
+                    callback: (response) => this.handleCredentialResponse(response)
                 })
+                google.accounts.id.renderButton( document.getElementById("signIn"),
+                    {
+                        type: "standard",
+                        theme: "outline", 
+                        size: "large", 
+                        text: "signin",
+                        shape: "rectangular", 
+                        logo_alignment: "left", 
+                        width: "200", 
+                        locale: getPickerLanguage(),
+                    })
+                };
     };
 
     updateLoginStatus(is_logged_in) {
@@ -118,7 +122,7 @@ class GoogleDriveUtil {
           });
         //   console.log(tokenClient)
 
-        console.log('google', new window.google.picker);
+        console.log('google', window.google);
         const view = new google.picker.View(google.picker.ViewId.DOCS);
         view.setMimeTypes('image/png,image/jpeg,image/jpg');
         const picker = new google.picker.PickerBuilder()
