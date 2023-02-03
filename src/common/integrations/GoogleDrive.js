@@ -24,7 +24,8 @@ class GoogleDriveUtil {
         client_id = GD_CONFIG.CLIENT_ID,
         api_key = GD_CONFIG.API_KEY,
         app_id = GD_CONFIG.APP_ID,
-        api_url = GD_CONFIG.API_URL,
+        api_url_identity = GD_CONFIG.API_URL_IDENTITY,
+        api_url_gdrive = GD_CONFIG.API_URL_GDRIVE,
         auth_scope = GD_CONFIG.AUTH_SCOPE,
         scope = GD_CONFIG.SCOPE,
         discovery_docs = GD_CONFIG.DISCOVERY_DOCS,
@@ -33,7 +34,8 @@ class GoogleDriveUtil {
         this.client_id = client_id;
         this.api_key = api_key;
         this.app_id = app_id;
-        this.api_url = api_url;
+        this.api_url_identity = api_url_identity;
+        this.api_url_gdrive = api_url_gdrive;
         this.auth_scope = auth_scope;
         this.scope = scope;
         this.discovery_docs = discovery_docs;
@@ -42,14 +44,15 @@ class GoogleDriveUtil {
         this.is_authorized = false;
         this.profile = null;
         // Fetch Google API script and initialize class fields
-        loadExternalScript(this.api_url)
-            .then(this.init)
-            .catch(err => errLogger(err, translate('There was an error loading Google API script.')));
+        loadExternalScript(this.api_url_identity)
+            .then(this.initUrlIdentity)
+            .catch(err => errLogger(err, translate('There was an error loading Google Identity API script.')));
+        loadExternalScript(this.api_url_gdrive)
+            .then(this.initGDrive)
+            .catch(err => errLogger(err, translate('There was an error loading Google Drive API script.')));
     }
 
     handleCredentialResponse(response) {
-        // decodeJwtResponse() is a custom function
-        // to decode the credential response.
         const response_payload = decodeJwtResponse(response.credential);
         this.profile = response_payload;
         this.updateLoginStatus(true);
@@ -57,14 +60,26 @@ class GoogleDriveUtil {
         this.is_authorized = true;
     }
 
-    init = () => {
-        console.log('GD_CONFIG.CLIENT_ID', GD_CONFIG.CLIENT_ID);
+    initUrlIdentity = () => {
             store.dispatch(setGdReady(true));
             window.onGoogleLibraryLoad = () => {
-                google.accounts.id.initialize({
-                    //!TODO
+
+                this.client = google.accounts.oauth2.initTokenClient({
                     client_id: GD_CONFIG.CLIENT_ID,
-                    // client_id: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
+                    scope: GD_CONFIG.SCOPE,
+                    callback: tokenResponse => {
+                        this.access_token = tokenResponse.access_token;
+                        console.log(this.access_token);
+                        store.dispatch(setGdLoggedIn(true));
+                    },
+                });
+                // this.client.requestAccessToken({prompt: 'consent'});
+                // google.accounts.id.prompt();
+                // console.log('this.client', this.client);
+
+                google.accounts.id.initialize({
+                    // client_id: GD_CONFIG.CLIENT_ID,
+                    client_id: "819005229069-cflqi9vh6395q1pilodafkqd7q19vtgd.apps.googleusercontent.com",
                     callback: (response) => this.handleCredentialResponse(response)
                 })
                 google.accounts.id.renderButton( document.getElementById("signIn"),
@@ -81,8 +96,48 @@ class GoogleDriveUtil {
                 };
     };
 
-    updateLoginStatus(is_logged_in) {
+    //!TODO should be removed after finding mothod for get token Google identity
+    initGDrive = () => {        
+        gapi.load(this.auth_scope, {
+        callback: () => {
+            gapi.client
+                .init({
+                    apiKey: this.api_key,
+                    clientId: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
+                    scope: this.scope,
+                    discoveryDocs: this.discovery_docs,
+                })
+                .then(
+                    () => {
+                        this.auth = gapi.auth2.getAuthInstance();
+                        if(this.auth) {
+                            this.auth.isSignedIn.listen(is_logged_in => this.updateLoginStatus(is_logged_in));
+                            this.updateLoginStatus(this.auth.isSignedIn.get());
+                            store.dispatch(setGdReady(true));
+                        }
+                    },
+                    (error) => {
+                        if (error.error === "idpiframe_initialization_failed" && error.details.includes('Cookies')) {
+                          $.notify(
+                            translate(
+                                "There was an error initialising Google Drive. Please enable Cookies on your browser settings to use this feature."
+                                ),
+                            { position: "bottom left" }
+                          );
+                        } else{
+                          errLogger(
+                            error,
+                            translate("There was an error initialising Google Drive.")
+                          );
+                        }
+                      }
+                    )
+        },
+        onerror: error => errLogger(error, translate('There was an error loading Google Drive libraries')),
+        });
+    };
 
+    updateLoginStatus(is_logged_in) {
         store.dispatch(setGdLoggedIn(is_logged_in));
         this.is_authorized = is_logged_in;
     }
@@ -104,65 +159,41 @@ class GoogleDriveUtil {
         }
     }
 
-    createFilePickerView = async(
-        // {
-        // title,
-        // afterAuthCallback,
-        // mime_type,
-        // pickerCallback,
-        // generalCallback,
-        // rejectCallback,
-        // generalRejectCallback,
-    // }
-    ) => {
-        const tokenClient = google.accounts.oauth2.initTokenClient({
-            client_id: '421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com',
-            scope: this.auth_scope,
-            callback: '', // defined later
-          });
-        //   console.log(tokenClient)
+    createFilePickerView ({
+        title,
+        afterAuthCallback,
+        mime_type,
+        pickerCallback,
+        generalCallback,
+        rejectCallback,
+        generalRejectCallback,
+    }) {
+        this.authorise()
+        .then(() => {
+            afterAuthCallback()
+                .then(() => {
+                    const view = new google.picker.DocsView();
+                    view.setIncludeFolders(true)
+                        .setSelectFolderEnabled(true)
+                        .setMimeTypes(mime_type);
 
-        console.log('google', window.google);
-        const view = new google.picker.View(google.picker.ViewId.DOCS);
-        view.setMimeTypes('image/png,image/jpeg,image/jpg');
-        const picker = new google.picker.PickerBuilder()
-            // .enableFeature(google.picker.Feature.NAV_HIDDEN)
-            // .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-            .setDeveloperKey(GD_CONFIG.API_KEY)
-            .setAppId(GD_CONFIG.APP_ID)
-            .setOAuthToken(await tokenClient) //?
-            .addView(view)
-            .addView(new google.picker.DocsUploadView())
-            // .setCallback(pickerCallback)
-            .build();
-        picker.setVisible(true);
-        console.log('picker', picker)
-        // this.authorise()
-        //     .then(() => {
-        //         afterAuthCallback()
-        //             .then(() => {
-        //                 const view = new google.picker.DocsView();
-        //                 view.setIncludeFolders(true)
-        //                     .setSelectFolderEnabled(true)
-        //                     .setMimeTypes(mime_type);
-
-        //                 const picker = new google.picker.PickerBuilder();
-        //                 picker
-        //                     .setOrigin(`${window.location.protocol}//${window.location.host}`)
-        //                     .setTitle(translate(title))
-        //                     .addView(view)
-        //                     .setLocale(getPickerLanguage())
-        //                     .setAppId(this.app_id)
-        //                     .setOAuthToken(gapi.auth.getToken().access_token)
-        //                     .setDeveloperKey(this.api_key)
-        //                     .setCallback(pickerCallback)
-        //                     .build()
-        //                     .setVisible(true);
-        //                 if (typeof generalCallback === 'function') generalCallback();
-        //             })
-        //             .catch(rejectCallback);
-        //     })
-        //     .catch(generalRejectCallback);
+                    const picker = new google.picker.PickerBuilder();
+                    picker
+                        .setOrigin(`${window.location.protocol}//${window.location.host}`)
+                        .setTitle(translate(title))
+                        .addView(view)
+                        .setLocale(getPickerLanguage())
+                        .setAppId(this.app_id)
+                        .setOAuthToken(gapi.auth.getToken().access_token)
+                        .setDeveloperKey(this.api_key)
+                        .setCallback(pickerCallback)
+                        .build()
+                        .setVisible(true);
+                    if (typeof generalCallback === 'function') generalCallback();
+                })
+                .catch(rejectCallback);
+        })
+        .catch(generalRejectCallback);
     }
 
     createFilePicker() {
@@ -206,25 +237,25 @@ class GoogleDriveUtil {
                 } else if (data.action === google.picker.Action.CANCEL) reject();
             };
 
-            // this.createFilePickerView({
-            //     title: translate('Select a Binary Bot strategy'),
-            //     afterAuthCallback: gapi.client.drive.files.list,
-            //     mime_type: ['text/xml', 'application/xml'],
-            //     pickerCallback: userPickedFile,
-            //     generalCallback: resolve,
-            //     rejectCallback: err => {
-            //         if (err.status && err.status === 401) this.logout();
+            this.createFilePickerView({
+                title: translate('Select a Binary Bot strategy'),
+                afterAuthCallback: gapi.client.drive.files.list,
+                mime_type: ['text/xml', 'application/xml'],
+                pickerCallback: userPickedFile,
+                generalCallback: resolve,
+                rejectCallback: err => {
+                    if (err.status && err.status === 401) this.logout();
 
-            //         const error = new TrackJSError(
-            //             'GoogleDrive',
-            //             translate('There was an error listing files from Google Drive'),
-            //             err
-            //         );
-            //         globalObserver.emit('Error', error);
-            //         reject(error);
-            //     },
-            //     generalRejectCallback: reject,
-            // });
+                    const error = new TrackJSError(
+                        'GoogleDrive',
+                        translate('There was an error listing files from Google Drive'),
+                        err
+                    );
+                    globalObserver.emit('Error', error);
+                    reject(error);
+                },
+                generalRejectCallback: reject,
+            });
         });
     }
 

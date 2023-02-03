@@ -68,7 +68,6 @@ const Load = ({ closeDialog, is_gd_logged_in }) => {
           id="load-strategy"
           type="submit"
           disabled={is_loading}
-          onClick={google_drive_util.createFilePickerView()}
         >
           {is_loading ? <LoadingButton /> : translate('Load')}
         </button>
