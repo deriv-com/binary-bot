@@ -43,6 +43,7 @@ class GoogleDriveUtil {
         this.auth = null;
         this.is_authorized = false;
         this.profile = null;
+        this.access_token = null;
         // Fetch Google API script and initialize class fields
         loadExternalScript(this.api_url_identity)
             .then(this.initUrlIdentity)
@@ -52,9 +53,29 @@ class GoogleDriveUtil {
             .catch(err => errLogger(err, translate('There was an error loading Google Drive API script.')));
     }
 
+    initTokenClient() {
+        this.client = google.accounts.oauth2.initTokenClient({
+            client_id: GD_CONFIG.CLIENT_ID,
+            scope: GD_CONFIG.SCOPE,
+            prompt: 'none',
+            select_account: "true",
+            callback: tokenResponse => {
+                this.access_token = tokenResponse.access_token;
+                store.dispatch(setGdLoggedIn(true));
+            },
+        });
+
+        if(this.client){
+            this.client.requestAccessToken({
+                hint: this.profile?.email
+            });
+        };
+    }
+
     handleCredentialResponse(response) {
         const response_payload = decodeJwtResponse(response.credential);
         this.profile = response_payload;
+        this.initTokenClient();
         this.updateLoginStatus(true);
         store.dispatch(setGdLoggedIn(true));
         this.is_authorized = true;
@@ -63,20 +84,6 @@ class GoogleDriveUtil {
     initUrlIdentity = () => {
             store.dispatch(setGdReady(true));
             window.onGoogleLibraryLoad = () => {
-
-                this.client = google.accounts.oauth2.initTokenClient({
-                    client_id: GD_CONFIG.CLIENT_ID,
-                    scope: GD_CONFIG.SCOPE,
-                    callback: tokenResponse => {
-                        this.access_token = tokenResponse.access_token;
-                        console.log(this.access_token);
-                        store.dispatch(setGdLoggedIn(true));
-                    },
-                });
-                // this.client.requestAccessToken({prompt: 'consent'});
-                // google.accounts.id.prompt();
-                // console.log('this.client', this.client);
-
                 google.accounts.id.initialize({
                     // client_id: GD_CONFIG.CLIENT_ID,
                     client_id: "819005229069-cflqi9vh6395q1pilodafkqd7q19vtgd.apps.googleusercontent.com",
@@ -96,46 +103,45 @@ class GoogleDriveUtil {
                 };
     };
 
-    //!TODO should be removed after finding mothod for get token Google identity
-    initGDrive = () => {        
+    initGDrive = () => {      
         gapi.load(this.auth_scope, {
-        callback: () => {
-            gapi.client
-                .init({
-                    apiKey: this.api_key,
-                    clientId: "421032537360-bs7d6orvvd7inrj2apc86fkmnbmbmj9g.apps.googleusercontent.com",
-                    scope: this.scope,
-                    discoveryDocs: this.discovery_docs,
-                })
-                .then(
-                    () => {
-                        this.auth = gapi.auth2.getAuthInstance();
-                        if(this.auth) {
-                            this.auth.isSignedIn.listen(is_logged_in => this.updateLoginStatus(is_logged_in));
-                            this.updateLoginStatus(this.auth.isSignedIn.get());
-                            store.dispatch(setGdReady(true));
-                        }
-                    },
-                    (error) => {
-                        if (error.error === "idpiframe_initialization_failed" && error.details.includes('Cookies')) {
-                          $.notify(
-                            translate(
-                                "There was an error initialising Google Drive. Please enable Cookies on your browser settings to use this feature."
-                                ),
-                            { position: "bottom left" }
-                          );
-                        } else{
-                          errLogger(
-                            error,
-                            translate("There was an error initialising Google Drive.")
-                          );
-                        }
-                      }
-                    )
-        },
+        callback: () => {},
         onerror: error => errLogger(error, translate('There was an error loading Google Drive libraries')),
         });
     };
+
+    listFiles = async() => {
+        let response;
+        try {
+          response = await gapi.client.drive.files.list({
+            'pageSize': 10,
+            'fields': 'files(id, name)',
+          });
+        } catch (err) {
+            const error = new TrackJSError(
+                'GoogleDrive',
+                translate(err.message),
+                err
+            );
+            globalObserver.emit('Error', error);
+          return;
+        }
+        const files = response.result.files;
+        if (!files || files.length == 0) {
+            const error = new TrackJSError(
+                'GoogleDrive',
+                translate('No files found.'),
+                err
+            );
+            globalObserver.emit('Error', error);
+          return;
+        }
+        // Flatten to string to display
+        const output = files.reduce(
+            (str, file) => `${str}${file.name} (${file.id})\n`,
+            'Files:\n');
+        console.log('output', output);
+    }
 
     updateLoginStatus(is_logged_in) {
         store.dispatch(setGdLoggedIn(is_logged_in));
@@ -184,7 +190,7 @@ class GoogleDriveUtil {
                         .addView(view)
                         .setLocale(getPickerLanguage())
                         .setAppId(this.app_id)
-                        .setOAuthToken(gapi.auth.getToken().access_token)
+                        .setOAuthToken(this.access_token)
                         .setDeveloperKey(this.api_key)
                         .setCallback(pickerCallback)
                         .build()
@@ -239,7 +245,7 @@ class GoogleDriveUtil {
 
             this.createFilePickerView({
                 title: translate('Select a Binary Bot strategy'),
-                afterAuthCallback: gapi.client.drive.files.list,
+                afterAuthCallback: this.listFiles,
                 mime_type: ['text/xml', 'application/xml'],
                 pickerCallback: userPickedFile,
                 generalCallback: resolve,

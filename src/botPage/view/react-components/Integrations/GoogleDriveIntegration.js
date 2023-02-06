@@ -20,7 +20,7 @@ const GoogleDriveIntegration = () => {
             </div>
             <div className="right">
                 <a id="signIn"
-                    onClick={() => google_drive_util.authorise()}
+                    onClick={() => google_drive_util.initTokenClient().then( google_drive_util.authorise())}
                     className={!is_gd_logged_in ? 'button' : 'button-disabled'}
                 >
                     <span id="connect-google-drive">{translate('Connect')}</span>
