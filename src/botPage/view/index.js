@@ -9,6 +9,9 @@ import App from './deriv/app'
 
 ReactDOM.render(
   <Provider store={store}>
+     <div id="g_id_onload" style={{display:'none' }}
+					data-client_id={process.env.GD_CLIENT_ID}
+          data-auto_prompt="false"></div>
     <App />
   </Provider>,
   document.getElementById("main")

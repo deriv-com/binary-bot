@@ -17,17 +17,8 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
     const isMounted = useIsMounted();
 
     const onChange = e => e.target.type === 'radio' ? setSaveType(e.target.value) : setSaveAsCollection(e.target.checked);
-
-    const onSubmit = e => {
-        e.preventDefault();
-
-        if (save_type === SAVE_LOAD_TYPE.local) {
-            blockly.save({ file_name, save_as_collection });
-            closeDialog();
-            return;
-        }
-
-        setLoading(true);
+   
+    const saveInGoogleDrive = () => {
         const xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
         cleanBeforeExport(xml);
         xml.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
@@ -42,6 +33,27 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
             })
             .then(() => globalObserver.emit('ui.log.success', translate('Successfully uploaded to Google Drive')))
             .finally(() => isMounted() && setLoading(false));
+    }
+    const onSubmit = e => {
+        e.preventDefault();
+
+        if (save_type === SAVE_LOAD_TYPE.local) {
+            blockly.save({ file_name, save_as_collection });
+            closeDialog();
+            return;
+        }
+        setLoading(true);
+        if(!google_drive_util.access_token) {
+            google_drive_util.client.callback = (response) => {
+                google_drive_util.access_token = response.access_token;
+                saveInGoogleDrive() ;
+            }
+            google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.profile?.email});
+        }
+        else {
+            saveInGoogleDrive() ;
+        }
+        
     };
 
     return (

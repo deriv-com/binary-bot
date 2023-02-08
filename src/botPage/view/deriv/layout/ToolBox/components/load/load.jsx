@@ -14,16 +14,30 @@ const Load = ({ closeDialog, is_gd_logged_in }) => {
 
   const onChange = e => setLoadType(e.target.value);
 
+  const createFilePicker = () => {
+    google_drive_util
+    .createFilePicker()
+    .then(() => closeDialog())
+    .finally(() => isMounted() && setLoading(false));
+  }
+
   const onSubmit = e => {
     e.preventDefault();
 
     if (load_type === SAVE_LOAD_TYPE.google_drive) {
       setLoading(true);
 
-      google_drive_util
-        .createFilePicker()
-        .then(() => closeDialog())
-        .finally(() => isMounted() && setLoading(false));
+      if(!google_drive_util.access_token) {
+          google_drive_util.client.callback = (response) => {
+              google_drive_util.access_token = response.access_token;
+              createFilePicker() ;
+          }
+          google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.profile?.email});
+      }
+      else {
+        createFilePicker() ;
+      }
+   
     } else {
       // [TODO]: Refactor to use react
       document.getElementById('files').click();
