@@ -31,11 +31,15 @@ const Load = ({ closeDialog, is_gd_logged_in }) => {
           google_drive_util.client.callback = (response) => {
               google_drive_util.access_token = response.access_token;
               createFilePicker() ;
+              isMounted() && setLoading(false);
+              closeDialog();
           }
           google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.profile?.email});
       }
       else {
         createFilePicker() ;
+        isMounted() && setLoading(false);
+        closeDialog();
       }
    
     } else {

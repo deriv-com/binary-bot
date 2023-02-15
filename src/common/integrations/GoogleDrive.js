@@ -3,7 +3,7 @@ import decodeJwtResponse from 'jwt-decode';
 import GD_CONFIG from '../../botPage/common/google_drive_config';
 import { load } from '../../botPage/view/blockly';
 import store from '../../botPage/view/deriv/store';
-import { setGdLoggedIn } from '../../botPage/view/deriv/store/client-slice';
+import { setGdLoggedIn, setGoogleEmail } from '../../botPage/view/deriv/store/client-slice';
 import { setGdReady } from '../../botPage/view/deriv/store/ui-slice';
 import { TrackJSError } from '../../botPage/view/logger';
 import { getLanguage } from '../lang';
@@ -42,7 +42,6 @@ class GoogleDriveUtil {
     this.bot_folder = bot_folder;
     this.auth = null;
     this.is_authorized = false;
-    this.profile = null;
     // Fetch Google API script and initialize class fields
     loadExternalScript(this.api_url_identity)
       .then(() => this.initUrlIdentity())
@@ -61,15 +60,16 @@ class GoogleDriveUtil {
           translate('There was an error loading Google Drive API script.')
         )
     });
+  
+    this.google_email = localStorage.getItem('google_email') ? localStorage.getItem('google_email') : null;
+    
   }
-
-    get clientEmail() {
-        return this.profile?.email;
-    };
 
     handleCredentialResponse = (response) => {
         const response_payload = decodeJwtResponse(response.credential);
-        this.profile = response_payload;
+        this.google_email = response_payload.email;
+        store.dispatch(setGoogleEmail(this.google_email));
+        localStorage.setItem('google_email', this.google_email);
         this.updateLoginStatus(true);
     };
 
@@ -77,9 +77,8 @@ class GoogleDriveUtil {
         this.client = google.accounts.oauth2.initTokenClient({
             client_id: GD_CONFIG.CLIENT_ID,
             scope: GD_CONFIG.SCOPE,
-            callback: (tokenResponse) => {
-                this.updateLoginStatus(true);
-                this.access_token = tokenResponse.access_token;
+            callback: (response) => {
+                this.access_token = response.access_token;
             },
         });
 
@@ -90,7 +89,7 @@ class GoogleDriveUtil {
             prompt_parent_id: 'g_id_onload'
         });
 
-        google.accounts.id.prompt((notification) => {
+        google.accounts.id.prompt(this.google_email ?? '', (notification) => {
             if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
             // TODO handle in case needed
             }
@@ -101,25 +100,14 @@ class GoogleDriveUtil {
         this.client.callback = (response) => {
             this.access_token = response.access_token;
             store.dispatch(setGdLoggedIn(true));
-            google.accounts.id.prompt((notification) => {
+            google.accounts.id.prompt(this.google_email ?? '', (notification) => {
             if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
                 // TODO handle incase needed
             }
         });
         }
-        this.client.requestAccessToken()
+        this.requestAccessToken()
     }
-
-    initGDrive = () => {
-        this.client = google.accounts.oauth2.initTokenClient({
-            client_id: GD_CONFIG.CLIENT_ID,
-            scope: GD_CONFIG.SCOPE,
-            callback: async (tokenResponse) => {
-                this.updateLoginStatus(true);
-                this.access_token = tokenResponse.access_token;
-            },
-        });
-    };
 
     updateLoginStatus(is_logged_in) {
         store.dispatch(setGdLoggedIn(is_logged_in));
@@ -127,8 +115,11 @@ class GoogleDriveUtil {
     }
 
     logout() {
-        google.accounts.id.revoke(this.profile?.email, done => {
+        if(this.google_email)
+        google.accounts.id.revoke(this.google_email, done => {
             this.updateLoginStatus(false);
+            this.access_token='';
+            store.dispatch(setGoogleEmail(""));
         })
     }
 
@@ -182,7 +173,6 @@ class GoogleDriveUtil {
                 .setTitle(translate(title))
                 .addView(view)
                 .setLocale(getPickerLanguage())
-                .setAppId(this.app_id)
                 .setOAuthToken(this.access_token)
                 .setDeveloperKey(this.api_key)
                 .setCallback(pickerCallback)
@@ -231,7 +221,7 @@ class GoogleDriveUtil {
                     globalObserver.emit('Error', error);
                     reject(error);
                 });
-            } else if (data.action === google.picker.Action.CANCEL) reject();
+            }
             };
 
             this.createFilePickerView({
@@ -293,10 +283,11 @@ class GoogleDriveUtil {
         });
     }
 
-    requestAccessToken() {
+    requestAccessToken = () => {
         if(!this.access_token)
         this.client.requestAccessToken({ prompt: '' });
     }
+
     saveFile(options) {
         return new Promise((resolve, reject) => {
             // eslint-disable-next-line consistent-return
@@ -349,7 +340,6 @@ class GoogleDriveUtil {
                 }
                 return;
             }
-            if (data.action === google.picker.Action.CANCEL) reject();
             };
 
             this.createFilePickerView({

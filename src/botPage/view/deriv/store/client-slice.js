@@ -16,6 +16,7 @@ const initial_state = {
   is_logged: false,
   is_gd_logged_in: false,
   accounts: {},
+  google_email: '',
 };
 
 export const clientSlice = createSlice({
@@ -60,6 +61,9 @@ export const clientSlice = createSlice({
     setGdLoggedIn: (state, action) => {
       state.is_gd_logged_in = action.payload;
     },
+    setGoogleEmail: (state, action) => {
+      state.google_email = action.payload
+    }
   },
 });
 
@@ -70,6 +74,7 @@ export const {
   updateActiveAccount,
   updateBalance,
   setGdLoggedIn,
+  setGoogleEmail,
 } = clientSlice.actions;
 
 export default clientSlice.reducer;
