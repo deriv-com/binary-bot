@@ -86,10 +86,11 @@ class GoogleDriveUtil {
             client_id: GD_CONFIG.CLIENT_ID,
             callback: (response) => this.handleCredentialResponse(response),
             auto_select: true,
-            prompt_parent_id: 'g_id_onload'
+            prompt_parent_id: 'g_id_onload',
+            email: this.google_email ?? ''
         });
 
-        google.accounts.id.prompt(this.google_email ?? '', (notification) => {
+        google.accounts.id.prompt((notification) => {
             if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
             // TODO handle in case needed
             }
@@ -100,7 +101,7 @@ class GoogleDriveUtil {
         this.client.callback = (response) => {
             this.access_token = response.access_token;
             store.dispatch(setGdLoggedIn(true));
-            google.accounts.id.prompt(this.google_email ?? '', (notification) => {
+            google.accounts.id.prompt((notification) => {
             if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
                 // TODO handle incase needed
             }

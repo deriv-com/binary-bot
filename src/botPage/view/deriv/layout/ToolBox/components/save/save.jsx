@@ -48,7 +48,7 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
                 google_drive_util.access_token = response.access_token;
                 saveInGoogleDrive() ;
             }
-            google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.profile?.email});
+            google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.google_email});
         }
         else {
             saveInGoogleDrive() ;

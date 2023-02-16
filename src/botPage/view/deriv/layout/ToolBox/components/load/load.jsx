@@ -34,7 +34,7 @@ const Load = ({ closeDialog, is_gd_logged_in }) => {
               isMounted() && setLoading(false);
               closeDialog();
           }
-          google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.profile?.email});
+          google_drive_util.client.requestAccessToken({prompt: "", hint: google_drive_util.google_email});
       }
       else {
         createFilePicker() ;
