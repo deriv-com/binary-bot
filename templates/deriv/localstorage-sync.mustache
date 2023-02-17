@@ -15,13 +15,14 @@
                     'https://staging-app.deriv.me',
                     'https://deriv-app-git-fork-rupato-deriv-fix-local-storage-sync.binary.sx/'
                 ];
+                console.log(allowed_origins, 'allowed_origins');
 
                 const autoLogin = message => {
                     const { value, key } = message.data;
                     const client_accounts = JSON.parse(value);
                     const token_data = {};
                     let login_token  = null
-
+                    
                     Object.keys(client_accounts).forEach((e, i) => {
                         const order = i + 1;
                         const { token, currency } = client_accounts[e];
@@ -43,6 +44,8 @@
                         localStorage.setItem('login_url', token_params);
                         localStorage.setItem('current_token', login_token);
                     }
+                    console.log(token_params, 'token_params');
+                    console.log(current_token, 'current_token');
                 };
 
                 if (allowed_origins.includes(message.origin)) {
