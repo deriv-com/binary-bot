@@ -16,7 +16,7 @@
                     'https://staging-app.deriv.me',
                     'https://deriv-app-git-fork-rupato-deriv-fix-local-storage-sync.binary.sx'
                 ];
-                console.log(allowed_origins, 'allowed_origins');
+              
 
                 const autoLogin = message => {
                     const { value, key } = message.data;
@@ -50,15 +50,16 @@
 
                     if (token_params !== '' && login_token && login_token !== current_token) {
                         // store the login url and fire when the user hits binary bot app directly
+
+                        console.log('token params check',{
+                            token_params,
+                            login_token
+                        })
                         localStorage.setItem('login_url', token_params);
                         localStorage.setItem('current_token', login_token);
                     }
 
                 };
-
-                console.log({
-                    mo: message.origin
-                })
 
                 if (allowed_origins.includes(message.origin)) {
                     switch (message.data.key) {
