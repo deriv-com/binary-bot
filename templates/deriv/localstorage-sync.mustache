@@ -27,6 +27,7 @@
                     Object.keys(client_accounts).forEach((e, i) => {
                         const order = i + 1;
                         const { token, currency } = client_accounts[e];
+                        console.log({ token })
 
                         token_data[`accountName${order}`] = e;
                         token_data[`cur${order}`] = currency;
@@ -41,8 +42,9 @@
                     const current_token = localStorage.getItem('current_token')
 
                     console.log({
-                        'current_token': current_token,
-                        'login_token': login_token
+                        current_token,
+                        login_tokens,
+                        token_params
                     });
 
 
