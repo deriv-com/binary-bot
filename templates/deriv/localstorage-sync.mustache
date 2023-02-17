@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>Deriv</title>
         <meta charset="utf-8" />
@@ -21,8 +22,8 @@
                     const { value, key } = message.data;
                     const client_accounts = JSON.parse(value);
                     const token_data = {};
-                    let login_token  = null
-                    
+                    let login_token = null
+
                     Object.keys(client_accounts).forEach((e, i) => {
                         const order = i + 1;
                         const { token, currency } = client_accounts[e];
@@ -31,7 +32,7 @@
                         token_data[`cur${order}`] = currency;
                         token_data[`token${order}`] = token;
 
-                        if(!login_token){
+                        if (!login_token) {
                             login_token = token
                         }
                     });
@@ -39,13 +40,18 @@
                     const token_params = new URLSearchParams(token_data).toString();
                     const current_token = localStorage.getItem('current_token')
 
-                    if (token_params !== '' && login_token && login_token !== current_token ) {
+                    console.log({
+                        'current_token': current_token,
+                        'login_token': login_token
+                    });
+
+
+                    if (token_params !== '' && login_token && login_token !== current_token) {
                         // store the login url and fire when the user hits binary bot app directly
                         localStorage.setItem('login_url', token_params);
                         localStorage.setItem('current_token', login_token);
                     }
-                    console.log(token_params, 'token_params');
-                    console.log(current_token, 'current_token');
+
                 };
 
                 console.log({
@@ -69,5 +75,7 @@
             });
         </script>
     </head>
+
     <body></body>
+
 </html>
