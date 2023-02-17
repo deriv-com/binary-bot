@@ -13,7 +13,7 @@
                     'https://staging-app.deriv.com',
                     'https://staging-app.deriv.be',
                     'https://staging-app.deriv.me',
-                    'https://deriv-app-git-fork-rupato-deriv-fix-local-storage-sync.binary.sx/'
+                    'https://deriv-app-git-fork-rupato-deriv-fix-local-storage-sync.binary.sx'
                 ];
                 console.log(allowed_origins, 'allowed_origins');
 
@@ -47,6 +47,10 @@
                     console.log(token_params, 'token_params');
                     console.log(current_token, 'current_token');
                 };
+
+                console.log({
+                    mo: message.origin
+                })
 
                 if (allowed_origins.includes(message.origin)) {
                     switch (message.data.key) {
