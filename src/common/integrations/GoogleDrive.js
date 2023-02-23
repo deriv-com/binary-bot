@@ -85,6 +85,7 @@ class GoogleDriveUtil {
 
     login = () => {
         this.google_email = localStorage.getItem('google_email') ? localStorage.getItem('google_email') : null;
+        store.dispatch(setGoogleEmail(this.google_email));
         this.client.callback = response => {
             this.access_token = response.access_token;
             store.dispatch(setGdLoggedIn(true));
