@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { isMobile, isDesktop, parseQueryString } from '../../../../../common/utils/tools';
 import PlatformDropdown from './components/platform-dropdown.jsx';
-import { isLoggedIn, getActiveToken , updateTokenList } from '../../utils';
+import { isLoggedIn, getActiveToken, updateTokenList } from '../../utils';
 import {
     getTokenList,
     removeAllTokens,
@@ -73,7 +73,6 @@ const Header = () => {
         const token_list = getTokenList();
         const active_storage_token = getActiveToken(token_list);
         const landing_company = active_storage_token?.loginInfo.landing_company_name;
-
         dispatch(updateShowMessagePage(landing_company === 'maltainvest'));
 
         if (!active_storage_token) {
