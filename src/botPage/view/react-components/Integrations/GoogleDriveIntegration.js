@@ -11,7 +11,7 @@ const GoogleDriveIntegration = () => {
             <div className='left'>
                 <h2>Google Drive</h2>
                 <div className='description'>{translate('Save your blocks and strategies to Google Drive')}</div>
-                {is_gd_logged_in && (
+                {is_gd_logged_in && google_email &&(
                     <div className="integration-user">
                         {`${translate('You are logged in as')} ${google_email}`}
                     </div>
