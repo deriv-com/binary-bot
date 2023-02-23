@@ -100,12 +100,13 @@ class GoogleDriveUtil {
     }
 
     logout() {
-        if (this.google_email)
+        if (this.google_email) {
             google.accounts.id.revoke(this.google_email, done => {
                 this.updateLoginStatus(false);
                 this.access_token = '';
                 store.dispatch(setGoogleEmail(''));
             });
+        }
     }
 
     listFiles = async () => {
