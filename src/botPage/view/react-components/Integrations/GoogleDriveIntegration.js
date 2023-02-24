@@ -1,4 +1,3 @@
-/* global google */
 import React  from "react";
 import { useSelector } from "react-redux";
 import { translate } from "../../../../common/i18n";
