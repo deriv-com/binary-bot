@@ -47,9 +47,11 @@ class GoogleDriveUtil {
             .then(() => this.initUrlIdentity())
             .catch(err => errLogger(err, translate('There was an error loading Google Identity API script.')));
         loadExternalScript(this.api_url_gdrive)
-            .then(() => gapi.load(this.auth_scope, async () => {
-               await gapi.client.load(...this.discovery_docs)
-            }))
+            .then(() =>
+                gapi.load(this.auth_scope, async () => {
+                    await gapi.client.load(...this.discovery_docs);
+                })
+            )
             .then(() => store.dispatch(setGdReady(true)))
             .catch(err => {
                 errLogger(err, translate('There was an error loading Google Drive API script.'));

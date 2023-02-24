@@ -40,41 +40,41 @@ export const clientSlice = createSlice({
         setGdLoggedIn: (state, action) => {
             state.is_gd_logged_in = action.payload;
         },
-    updateBalance: (state, action) => {
-      if (action.payload.loginid === state.active_account_name) {
-        state.balance = action.payload.balance;
-        state.currency = action.payload.currency;
-      }
-      if (action.payload.total?.deriv) {
-        state.total_deriv = action.payload.total.deriv;
-      }
-      if (action.payload.accounts) {
-        state.accounts = { ...action.payload.accounts };
-        return;
-      }
-      if (action.payload.loginid in current(state.accounts)) {
-        const account = state.accounts[action.payload.loginid];
-        account.balance = action.payload.balance;
-        state.account_balance = {
-          ...state.account_balance,
-          [action.payload.loginid]: account,
-        };
-      }
+        updateBalance: (state, action) => {
+            if (action.payload.loginid === state.active_account_name) {
+                state.balance = action.payload.balance;
+                state.currency = action.payload.currency;
+            }
+            if (action.payload.total?.deriv) {
+                state.total_deriv = action.payload.total.deriv;
+            }
+            if (action.payload.accounts) {
+                state.accounts = { ...action.payload.accounts };
+                return;
+            }
+            if (action.payload.loginid in current(state.accounts)) {
+                const account = state.accounts[action.payload.loginid];
+                account.balance = action.payload.balance;
+                state.account_balance = {
+                    ...state.account_balance,
+                    [action.payload.loginid]: account,
+                };
+            }
+        },
+        setGoogleEmail: (state, action) => {
+            state.google_email = action.payload;
+        },
     },
-    setGoogleEmail: (state, action) => {
-      state.google_email = action.payload
-    },
-  },
 });
 
 export const {
-  updateIsLogged,
-  resetClient,
-  updateActiveToken,
-  updateActiveAccount,
-  updateBalance,
-  setGdLoggedIn,
-  setGoogleEmail,
+    updateIsLogged,
+    resetClient,
+    updateActiveToken,
+    updateActiveAccount,
+    updateBalance,
+    setGdLoggedIn,
+    setGoogleEmail,
 } = clientSlice.actions;
 
 export default clientSlice.reducer;
