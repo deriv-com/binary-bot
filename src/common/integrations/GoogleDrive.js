@@ -95,7 +95,7 @@ class GoogleDriveUtil {
             store.dispatch(setGdLoggedIn(true));
             google.accounts.id.prompt();
         };
-        this.requestAccessToken();
+        this.client.requestAccessToken({prompt: "", hint: this.google_email ? this.google_email : ''});
     };
 
     updateLoginStatus(is_logged_in) {
@@ -249,10 +249,6 @@ class GoogleDriveUtil {
                 });
         });
     }
-
-    requestAccessToken = () => {
-        if (!this.access_token) this.client.requestAccessToken({ prompt: '' });
-    };
 
     saveFile(options) {
         return new Promise((resolve, reject) => {
