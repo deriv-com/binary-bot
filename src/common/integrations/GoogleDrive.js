@@ -95,7 +95,7 @@ class GoogleDriveUtil {
             store.dispatch(setGdLoggedIn(true));
             google.accounts.id.prompt();
         };
-        this.client.requestAccessToken({prompt: "", hint: this.google_email ? this.google_email : ''});
+        this.client.requestAccessToken({ prompt: '', hint: this.google_email ? this.google_email : '' });
     };
 
     updateLoginStatus(is_logged_in) {
