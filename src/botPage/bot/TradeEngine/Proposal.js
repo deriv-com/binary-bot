@@ -88,7 +88,10 @@ export default Engine =>
                         throw error;
                     })
                 )
-            ).catch(e => this.$scope.observer.emit('Error', e));
+            ).catch(({ error = {} }) => {
+                this.$scope.observer.emit('Error', { name: error.code, ...error });
+                return { name: error.code, ...error };
+            });
         }
 
         observeProposals() {
