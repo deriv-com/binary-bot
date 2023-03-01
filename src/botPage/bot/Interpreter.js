@@ -24,12 +24,21 @@ const unrecoverable_errors = [
     'CustomLimitsReached',
     'OfferingsValidationError',
     'InvalidCurrency',
+    'ContractBuyValidationError',
     'NotDefaultCurrency',
     'PleaseAuthenticate',
     'FinancialAssessmentRequired',
+    'PositiveIntegerExpected',
+    'OptionError',
+    'IncorrectPayoutDecimals',
+    'IncorrectStakeDecimals',
+    'NoMFProfessionalClient',
     'AuthorizationRequired',
     'InvalidToken',
+    'DailyLossLimitExceeded',
+    'InputValidationFailed',
     'ClientUnwelcome',
+    'PriceMoved',
 ];
 
 const botInitialized = bot => bot && bot.tradeEngine.options;
@@ -40,7 +49,6 @@ const shouldRestartOnError = (bot, error_name = '') =>
 const shouldStopOnError = (bot, error_name = '') => {
     const stop_errors = [
         'SellNotAvailableCustom',
-        'ContractBuyValidationError',
         'CustomInvalidProposal',
         'ContractCreationFailure',
     ];
@@ -157,7 +165,6 @@ export default class Interpreter {
                 const { initArgs, tradeOptions } = this.bot.tradeEngine;
                 this.terminateSession();
                 this.init();
-                this.$scope.observer.register('Error', onError);
                 this.bot.tradeEngine.init(...initArgs);
                 this.bot.tradeEngine.start(tradeOptions);
                 this.revert(this.startState);
