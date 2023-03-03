@@ -27,6 +27,7 @@ const Load = ({ closeDialog, is_gd_logged_in }) => {
         if (load_type === SAVE_LOAD_TYPE.google_drive) {
             setLoading(true);
             google_drive_util.client.callback = response => {
+                google_drive_util.removeGdBackground();
                 google_drive_util.access_token = response.access_token;
                 localStorage.setItem('access_token', response.access_token);
                 createFilePicker();

@@ -178,7 +178,6 @@ class GoogleDriveUtil {
                         .then(response => {
                             try {
                                 load(response.body);
-                                this.removeGdBackground();
                             } catch (err) {
                                 const error = new TrackJSError(
                                     'GoogleDrive',
@@ -199,8 +198,9 @@ class GoogleDriveUtil {
                                 err
                             );
 
-                            this.removeGdBackground();
-                            globalObserver.emit('Error', error);
+                            if (err.status && err.status !== 401) {
+                                globalObserver.emit('Error', error);
+                            }
                             reject(error);
                         });
                 }
