@@ -78,7 +78,7 @@ class GoogleDriveUtil {
     };
 
     login = () => {
-        if(!this.access_token) {
+        if (!this.access_token) {
             gapi.client.setToken('');
             this.client.callback = response => {
                 this.access_token = response.access_token;
