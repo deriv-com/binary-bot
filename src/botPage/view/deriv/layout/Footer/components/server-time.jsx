@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer as globalObserver } from '../../../../../../common/utils/observer';
-import api from '../../../api';
+import api_base from '../../../api_base';
 import Popover from '../../../components/popover';
 
 const ServerTime = () => {
@@ -24,9 +24,9 @@ const ServerTime = () => {
     };
 
     const getServerTime = () => {
-        if (!navigator.onLine || api.connection.readyState !== 1) setHasApiResponse(false);
+        if (!navigator.onLine || api_base.api.connection.readyState !== 1) setHasApiResponse(false);
 
-        api.send({ time: 1 })
+        api_base.api.send({ time: 1 })
             .then(response => {
                 const newDate = new Date(response.time * 1000);
                 setDate(newDate);

@@ -14,7 +14,7 @@ import Dialog from './Dialog';
 import ChartTicksService from '../../common/ChartTicksService';
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { getLanguage } from '../../../common/lang';
-import api from '../deriv/api';
+import api_base from '../deriv/api_base';
 
 setSmartChartsPublicPath('./js/');
 
@@ -39,7 +39,7 @@ const ChartContent = () => {
         symbol: globalObserver.getState('symbol'),
         should_barrier_display: false,
     });
-    const ticksService = new ChartTicksService(api);
+    const ticksService = new ChartTicksService(api_base.api);
     const listeners = [];
 
     React.useEffect(() => {
@@ -88,7 +88,7 @@ const ChartContent = () => {
 
     const getKey = request => `${request.ticks_history}-${request.granularity}`;
     const requestAPI = data =>
-        ticksService.api.send(data).catch(e => {
+        api_base.api.send(data).catch(e => {
             globalObserver.emit('Error', e);
         });
 

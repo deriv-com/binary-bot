@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer as globalObserver } from '../../../common/utils/observer';
+import api_base from '../deriv/api_base';
 
-const ServerTime = ({ api }) => {
+const ServerTime = () => {
     const [hasApiResponse, setHasApiResponse] = React.useState(false);
     const [date, setDate] = React.useState();
     const [dateString, setDateString] = React.useState();
@@ -22,7 +23,7 @@ const ServerTime = ({ api }) => {
     };
 
     const getServerTime = () => {
-        api.send({ time: 1 })
+        api_base.api.send({ time: 1 })
             .then(response => {
                 const newDate = new Date(response.time * 1000);
                 setDate(newDate);

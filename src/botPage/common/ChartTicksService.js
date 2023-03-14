@@ -1,10 +1,11 @@
 import { observer as globalObserver } from '../../common/utils/observer';
 import { doUntilDone } from '../bot/tools';
+import api_base from '../view/deriv/api_base';
 import TicksService from './TicksService';
 
 export default class ChartTicksService extends TicksService {
     observe() {
-        this.api.onMessage().subscribe(({ data }) => {
+        const subscription = api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.error?.code) {
                 return;
             }
@@ -30,6 +31,7 @@ export default class ChartTicksService extends TicksService {
                 }
             }
         });
+        api_base.pushSubscription(subscription);
     }
 
     requestTicks(options) {
@@ -44,7 +46,7 @@ export default class ChartTicksService extends TicksService {
         };
 
         return new Promise((resolve, reject) => {
-            doUntilDone(() => this.api.send(request_object))
+            doUntilDone(() => api_base.api.send(request_object))
                 .then(r => {
                     if (style === 'ticks') {
                         this.updateTicksAndCallListeners(symbol, r);

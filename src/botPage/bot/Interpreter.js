@@ -3,6 +3,7 @@ import { createScope } from './CliTools';
 import Interface from './Interface';
 import { clone } from '../common/clone';
 import { observer as globalObserver } from '../../common/utils/observer';
+import api_base from '../view/deriv/api_base';
 
 /* eslint-disable func-names, no-underscore-dangle */
 JSInterpreter.prototype.takeStateSnapshot = function() {
@@ -24,12 +25,22 @@ const unrecoverable_errors = [
     'CustomLimitsReached',
     'OfferingsValidationError',
     'InvalidCurrency',
+    'ContractBuyValidationError',
     'NotDefaultCurrency',
     'PleaseAuthenticate',
     'FinancialAssessmentRequired',
+    'PositiveIntegerExpected',
+    'OptionError',
+    'IncorrectPayoutDecimals',
+    'IncorrectStakeDecimals',
+    'NoMFProfessionalClient',
     'AuthorizationRequired',
     'InvalidToken',
+    'DailyLossLimitExceeded',
+    'InputValidationFailed',
     'ClientUnwelcome',
+    'PriceMoved',
+    'ContractCreationFailure',
 ];
 
 const botInitialized = bot => bot && bot.tradeEngine.options;
@@ -38,7 +49,10 @@ const shouldRestartOnError = (bot, error_name = '') =>
     !unrecoverable_errors.includes(error_name) && botInitialized(bot) && bot.tradeEngine.options.shouldRestartOnError;
 
 const shouldStopOnError = (bot, error_name = '') => {
-    const stop_errors = ['SellNotAvailableCustom', 'ContractBuyValidationError', 'CustomInvalidProposal'];
+    const stop_errors = [
+        'SellNotAvailableCustom',
+        'CustomInvalidProposal',
+    ];
     if (stop_errors.includes(error_name) && botInitialized(bot)) {
         return true;
     }
@@ -152,7 +166,6 @@ export default class Interpreter {
                 const { initArgs, tradeOptions } = this.bot.tradeEngine;
                 this.terminateSession();
                 this.init();
-                this.$scope.observer.register('Error', onError);
                 this.bot.tradeEngine.init(...initArgs);
                 this.bot.tradeEngine.start(tradeOptions);
                 this.revert(this.startState);
@@ -181,9 +194,13 @@ export default class Interpreter {
     terminateSession() {
         this.stopped = true;
         this.isErrorTriggered = false;
-
         globalObserver.emit('bot.stop');
         globalObserver.setState({ isRunning: false });
+
+        const { ticksService } = this.$scope;
+        ticksService.unsubscribeFromTicksService();
+
+        api_base.clearSubscriptions();
     }
 
     stop() {

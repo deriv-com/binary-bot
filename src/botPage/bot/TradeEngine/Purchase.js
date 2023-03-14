@@ -4,6 +4,7 @@ import { contractStatus, info, notify } from '../broadcast';
 import { purchaseSuccessful } from './state/actions';
 import { BEFORE_PURCHASE } from './state/constants';
 import GTM from '../../../common/gtm';
+import api_base from '../../view/deriv/api_base';
 
 let delay_index = 0;
 let purchase_reference;
@@ -55,7 +56,7 @@ export default Engine =>
                 currency,
             });
 
-            const action = () => this.api.send({ buy: proposal.id, price: proposal.ask_price });
+            const action = () => api_base.api.send({ buy: proposal.id, price: proposal.ask_price });
 
             if (!this.options.timeMachineEnabled) {
                 return doUntilDone(action).then(onSuccess);

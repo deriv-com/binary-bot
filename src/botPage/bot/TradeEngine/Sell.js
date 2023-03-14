@@ -2,6 +2,7 @@ import { translate } from '../../../common/i18n';
 import { recoverFromError, doUntilDone } from '../tools';
 import { contractStatus, notify } from '../broadcast';
 import { DURING_PURCHASE } from './state/constants';
+import api_base from '../../view/deriv/api_base';
 
 let delay_index = 0;
 
@@ -29,7 +30,7 @@ export default Engine =>
             };
 
             const action = () =>
-                this.api
+                api_base.api
                     .sellContract(this.contractId, 0)
                     .then(response => {
                         onSuccess(response.sell.sold_for);

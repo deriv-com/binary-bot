@@ -1,8 +1,5 @@
 import { translate } from '../../common/i18n';
-import api from '../view/deriv/api';
-import { load as loadLang } from '../../common/lang';
-
-loadLang();
+import api_base from '../view/deriv/api_base';
 
 const CRYPTO_CURRENCIES = ['BTC', 'ETH', 'LTC', 'BCH', 'ETC'];
 
@@ -271,7 +268,7 @@ const config = {
 
 export async function updateConfigCurrencies() {
     try {
-        const response = await api.send({ payout_currencies: 1 });
+        const response = await api_base.api.send({ payout_currencies: 1 });
         config.lists.CURRENCY = response.payout_currencies.map(c => {
             if (c === 'UST') return ['USDT', 'UST'];
             return [c, c];

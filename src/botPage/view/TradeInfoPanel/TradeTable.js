@@ -8,6 +8,7 @@ import { appendRow, updateRow, saveAs, isNumber } from '../shared';
 import { translate } from '../../../common/i18n';
 import { roundBalance } from '../../common/tools';
 import * as style from '../style';
+import api_base from '../deriv/api_base';
 
 const getProfit = ({ sell_price, buy_price, currency }) => {
     if (isNumber(sell_price) && isNumber(buy_price)) {
@@ -29,7 +30,7 @@ const getTimestamp = date => {
 const ProfitColor = ({ value }) => <div style={value > 0 ? style.greenLeft : style.redLeft}>{value}</div>;
 const StatusFormat = ({ value }) => <div style={style.left}>{value}</div>;
 
-const TradeTable = ({ account_id, api }) => {
+const TradeTable = ({ account_id }) => {
     const initial_state = { id: 0, rows: [] };
     const [account_state, setAccountState] = React.useState({ [account_id]: initial_state });
 
@@ -113,7 +114,7 @@ const TradeTable = ({ account_id, api }) => {
         while (!settled) {
             await sleep();
             try {
-                await refreshContract(api, contract_id);
+                await refreshContract(contract_id);
                 const rows = account_state[account_id].rows; //eslint-disable-line
                 const contract_row = rows.find(row => row.contract_id === contract_id); //eslint-disable-line
                 if (contract_row && contract_row.contract_settled) {
@@ -127,8 +128,8 @@ const TradeTable = ({ account_id, api }) => {
         }
     };
 
-    const refreshContract = async (_api, contract_id) => {
-        const contract_info = await _api.send({ proposal_open_contract: 1, contract_id }).catch(e => {
+    const refreshContract = async (contract_id) => {
+        const contract_info = await api_base.api.send({ proposal_open_contract: 1, contract_id }).catch(e => {
             globalObserver.emit('Error', e);
         });
 
