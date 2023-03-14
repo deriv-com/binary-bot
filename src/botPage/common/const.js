@@ -1,8 +1,5 @@
 import { translate } from '../../common/i18n';
-import { load as loadLang } from '../../common/lang';
 import api_base from '../view/deriv/api_base';
-
-// loadLang();
 
 const CRYPTO_CURRENCIES = ['BTC', 'ETH', 'LTC', 'BCH', 'ETC'];
 
