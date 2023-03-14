@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import { durationToSecond } from '../../../common/utils/tools';
 import { translate } from '../../..//common/i18n';
 import { createError } from '../../common/error';
-import { doUntilDone } from '../tools';
 import { expectInitArg, expectTradeOptions } from '../sanitize';
 import Proposal from './Proposal';
 import Total from './Total';
@@ -16,6 +15,7 @@ import rootReducer from './state/reducers';
 import * as constants from './state/constants';
 import { start } from './state/actions';
 import { observer as globalObserver } from '../../../common/utils/observer';
+import api_base from '../../view/deriv/api_base';
 
 const watchBefore = store =>
     watchScope({
@@ -102,20 +102,12 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
         this.checkProposalReady();
     }
 
-    loginAndGetBalance(token) {
-        if (this.token === token) return Promise.resolve();
-        doUntilDone(() => this.api.authorize(token)).catch(({ error }) =>
-            this.$scope.observer.emit('Error', { name: error.code, ...error })
-        );
-        return new Promise(resolve =>
-            this.api.expectResponse('authorize').then(({ authorize }) => {
-                this.accountInfo = authorize;
-                this.token = token;
-                resolve();
-            })
-        ).catch(error => {
-            globalObserver.emit('Error', error);
-        });
+    loginAndGetBalance() {
+        return new Promise(resolve => {
+            this.accountInfo = api_base.account_info;
+            this.token = api_base.token;
+            resolve();
+        })
     }
 
     getContractDuration() {

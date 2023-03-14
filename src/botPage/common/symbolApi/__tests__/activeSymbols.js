@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 import deep from 'deep-diff';
 import ActiveSymbols from '../activeSymbols';
-import api from '../../../view/deriv/api';
+import api_base from '../../../view/deriv/api_base';
 /*
  There is a market called forex, which has a submarket
  called major_pairs, which has a symbol called frxEURUSD
@@ -27,7 +27,7 @@ const setChecks = obj => {
 describe('ActiveSymbols', () => {
     let activeSymbols;
     beforeAll(done => {
-        api.send({ active_symbol: 'brief' }).then(response => {
+        api_base.api.send({ active_symbol: 'brief' }).then(response => {
             activeSymbols = new ActiveSymbols(response.active_symbols);
             done();
         });

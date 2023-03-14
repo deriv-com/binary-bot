@@ -3,6 +3,7 @@ import { createScope } from './CliTools';
 import Interface from './Interface';
 import { clone } from '../common/clone';
 import { observer as globalObserver } from '../../common/utils/observer';
+import api_base from '../view/deriv/api_base';
 
 /* eslint-disable func-names, no-underscore-dangle */
 JSInterpreter.prototype.takeStateSnapshot = function() {
@@ -39,6 +40,7 @@ const unrecoverable_errors = [
     'InputValidationFailed',
     'ClientUnwelcome',
     'PriceMoved',
+    'ContractCreationFailure',
 ];
 
 const botInitialized = bot => bot && bot.tradeEngine.options;
@@ -50,7 +52,6 @@ const shouldStopOnError = (bot, error_name = '') => {
     const stop_errors = [
         'SellNotAvailableCustom',
         'CustomInvalidProposal',
-        'ContractCreationFailure',
     ];
     if (stop_errors.includes(error_name) && botInitialized(bot)) {
         return true;
@@ -193,9 +194,13 @@ export default class Interpreter {
     terminateSession() {
         this.stopped = true;
         this.isErrorTriggered = false;
-
         globalObserver.emit('bot.stop');
         globalObserver.setState({ isRunning: false });
+
+        const { ticksService } = this.$scope;
+        ticksService.unsubscribeFromTicksService();
+
+        api_base.clearSubscriptions();
     }
 
     stop() {

@@ -2,7 +2,7 @@ import React from 'react';
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import { get as getStorage, set as setStorage } from '../../../../../common/utils/storageManager';
 import { translate } from '../../../../../common/utils/tools';
-import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from '../../api';
+import { getDefaultEndpoint, getServerAddressFallback, getAppIdFallback, getLanguage } from '../../api_base';
 import { isLoggedIn } from '../../utils';
 import useLogout from '../../../../../common/hooks/useLogout';
 

@@ -24,7 +24,7 @@ import {
 import GTM from '../../../common/gtm';
 import google_drive_util from '../../../common/integrations/GoogleDrive';
 import { load } from '../../view/blockly';
-import api from './api';
+import api_base from './api_base';
 
 const integrationsDialog = new IntegrationsDialog();
 const tradingView = new TradingView();
@@ -196,7 +196,7 @@ const addBindings = blockly => {
 
     $('#chartButton').click(() => {
         if (!chart) {
-            chart = new Chart(api);
+            chart = new Chart(api_base.api);
         }
 
         chart.open();

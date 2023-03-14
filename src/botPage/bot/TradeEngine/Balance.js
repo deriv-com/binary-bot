@@ -1,11 +1,12 @@
 import { roundBalance } from '../../common/tools';
 import { info } from '../broadcast';
 import { observer as globalObserver } from '../../../common/utils/observer';
+import api_base from '../../view/deriv/api_base';
 
 export default Engine =>
     class Balance extends Engine {
         observeBalance() {
-            this.api.onMessage().subscribe(({ data }) => {
+            const subscription = api_base.api.onMessage().subscribe(({ data }) => {
                 if (data?.error?.code) {
                     return;
                 }
@@ -18,6 +19,7 @@ export default Engine =>
                     info({ accountID: this.accountInfo?.loginid, balance: balance_str });
                 }
             });
+            api_base.pushSubscription(subscription);
         }
         // eslint-disable-next-line class-methods-use-this
         getBalance(type) {

@@ -20,9 +20,8 @@ import {
 import { setAccountSwitcherLoader, updateShowMessagePage } from '../../store/ui-slice';
 import { DrawerMenu, AuthButtons, AccountActions, MenuLinks, AccountSwitcherLoader } from './components';
 import { queryToObjectArray } from '../../../../../common/appId';
-import api from '../../api';
+import api_base from '../../api_base';
 import config from '../../../../../app.config';
-import { observer as globalObserver } from '../../../../../common/utils/observer';
 
 const AccountSwitcher = () => {
     const { account_switcher_loader } = useSelector(state => state.ui);
@@ -61,8 +60,7 @@ const Header = () => {
     const hideDropdown = e => !platformDropdownRef.current.contains(e.target) && setIsPlatformSwitcherOpen(false);
 
     React.useEffect(() => {
-        api.onMessage().subscribe(({ data }) => {
-            if (data?.error?.code) return;
+        api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.msg_type === 'balance') {
                 dispatch(updateBalance(data.balance));
             }
@@ -81,38 +79,12 @@ const Header = () => {
             dispatch(setAccountSwitcherLoader(false));
         }
         if (active_storage_token) {
-            api.authorize(active_storage_token.token)
-                .then(account => {
-                    const active_loginid = account.authorize.loginid;
-                    setStorage('active_loginid', active_loginid);
-                    updateTokenList();
-                    if (account?.error?.code) return;
-                    dispatch(updateActiveToken(active_storage_token.token));
-                    dispatch(updateActiveAccount(account.authorize));
-                    dispatch(setAccountSwitcherLoader(false));
-                    if (!globalObserver.getState('is_subscribed_to_balance')) {
-                        api.send({
-                            balance: 1,
-                            account: 'all',
-                            subscribe: 1,
-                        })
-                            .then(({ balance }) => {
-                                globalObserver.setState({
-                                    balance: Number(balance.balance),
-                                    currency: balance.currency,
-                                    is_subscribed_to_balance: true,
-                                });
-                            })
-                            .catch(e => {
-                                globalObserver.emit('Error', e);
-                            });
-                    }
-                })
-                .catch(() => {
-                    removeAllTokens();
-                    dispatch(resetClient());
-                    dispatch(setAccountSwitcherLoader(true));
-                });
+            setStorage('active_loginid', api_base.account_id);
+            updateTokenList();
+
+            dispatch(updateActiveToken(active_storage_token.token));
+            dispatch(updateActiveAccount(api_base.account_info));
+            dispatch(setAccountSwitcherLoader(false));
             syncWithDerivApp();
         }
     }, [active_token]);

@@ -11,7 +11,7 @@ import {
 } from '../../../../common/utils/storageManager';
 import { observer as globalObserver } from '../../../../common/utils/observer';
 import { isProduction } from '../../../../common/utils/tools';
-import api from '../../deriv/api';
+import api_base from '../../deriv/api_base';
 
 let purchaseChoices = [[translate('Click to select'), '']];
 
@@ -312,7 +312,7 @@ export const getContractsAvailableForSymbolFromApi = async underlyingSymbol => {
     let tokenList = getTokenList();
     if (tokenList.length) {
         try {
-            await api.authorize(tokenList[0].token);
+            await api_base.api.authorize(tokenList[0].token);
         } catch (e) {
             removeAllTokens();
             tokenList = [];
@@ -320,7 +320,7 @@ export const getContractsAvailableForSymbolFromApi = async underlyingSymbol => {
     }
     const contractsForSymbol = {};
     try {
-        const response = await api.send({ contracts_for: underlyingSymbol });
+        const response = await api_base.api.send({ contracts_for: underlyingSymbol });
         if (response.contracts_for) {
             Object.assign(contractsForSymbol, {
                 symbol: underlyingSymbol,

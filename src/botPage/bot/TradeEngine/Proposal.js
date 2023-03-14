@@ -2,6 +2,7 @@ import { translate } from '../../../common/i18n';
 import { tradeOptionToProposal, doUntilDone } from '../tools';
 import { proposalsReady, clearProposals } from './state/actions';
 import { TrackJSError } from '../../view/logger';
+import api_base from '../../view/deriv/api_base';
 
 export default Engine =>
     class Proposal extends Engine {
@@ -72,7 +73,7 @@ export default Engine =>
         requestProposals() {
             Promise.all(
                 this.proposalTemplates.map(proposal =>
-                    doUntilDone(() => this.api.send(proposal)).catch(error => {
+                    doUntilDone(() => api_base.api.send(proposal)).catch(error => {
                         // We intercept ContractBuyValidationError as user may have specified
                         // e.g. a DIGITUNDER 0 or DIGITOVER 9, while one proposal may be invalid
                         // the other is valid. We will error on Purchase rather than here.
@@ -95,7 +96,7 @@ export default Engine =>
         }
 
         observeProposals() {
-            this.api.onMessage().subscribe(({ data }) => {
+            const subscription = api_base.api.onMessage().subscribe(({ data }) => {
                 if (data?.error?.code) {
                     return;
                 }
@@ -111,6 +112,7 @@ export default Engine =>
                     }
                 }
             });
+            api_base.pushSubscription(subscription);
         }
 
         unsubscribeProposals() {
@@ -132,7 +134,7 @@ export default Engine =>
                         return Promise.resolve();
                     }
 
-                    return doUntilDone(() => this.api.forget(proposal.id)).then(() =>
+                    return doUntilDone(() => api_base.api.forget(proposal.id)).then(() =>
                         removeForgetProposalById(proposal.id)
                     );
                 })

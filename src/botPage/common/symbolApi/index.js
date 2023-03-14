@@ -1,8 +1,8 @@
 import ActiveSymbols from './activeSymbols';
 import config from '../../common/const';
 import { getObjectValue } from '../../../common/utils/tools';
-import { getTokenList, removeAllTokens } from '../../../common/utils/storageManager';
 import { observer as globalObserver } from '../../../common/utils/observer';
+import api_base from '../../view/deriv/api_base';
 
 let parsed_asset_index;
 
@@ -40,42 +40,24 @@ const getCategoryForCondition = condition =>
     );
 
 export default class _Symbol {
-    constructor(api) {
-        this.api = api;
+    constructor() {
         this.initPromise = new Promise(resolve => {
-            const getActiveSymbolsLogic = () => {
-                this.api
-                    .send({ active_symbols: 'brief' })
-                    .then(r => {
-                        this.activeSymbols = new ActiveSymbols(r.active_symbols);
-                        this.api
-                            .send({ asset_index: 1 })
-                            .then(({ asset_index }) => {
-                                parsed_asset_index = parseAssetIndex(asset_index);
-                                resolve();
-                            })
-                            .catch(error => {
-                                globalObserver.emit('Error', error);
-                            });
-                    })
-                    .catch(error => {
-                        globalObserver.emit('Error', error);
-                    });
-            };
-            // Authorize the WS connection when possible for accurate offered Symbols & AssetIndex
-            const token_list = getTokenList();
-            if (token_list.length) {
-                this.api
-                    .authorize(token_list[0].token)
-                    .then(() => getActiveSymbolsLogic())
-                    .catch(e => {
-                        globalObserver.emit('Error', e);
-                        removeAllTokens();
-                        getActiveSymbolsLogic();
-                    });
-            } else {
-                getActiveSymbolsLogic();
-            }
+            api_base.api.send({ active_symbols: 'brief' })
+                .then(r => {
+                    this.activeSymbols = new ActiveSymbols(r.active_symbols);
+                    api_base.api
+                        .send({ asset_index: 1 })
+                        .then(({ asset_index }) => {
+                            parsed_asset_index = parseAssetIndex(asset_index);
+                            resolve();
+                        })
+                        .catch(error => {
+                            globalObserver.emit('Error', error);
+                        });
+                })
+                .catch(error => {
+                    globalObserver.emit('Error', error);
+                });
         });
     }
 

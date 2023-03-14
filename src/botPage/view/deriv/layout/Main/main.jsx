@@ -18,7 +18,7 @@ import { parseQueryString, translate } from '../../../../../common/utils/tools';
 import _Blockly from '../../../blockly';
 import LogTable from '../../../LogTable';
 import TradeInfoPanel from '../../../TradeInfoPanel';
-import api from '../../api';
+import api_base from '../../api_base';
 import initialize, { applyToolboxPermissions } from '../../blockly-worksace';
 import SidebarToggle from '../../components/SidebarToggle';
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from '../../store/client-slice';
@@ -85,7 +85,7 @@ const Main = () => {
                         }
                         dispatch(updateIsLogged(isLoggedIn()));
                         history.replace('/');
-                        api.send({ balance: 1, account: 'all' }).catch(e => {
+                        api_base.api.send({ balance: 1, account: 'all' }).catch(e => {
                             globalObserver.emit('Error', e);
                         });
                         applyToolboxPermissions();

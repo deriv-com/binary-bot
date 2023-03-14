@@ -7,6 +7,7 @@ export const getLanguage = () => {
     const queryLang = parseQueryString().l ? parseQueryString().l || getStorage('lang') : 'en';
 
     const lang =
+        // eslint-disable-next-line no-nested-ternary
         getStorage('lang') in supportedLanguages
             ? getStorage('lang')
             : queryLang in supportedLanguages

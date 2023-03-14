@@ -14,8 +14,7 @@ const generateBaseName = () => {
     return '/';
 };
 
-const Routes = () => {
-    return (
+const Routes = () => (
         <BrowserRouter basename={generateBaseName()}>
             <Switch>
                 <RouteWrapper exact path='/' component={Main} />
@@ -25,6 +24,5 @@ const Routes = () => {
             </Switch>
         </BrowserRouter>
     );
-};
 
 export default Routes;

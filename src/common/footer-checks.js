@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import api from '../botPage/view/deriv/api';
+import api_base from '../botPage/view/deriv/api_base';
 
 /* eslint-disable camelcase */
 export const isEuLandingCompany = landing_company => /^(maltainvest|malta|iom)$/.test(landing_company);
@@ -8,9 +8,9 @@ export const hasEuAccount = token_list =>
     token_list.some(token_obj => isEuLandingCompany(token_obj.loginInfo.landing_company_name));
 
 export const isEuCountry = async () => {
-    const { website_status } = await api.send({ website_status: 1 });
+    const { website_status } = await api_base.api.send({ website_status: 1 });
     const { clients_country } = website_status;
-    const { landing_company } = await api.send({ landing_company: clients_country });
+    const { landing_company } = await api_base.api.send({ landing_company: clients_country });
     const { financial_company, gaming_company } = landing_company;
 
     const eu_excluded_regexp = /^mt$/;

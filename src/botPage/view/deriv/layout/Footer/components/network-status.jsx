@@ -2,17 +2,17 @@ import classNames from 'classnames';
 import React from 'react';
 import Popover from '../../../components/popover';
 import { translate } from '../../../../../../common/utils/tools';
-import api from '../../../api';
+import api_base from '../../../api_base';
 import { observer as globalObserver } from '../../../../../../common/utils/observer';
 
 const NetworkStatus = () => {
     const [status, setStatus] = React.useState('offline');
 
     React.useEffect(() => {
-        api.send({ website_status: '1', subscribe: 1 }).catch(e => {
+        api_base.api.send({ website_status: '1', subscribe: 1 }).catch(e => {
             globalObserver.emit('Error', e);
         });
-        api.onMessage().subscribe(({ data }) => {
+        api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.error?.code) {
                 return;
             }
@@ -49,10 +49,10 @@ const NetworkStatus = () => {
 
     const updateStatus = () => {
         if (navigator.onLine) {
-            if (api.connection.readyState !== 1) {
+            if (api_base.api.connection.readyState !== 1) {
                 setStatus('blinker');
             } else {
-                api.send({ ping: '1' })
+                api_base.api.send({ ping: '1' })
                     .then(() => setStatus('online'))
                     .catch(e => {
                         globalObserver.emit('Error', e);
