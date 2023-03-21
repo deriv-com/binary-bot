@@ -1,4 +1,3 @@
-import { observer as globalObserver } from '../../common/utils/observer';
 import { doUntilDone } from '../bot/tools';
 import TicksService from './TicksService';
 
@@ -54,7 +53,6 @@ export default class ChartTicksService extends TicksService {
                 })
                 .catch(e => {
                     reject(e);
-                    globalObserver.emit('Error', e);
                 });
         });
     }
