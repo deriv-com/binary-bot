@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>Deriv</title>
         <meta charset="utf-8" />
@@ -12,24 +13,27 @@
                     'https://app.deriv.me',
                     'https://staging-app.deriv.com',
                     'https://staging-app.deriv.be',
-                    'https://staging-app.deriv.me'
+                    'https://staging-app.deriv.me',
+                    'https://deriv-app-git-fork-rupato-deriv-fix-local-storage-sync.binary.sx'
                 ];
+              
 
                 const autoLogin = message => {
                     const { value, key } = message.data;
                     const client_accounts = JSON.parse(value);
                     const token_data = {};
-                    let login_token  = null
+                    let login_token = null
 
                     Object.keys(client_accounts).forEach((e, i) => {
                         const order = i + 1;
                         const { token, currency } = client_accounts[e];
+                        console.log({ token })
 
                         token_data[`accountName${order}`] = e;
                         token_data[`cur${order}`] = currency;
                         token_data[`token${order}`] = token;
 
-                        if(!login_token){
+                        if (!login_token) {
                             login_token = token
                         }
                     });
@@ -37,11 +41,24 @@
                     const token_params = new URLSearchParams(token_data).toString();
                     const current_token = localStorage.getItem('current_token')
 
-                    if (token_params !== '' && login_token && login_token !== current_token ) {
+                    console.log({
+                        current_token,
+                        login_token,
+                        token_params
+                    });
+
+
+                    if (token_params !== '' && login_token && login_token !== current_token) {
                         // store the login url and fire when the user hits binary bot app directly
+
+                        console.log('token params check',{
+                            token_params,
+                            login_token
+                        })
                         localStorage.setItem('login_url', token_params);
                         localStorage.setItem('current_token', login_token);
                     }
+
                 };
 
                 if (allowed_origins.includes(message.origin)) {
@@ -61,5 +78,7 @@
             });
         </script>
     </head>
+
     <body></body>
+
 </html>
