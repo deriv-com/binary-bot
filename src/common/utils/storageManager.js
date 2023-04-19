@@ -1,5 +1,3 @@
-import { getRelatedDeriveOrigin } from '../../botPage/view/deriv/utils';
-
 let store = {};
 let hasReadystateListener = false;
 
@@ -88,7 +86,7 @@ export const remove = varName => delete store[varName];
 
 export const syncWithDerivApp = () => {
     const iframe = document.getElementById('localstorage-sync');
-    const { origin } = getRelatedDeriveOrigin();
+    const test_origin = 'https://deriv-app-git-fork-rupato-deriv-fix-localstorage-to-get-token.binary.sx';
 
     const postMessages = () => {
         iframe.contentWindow.postMessage(
@@ -96,14 +94,14 @@ export const syncWithDerivApp = () => {
                 key: 'client.accounts',
                 value: get('client.accounts'),
             },
-            origin
+            test_origin
         );
         iframe.contentWindow.postMessage(
             {
                 key: 'active_loginid',
                 value: get('active_loginid'),
             },
-            origin
+            test_origin
         );
     };
 
