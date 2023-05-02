@@ -1,8 +1,8 @@
-import RenderHTML from 'react-render-html';
-import { translate as i18nTranslate } from '../../common/i18n';
-import { getLanguage } from '../../common/lang';
-import AppIdMap from '../../common/appIdResolver';
-import { trackJSTrack } from '../../common/integrations/trackJSTrack';
+import React from 'react';
+import { translate as i18nTranslate } from '../i18n';
+import { getLanguage } from '../lang';
+import AppIdMap from '../appIdResolver';
+import { trackJSTrack } from '../integrations/trackJSTrack';
 import { TrackJSError } from '../../botPage/view/logger';
 
 export const MAX_MOBILE_WIDTH = 813;
@@ -100,8 +100,7 @@ export const translate = (input, params = []) => {
             translatedString = translatedString.replaceAll(`\{\$${index}\}`, replacement);
         }
     });
-
-    return RenderHTML(translatedString);
+    return <div dangerouslySetInnerHTML={{ __html: translatedString }} />;
 };
 
 export const getExtension = () => {
