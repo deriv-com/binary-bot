@@ -42,7 +42,7 @@ const productionPlugins = () => {
 
 module.exports = {
     entry: {
-        bot: path.join(__dirname, 'src', 'botPage', 'view'),
+        bot: path.join(__dirname, 'src/index.js'),
         index: path.join(__dirname, 'src', 'indexPage'),
     },
     output: {
