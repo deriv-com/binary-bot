@@ -25,4 +25,9 @@ module.exports = {
             raw: true,
         }),
     ],
+    resolve: {
+        alias: {
+            config: path.join(__dirname, 'src/config.js'),
+        },
+    },
 };

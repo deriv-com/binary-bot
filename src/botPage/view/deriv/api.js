@@ -2,9 +2,9 @@ import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import AppIdMap from '../../../common/appIdResolver';
 import { supportedLanguages } from '../../../common/i18n';
 import { setCookieLanguage } from '../../../common/utils/cookieManager';
+import { doUntilDone } from '../../bot/tools';
 
 // [Todo] getLanguage, getStorage, setStorage are duplicated here after update the structure of project we should remove them
-
 function getStorage(label) {
     return window.localStorage.getItem(label);
 }
@@ -85,3 +85,53 @@ const api = new DerivAPIBasic({
 });
 
 export default api;
+
+class APIBase {
+    api;
+    token;
+    account_id;
+    account_info;
+    has_activeSymbols = false;
+    active_symbols = [];
+    pip_sizes = {};
+
+    async init() {
+        this.api = await new DerivAPIBasic({
+            connection: new WebSocket(socket_url),
+        });
+        this.initEventListeners();
+        this.authorize();
+    }
+
+    initEventListeners() {
+        if (window) {
+            window.addEventListener('online', this.reconnectIfNotConnected);
+            window.addEventListener('focus', this.reconnectIfNotConnected);
+        }
+    }
+
+    async authorize() {
+        this.token = getStorage('activeToken');
+        this.account_id = getStorage('active_loginid');
+
+        if (this.token) {
+            const { authorize } = await this.api.authorize(this.token);
+            this.account_info = authorize;
+        }
+    }
+
+    getActiveSymbols() {
+        doUntilDone(() => this.api.send({ active_symbols: 'brief' })).then(({ active_symbols = [] }) => {
+            const pip_sizes = {};
+            if (active_symbols.length) this.has_activeSymbols = true;
+            this.active_symbols = active_symbols;
+
+            active_symbols.forEach(({ symbol, pip }) => {
+                pip_sizes[symbol] = +(+pip).toExponential().substring(3);
+            });
+            this.pip_sizes = pip_sizes;
+        });
+    }
+}
+
+export const api_base = new APIBase();

@@ -42,9 +42,21 @@
       "object": false
     }, {
       "enforceForRenamedProperties": false
-    }]
+    }],
+    "import/extensions": ["error", "always", {
+      "js": "never",
+      "jsx": "never"
+    }] // Allow .jsx extensions
   },
   "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["config", "./src/config.js"]
+        ],
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    },
     "react": {
       "createClass": "createReactClass", // Regex for Component Factory to use, default to "createReactClass"
       "pragma": "React",  // Pragma to use, default to "React"

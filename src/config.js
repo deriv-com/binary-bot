@@ -1,10 +1,8 @@
-import { translate } from '../../common/i18n';
-import { load } from '../../common/lang';
-import { api_base } from '../view/deriv/api';
+import { api_base } from './botPage/view/deriv/api';
+import { translate } from './common/i18n';
+// import { load as loadLang } from "./common/lang";
 
-setTimeout(() => {
-    load();
-}, 1000);
+// loadLang();
 
 export const CRYPTO_CURRENCIES = [
     'BTC',

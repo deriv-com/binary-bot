@@ -1,5 +1,5 @@
+import config from 'config';
 import ActiveSymbols from './activeSymbols';
-import config from '../../common/const';
 import { getObjectValue } from '../../../common/utils/tools';
 import { getTokenList, removeAllTokens } from '../../../common/utils/storageManager';
 import { observer as globalObserver } from '../../../common/utils/observer';
