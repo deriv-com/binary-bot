@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { CRYPTO_CURRENCIES } from 'config';
 import { translate } from '../../../../../../common/utils/tools';
 import { getTokenList } from '../../../../../../common/utils/storageManager';
 import { useDispatch } from 'react-redux';
 import { setAccountSwitcherToken } from '../../../store/ui-slice';
 import classNames from 'classnames';
 import config from '../../../../../../app.config';
-import { CRYPTO_CURRENCIES } from '../../../../../common/const';
 
 const TabContent = ({ tab = 'real', isActive, setIsAccDropdownOpen, accounts, title = 'Deriv Accounts' }) => {
     const [isAccordionOpen, setIsAccordionOpen] = React.useState(true);
@@ -93,9 +93,9 @@ const TabContent = ({ tab = 'real', isActive, setIsAccDropdownOpen, accounts, ti
                                                 {demo_account
                                                     ? translate('Demo')
                                                     : account.account?.includes('MF') &&
-                                                        (active_account_name?.includes('MF'))
-                                                        ? 'Multiplers'
-                                                        : config.currency_name_map[currency]?.name || currency}
+                                                      active_account_name?.includes('MF')
+                                                    ? 'Multiplers'
+                                                    : config.currency_name_map[currency]?.name || currency}
 
                                                 <div className='account__switcher-loginid'>{account.account}</div>
                                             </span>

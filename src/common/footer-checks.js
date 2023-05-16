@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import api from '../botPage/view/deriv/api';
+import { api_base } from '../botPage/view/deriv/api';
 import { get as getStorage, getTokenList } from '../common/utils/storageManager';
 import { isLoggedIn } from '../botPage/view/deriv/utils';
 
@@ -55,10 +55,11 @@ export const isEuLandingCompany = landing_company => /^(maltainvest|malta|iom)$/
 export const hasEuAccount = token_list =>
     token_list.some(token_obj => isEuLandingCompany(token_obj.loginInfo.landing_company_name));
 
+// TODO: Need to remove this function once we have the new api ready
 export const isEuCountry = async () => {
-    const { website_status } = await api.send({ website_status: 1 });
+    const { website_status } = await api_base.api.send({ website_status: 1 });
     const { clients_country } = website_status;
-    const { landing_company } = await api.send({ landing_company: clients_country });
+    const { landing_company } = await api_base.api.send({ landing_company: clients_country });
     const { financial_company, gaming_company } = landing_company;
 
     const eu_excluded_regexp = /^mt$/;
@@ -124,14 +125,14 @@ export const checkSwitcherType = async () => {
     const client_accounts = JSON.parse(getStorage('client.accounts'));
     const client_country_code = token_list[0]?.loginInfo?.country || localStorage.getItem('client.country');
     if (!client_country_code) return null;
-    const { landing_company } = await api.send({
+    const { landing_company } = await api_base.api.send({
         landing_company: client_country_code,
     });
 
     const { is_multiplier, country_code } = await isMultiplier(landing_company);
 
     const { financial_company, gaming_company } = landing_company;
-    const account_status = await api.send({ get_account_status: 1 });
+    const account_status = await api_base.api.send({ get_account_status: 1 });
 
     const {
         get_account_status: { risk_classification },

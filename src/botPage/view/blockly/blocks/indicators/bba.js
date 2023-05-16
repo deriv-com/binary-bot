@@ -1,6 +1,6 @@
 // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#3qghes
+import config from 'config';
 import { translate } from '../../../../../common/i18n';
-import config from '../../../../common/const';
 import { expectValue } from '../shared';
 
 Blockly.Blocks.bba = {

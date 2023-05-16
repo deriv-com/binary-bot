@@ -1,6 +1,6 @@
+import config from 'config';
 import { translate } from '../../../../../common/i18n';
 import { mainScope } from '../../relationChecker';
-import config from '../../../../common/const';
 
 Blockly.Blocks.check_direction = {
     init: function init() {

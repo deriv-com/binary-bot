@@ -1,4 +1,4 @@
-import config, { updateConfigCurrencies } from '../../../botPage/common/const';
+import config, { updateConfigCurrencies } from 'config';
 import logHandler from '../../view/logger';
 import { updateTokenList } from './utils';
 import {

@@ -1,6 +1,6 @@
+import config from 'config';
 import { fieldGeneratorMapping } from './blocks/shared';
 import { saveAs } from '../shared';
-import config from '../../common/const';
 import { translate } from '../../../common/i18n';
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { TrackJSError } from '../logger';

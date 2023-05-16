@@ -1,3 +1,4 @@
+import config from 'config';
 import './customBlockly';
 import blocks from './blocks';
 import {
@@ -29,7 +30,7 @@ import GTM from '../../../common/gtm';
 import { parseQueryString } from '../../../common/utils/tools';
 import { TrackJSError } from '../logger';
 import { createDataStore } from '../../bot/data-collection';
-import config from '../../common/const';
+
 import { getActiveAccount } from '../../../common/utils/storageManager';
 import { getRelatedDeriveOrigin } from '../deriv/utils';
 import { trackJSTrack } from '../../../common/integrations/trackJSTrack';
