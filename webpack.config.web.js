@@ -35,10 +35,10 @@ const productionPlugins = () => {
                     warnings: false,
                 },
             }),
-        ]
+        ];
     }
     return [];
-}
+};
 
 module.exports = {
     entry: {
