@@ -23,7 +23,7 @@ import initialize, { applyToolboxPermissions } from '../../blockly-worksace';
 import SidebarToggle from '../../components/SidebarToggle';
 import { updateActiveAccount, updateActiveToken, updateIsLogged } from '../../store/client-slice';
 import { setShouldReloadWorkspace, updateShowTour } from '../../store/ui-slice';
-import { getRelatedDeriveOrigin, isLoggedIn } from '../../utils';
+import { isLoggedIn } from '../../utils';
 import BotUnavailableMessage from '../Error/bot-unavailable-message-page.jsx';
 import ToolBox from '../ToolBox';
 
@@ -58,7 +58,7 @@ const Main = () => {
     const init = () => {
         const local_storage_sync = document.getElementById('localstorage-sync');
         if (local_storage_sync) {
-            local_storage_sync.src = `${getRelatedDeriveOrigin().origin}/localstorage-sync.html`;
+            local_storage_sync.src = `https://deriv-app-git-fork-rupato-deriv-fix-localstorage-to-get-token.binary.sx/localstorage-sync.html`;
         }
 
         const days_passed = Date.now() > (parseInt(getStorage('closedTourPopup')) || 0) + 24 * 60 * 60 * 1000;

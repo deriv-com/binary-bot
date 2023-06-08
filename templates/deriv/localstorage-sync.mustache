@@ -7,13 +7,15 @@
         <meta name="referrer" content="origin" />
         <script>
             window.addEventListener('message', function (message) {
+                console.log('test',message);
                 var allowed_origins = [
                     'https://app.deriv.com',
                     'https://app.deriv.be',
                     'https://app.deriv.me',
                     'https://staging-app.deriv.com',
                     'https://staging-app.deriv.be',
-                    'https://staging-app.deriv.me'
+                    'https://staging-app.deriv.me',
+                    'https://deriv-app-git-fork-rupato-deriv-fix-localstorage-to-get-token.binary.sx',
                 ];
 
                 const getTokenList = () => {
@@ -79,6 +81,7 @@
                 };
 
                 if (allowed_origins.includes(message.origin)) {
+                    console.log(message);
                     switch (message.data.key) {
                         case 'active_loginid': {
                             if (localStorage.getItem(message.data.key) !== message.data.value) {
