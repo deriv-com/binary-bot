@@ -203,7 +203,11 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
         id_container="runButton"
         tooltip={translate("Run the bot")}
         position="bottom"
-        onClick={() => globalObserver.emit("blockly.start")}
+        onClick={() => {
+          globalObserver.emit("blockly.start")
+          performance.mark('bot-start');
+          console.log('Bot started')
+        }}
         classes={classNames("toolbox-button icon-run", { "toolbox-hide": is_loading_balance || !is_workspace_rendered })}
         is_bot_running={is_bot_running}
       />

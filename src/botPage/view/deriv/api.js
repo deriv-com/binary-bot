@@ -2,6 +2,7 @@ import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import AppIdMap from '../../../common/appIdResolver';
 import { supported_languages } from '../../../common/i18n';
 import { setCookieLanguage } from '../../../common/utils/cookieManager';
+import APIMiddleware from './api-middleware';
 
 // [Todo] getStorage, setStorage are duplicated here after update the structure of project we should remove them
 
@@ -82,6 +83,7 @@ const socket_url = `wss://${getServerAddressFallback()}/websockets/v3?app_id=${g
 // and once the network is back we need to create a new api instance.
 const api = new DerivAPIBasic({
     connection: new WebSocket(socket_url),
+    middleware: new APIMiddleware({}),
 });
 
 export default api;
