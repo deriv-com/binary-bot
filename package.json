@@ -1,5 +1,6 @@
 {
     "name": "binary-bot",
+    "version": "1.0.0",
     "description": "Visual automation for binary.com",
     "bin": {
         "bot": "lib/index.js"
@@ -56,6 +57,7 @@
         "eslint-config-airbnb": "^16.1.0",
         "eslint-config-binary": "^1.0.2",
         "eslint-config-prettier": "^2.9.0",
+        "eslint-import-resolver-alias": "^1.1.2",
         "eslint-plugin-import": "^2.8.0",
         "eslint-plugin-jsx-a11y": "^6.0.3",
         "eslint-plugin-prettier": "^4.2.1",

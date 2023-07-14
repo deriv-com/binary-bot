@@ -35,10 +35,10 @@ const productionPlugins = () => {
                     warnings: false,
                 },
             }),
-        ]
+        ];
     }
     return [];
-}
+};
 
 module.exports = {
     entry: {
@@ -65,4 +65,10 @@ module.exports = {
         ],
     },
     plugins: plugins.concat(productionPlugins()),
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        alias: {
+            config: path.join(__dirname, 'src/config.js'),
+        },
+    },
 };
