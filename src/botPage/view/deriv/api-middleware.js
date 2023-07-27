@@ -33,7 +33,7 @@ class APIMiddleware {
                 performance.mark('first_proposal_end');
                 if (performance.getEntriesByName('bot-start', 'mark').length) {
                     measure = performance.measure('run-proposal', 'bot-start', 'first_proposal_end');
-                    console.log('run-proposal', measure);
+              
                     performance.clearMarks('bot-start');
                 }
             }
