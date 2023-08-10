@@ -289,7 +289,6 @@ export default class TicksService {
                 })
                 .catch(e => {
                     reject(e);
-                    globalObserver.emit('Error', e);
                 });
         });
     }
