@@ -1,13 +1,54 @@
-/* global google,gapi */
+import { getLanguage } from '@storage';
+import { translate } from '@i18n';
 import GD_CONFIG from '../../botPage/common/google_drive_config';
 import { load } from '../../botPage/view/blockly';
 import store from '../../botPage/view/deriv/store';
 import { setGdLoggedIn } from '../../botPage/view/deriv/store/client-slice';
 import { setGdReady } from '../../botPage/view/deriv/store/ui-slice';
 import { TrackJSError } from '../../botPage/view/logger';
-import { getLanguage } from '../lang';
 import { observer as globalObserver } from '../utils/observer';
-import { errLogger, loadExternalScript, translate } from '../utils/tools';
+import { trackJSTrack } from './trackJSTrack';
+
+export const loadExternalScript = (src, async = true, defer = true) =>
+    new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = async;
+        script.defer = defer;
+        script.crossorigin = 'anonymous';
+        script.onerror = reject;
+
+        function handleLoad() {
+            const load_state = this.readyState;
+            if (load_state && !/loaded|complete/.test(load_state)) return;
+
+            script.onload = null;
+            script.onreadystatechange = null;
+            resolve();
+        }
+
+        script.onload = handleLoad;
+        script.onreadystatechange = handleLoad;
+
+        document.head.appendChild(script);
+    });
+
+const errLogger = (err, msg) => {
+    const err_str = JSON.stringify(err);
+    const err_msg = `${msg} - Error: ${err_str}`;
+    // eslint-disable-next-line no-console
+    console.warn(err_msg);
+    trackJSTrack(new TrackJSError(translate(err_msg), err_str));
+};
+
+export const removeGdBackground = () => {
+    const picker_background = document.getElementsByClassName('picker-dialog-bg');
+    if (picker_background.length) {
+        for (let i = 0; i < picker_background.length; i++) {
+            picker_background[i].style.display = 'none';
+        }
+    }
+};
 
 const getPickerLanguage = () => {
     const language = getLanguage();
@@ -44,7 +85,12 @@ class GoogleDriveUtil {
         // Fetch Google API script and initialize class fields
         loadExternalScript(this.api_url_identity)
             .then(() => this.initUrlIdentity())
-            .catch(err => errLogger(err, translate('There was an error loading Google Identity API script.')));
+            .catch(err =>
+                errLogger(
+                    JSON.stringify(err, ['message', 'arguments', 'type', 'name']),
+                    translate('There was an error loading Google Identity API script.')
+                )
+            );
         loadExternalScript(this.api_url_gdrive)
             .then(() =>
                 gapi.load(this.auth_scope, async () => {
@@ -54,9 +100,12 @@ class GoogleDriveUtil {
             .then(() => {
                 store.dispatch(setGdReady(true));
             })
-            .catch(err => {
-                errLogger(err, translate('There was an error loading Google Drive API script.'));
-            });
+            .catch(err =>
+                errLogger(
+                    JSON.stringify(err, ['message', 'arguments', 'type', 'name']),
+                    translate('There was an error loading Google Drive API script.')
+                )
+            );
     }
 
     initUrlIdentity = () => {
@@ -90,15 +139,6 @@ class GoogleDriveUtil {
         }
     };
 
-    removeGdBackground = () => {
-        const picker_background = document.getElementsByClassName('picker-dialog-bg');
-        if (picker_background.length) {
-            for (let i = 0; i < picker_background.length; i++) {
-                picker_background[i].style.display = 'none';
-            }
-        }
-    };
-
     updateLoginStatus(is_logged_in) {
         store.dispatch(setGdLoggedIn(is_logged_in));
         this.is_authorized = is_logged_in;
@@ -129,11 +169,13 @@ class GoogleDriveUtil {
                 this.client.requestAccessToken({ prompt: '' });
             }
 
-            const error = new TrackJSError(
-                'GoogleDrive',
-                translate('There was an error listing files from Google Drive'),
-                err
+            const error = translate('There was an error listing files from Google Drive');
+
+            errLogger(
+                JSON.stringify(err, ['message', 'arguments', 'type', 'name']),
+                translate('There was an error listing files from Google Drive')
             );
+
             globalObserver.emit('Error', error);
         }
     };
@@ -142,9 +184,7 @@ class GoogleDriveUtil {
         afterAuthCallback()
             .then(() => {
                 const view = new google.picker.DocsView();
-                view.setIncludeFolders(true)
-                    .setSelectFolderEnabled(true)
-                    .setMimeTypes(mime_type);
+                view.setIncludeFolders(true).setSelectFolderEnabled(true).setMimeTypes(mime_type);
 
                 const picker = new google.picker.PickerBuilder();
                 picker
