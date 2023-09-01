@@ -32,7 +32,7 @@ You can simply search for these extensions on VS Code and install them to start 
 
 ## Installation
 
-### 1. Setup the project on local machine
+### 1. Setup the project on a local machine
 
 You will need to perform the following on your development machine:
 
