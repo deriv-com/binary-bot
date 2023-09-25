@@ -6,6 +6,7 @@ import {
     setClientAccounts,
 } from '@storage';
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
+import { observer as globalObserver } from '@utilities/observer';
 
 const socket_url = `wss://${getServerAddressFallback()}/websockets/v3?app_id=${getAppIdFallback()}&l=${getLanguage().toUpperCase()}&brand=deriv`;
 
@@ -14,10 +15,12 @@ class APIBase {
     token;
     login_id;
     active_login_id;
+    parsed_asset_index;
     account_info = {};
     landing_compnay = {};
     landing_company_details = {};
     account_status = {};
+    active_symbols = {};
 
     constructor() {
         this.init();
@@ -25,14 +28,19 @@ class APIBase {
     }
 
     init() {
-        this.api = new DerivAPIBasic({
-            connection: new WebSocket(socket_url),
-        });
+        try {
+            this.api = new DerivAPIBasic({
+                connection: new WebSocket(socket_url),
+            });
 
-        this.api.onOpen().subscribe(() => {
-            // eslint-disable-next-line no-console
-            console.log('Connection has been established!', this.api);
-        });
+            this.api.onOpen().subscribe(() => {
+                // eslint-disable-next-line no-console
+                console.log('Connection has been established!', this.api);
+            });
+            this.getActiveSymbols();
+        } catch (error) {
+            globalObserver.emit('Error', error);
+        }
     }
 
     async authorize(token) {
@@ -124,6 +132,15 @@ class APIBase {
             this.init();
         }
     };
+
+    async getActiveSymbols() {
+        try {
+            const { active_symbols } = await this.api.send({ active_symbols: 'brief' });
+            this.active_symbols = active_symbols;
+        } catch (error) {
+            globalObserver.emit('Error', error);
+        }
+    }
 }
 
 export default APIBase;

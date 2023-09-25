@@ -45,22 +45,15 @@ export default class _Symbol {
         this.initPromise = new Promise(resolve => {
             const getActiveSymbolsLogic = () => {
                 api_base.api
-                    .send({ active_symbols: 'brief' })
-                    .then(r => {
-                        this.activeSymbols = new ActiveSymbols(r.active_symbols);
-                        api_base.api
-                            .send({ asset_index: 1 })
-                            .then(({ asset_index }) => {
-                                parsed_asset_index = parseAssetIndex(asset_index);
-                                resolve();
-                            })
-                            .catch(error => {
-                                globalObserver.emit('Error', error);
-                            });
+                    .send({ asset_index: 1 })
+                    .then(({ asset_index }) => {
+                        parsed_asset_index = parseAssetIndex(asset_index);
+                        resolve();
                     })
                     .catch(error => {
                         globalObserver.emit('Error', error);
                     });
+                this.activeSymbols = new ActiveSymbols(api_base.active_symbols);
             };
 
             // Authorize the WS connection when possible for accurate offered Symbols & AssetIndex
