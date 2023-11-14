@@ -57,12 +57,12 @@
     border-width: thin;
     color: var(--color-light-grey);
     border-right: 0.063em solid;
-    width: 11em;
+    min-width: 11rem;
     transition: width 0.3s ease-in-out;
     @media (max-width: $desktop-width) {
         width: 0;
         &__toolbox-open {
-            width: 11em;
+            min-width: 11rem;
         }
     }
 }

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { parseQueryString, getRelatedDeriveOrigin, getDomainAppId } from '@utils';
-import { supported_languages, redirectToSupportedLang } from '@i18n';
+import { supported_languages } from '@i18n';
 import { setCookieLanguage } from './common/utils/cookieManager';
 
 const CLIENT_ACCOUNT = 'client.accounts';
@@ -192,24 +192,20 @@ export const getActiveAccount = () => {
 };
 
 export const getLanguage = () => {
-    const parsed_url = parseQueryString().lang || parseQueryString().l;
+    const parsed_url = parseQueryString()?.lang || parseQueryString()?.l;
     const supported_storage_lang = getLang() in supported_languages ? getLang() : null;
     const get_cookie_lang = Cookies.get('user_language');
+
     const getUserLang = () => {
         if (parsed_url) return parsed_url;
-        if (supported_storage_lang) return supported_storage_lang;
         if (get_cookie_lang) return get_cookie_lang;
+        if (supported_storage_lang) return supported_storage_lang;
         return 'en';
     };
+
     const query_lang = getUserLang();
-    const is_query_lang_supported = query_lang in supported_languages;
 
-    if (is_query_lang_supported) {
-        return setLanguage(query_lang);
-    }
-
-    redirectToSupportedLang('en');
-    return setLanguage('en');
+    return query_lang || 'en';
 };
 
 export const setLanguage = lang => {

@@ -18,6 +18,7 @@ export const load = async () => {
     if (typeof $ !== 'function') return; // Adding this check to skip unit test
 
     const lang = await getLanguage();
+    console.log(lang);
     if (lang) {
         init(lang);
     }

@@ -40,6 +40,27 @@ const getCategoryForCondition = condition =>
         category => config.conditionsCategory[category].indexOf(condition.toLowerCase()) >= 0
     );
 
+function parameterExists(url, params_to_check) {
+    const queryString = url.split('?')[1];
+
+    if (!queryString) {
+        return false;
+    }
+
+    const urlParameters = queryString.split('&');
+
+    for (let i = 0; i < params_to_check.length; i++) {
+        for (let j = 0; j < urlParameters.length; j++) {
+            const [paramName] = urlParameters[j].split('=');
+            if (paramName === params_to_check[i]) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 export default class _Symbol {
     constructor() {
         this.initPromise = new Promise(resolve => {
@@ -68,21 +89,29 @@ export default class _Symbol {
                     });
             };
 
+            const initializeOnLogout = () => {
+                api_base.getActiveSymbols();
+                getActiveSymbolsLogic();
+            };
+
             if (loginid && accounts && accounts?.[loginid]?.token) {
                 initialize();
             } else {
                 const url = window.location.href;
+                const params_to_check = ['l', 'lang'];
+                const check_param_exists = parameterExists(url, params_to_check);
                 const urlObject = new URL(url);
                 const queryParams = urlObject.searchParams;
                 const tokens_from_url = Array.from(queryParams.values());
 
-                if (tokens_from_url.length === 0) {
-                    // Used when the user logs out
-                    api_base.getActiveSymbols();
-                    getActiveSymbolsLogic();
-                } else {
+                if (check_param_exists && tokens_from_url.length > 1) {
                     // Used when we have a token in the query param
+                    // and the query params are token or lang
+                    console.log(tokens_from_url);
                     initialize(tokens_from_url[1]);
+                } else {
+                    // Used when the user logs out
+                    initializeOnLogout();
                 }
             }
         });
