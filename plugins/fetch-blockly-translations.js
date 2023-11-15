@@ -10,7 +10,6 @@ const axios = require('axios');
     }
     return Promise.all(
         blocklyLanguages.map(lang => {
-            console.log(lang, 'blocklyLanguagesblocklyLanguages');
             const url = `https://blockly-demo.appspot.com/static/build/msg/${lang}.js?_=${Date.now()}`;
 
             return axios.get(url).then(({ data }) => {

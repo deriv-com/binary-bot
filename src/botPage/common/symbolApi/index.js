@@ -107,7 +107,6 @@ export default class _Symbol {
                 if (check_param_exists && tokens_from_url.length > 1) {
                     // Used when we have a token in the query param
                     // and the query params are token or lang
-                    console.log(tokens_from_url);
                     initialize(tokens_from_url[1]);
                 } else {
                     // Used when the user logs out

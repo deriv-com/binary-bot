@@ -89,7 +89,7 @@ const addBlocklyTranslation = () => {
         options.async = true; // eslint-disable-line no-param-reassign
     });
     let lang = getLanguage()?.toLowerCase();
-    console.log(lang);
+
     if (lang === 'ach') {
         lang = 'en';
     } else if (lang === 'zh_cn') {
@@ -102,14 +102,12 @@ const addBlocklyTranslation = () => {
 
         $.getScript(link)
             .done(() => {
-                console.log(`script loaded for lang: ${lang}`);
+                console.log(`Script loaded for lang: ${lang}`);
                 resolve();
             })
             .fail((jqxhr, settings, exception) => {
-                console.error(`Failed to load script: ${link}`, settings);
-                console.error(`Failed to load script: ${link}`, jqxhr);
-                console.error(`Failed to load script: ${link}`, exception);
-                reject(exception); // Reject the promise with the error
+                console.error(`Failed to load script for lang: ${link}`, { lang, link, settings, jqxhr, exception });
+                reject(exception);
             });
     });
 };
@@ -346,8 +344,6 @@ export default class _Blockly {
                 window.addEventListener('resize', renderInstance, false);
                 renderInstance();
                 addBlocklyTranslation().then(() => {
-                    const lang = getLanguage();
-                    console.log(lang, 'lang --->>>>>>>>>>>>>');
                     const loadDomToWorkspace = dom => {
                         repaintDefaultColours();
                         overrideBlocklyDefaultShape();
