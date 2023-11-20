@@ -4,7 +4,6 @@ import { translate, xml as translateXml } from '@i18n';
 import { observer as globalObserver } from '@utilities/observer';
 import { trackJSTrack } from '@utilities/integrations/trackJSTrack';
 import config from '@currency-config';
-import GTM from '@utilities/integrations/gtm';
 import { TrackJSError } from '@utilities/logger';
 import './customBlockly';
 import blocks from './blocks';
@@ -88,7 +87,7 @@ const addBlocklyTranslation = () => {
     $.ajaxPrefilter(options => {
         options.async = true; // eslint-disable-line no-param-reassign
     });
-    let lang = getLanguage()?.toLowerCase();
+    let lang = getLanguage();
 
     if (lang === 'ach') {
         lang = 'en';
@@ -97,18 +96,12 @@ const addBlocklyTranslation = () => {
     } else if (lang === 'zh_tw') {
         lang = 'zh-hant';
     }
-    return new Promise((resolve, reject) => {
-        const link = `blockly-translations/${lang}.js`;
-
-        $.getScript(link)
-            .done(() => {
-                console.log(`Script loaded for lang: ${lang}`);
-                resolve();
-            })
-            .fail((jqxhr, settings, exception) => {
-                console.error(`Failed to load script for lang: ${link}`, { lang, link, settings, jqxhr, exception });
-                reject(exception);
-            });
+    return new Promise(resolve => {
+        try {
+            $.getScript(`blockly-translations/${lang}.js`, resolve);
+        } catch (e) {
+            globalObserver.emit('Error', e);
+        }
     });
 };
 
@@ -315,30 +308,7 @@ export default class _Blockly {
                     },
                     trashcan: false,
                 });
-                workspace.addChangeListener(event => {
-                    if (event.type === Blockly.Events.BLOCK_CREATE) {
-                        event.ids.forEach(id => {
-                            const block = workspace.getBlockById(id);
-                            if (block) {
-                                GTM.pushDataLayer({
-                                    event: 'Block Event',
-                                    blockEvent: event.type,
-                                    blockType: block.type,
-                                });
-                            }
-                        });
-                    } else if (event.type === Blockly.Events.BLOCK_DELETE) {
-                        const dom = Blockly.Xml.textToDom(`<xml>${event.oldXml.outerHTML}</xml>`);
-                        const blockNodes = dom.getElementsByTagName('block');
-                        Array.from(blockNodes).forEach(blockNode => {
-                            GTM.pushDataLayer({
-                                event: 'Block Event',
-                                blockEvent: event.type,
-                                blockType: blockNode.getAttribute('type'),
-                            });
-                        });
-                    }
-                });
+                // Check https://app.clickup.com/t/20696747/BOT-811 if previous GTM codes are requried
 
                 const renderInstance = render(workspace);
                 window.addEventListener('resize', renderInstance, false);
