@@ -2,16 +2,15 @@ name: deriv-com/binary-bot/test
 on:
   push:
     branches:
-    - master
+      - '*'
+      - '!master'
 jobs:
   test:
-    if: # GitHub does not currently support regular expressions inside if conditions
-#         github.ref != 'refs/heads//^master$/'
     runs-on: ubuntu-latest
     container:
       image: node:18.16
     steps:
-    - uses: actions/checkout@v4.1.0
+    # - uses: actions/checkout@v4.1.0
     - uses: "./.github/actions/git_checkout_from_cache"
     - uses: "./.github/actions/npm_install"
     - uses: "./.github/actions/test"
