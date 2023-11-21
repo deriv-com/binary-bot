@@ -1,0 +1,70 @@
+name: deriv-com/binary-bot/release
+on:
+  push:
+    branches:
+    - master
+jobs:
+  release_staging:
+    if: # GitHub does not currently support regular expressions inside if conditions
+#         github.ref == 'refs/heads//^master$/'
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.16
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: "./.github/actions/git_checkout_from_cache"
+    - uses: "./.github/actions/npm_install"
+#     # This item has no matching transformer
+#     - test:
+    - uses: "./.github/actions/build"
+    - uses: actions/upload-artifact@v3.1.3
+      with:
+        path: www/.
+#     # `run` was not transformed because it is missing a `command`
+    - uses: "./.github/actions/notify_slack"
+  publish_cloudflare_staging:
+    if: # GitHub does not currently support regular expressions inside if conditions
+#         github.ref == 'refs/heads//^master$/'
+    runs-on: ubuntu-latest
+    container:
+      image: node:20.2.0
+    needs:
+    - release_staging
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        path: www
+    - uses: "./.github/actions/publish_to_pages_staging"
+  release_production:
+    if: # GitHub does not currently support regular expressions inside if conditions
+#         (github.ref == 'refs/tags//^production.*/') && (github.ref != 'refs/heads//.*/')
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.6
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: "./.github/actions/git_checkout_from_cache"
+    - uses: "./.github/actions/npm_install"
+#     # This item has no matching transformer
+#     - test:
+    - uses: "./.github/actions/build"
+    - uses: actions/upload-artifact@v3.1.3
+      with:
+        path: www/.
+#     # `run` was not transformed because it is missing a `command`
+    - uses: "./.github/actions/notify_slack"
+  publish_cloudflare_production:
+    if: # GitHub does not currently support regular expressions inside if conditions
+#         (github.ref == 'refs/tags//^production.*/') && (github.ref != 'refs/heads//.*/')
+    runs-on: ubuntu-latest
+    container:
+      image: node:20.2.0
+    needs:
+    - release_production
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        path: www
+    - uses: "./.github/actions/publish_to_pages_production"

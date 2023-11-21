@@ -1,0 +1,10 @@
+name: publish_to_pages_production
+runs:
+  using: composite
+  steps:
+  - name: Publish to cloudflare pages (production)
+    run: |-
+      cd www
+      npx wrangler pages publish . --project-name=deriv-binary-bot-pages --branch=main
+      echo "New website - http://cf-pages-deriv-binary-bot.deriv.com"
+    shell: bash
