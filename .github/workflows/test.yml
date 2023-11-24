@@ -10,7 +10,6 @@ jobs:
     container:
       image: node:18.16
     steps:
-    # - uses: actions/checkout@v4.1.0
     - uses: "./.github/actions/git_checkout_from_cache"
     - uses: "./.github/actions/npm_install"
     - uses: "./.github/actions/test"

@@ -5,8 +5,8 @@ runs:
   - name: restore_cache
     uses: actions/cache@v3.3.2
     with:
-      key: source-v1-{{ .Branch }}-{{ .Revision }}
       path: node_modules
+      key: source-v1-{{ .Branch }}-{{ .Revision }}
       restore-keys: |-
         source-v1-{{ .Branch }}-{{ .Revision }}
         source-v1-{{ .Branch }}-
@@ -22,6 +22,7 @@ runs:
         git fetch origin --tags -f
       fi
     shell: bash
+  - name: Checkout
   - uses: actions/checkout@v4.1.0
   - name: Compress git objects
     run: git gc

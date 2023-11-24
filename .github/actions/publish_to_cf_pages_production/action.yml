@@ -1,4 +1,12 @@
-name: publish_to_pages_production
+name: publish_to_cf_pages_production
+description: publish to cloudflare pages (production)
+inputs:
+  CLOUDFLARE_ACCOUNT_ID:
+    description: 'Cloudflare account id'
+    required: true
+  CLOUDFLARE_API_TOKEN:
+    description: 'Cloudflare token'
+    required: true
 runs:
   using: composite
   steps:

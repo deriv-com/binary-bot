@@ -1,0 +1,14 @@
+
+name: Versioning Action
+description: version the release and store it in the environment variable
+on:
+  push:
+    branches:
+      - main
+
+runs:
+  using: composite
+  steps:
+    - name: Set version
+      run: echo "VERSION=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+      shell: bash
