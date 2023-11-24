@@ -11,6 +11,9 @@ runs:
   using: composite
   steps:
     - name: Publish to cloudflare pages (staging)
+      env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.CLOUDFLARE_API_TOKEN }}
       run: |-
         cd www
         npx wrangler pages publish . --project-name=deriv-binary-bot-pages --branch=main

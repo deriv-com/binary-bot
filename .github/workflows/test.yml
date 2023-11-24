@@ -13,9 +13,6 @@ jobs:
               uses: './.github/actions/setup_node'
               with:
                   node-version: '18.x'
-            - name: Git Cleanup
-              run: git gc
-              shell: bash
             - name: Install Dependencies
               uses: './.github/actions/npm_install_from_cache'
             - name: Invalidate NPM Cache
