@@ -1,24 +1,26 @@
 name: build
+description: Build all packages
 inputs:
   GD_API_KEY:
-    description: 'Google drive api key'
+    description: "Google drive api key"
     required: false
   GD_APP_ID:
-    description: 'Google drive app id'
+    description: "Google drive app id"
     required: false
   GD_CLIENT_ID:
-    description: 'Google drive client id'
+    description: "Google drive client id"
     required: false
   TRACKJS_TOKEN:
-    description: 'trackjs token'
+    description: "trackjs token"
     required: false
 runs:
+  using: composite
   steps:
-  - name: Build all packages
-    env:
-      GD_CLIENT_ID: ${{ inputs.GD_CLIENT_ID }}
-      GD_API_KEY: ${{ inputs.GD_API_KEY }}
-      GD_APP_ID: ${{ inputs.GD_APP_ID }}
-      TRACKJS_TOKEN: ${{ inputs.TRACKJS_TOKEN }}
-    run: npm run build
-    shell: bash
+    - name: Build all packages
+      env:
+        GD_CLIENT_ID: ${{ inputs.GD_CLIENT_ID }}
+        GD_API_KEY: ${{ inputs.GD_API_KEY }}
+        GD_APP_ID: ${{ inputs.GD_APP_ID }}
+        TRACKJS_TOKEN: ${{ inputs.TRACKJS_TOKEN }}
+      run: npm run build
+      shell: bash

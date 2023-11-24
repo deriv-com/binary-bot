@@ -3,9 +3,8 @@ description: Invalidate the Master NPM cache
 runs:
   using: composite
   steps:
-
-  - name: save_cache
-    uses: actions/cache/save@v3
-    with:
-      path: node_modules
-      key: ${{ runner.os }}-build-master-cache-${{ hashFiles('./package-lock.json') }}
+    - name: save_cache
+      uses: actions/cache/save@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-build-master-cache-${{ hashFiles('./package-lock.json') }}
