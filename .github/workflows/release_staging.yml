@@ -25,10 +25,6 @@ jobs:
                   TRACKJS_TOKEN: ${{ secrets.TRACKJS_TOKEN }}
             - name: Test
               uses: './.github/actions/test'
-            - name: Versioning
-              uses: './.github/actions/versioning'
-              with:
-                  RELEASE_TYPE: staging
             - name: Deploy to Cloudflare Pages
               uses: './.github/actions/publish_to_cf_pages_staging'
               with:
