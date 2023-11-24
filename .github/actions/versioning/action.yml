@@ -1,4 +1,3 @@
-
 name: Versioning Action
 description: version the release and store it in the environment variable
 inputs:
