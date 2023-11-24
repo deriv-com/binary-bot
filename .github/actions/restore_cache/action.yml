@@ -1,0 +1,18 @@
+name: restore_cache
+description: restore cache from master
+inputs:
+  path:
+    description: 'The path to restore cache from'
+    required: true
+  key:
+    description: 'The key to restore cache from'
+    required: true
+
+runs:
+  using: composite
+  steps:
+  - name: restore_cache
+    uses: actions/cache/restore@v3
+    with:
+      path: node_modules
+      key: ${{ runner.os }}-build-master-cache-${{ hashFiles('./package-lock.json') }}

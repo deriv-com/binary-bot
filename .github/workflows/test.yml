@@ -1,15 +1,17 @@
 name: deriv-com/binary-bot/test
 on:
-  push:
-    branches:
-      - '*'
-      - '!master'
+    push:
+        branches:
+            - '*'
+            - '!master'
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    container:
-      image: node:18.16
-    steps:
-    - uses: "./.github/actions/git_checkout_from_cache"
-    - uses: "./.github/actions/npm_install"
-    - uses: "./.github/actions/test"
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4.1.0
+            - name: Compress git objects
+              run: git gc
+              shell: bash
+            - uses: './.github/actions/npm_install_from_cache'
+            - uses: './.github/actions/test'
