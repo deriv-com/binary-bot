@@ -6,6 +6,7 @@ on:
 jobs:
   release_production:
     name: Build, Test and Deploy to Cloudflare Pages
+    environment: Production
     runs-on: ubuntu-latest
     outputs:
       RELEASE_VERSION: ${{ steps.extract_version.outputs.RELEASE_VERSION }}
@@ -42,6 +43,7 @@ jobs:
   send_slack_notification:
     if: always()
     needs: [release_production]
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
