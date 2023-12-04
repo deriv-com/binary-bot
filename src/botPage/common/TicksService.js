@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 import { api_base } from '@api-base';
-import { isLoggedIn } from '@storage';
 import { observer as globalObserver } from '@utilities/observer';
 import { historyToTicks, getLast } from '../../common/utils/binary';
 import { doUntilDone, getUUID } from '../../blockly/bot/tools';
@@ -59,45 +58,14 @@ export default class TicksService {
 
         if (!this.active_symbols_promise) {
             this.active_symbols_promise = new Promise(resolve => {
-                this.getActiveSymbols()
-                    .then((activeSymbols = []) => {
-                        this.pipSizes = activeSymbols
-                            ?.reduce((s, i) => s.set(i.symbol, +(+i.pip).toExponential().substring(3)), new Map())
-                            .toObject();
-                        resolve(this.pipSizes);
-                    })
-                    .catch(error => {
-                        globalObserver.emit('Error', error);
-                    });
+                this.pipSizes = api_base.active_symbols
+                    ?.reduce((s, i) => s.set(i.symbol, +(+i.pip).toExponential().substring(3)), new Map())
+                    .toObject();
+                resolve(this.pipSizes);
             });
         }
         return this.active_symbols_promise;
     }
-
-    // TODO: need to fix this eslint issue
-    // eslint-disable-next-line class-methods-use-this
-    getActiveSymbols = () =>
-        new Promise(resolve => {
-            const getSymbols = () => {
-                api_base.api
-                    .send({ active_symbols: 'brief' })
-                    .then(({ active_symbols }) =>
-                        // eslint-disable-next-line camelcase
-                        resolve(active_symbols)
-                    )
-                    .catch(err => {
-                        globalObserver.emit('Error', err);
-                    });
-            };
-
-            if (isLoggedIn()) {
-                api_base.api.expectResponse('authorize').then(() => {
-                    getSymbols();
-                });
-            } else {
-                getSymbols();
-            }
-        });
 
     request(options) {
         const { symbol, granularity } = options;
@@ -144,7 +112,7 @@ export default class TicksService {
         this.unsubscribeIfEmptyListeners(options);
     }
     unsubscribeIfEmptyListeners(options) {
-        const { symbol, granularity } = options;
+        const { symbol, granularity, is_chart } = options;
         let needToUnsubscribe = false;
         const tickListener = this.tickListeners.get(symbol);
         const ohlcListener = this.ohlcListeners.getIn([symbol, Number(granularity)]);
@@ -162,10 +130,10 @@ export default class TicksService {
         }
 
         if (needToUnsubscribe) {
-            this.unsubscribeAllAndSubscribeListeners(symbol);
+            this.unsubscribeAllAndSubscribeListeners(symbol, is_chart);
         }
     }
-    unsubscribeAllAndSubscribeListeners(symbol) {
+    unsubscribeAllAndSubscribeListeners(symbol, is_chart) {
         const ohlcSubscriptions = this.subscriptions.getIn(['ohlc', symbol]);
         const tickSubscription = this.subscriptions.getIn(['tick', symbol]);
         const subscription = [];
@@ -178,7 +146,11 @@ export default class TicksService {
         if (tickSubscription) {
             subscription.push(tickSubscription);
         }
-        Promise.all(subscription.map(id => doUntilDone(() => api_base.api.forget(id))));
+        Promise.all(
+            subscription.map(id =>
+                doUntilDone(() => (is_chart ? api_base.api_chart?.forget(id) : api_base.api.forget(id)))
+            )
+        );
         this.subscriptions = new Map();
     }
     updateTicksAndCallListeners(symbol, ticks) {

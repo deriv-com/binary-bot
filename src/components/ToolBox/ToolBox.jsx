@@ -18,6 +18,7 @@ import Save from './save';
 import TradingView from '@components/Dialogs/TradingView';
 import IntegrationsDialog from '@components/Dialogs/IntegrationsDialog';
 import { getActiveToken } from '@storage';
+import { api_base } from '../../api-base';
 
 const ShowModal = ({ modal, onClose, class_name }) => {
     if (!modal) return null;
@@ -232,7 +233,7 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                 tooltip={translate('Run the bot')}
                 position='bottom'
                 onClick={() => {
-                    globalObserver.emit("blockly.start")
+                    globalObserver.emit('blockly.start');
                     performance.mark('bot-start');
                 }}
                 classes={classNames('toolbox-button icon-run', {
@@ -265,6 +266,9 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                 position='bottom'
                 classes='toolbox-button icon-chart-line'
                 onClick={() => {
+                    if (!api_base.api_chart) {
+                        api_base.initChartWebSocket();
+                    }
                     if (!chart) {
                         chart = new Chart();
                     }

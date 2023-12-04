@@ -8,7 +8,7 @@ export const REQUESTS = [
     'run-proposal',
     'transaction',
     'ticks_history',
-    'history'
+    'history',
 ];
 
 class APIMiddleware {
@@ -18,6 +18,7 @@ class APIMiddleware {
         this.addGlobalMethod();
     }
 
+    // eslint-disable-next-line class-methods-use-this
     getRequestType = request => {
         let req_type;
         REQUESTS.forEach(type => {
@@ -27,6 +28,7 @@ class APIMiddleware {
         return req_type;
     };
 
+    // eslint-disable-next-line class-methods-use-this
     defineMeasure = res_type => {
         if (res_type) {
             let measure;
@@ -35,18 +37,21 @@ class APIMiddleware {
                 if (performance.getEntriesByName('bot-start', 'mark').length) {
                     measure = performance.measure('run-proposal', 'bot-start', 'first_proposal_end');
                     performance.clearMarks('bot-start');
-                    console.table('bot-first-run', measure.duration)
+                    // eslint-disable-next-line no-console
+                    console.table('bot-first-run', measure.duration);
                 }
             }
             if (res_type === 'history') {
                 performance.mark('ticks_history_end');
                 measure = performance.measure('ticks_history', 'ticks_history_start', 'ticks_history_end');
-                console.table('ticks_history', measure.duration)
+                // eslint-disable-next-line no-console
+                console.table('ticks_history', measure.duration);
             } else {
                 performance.mark(`${res_type}_end`);
                 measure = performance.measure(`${res_type}`, `${res_type}_start`, `${res_type}_end`);
-                if (res_type === 'proposal') { 
-                    console.table('proposal', measure.duration)
+                if (res_type === 'proposal') {
+                    // eslint-disable-next-line no-console
+                    console.table('proposal', measure.duration);
                 }
             }
             return (measure.startTimeDate = new Date(Date.now() - measure.startTime));
@@ -66,6 +71,7 @@ class APIMiddleware {
         return response_promise;
     };
 
+    // eslint-disable-next-line class-methods-use-this
     sendRequestsStatistic = () => {
         // REQUESTS.forEach(req_type => {
         //    const measure = performance.getEntriesByName(req_type);
