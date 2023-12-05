@@ -1,0 +1,8 @@
+name: run_tests
+description: Run tests
+runs:
+    using: composite
+    steps:
+    - name: run tests
+      run: npm test
+      shell: bash
