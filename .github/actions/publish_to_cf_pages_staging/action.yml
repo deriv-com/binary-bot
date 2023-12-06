@@ -16,6 +16,6 @@ runs:
         CLOUDFLARE_API_TOKEN: ${{ inputs.CLOUDFLARE_API_TOKEN }}
       run: |-
         cd www
-        npx wrangler pages publish . --project-name=deriv-binary-bot-pages --branch=main
+        npx wrangler pages publish . --project-name=deriv-binary-bot-pages --branch=staging
         echo "New staging website - http://staging.cf-pages-deriv-binary-bot.deriv.com"
       shell: bash
