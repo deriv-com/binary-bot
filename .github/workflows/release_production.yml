@@ -43,7 +43,7 @@ jobs:
       - name: Build Docker image and push to Docker hub and K8S
         uses: "./.github/actions/build_and_push_docker_image"
         with:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
           DOCKERHUB_ORGANISATION: ${{ secrets.DOCKERHUB_ORGANISATION }}
           K8S_NAMESPACE: bot-deriv-com-production
