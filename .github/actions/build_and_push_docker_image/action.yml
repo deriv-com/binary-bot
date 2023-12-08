@@ -38,7 +38,7 @@ runs:
         echo "SERVICEACCOUNT_TOKEN=${{ inputs.SERVICEACCOUNT_TOKEN }}" >> "$GITHUB_ENV"
         echo "DOCKERHUB_ORGANISATION=${{ inputs.DOCKERHUB_ORGANISATION }}" >> "$GITHUB_ENV"
         echo "CA_CRT=${{ inputs.CA_CRT }}" >> "$GITHUB_ENV"
-        echo "APP_NAME=deriv-binary-bot" >> "$GITHUB_ENV"
+        echo "APP_NAME=deriv-static-bot" >> "$GITHUB_ENV"
         echo "APP_VERSION=${{ inputs.APP_VERSION }}" >> "$GITHUB_ENV"
       shell: bash
     - name: Build docker image 🐳
