@@ -44,7 +44,7 @@ jobs:
         uses: "./.github/actions/build_and_push_docker_image"
         with:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
           DOCKERHUB_ORGANISATION: ${{ secrets.DOCKERHUB_ORGANISATION }}
           K8S_NAMESPACE: bot-deriv-com-production
           KUBE_SERVER: ${{ secrets.KUBE_SERVER }}
