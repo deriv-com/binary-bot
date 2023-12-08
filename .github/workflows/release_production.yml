@@ -46,7 +46,7 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKERHUB_ORGANISATION: ${{ secrets.DOCKERHUB_ORGANISATION }}
-          K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE }}
+          K8S_NAMESPACE: bot-deriv-com-production
           KUBE_SERVER: ${{ secrets.KUBE_SERVER }}
           SERVICEACCOUNT_TOKEN: ${{ secrets.SERVICEACCOUNT_TOKEN }}
           CA_CRT: ${{ secrets.CA_CRT }}
