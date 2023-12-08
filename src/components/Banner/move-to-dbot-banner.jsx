@@ -24,7 +24,7 @@ const shouldShowPopup = () => {
         return true;
     }
 
-    const allowed_delay = 14; // Two weeks in days
+    const allowed_delay = 7; // One week in days
     const last_popup_date = new Date(last_deriv_redirect_popup_time);
     const current_date = new Date();
 
