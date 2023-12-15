@@ -2,7 +2,7 @@ name: Binary Bot Production Workflow
 on:
   push:
     tags:
-      - production.*
+      - production_*
 jobs:
   release_production:
     name: Build, Test and Deploy to Cloudflare Pages
