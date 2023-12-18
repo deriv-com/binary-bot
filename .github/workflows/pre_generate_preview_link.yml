@@ -7,8 +7,11 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  HEAD_REF: ${{ github.head_ref }}
+
 concurrency:
-  group: cloudflare-pages-verify-${{ github.head_ref }}
+  group: cloudflare-pages-verify-"$HEAD_REF"
   cancel-in-progress: true
 
 jobs:
@@ -16,10 +19,13 @@ jobs:
     runs-on: Ubuntu-latest
     steps:
       - name: Retrieve PR information
+        env:
+          ISSUE_NUMBER: ${{ github.event.number }}
+          USERNAME: ${{ github.event.pull_request.user.login }}
         run: |
           mkdir -p ./pr
-          echo ${{ github.event.number }} > ./pr/NR
-          echo ${{ github.event.pull_request.user.login }} > ./pr/USERNAME
+          echo "$ISSUE_NUMBER" > ./pr/ISSUE_NUMBER
+          echo "$USERNAME" > ./pr/USERNAME
 
       - name: Upload PR information to artifact
         uses: actions/upload-artifact@v2
