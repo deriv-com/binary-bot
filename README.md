@@ -14,7 +14,7 @@ Ensure that your environment contains the following packages.
 ```
  - node >= 18.16.0
  - npm >= 9.5.0
- - git (for contribution)
+ - git (for contributions)
 ```
 
 ## Getting Started
