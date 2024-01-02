@@ -8,7 +8,6 @@ import { generateDerivLink } from '@utils';
 import { setActiveLoginId, getClientAccounts, syncWithDerivApp } from '@storage';
 import { translate } from '@i18n';
 import Modal from '@components/common/modal';
-import Tour, { TourTargets } from '@components/common/tour';
 import {
     setAccountSwitcherLoader,
     setAccountSwitcherId,
@@ -147,8 +146,6 @@ const AccountActions = () => {
                     <AccountSwitchModal is_bot_running={is_bot_running} onClose={onClose} onAccept={onAccept} />
                 </Modal>
             )}
-            <TourTargets />
-            <Tour />
         </React.Fragment>
     );
 };
