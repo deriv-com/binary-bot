@@ -1,0 +1,22 @@
+name: deriv-com/binary-bot/test
+on:
+  pull_request:
+    branches:
+      - "master"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: "./.github/actions/setup_node"
+        with:
+          node-version: "18.x"
+      - name: Install Dependencies
+        uses: "./.github/actions/npm_install_from_cache"
+      - name: Invalidate NPM Cache
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: "./.github/actions/invalidate_npm_cache"
+      - name: Test
+        uses: "./.github/actions/test"
