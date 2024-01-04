@@ -1,0 +1,58 @@
+@mixin container-space($parent, $space) {
+    #{$parent}__top-icon {
+        top: $space * 1rem;
+        left: $space * 1rem;
+    }
+
+    #{$parent}__bottom-icon {
+        bottom: $space * 1rem;
+        right: $space * 1rem;
+    }
+}
+
+.app-icon {
+    $p-app-icon: &;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 6.4rem;
+    height: 4rem;
+
+    @include container-space($p-app-icon, 0.2);
+
+    &__top-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    &__bottom-icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+// .wallet-icon {
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     border-radius: 4px;
+//     overflow: hidden;
+
+//     &__default-bg {
+//         // Default Background
+//         background: radial-gradient(100% 4130.74% at 0% 100%, rgba(244, 67, 54, 0.24) 0%, rgba(40, 57, 145, 0.48) 100%) #ffffff;
+//     }
+
+//     &--small {
+//         width: 4rem;
+//         height: 2.4rem;
+//     }
+// }

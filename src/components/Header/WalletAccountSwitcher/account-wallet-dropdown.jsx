@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import config from '@config';
 import { translate } from '@i18n';
 import WalletContent from './wallet-content.jsx';
-import Text from '../common/text/text';
+import Text from '../../common/text/text.jsx';
+import './account-wallet-dropdown.scss';
 
 const Separator = () => <div className='account__switcher-seperator'></div>;
 
@@ -13,9 +14,10 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
     const container_ref = React.useRef();
     let all_accounts = [];
 
-    const transformAccounts = () => Object.keys(accounts).forEach(account => {
-        all_accounts.push({ ...accounts[account], account });
-    });
+    const transformAccounts = () =>
+        Object.keys(accounts).forEach(account => {
+            all_accounts.push({ ...accounts[account], account });
+        });
 
     // Sort wallet accounts alphabetically by fiat, crypto, then virtual.
     const sortWalletAccounts = wallets => {
