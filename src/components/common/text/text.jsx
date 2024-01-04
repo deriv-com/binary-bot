@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { PropTypes } from 'mobx-react';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const isEmptyObject = obj => {
