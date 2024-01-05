@@ -19,10 +19,10 @@
     justify-content: center;
     border-radius: 4px;
     overflow: hidden;
-    width: 6.4rem;
-    height: 4rem;
+    width: 4rem;
+    height: 2.5rem;
 
-    @include container-space($p-app-icon, 0.2);
+    @include container-space($p-app-icon, 0.14);
 
     &__top-icon {
         position: absolute;
@@ -35,24 +35,54 @@
         position: absolute;
         bottom: 0;
         right: 0;
+
+        .wallet-icon img {
+            width: 32px;
+            height: 20px;
+        }
+    }
+
+    .acc-info {
+        &__wallets-container {
+            width: 4rem;
+            height: 2.5rem;
+        }
     }
 }
 
-// .wallet-icon {
-//     position: relative;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     border-radius: 4px;
-//     overflow: hidden;
+.wallet-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
 
-//     &__default-bg {
-//         // Default Background
-//         background: radial-gradient(100% 4130.74% at 0% 100%, rgba(244, 67, 54, 0.24) 0%, rgba(40, 57, 145, 0.48) 100%) #ffffff;
-//     }
+    &__default-bg {
+        // Default Background
+        background: radial-gradient(100% 4130.74% at 0% 100%, rgba(244, 67, 54, 0.24) 0%, rgba(40, 57, 145, 0.48) 100%)
+            #ffffff;
+    }
 
-//     &--small {
-//         width: 4rem;
-//         height: 2.4rem;
-//     }
-// }
+    &--small {
+        width: 2.5rem;
+        height: 1.5rem;
+    }
+
+    img {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0 !important;
+    }
+}
+
+.wallet-card {
+    &__usd-bg {
+        background: radial-gradient(100% 4130.74% at 0% 100%, rgba(244, 67, 54, 0.24) 0%, rgba(40, 57, 145, 0.48) 100%)
+            #ffffff;
+
+        img {
+            height: 16px !important;
+        }
+    }
+}

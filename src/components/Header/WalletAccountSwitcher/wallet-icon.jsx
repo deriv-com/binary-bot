@@ -11,24 +11,28 @@ const WalletIcon = ({ currency, has_wallet_account, is_virtual, currency_icon, i
     };
 
     return (
-        <>
+        <div className='acc-info__wallets-container'>
             <div className='app-icon__top-icon'>
-                <img src={`${wallet_icon_path}ic-wallet-options-light.svg`} />
+                <div className='wallet-icon'>
+                    <img src={`${wallet_icon_path}ic-wallet-options-light.svg`} />
+                </div>
             </div>
-            <div className={`wallet-icon wallet-card__btc-bg ${is_wallet_dropdown && 'app-icon__bottom-icon'}`}>
-                <img
-                    src={
-                        has_wallet_account
-                            ? isWalletIcon(currency) && !is_virtual
-                                ? `${wallet_icon_path}${currency_icon}.svg`
-                                : is_virtual
-                                    ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
-                                    : default_currency_icon_path
-                            : default_currency_icon_path
-                    }
-                />
+            <div className={`${is_wallet_dropdown && 'app-icon__bottom-icon'}`}>
+                <div className='wallet-icon wallet-icon--small wallet-icon__default-bg wallet-card__usd-bg'>
+                    <img
+                        src={
+                            has_wallet_account
+                                ? isWalletIcon(currency) && !is_virtual
+                                    ? `${wallet_icon_path}${currency_icon}.svg`
+                                    : is_virtual
+                                        ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
+                                        : default_currency_icon_path
+                                : default_currency_icon_path
+                        }
+                    />
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 

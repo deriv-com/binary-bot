@@ -35,7 +35,7 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
 
                     return (
                         <div
-                            className={classNames('account__switcher-acc account__switcher-wallet-acc', {
+                            className={classNames('account__switcher-wallet-acc', {
                                 'account__switcher-acc--active': login_id === account.account,
                             })}
                             key={account.account}
@@ -46,16 +46,18 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
                             ref={el => (item_ref.current[index] = el)}
                         >
                             <input type='hidden' name='account_name' value={account.account} />
-                            <div className='app-icon'>
-                                <WalletIcon
-                                    currency={currency}
-                                    has_wallet_account={has_wallet_account}
-                                    is_virtual={!!demo_account}
-                                    currency_icon={currency_icon}
-                                    is_wallet_dropdown
-                                />
-                            </div>
                             <div>
+                                <div className='app-icon'>
+                                    <WalletIcon
+                                        currency={currency}
+                                        has_wallet_account={has_wallet_account}
+                                        is_virtual={!!demo_account}
+                                        currency_icon={currency_icon}
+                                        is_wallet_dropdown
+                                    />
+                                </div>
+                            </div>
+                            <div className='wallet-content'>
                                 {!currency && <span className='symbols'>{translate('No currency assigned')}</span>}
                                 <span>{translate('Deriv Apps')}</span>
                                 <div className='account__switcher-loginid'>{`${currency} ${translate('Wallet')}`}</div>
