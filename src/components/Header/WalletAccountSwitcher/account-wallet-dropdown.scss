@@ -1,4 +1,6 @@
 .account {
+    $color-black-1: #333333;
+
     &__wallet-switcher-list {
         padding: 0.28rem 0.57rem !important;
         border-bottom: 1px solid #e6e9e9 !important;
@@ -16,8 +18,28 @@
 
         .wallet-content {
             width: 100%;
+
+            span:first-child,
+            div {
+                color: $color-black-1;
+            }
+
+            span:first-child {
+                font-size: var(--font-size-xxs);
+                font-weight: normal;
+            }
+
+            .account__switcher-balance {
+                font-weight: 700;
+            }
+
+            .account__switcher-balance span {
+                font-size: var(--font-size-s);
+                font-weight: 700;
+            }
         }
     }
+
     &__switcher-wallet-acc:not(.account__switcher-acc--active):hover {
         background: var(--state-hover);
     }
@@ -40,6 +62,32 @@
         &::-webkit-scrollbar-thumb {
             border-radius: 10px;
             background-color: #999999;
+        }
+    }
+
+    &__switcher-total-wallet {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.14rem;
+        color: $color-black-1;
+        font-size: var(--font-size-s);
+
+        .header__expand {
+            transform: rotate(-90deg);
+            cursor: pointer;
+        }
+    }
+
+    &-switcher-wallet {
+        &__header {
+            padding: 0.71rem;
+            border-bottom: 1px solid var(--general-hover);
+
+            .dc-text {
+                font-size: var(--font-size-s) !important;
+                margin: 0;
+            }
         }
     }
 }

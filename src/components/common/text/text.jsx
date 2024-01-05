@@ -25,7 +25,7 @@ const Text = ({
     ...props
 }) => {
     const class_styles = {
-        '--text-size': `var(--text-size-${size})`,
+        '--text-size': `var(--font-size-${size})`,
         '--text-color': `var(--text-${color})`,
         '--text-lh': `var(--text-lh-${line_height})`,
         '--text-weight': `var(--text-weight-${weight})`,

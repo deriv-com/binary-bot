@@ -7,8 +7,6 @@ import WalletContent from './wallet-content.jsx';
 import Text from '../../common/text/text.jsx';
 import './account-wallet-dropdown.scss';
 
-const Separator = () => <div className='account__switcher-seperator'></div>;
-
 const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdownRef) => {
     const { accounts, account_list } = useSelector(state => state.client);
     const container_ref = React.useRef();
@@ -50,18 +48,18 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
             <div id='account__switcher-dropdown' className='account__switcher-dropdown' ref={container_ref}>
                 <div className='account__switcher-container'>
                     <div className='account-switcher-wallet__header'>
-                        <Text as='h4' weight='bold' size='xs'>
+                        <Text as='h4' weight='bold' size='s'>
                             {translate('Deriv Apps accounts')}
                         </Text>
                     </div>
                     {/* should show real and demo accounts */}
                     <WalletContent setIsAccDropdownOpen={setIsAccDropdownOpen} accounts={all_accounts} />
-                    <Separator />
                 </div>
-                <Separator />
-                <div className='account__switcher-total'>
+                <div className='account__switcher-total-wallet'>
+                    <span>{translate('Looking for CFDs? Go to Trader\'s hub')}</span>
+
                     <a href={config.tradershub.url} className={'account__switcher-total--link'}>
-                        <span>{translate('Looking for CFD accounts? Go to Trader\'s hub')}</span>
+                        <img className={'header__expand'} src='/public/images/ic-chevron-down-bold.svg' />
                     </a>
                 </div>
             </div>
