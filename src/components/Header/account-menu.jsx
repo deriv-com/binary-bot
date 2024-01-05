@@ -23,13 +23,15 @@ const AccountMenu = ({ is_open }) => {
 
     return (
         <div className={classNames('header__acc-info', { disabled: is_bot_running })}>
-            <WalletIcon
-                currency={currency}
-                has_wallet_account={has_wallet_account}
-                is_virtual={is_virtual}
-                currency_icon={currency_icon}
-            />
-            <div id='header__acc-balance' className='header__acc-balance'>
+            {has_wallet_account ? (
+                <WalletIcon currency={currency} is_virtual={is_virtual} currency_icon={currency_icon} />
+            ) : (
+                <img className='header__acc-icon' src={`/public/images/currency/ic-currency-${currency_icon}.svg`} />
+            )}
+            <div
+                id='header__acc-balance'
+                className={classNames('header__acc-balance', { 'header__acc-balance-wallet': has_wallet_account })}
+            >
                 {currency
                     ? balance.toLocaleString(undefined, {
                         minimumFractionDigits: currency_name_map[currency]?.fractional_digits ?? 2,
@@ -41,7 +43,7 @@ const AccountMenu = ({ is_open }) => {
                 )}
             </div>
             <img
-                className={`header__icon header__expand ${is_open ? 'open' : ''}`}
+                className={classNames('header__icon header__expand', { open: is_open })}
                 src={`/public/images/${account_icon}.svg`}
             />
         </div>

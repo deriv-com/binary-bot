@@ -53,7 +53,6 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
                                         has_wallet_account={has_wallet_account}
                                         is_virtual={!!demo_account}
                                         currency_icon={currency_icon}
-                                        is_wallet_dropdown
                                     />
                                 </div>
                             </div>

@@ -1,4 +1,18 @@
 .header {
     font-size: var(--font-size-n);
     font-family: var(--font-stack);
+
+    &__acc-balance-wallet {
+        color: var(--text-general) !important;
+    }
+
+    &__acc-info {
+        .acc-info {
+            &__wallets-container {
+                position: relative;
+                width: 4.5rem;
+                height: 1.5rem;
+            }
+        }
+    }
 }

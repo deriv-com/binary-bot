@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './wallet-icon.scss';
 
-const WalletIcon = ({ currency, has_wallet_account, is_virtual, currency_icon, is_wallet_dropdown = false }) => {
+const WalletIcon = ({ currency, is_virtual, currency_icon }) => {
     const wallet_icon_path = '/public/images/wallet/';
     const default_currency_icon_path = `/public/images/currency/ic-currency-${currency_icon}.svg`;
     const isWalletIcon = _currency => {
@@ -12,22 +12,22 @@ const WalletIcon = ({ currency, has_wallet_account, is_virtual, currency_icon, i
 
     return (
         <div className='acc-info__wallets-container'>
-            <div className='app-icon__top-icon'>
-                <div className='wallet-icon'>
-                    <img src={`${wallet_icon_path}ic-wallet-options-light.svg`} />
+            {
+                <div className='app-icon__top-icon'>
+                    <div className='wallet-icon'>
+                        <img src={`${wallet_icon_path}ic-wallet-options-light.svg`} />
+                    </div>
                 </div>
-            </div>
-            <div className={`${is_wallet_dropdown && 'app-icon__bottom-icon'}`}>
+            }
+            <div className={'app-icon__bottom-icon'}>
                 <div className='wallet-icon wallet-icon--small wallet-icon__default-bg wallet-card__usd-bg'>
                     <img
                         src={
-                            has_wallet_account
-                                ? isWalletIcon(currency) && !is_virtual
-                                    ? `${wallet_icon_path}${currency_icon}.svg`
-                                    : is_virtual
-                                        ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
-                                        : default_currency_icon_path
-                                : default_currency_icon_path
+                            isWalletIcon(currency) && !is_virtual
+                                ? `${wallet_icon_path}${currency_icon}.svg`
+                                : is_virtual
+                                    ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
+                                    : default_currency_icon_path
                         }
                     />
                 </div>
@@ -38,10 +38,8 @@ const WalletIcon = ({ currency, has_wallet_account, is_virtual, currency_icon, i
 
 WalletIcon.propTypes = {
     currency: PropTypes.string,
-    has_wallet_account: PropTypes.bool,
     is_virtual: PropTypes.bool,
     currency_icon: PropTypes.string,
-    is_wallet_dropdown: PropTypes.bool,
 };
 
 export default WalletIcon;
