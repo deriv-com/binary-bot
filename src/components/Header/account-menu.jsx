@@ -29,7 +29,11 @@ const AccountMenu = ({ is_open }) => {
             {has_wallet_account ? (
                 <WalletIcon currency={currency} is_virtual={is_virtual} currency_icon={currency_icon} />
             ) : (
-                <img className='header__acc-icon' src={`/public/images/currency/ic-currency-${currency_icon}.svg`} />
+                <img
+                    className='header__acc-icon'
+                    src={`/public/images/currency/ic-currency-${currency_icon}.svg`}
+                    alt='icon'
+                />
             )}
             <div
                 id='header__acc-balance'
@@ -52,6 +56,7 @@ const AccountMenu = ({ is_open }) => {
             <img
                 className={classNames('header__icon header__expand', { open: is_open })}
                 src={`/public/images/${account_icon}.svg`}
+                alt='icon'
             />
         </div>
     );

@@ -61,7 +61,11 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                     <span>{translate('Looking for CFDs? Go to Trader\'s hub')}</span>
 
                     <a href={config.tradershub.url} className={'account__switcher-total--link'}>
-                        <img className={'header__expand'} src='/public/images/ic-chevron-down-bold.svg' />
+                        <img
+                            className={'header__expand'}
+                            src='/public/images/ic-chevron-down-bold.svg'
+                            alt='wallet_icon'
+                        />
                     </a>
                 </div>
             </div>

@@ -10,12 +10,19 @@ const WalletIcon = ({ currency, is_virtual, currency_icon }) => {
         return wallet_icons.includes(_currency.toLowerCase());
     };
 
+    const src_path =
+        isWalletIcon(currency) && !is_virtual
+            ? `${wallet_icon_path}${currency_icon}.svg`
+            : is_virtual
+                ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
+                : default_currency_icon_path;
+
     return (
         <div className='acc-info__wallets-container'>
             {
                 <div className='app-icon__top-icon'>
                     <div className='wallet-icon'>
-                        <img src={`${wallet_icon_path}ic-wallet-options-light.svg`} />
+                        <img src={`${wallet_icon_path}ic-wallet-options-light.svg`} alt='wallet_icon' />
                     </div>
                 </div>
             }
@@ -25,15 +32,7 @@ const WalletIcon = ({ currency, is_virtual, currency_icon }) => {
                         is_virtual ? 'demo' : currency.toLowerCase()
                     }-bg`}
                 >
-                    <img
-                        src={
-                            isWalletIcon(currency) && !is_virtual
-                                ? `${wallet_icon_path}${currency_icon}.svg`
-                                : is_virtual
-                                    ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
-                                    : default_currency_icon_path
-                        }
-                    />
+                    <img src={src_path} alt='wallet_icon' />
                 </div>
             </div>
         </div>
