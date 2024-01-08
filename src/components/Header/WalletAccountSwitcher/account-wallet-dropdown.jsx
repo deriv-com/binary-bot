@@ -23,7 +23,9 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
         transformAccounts();
 
         return wallets
-            .filter(account => /^(CR|MF|VRTC)\d+$/.test(account.account))
+            .filter(
+                account => account_list.find(acc => acc.loginid === account.account)?.account_category === 'trading'
+            )
             .sort((a, b) => {
                 const typeA = account_list.find(acc => acc.loginid === a.account)?.account_type;
                 const typeB = account_list.find(acc => acc.loginid === b.account)?.account_type;
