@@ -85,4 +85,69 @@
             height: 16px !important;
         }
     }
+
+    &__demo-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(255, 100, 68, 0.24) 0%, rgba(255, 68, 79, 0.48) 100%)
+            #212329;
+    }
+
+    &__btc-bg {
+        background: radial-gradient(
+                100% 277.78% at 0% 100%,
+                rgba(247, 147, 27, 0.24) 0%,
+                rgba(247, 199, 27, 0.477) 99.99%
+            )
+            #ffffff;
+    }
+
+    &__eusdt-bg,
+    &__tusdt-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(0, 147, 147, 0.24) 0%, rgba(0, 147, 147, 0.48) 100%)
+            #ffffff;
+    }
+
+    &__eth-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(82, 86, 127, 0.24) 0%, rgba(130, 140, 173, 0.48) 100%)
+            #ffffff;
+    }
+
+    &__ltc-bg {
+        background: radial-gradient(
+                100% 277.78% at 0% 100%,
+                rgba(165, 168, 169, 0.24) 0%,
+                rgba(193, 204, 207, 0.48) 100%
+            )
+            #ffffff;
+    }
+
+    &__usdc-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(39, 117, 202, 0.24) 0%, rgba(34, 76, 225, 0.48) 100%)
+            #ffffff;
+    }
+
+    &__usdt-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(39, 117, 202, 0.24) 0%, rgba(34, 76, 225, 0.48) 100%)
+            #ffffff;
+    }
+}
+
+.dc-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff !important;
+    border-radius: 2px;
+    font-size: 10px;
+    height: 0.9rem;
+    padding-inline: 0.28rem;
+    font-weight: 600;
+
+    &--blue {
+        background-color: #377cfc;
+    }
+
+    &--bordered {
+        border: 1px solid var(--text-prominent);
+        color: var(--text-prominent) !important;
+    }
 }

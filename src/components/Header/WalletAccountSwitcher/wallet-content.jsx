@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { api_base } from '@api-base';
 import classNames from 'classnames';
 import config from '@config';
 import { getActiveLoginId } from '@storage';
@@ -13,6 +14,9 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
     const dispatch = useDispatch();
     const { login_id, has_wallet_account } = useSelector(state => state.client);
     const item_ref = React.useRef([]);
+
+    const active_account = { ...api_base.account_info };
+    const { landing_company_name } = active_account;
 
     const onChangeAccount = id => {
         const active_login_id = getActiveLoginId();
@@ -68,6 +72,17 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
                                     </span>
                                 </span>
                             </div>
+                            {!!demo_account && (
+                                <span
+                                    className={classNames('dc-badge', {
+                                        'dc-badge--blue': !!demo_account,
+                                        'dc-badge--bordered': !demo_account,
+                                    })}
+                                >
+                                    {translate('Demo')}
+                                </span>
+                            )}
+                            {landing_company_name === 'maltainvest' && <span>malta</span>}
                         </div>
                     );
                 })}
