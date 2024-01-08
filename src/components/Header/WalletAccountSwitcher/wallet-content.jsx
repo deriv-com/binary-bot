@@ -48,6 +48,13 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
                                 onChangeAccount(account.account);
                             }}
                             ref={el => (item_ref.current[index] = el)}
+                            role='button'
+                            onKeyDown={e => {
+                                if (e.key === 'Enter') {
+                                    e.stopPropagation();
+                                    onChangeAccount(account.account);
+                                }
+                            }}
                         >
                             <input type='hidden' name='account_name' value={account.account} />
                             <div>

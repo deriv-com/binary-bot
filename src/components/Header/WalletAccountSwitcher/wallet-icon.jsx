@@ -10,12 +10,14 @@ const WalletIcon = ({ currency, is_virtual, currency_icon }) => {
         return wallet_icons.includes(_currency.toLowerCase());
     };
 
-    const src_path =
-        isWalletIcon(currency) && !is_virtual
-            ? `${wallet_icon_path}${currency_icon}.svg`
-            : is_virtual
-                ? `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`
-                : default_currency_icon_path;
+    let src_path;
+    if (isWalletIcon(currency) && !is_virtual) {
+        src_path = `${wallet_icon_path}${currency_icon}.svg`;
+    } else if (is_virtual) {
+        src_path = `${wallet_icon_path}ic-wallet-deriv-demo-light.svg`;
+    } else {
+        src_path = default_currency_icon_path;
+    }
 
     return (
         <div className='acc-info__wallets-container'>
