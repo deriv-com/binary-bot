@@ -13,7 +13,6 @@ import './wallet-icon.scss';
 const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
     const dispatch = useDispatch();
     const { login_id, has_wallet_account } = useSelector(state => state.client);
-    const item_ref = React.useRef([]);
 
     const active_account = { ...api_base.account_info };
     const { landing_company_name } = active_account;
@@ -29,7 +28,7 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
     return (
         <div className={'account__switcher-tabs-content account__wallet-switcher-tabs-content'}>
             <div className={'account__wallet-switcher-list open'}>
-                {accounts.map((account, index) => {
+                {accounts.map(account => {
                     const { demo_account, currency, balance } = account;
                     const currency_icon = demo_account ? 'virtual' : currency?.toLowerCase() || 'unknown';
                     const getBalance = () =>
@@ -47,7 +46,6 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
                                 e.stopPropagation();
                                 onChangeAccount(account.account);
                             }}
-                            ref={el => (item_ref.current[index] = el)}
                             role='button'
                             onKeyDown={e => {
                                 if (e.key === 'Enter') {
