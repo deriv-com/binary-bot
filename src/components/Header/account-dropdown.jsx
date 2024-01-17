@@ -13,6 +13,7 @@ import useLogout from '../../common/hooks/useLogout.js';
 import AccountSwitchModal from './account-switch-modal.jsx';
 import RiskComponent from './risk-component.jsx';
 import TabContent from './tab-content.jsx';
+import AccountWalletDropdown from './WalletAccountSwitcher/account-wallet-dropdown.jsx';
 
 const Separator = () => <div className='account__switcher-seperator'></div>;
 const getTotalDemo = accounts => {
@@ -30,7 +31,7 @@ const AccountDropdown = React.forwardRef((props, dropdownRef) => {
     const { setIsAccDropdownOpen, virtual } = props;
     const [activeTab, setActiveTab] = React.useState(virtual ? 'demo' : 'real');
     const [show_logout_modal, updaetShowLogoutModal] = React.useState(false);
-    const { accounts, balance, currency, account_type } = useSelector(state => state.client);
+    const { accounts, balance, currency, account_type, has_wallet_account } = useSelector(state => state.client);
 
     const { low_risk_without_account = false, high_risk_without_account = false } = account_type;
     const is_country_low_risk = low_risk_countries.includes(getClientCountry());
@@ -92,6 +93,9 @@ const AccountDropdown = React.forwardRef((props, dropdownRef) => {
         />
     );
 
+    if (has_wallet_account) {
+        return <AccountWalletDropdown setIsAccDropdownOpen={setIsAccDropdownOpen} />;
+    }
     return (
         <div className='account__switcher-dropdown-wrapper show' ref={dropdownRef}>
             <div id='account__switcher-dropdown' className='account__switcher-dropdown' ref={container_ref}>

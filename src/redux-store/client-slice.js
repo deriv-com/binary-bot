@@ -15,6 +15,7 @@ const initial_state = {
     accounts: {},
     account_type: {},
     active_symbols: [],
+    has_wallet_account: false,
 };
 
 export const clientSlice = createSlice({
@@ -53,6 +54,9 @@ export const clientSlice = createSlice({
         setLoginId: (state, action) => {
             state.login_id = action.payload;
         },
+        setHasWalletAccount: (state, action) => {
+            state.has_wallet_account = action.payload;
+        },
         setGdLoggedIn: (state, action) => {
             state.is_gd_logged_in = action.payload;
         },
@@ -89,6 +93,7 @@ export const {
     setGdLoggedIn,
     setLoginId,
     setActiveSymbols,
+    setHasWalletAccount,
 } = clientSlice.actions;
 
 export default clientSlice.reducer;

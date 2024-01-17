@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { PropTypes } from 'prop-types';
 import { api_base } from '@api-base';
 import config from '@config';
 import { generateDerivLink } from '@utils';
@@ -20,43 +19,7 @@ import Notifications from './notifications.jsx';
 import AccountDropdown from './account-dropdown.jsx';
 import AccountSwitchModal from './account-switch-modal.jsx';
 import { addTokenIfValid } from '../../common/appId.js';
-
-const AccountMenu = ({ is_open }) => {
-    const { currency, is_virtual, balance, login_id } = useSelector(state => state.client);
-    const { is_bot_running } = useSelector(state => state.ui);
-    const { currency_name_map } = config;
-    const account_icon = is_bot_running ? 'ic-lock' : 'ic-chevron-down-bold';
-    const currency_icon = is_virtual ? 'virtual' : currency.toLowerCase() || 'unknown';
-
-    return (
-        <div className={classNames('header__acc-info', { disabled: is_bot_running })}>
-            <img
-                id='header__acc-icon'
-                className='header__acc-icon'
-                src={`/public/images/currency/ic-currency-${currency_icon}.svg`}
-            />
-            <div id='header__acc-balance' className='header__acc-balance'>
-                {currency
-                    ? balance.toLocaleString(undefined, {
-                        minimumFractionDigits: currency_name_map[currency]?.fractional_digits ?? 2,
-                    })
-                    : ''}
-                <span className='symbols'>&nbsp;{currency || translate('No currency assigned')}</span>
-                {login_id.includes('MF') && !is_virtual && (
-                    <div className='is_symbol_multiplier'>{translate('Multipliers')}</div>
-                )}
-            </div>
-            <img
-                className={`header__icon header__expand ${is_open ? 'open' : ''}`}
-                src={`/public/images/${account_icon}.svg`}
-            />
-        </div>
-    );
-};
-
-AccountMenu.propTypes = {
-    is_open: PropTypes.bool,
-};
+import AccountMenu from './account-menu.jsx';
 
 const AccountActions = () => {
     const { is_virtual } = useSelector(state => state.client);

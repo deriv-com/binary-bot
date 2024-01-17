@@ -1,0 +1,153 @@
+@mixin container-space($parent, $space) {
+    #{$parent}__top-icon {
+        top: $space * 1rem;
+        left: $space * 1rem;
+    }
+
+    #{$parent}__bottom-icon {
+        bottom: $space * 1rem;
+        right: $space * 1rem;
+    }
+}
+
+.app-icon {
+    $p-app-icon: &;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 4rem;
+    height: 2.5rem;
+
+    @include container-space($p-app-icon, 0.14);
+
+    &__top-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    &__bottom-icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        .wallet-icon img {
+            width: 32px;
+            height: 20px;
+        }
+    }
+
+    .acc-info {
+        &__wallets-container {
+            width: 4rem;
+            height: 2.5rem;
+        }
+    }
+}
+
+.wallet-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
+
+    &__default-bg {
+        // Default Background
+        background: radial-gradient(100% 4130.74% at 0% 100%, rgba(244, 67, 54, 0.24) 0%, rgba(40, 57, 145, 0.48) 100%)
+            #ffffff;
+    }
+
+    &--small {
+        width: 2.5rem;
+        height: 1.5rem;
+    }
+
+    img {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0 !important;
+    }
+}
+
+.wallet-card {
+    &__usd-bg {
+        background: radial-gradient(100% 4130.74% at 0% 100%, rgba(244, 67, 54, 0.24) 0%, rgba(40, 57, 145, 0.48) 100%)
+            #ffffff;
+
+        img {
+            height: 16px !important;
+        }
+    }
+
+    &__demo-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(255, 100, 68, 0.24) 0%, rgba(255, 68, 79, 0.48) 100%)
+            #212329;
+    }
+
+    &__btc-bg {
+        background: radial-gradient(
+                100% 277.78% at 0% 100%,
+                rgba(247, 147, 27, 0.24) 0%,
+                rgba(247, 199, 27, 0.477) 99.99%
+            )
+            #ffffff;
+    }
+
+    &__eusdt-bg,
+    &__tusdt-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(0, 147, 147, 0.24) 0%, rgba(0, 147, 147, 0.48) 100%)
+            #ffffff;
+    }
+
+    &__eth-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(82, 86, 127, 0.24) 0%, rgba(130, 140, 173, 0.48) 100%)
+            #ffffff;
+    }
+
+    &__ltc-bg {
+        background: radial-gradient(
+                100% 277.78% at 0% 100%,
+                rgba(165, 168, 169, 0.24) 0%,
+                rgba(193, 204, 207, 0.48) 100%
+            )
+            #ffffff;
+    }
+
+    &__usdc-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(39, 117, 202, 0.24) 0%, rgba(34, 76, 225, 0.48) 100%)
+            #ffffff;
+    }
+
+    &__usdt-bg {
+        background: radial-gradient(100% 277.78% at 0% 100%, rgba(39, 117, 202, 0.24) 0%, rgba(34, 76, 225, 0.48) 100%)
+            #ffffff;
+    }
+}
+
+.dc-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff !important;
+    border-radius: 2px;
+    font-size: 10px;
+    height: 0.9rem;
+    padding-inline: 0.28rem;
+    font-weight: 600;
+
+    &--blue {
+        background-color: #377cfc;
+    }
+
+    &--bordered {
+        border: 1px solid var(--text-prominent);
+        color: var(--text-prominent) !important;
+    }
+}
