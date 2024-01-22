@@ -13,6 +13,7 @@ import {
 } from './utils';
 import { load } from '.';
 import Limits from '../components/Dialogs/Limits';
+import { throttle } from '../utils';
 
 const checkForRequiredBlocks = () => {
     const displayError = errorMessage => {
@@ -226,30 +227,37 @@ const addBindings = blockly => {
         blockly.run(limitations);
     };
 
-    $('#runButton').click(() => {
-        // setTimeout is needed to ensure correct event sequence
-        if (!checkForRequiredBlocks()) {
-            setTimeout(() => $('#stopButton').triggerHandler('click'));
-            return;
-        }
+    $('#runButton').click(
+        throttle(() => {
+            globalObserver.setState({ isStarting: true });
+            // setTimeout is needed to ensure correct event sequence
+            if (!checkForRequiredBlocks()) {
+                setTimeout(() => $('#stopButton').triggerHandler('click'));
+                return;
+            }
 
-        const login_id = getActiveLoginId();
-        const client_accounts = getClientAccounts();
+            const login_id = getActiveLoginId();
+            const client_accounts = getClientAccounts();
 
-        if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
-            const limits = new Limits();
-            limits
-                .getLimits()
-                .then(startBot)
-                .catch(() => {});
-        } else {
-            startBot();
-        }
-    });
+            if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
+                const limits = new Limits();
+                limits
+                    .getLimits()
+                    .then(startBot)
+                    .catch(() => {});
+            } else {
+                startBot();
+            }
+        }, 300)
+    );
 
-    $('#stopButton')
-        .click(e => stop(e))
-        .hide();
+    $('#stopButton').click(
+        throttle(e => {
+            const isStarting = globalObserver.getState('isStarting');
+            if (isStarting) return;
+            stop(e);
+        }, 300)
+    );
 
     $('[aria-describedby="summary-panel"]').on('click', '#summaryRunButton', () => {
         $('#runButton').trigger('click');
@@ -287,6 +295,7 @@ const addEventHandlers = blockly => {
     });
 
     globalObserver.register('Error', error => {
+        globalObserver.setState({ isStarting: false });
         getRunButtonElements().forEach(el => {
             const elRunButton = el;
             elRunButton.removeAttribute('disabled');

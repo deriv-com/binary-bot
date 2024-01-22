@@ -92,7 +92,6 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
             throw createError('NotInitialized', translate('Bot.init is not called'));
         }
 
-        globalObserver.emit('bot.running');
         globalObserver.setState({ isRunning: true });
 
         this.tradeOptions = expectTradeOptions(tradeOptions);
