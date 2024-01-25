@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import config from '@config';
 import { translate } from '@i18n';
+import { isMobile } from '@utils';
 import WalletContent from './wallet-content.jsx';
 import Text from '../../common/text/text.jsx';
 import './account-wallet-dropdown.scss';
@@ -11,6 +12,8 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
     const { accounts, account_list } = useSelector(state => state.client);
     const container_ref = React.useRef();
     let all_accounts = [];
+    const { deposit } = config;
+    const { label, url } = deposit;
 
     const transformAccounts = () =>
         Object.keys(accounts).forEach(account => {
@@ -46,8 +49,15 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
     }, []);
 
     return (
-        <div className='account__switcher-dropdown-wrapper show' ref={dropdownRef}>
-            <div id='account__switcher-dropdown' className='account__switcher-dropdown' ref={container_ref}>
+        <div
+            className='account__switcher-dropdown-wrapper account__switcher-dropdown-wrapper-wallet show'
+            ref={dropdownRef}
+        >
+            <div
+                id='account__switcher-dropdown'
+                className='account__switcher-dropdown account__switcher-dropdown-wallet'
+                ref={container_ref}
+            >
                 <div className='account__switcher-container'>
                     <div className='account-switcher-wallet__header'>
                         <Text as='h4' weight='bold' size='s'>
@@ -57,16 +67,26 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                     {/* should show real and demo accounts */}
                     <WalletContent setIsAccDropdownOpen={setIsAccDropdownOpen} accounts={all_accounts} />
                 </div>
-                <div className='account__switcher-total-wallet'>
-                    <span>{translate('Looking for CFDs? Go to Trader\'s hub')}</span>
+                <div>
+                    {isMobile() && (
+                        <div className='account__switcher-manage-funds'>
+                            <button className='wallet-btn'>{translate()}</button>
+                            <a className='url-cashier-deposit btn btn--primary header__deposit mobile-hide' href={url}>
+                                {translate(label)}
+                            </a>
+                        </div>
+                    )}
+                    <div className='account__switcher-total-wallet'>
+                        <span>{translate('Looking for CFDs? Go to Trader\'s hub')}</span>
 
-                    <a href={config.tradershub.url} className={'account__switcher-total--link'}>
-                        <img
-                            className={'header__expand'}
-                            src='/public/images/ic-chevron-down-bold.svg'
-                            alt='wallet_icon'
-                        />
-                    </a>
+                        <a href={config.tradershub.url} className={'account__switcher-total--link'}>
+                            <img
+                                className={'header__expand'}
+                                src='/public/images/ic-chevron-down-bold.svg'
+                                alt='wallet_icon'
+                            />
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
