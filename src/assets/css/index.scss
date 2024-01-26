@@ -14,11 +14,6 @@ body {
     margin: 0px;
     max-width: 100%;
     overflow-x: hidden;
-
-    //TODO! compare prod
-    @include mobile {
-        overflow: hidden;
-    }
 }
 
 .top-image {
