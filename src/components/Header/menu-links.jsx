@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 const MenuLinks = () => {
     const { has_wallet_account } = useSelector(state => state.client);
-    console.log('has_wallet_account', has_wallet_account);
     return (
         <div className='header__menu-item header__menu-links client_logged_in'>
             {!has_wallet_account && config.reports.visible && (
