@@ -63,8 +63,17 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                         <Text as='h4' weight='bold' size='s'>
                             {translate('Deriv Apps accounts')}
                         </Text>
-                        <div className='close-icon' onClick={() => setIsAccDropdownOpen(false)}>
-                            <img className='btn__close mobile-show' src='/public/images/ic-close.svg' />
+                        <div
+                            className='close-icon'
+                            onClick={() => setIsAccDropdownOpen(false)}
+                            onFocus={() => setIsAccDropdownOpen(false)}
+                            role='button'
+                        >
+                            <img
+                                className='btn__close mobile-show'
+                                src='/public/images/ic-close.svg'
+                                alt='wallet_icon'
+                            />
                         </div>
                     </div>
                     {/* should show real and demo accounts */}
