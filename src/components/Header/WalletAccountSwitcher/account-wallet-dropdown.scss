@@ -80,7 +80,7 @@
     &__switcher {
         &-manage-funds {
             border-bottom: 1px solid #e6e9e9 !important;
-            padding: 1rem 1.6rem;
+            padding: 1rem 0.8rem;
         }
 
         &-wallet-btn {
@@ -90,6 +90,7 @@
             font-weight: bold;
             width: 100%;
         }
+
         &-wallet-btn:hover {
             background-color: var(--button-primary-default);
         }
@@ -111,6 +112,9 @@
 
     &-switcher-wallet {
         &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 0.71rem;
             border-bottom: 1px solid var(--general-hover);
 
