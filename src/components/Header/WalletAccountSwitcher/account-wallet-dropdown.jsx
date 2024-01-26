@@ -70,9 +70,8 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                 <div>
                     {isMobile() && (
                         <div className='account__switcher-manage-funds'>
-                            <button className='wallet-btn'>{translate()}</button>
-                            <a className='url-cashier-deposit btn btn--primary header__deposit mobile-hide' href={url}>
-                                {translate(label)}
+                            <a href={url}>
+                                <button className='account__switcher-wallet-btn'>{translate(label)}</button>
                             </a>
                         </div>
                     )}

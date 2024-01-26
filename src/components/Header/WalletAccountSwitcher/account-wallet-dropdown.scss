@@ -77,8 +77,22 @@
         }
     }
 
-    &__switcher-manage-funds {
-        border-bottom: 1px solid #e6e9e9 !important;
+    &__switcher {
+        &-manage-funds {
+            border-bottom: 1px solid #e6e9e9 !important;
+            padding: 1rem 1.6rem;
+        }
+
+        &-wallet-btn {
+            background: var(--button-primary-default);
+            color: var(--text-colored-background);
+            font-size: var(--font-size-s);
+            font-weight: bold;
+            width: 100%;
+        }
+        &-wallet-btn:hover {
+            background-color: var(--button-primary-default);
+        }
     }
 
     &__switcher-total-wallet {
