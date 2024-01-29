@@ -180,6 +180,16 @@ export default class TicksService {
             if (data?.error?.code) {
                 return;
             }
+
+            if (data.msg_type === 'history') {
+                const {
+                    subscription: { id },
+                } = data;
+                this.subscriptions = this.subscriptions.set('history', id);
+                globalObserver.emit('bot.running');
+                globalObserver.setState({ isStarting: false });
+            }
+
             if (data?.msg_type === 'tick') {
                 const {
                     tick,
@@ -276,26 +286,39 @@ export default class TicksService {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    forget = subscription_id => {
-        if (subscription_id) {
-            api_base.api.forget(subscription_id);
-        }
-    };
+    forget = subscription_id =>
+        new Promise((resolve, reject) => {
+            if (subscription_id) {
+                api_base.api
+                    .forget(subscription_id)
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch(reject);
+            } else {
+                resolve();
+            }
+        });
 
-    unsubscribeFromTicksService() {
+    async unsubscribeFromTicksService() {
         if (this.ticks_history_promise) {
             const { stringified_options } = this.ticks_history_promise;
             const { symbol = '' } = JSON.parse(stringified_options);
             if (symbol) {
-                this.forget(this.subscriptions.getIn(['tick', symbol]));
+                if (!this.subscriptions.getIn(['tick', symbol])) {
+                    await this.forget(this.subscriptions.get('history'));
+                } else {
+                    await this.forget(this.subscriptions.getIn(['tick', symbol]));
+                }
             }
         }
         if (this.candles_promise) {
             const { stringified_options } = this.candles_promise;
             const { symbol = '' } = JSON.parse(stringified_options);
             if (symbol) {
-                this.forget(this.subscriptions.getIn(['candle', symbol]));
+                await this.forget(this.subscriptions.getIn(['candle', symbol]));
             }
         }
+        globalObserver.emit('bot.stop');
     }
 }

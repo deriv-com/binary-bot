@@ -191,7 +191,6 @@ export default class Interpreter {
     terminateSession() {
         this.stopped = true;
         this.isErrorTriggered = false;
-        globalObserver.emit('bot.stop');
         globalObserver.setState({ isRunning: false });
         const { ticksService } = this.$scope;
         ticksService.unsubscribeFromTicksService();

@@ -197,3 +197,14 @@ export const showSpinnerInButton = $buttonElement => {
 export const removeSpinnerInButton = ($buttonElement, initialText) => {
     $buttonElement.html(() => initialText).prop('disabled', false);
 };
+
+export const throttle = (func, delay) => {
+    let lastCallTime = 0;
+    return () => {
+        const now = Date.now();
+        if (now - lastCallTime >= delay) {
+            func();
+            lastCallTime = now;
+        }
+    };
+};
