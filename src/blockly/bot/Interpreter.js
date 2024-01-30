@@ -199,7 +199,7 @@ export default class Interpreter {
                 .then(() => {
                     resolve();
                 })
-                .catch(() => reject());
+                .catch(err => reject(err));
         });
     }
 
@@ -213,13 +213,13 @@ export default class Interpreter {
                                 globalObserver.unregisterAll('contract.status');
                                 resolve();
                             })
-                            .catch(() => reject());
+                            .catch(err => reject(err));
                     }
                 });
             } else {
                 this.terminateSession()
                     .then(() => resolve())
-                    .catch(() => reject());
+                    .catch(err => reject(err));
             }
         });
     }

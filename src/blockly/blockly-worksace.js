@@ -174,7 +174,7 @@ const addBindings = blockly => {
             }
             stopBlockly(blockly)
                 .then(() => resolve())
-                .catch(() => reject());
+                .catch(err => reject(err));
         });
 
     const removeTokens = () => {
@@ -289,7 +289,7 @@ const stopBlockly = async blockly =>
         blockly
             .stop()
             .then(() => resolve())
-            .catch(() => reject());
+            .catch(err => reject(err));
     });
 
 const addEventHandlers = blockly => {
