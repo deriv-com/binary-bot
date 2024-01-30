@@ -167,12 +167,15 @@ export const logButton = () => {
 };
 
 const addBindings = blockly => {
-    const stop = e => {
-        if (e) {
-            e.preventDefault();
-        }
-        stopBlockly(blockly);
-    };
+    const stop = e =>
+        new Promise((resolve, reject) => {
+            if (e) {
+                e.preventDefault();
+            }
+            stopBlockly(blockly)
+                .then(() => resolve())
+                .catch(() => reject());
+        });
 
     const removeTokens = () => {
         logoutAllTokens().then(() => {
@@ -252,10 +255,10 @@ const addBindings = blockly => {
     );
 
     $('#stopButton').click(
-        throttle(e => {
+        throttle(async e => {
             const isStarting = globalObserver.getState('isStarting');
             if (isStarting) return;
-            stop(e);
+            await stop(e);
         }, 300)
     );
 
@@ -281,7 +284,13 @@ const addBindings = blockly => {
     });
 };
 
-const stopBlockly = blockly => blockly.stop();
+const stopBlockly = async blockly =>
+    new Promise((resolve, reject) => {
+        blockly
+            .stop()
+            .then(() => resolve())
+            .catch(() => reject());
+    });
 
 const addEventHandlers = blockly => {
     const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');
@@ -294,7 +303,7 @@ const addEventHandlers = blockly => {
         }
     });
 
-    globalObserver.register('Error', error => {
+    globalObserver.register('Error', async error => {
         globalObserver.setState({ isStarting: false });
         getRunButtonElements().forEach(el => {
             const elRunButton = el;
@@ -302,7 +311,7 @@ const addEventHandlers = blockly => {
         });
         if (error?.error?.code === 'InvalidToken') {
             removeAllTokens();
-            stopBlockly(blockly);
+            await stopBlockly(blockly);
         }
     });
 

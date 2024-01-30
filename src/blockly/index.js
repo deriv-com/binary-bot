@@ -476,9 +476,9 @@ export default class _Blockly {
             if (code) {
                 this.stop(true);
                 this.interpreter = new Interpreter();
-                this.interpreter.run(code).catch(e => {
+                this.interpreter.run(code).catch(async e => {
+                    await this.stop();
                     globalObserver.emit('Error', e);
-                    this.stop();
                 });
             }
         } catch (e) {
@@ -487,23 +487,29 @@ export default class _Blockly {
         }
     }
     stop(stopBeforeStart) {
-        if (!stopBeforeStart) {
-            const elRunButtons = document.querySelectorAll('#runButton, #summaryRunButton');
-            const elStopButtons = document.querySelectorAll('#stopButton, #summaryStopButton');
+        return new Promise(resolve => {
+            if (!stopBeforeStart) {
+                const elRunButtons = document.querySelectorAll('#runButton, #summaryRunButton');
+                const elStopButtons = document.querySelectorAll('#stopButton, #summaryStopButton');
 
-            elRunButtons.forEach(el => {
-                const elRunButton = el;
-                elRunButton.style.display = 'initial';
-            });
-            elStopButtons.forEach(el => {
-                const elStopButton = el;
-                elStopButton.style.display = null;
-            });
-        }
-        if (this.interpreter) {
-            this.interpreter.stop();
-            this.interpreter = null;
-        }
+                elRunButtons.forEach(el => {
+                    const elRunButton = el;
+                    elRunButton.style.display = 'initial';
+                });
+                elStopButtons.forEach(el => {
+                    const elStopButton = el;
+                    elStopButton.style.display = null;
+                });
+            }
+            if (this.interpreter) {
+                this.interpreter.stop().then(() => {
+                    this.interpreter = null;
+                    resolve();
+                });
+            } else {
+                resolve();
+            }
+        });
     }
     /* eslint-disable class-methods-use-this */
     undo() {

@@ -189,24 +189,39 @@ export default class Interpreter {
     }
 
     terminateSession() {
-        this.stopped = true;
-        this.isErrorTriggered = false;
-        globalObserver.setState({ isRunning: false });
-        const { ticksService } = this.$scope;
-        ticksService.unsubscribeFromTicksService();
+        return new Promise((resolve, reject) => {
+            this.stopped = true;
+            this.isErrorTriggered = false;
+            globalObserver.setState({ isRunning: false });
+            const { ticksService } = this.$scope;
+            ticksService
+                .unsubscribeFromTicksService()
+                .then(() => {
+                    resolve();
+                })
+                .catch(() => reject());
+        });
     }
 
     stop() {
-        if (this.bot.tradeEngine.isSold === false && !this.isErrorTriggered) {
-            globalObserver.register('contract.status', contractStatus => {
-                if (contractStatus.id === 'contract.sold') {
-                    this.terminateSession();
-                    globalObserver.unregisterAll('contract.status');
-                }
-            });
-        } else {
-            this.terminateSession();
-        }
+        return new Promise((resolve, reject) => {
+            if (this.bot.tradeEngine.isSold === false && !this.isErrorTriggered) {
+                globalObserver.register('contract.status', contractStatus => {
+                    if (contractStatus.id === 'contract.sold') {
+                        this.terminateSession()
+                            .then(() => {
+                                globalObserver.unregisterAll('contract.status');
+                                resolve();
+                            })
+                            .catch(() => reject());
+                    }
+                });
+            } else {
+                this.terminateSession()
+                    .then(() => resolve())
+                    .catch(() => reject());
+            }
+        });
     }
 
     createAsync(interpreter, func) {
