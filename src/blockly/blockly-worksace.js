@@ -167,12 +167,15 @@ export const logButton = () => {
 };
 
 const addBindings = blockly => {
-    const stop = e => {
-        if (e) {
-            e.preventDefault();
-        }
-        stopBlockly(blockly);
-    };
+    const stop = e =>
+        new Promise((resolve, reject) => {
+            if (e) {
+                e.preventDefault();
+            }
+            stopBlockly(blockly)
+                .then(() => resolve())
+                .catch(err => reject(err));
+        });
 
     const removeTokens = () => {
         logoutAllTokens().then(() => {
@@ -229,6 +232,9 @@ const addBindings = blockly => {
 
     $('#runButton').click(
         throttle(() => {
+            const isStopping = globalObserver.getState('isStopping');
+            if (isStopping) return;
+
             globalObserver.setState({ isStarting: true });
             // setTimeout is needed to ensure correct event sequence
             if (!checkForRequiredBlocks()) {
@@ -252,10 +258,14 @@ const addBindings = blockly => {
     );
 
     $('#stopButton').click(
-        throttle(e => {
+        throttle(async e => {
+            globalObserver.setState({ isStopping: true });
             const isStarting = globalObserver.getState('isStarting');
-            if (isStarting) return;
-            stop(e);
+            if (isStarting) {
+                globalObserver.setState({ isStopping: false });
+                return;
+            }
+            await stop(e);
         }, 300)
     );
 
@@ -281,7 +291,13 @@ const addBindings = blockly => {
     });
 };
 
-const stopBlockly = blockly => blockly.stop();
+const stopBlockly = async blockly =>
+    new Promise((resolve, reject) => {
+        blockly
+            .stop()
+            .then(() => resolve())
+            .catch(err => reject(err));
+    });
 
 const addEventHandlers = blockly => {
     const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');
@@ -294,7 +310,7 @@ const addEventHandlers = blockly => {
         }
     });
 
-    globalObserver.register('Error', error => {
+    globalObserver.register('Error', async error => {
         globalObserver.setState({ isStarting: false });
         getRunButtonElements().forEach(el => {
             const elRunButton = el;
@@ -302,7 +318,7 @@ const addEventHandlers = blockly => {
         });
         if (error?.error?.code === 'InvalidToken') {
             removeAllTokens();
-            stopBlockly(blockly);
+            await stopBlockly(blockly);
         }
     });
 

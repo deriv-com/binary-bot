@@ -139,7 +139,7 @@ export default class Interpreter {
         };
 
         return new Promise((resolve, reject) => {
-            const onError = e => {
+            const onError = async e => {
                 if (this.stopped) {
                     return;
                 }
@@ -147,7 +147,7 @@ export default class Interpreter {
                 if (shouldStopOnError(this.bot, e.name)) {
                     globalObserver.emit('ui.log.error', e.message);
                     document.getElementById('stopButton').click();
-                    this.stop();
+                    await this.stop();
                     return;
                 }
 
@@ -160,12 +160,13 @@ export default class Interpreter {
 
                 globalObserver.emit('Error', e);
                 const { initArgs, tradeOptions } = this.bot.tradeEngine;
-                this.terminateSession();
-                this.init();
-                this.$scope.observer.register('Error', onError);
-                this.bot.tradeEngine.init(...initArgs);
-                this.bot.tradeEngine.start(tradeOptions);
-                this.revert(this.startState);
+                this.terminateSession().then(() => {
+                    this.init();
+                    this.$scope.observer.register('Error', onError);
+                    this.bot.tradeEngine.init(...initArgs);
+                    this.bot.tradeEngine.start(tradeOptions);
+                    this.revert(this.startState);
+                });
             };
 
             this.$scope.observer.register('Error', onError);
@@ -189,24 +190,40 @@ export default class Interpreter {
     }
 
     terminateSession() {
-        this.stopped = true;
-        this.isErrorTriggered = false;
-        globalObserver.setState({ isRunning: false });
-        const { ticksService } = this.$scope;
-        ticksService.unsubscribeFromTicksService();
+        return new Promise((resolve, reject) => {
+            this.stopped = true;
+            this.isErrorTriggered = false;
+            globalObserver.setState({ isRunning: false });
+            const { ticksService } = this.$scope;
+            ticksService
+                .unsubscribeFromTicksService()
+                .then(() => {
+                    globalObserver.setState({ isStopping: false });
+                    resolve();
+                })
+                .catch(err => reject(err));
+        });
     }
 
     stop() {
-        if (this.bot.tradeEngine.isSold === false && !this.isErrorTriggered) {
-            globalObserver.register('contract.status', contractStatus => {
-                if (contractStatus.id === 'contract.sold') {
-                    this.terminateSession();
-                    globalObserver.unregisterAll('contract.status');
-                }
-            });
-        } else {
-            this.terminateSession();
-        }
+        return new Promise((resolve, reject) => {
+            if (this.bot.tradeEngine.isSold === false && !this.isErrorTriggered) {
+                globalObserver.register('contract.status', contractStatus => {
+                    if (contractStatus.id === 'contract.sold') {
+                        this.terminateSession()
+                            .then(() => {
+                                globalObserver.unregisterAll('contract.status');
+                                resolve();
+                            })
+                            .catch(err => reject(err));
+                    }
+                });
+            } else {
+                this.terminateSession()
+                    .then(() => resolve())
+                    .catch(err => reject(err));
+            }
+        });
     }
 
     createAsync(interpreter, func) {

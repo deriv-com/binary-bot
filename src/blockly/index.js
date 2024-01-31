@@ -420,7 +420,7 @@ export default class _Blockly {
 
         save(file_name, collection, xml);
     }
-    run(limitations = {}) {
+    async run(limitations = {}) {
         disableStrayBlocks();
         let code;
         try {
@@ -474,36 +474,42 @@ export default class _Blockly {
             `;
             this.generatedJs = code;
             if (code) {
-                this.stop(true);
+                await this.stop(true);
                 this.interpreter = new Interpreter();
-                this.interpreter.run(code).catch(e => {
+                this.interpreter.run(code).catch(async e => {
+                    await this.stop();
                     globalObserver.emit('Error', e);
-                    this.stop();
                 });
             }
         } catch (e) {
             globalObserver.emit('Error', e);
-            this.stop();
+            await this.stop();
         }
     }
     stop(stopBeforeStart) {
-        if (!stopBeforeStart) {
-            const elRunButtons = document.querySelectorAll('#runButton, #summaryRunButton');
-            const elStopButtons = document.querySelectorAll('#stopButton, #summaryStopButton');
+        return new Promise(resolve => {
+            if (!stopBeforeStart) {
+                const elRunButtons = document.querySelectorAll('#runButton, #summaryRunButton');
+                const elStopButtons = document.querySelectorAll('#stopButton, #summaryStopButton');
 
-            elRunButtons.forEach(el => {
-                const elRunButton = el;
-                elRunButton.style.display = 'initial';
-            });
-            elStopButtons.forEach(el => {
-                const elStopButton = el;
-                elStopButton.style.display = null;
-            });
-        }
-        if (this.interpreter) {
-            this.interpreter.stop();
-            this.interpreter = null;
-        }
+                elRunButtons.forEach(el => {
+                    const elRunButton = el;
+                    elRunButton.style.display = 'initial';
+                });
+                elStopButtons.forEach(el => {
+                    const elStopButton = el;
+                    elStopButton.style.display = null;
+                });
+            }
+            if (this.interpreter) {
+                this.interpreter.stop().then(() => {
+                    this.interpreter = null;
+                    resolve();
+                });
+            } else {
+                resolve();
+            }
+        });
     }
     /* eslint-disable class-methods-use-this */
     undo() {

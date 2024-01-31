@@ -16,8 +16,8 @@ describe('Run Interpreter over bot', () => {
     `
         );
 
-        setTimeout(() => {
-            interpreter.stop();
+        setTimeout(async () => {
+            await interpreter.stop();
             interpreter = createInterpreter();
             interpreter
                 .run(
