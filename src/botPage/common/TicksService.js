@@ -186,7 +186,6 @@ export default class TicksService {
                     subscription: { id },
                 } = data;
                 this.subscriptions = this.subscriptions.set('history', id);
-                globalObserver.emit('bot.running');
                 globalObserver.setState({ isStarting: false });
             }
 

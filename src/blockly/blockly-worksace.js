@@ -232,6 +232,9 @@ const addBindings = blockly => {
 
     $('#runButton').click(
         throttle(() => {
+            const isStopping = globalObserver.getState('isStopping');
+            if (isStopping) return;
+
             globalObserver.setState({ isStarting: true });
             // setTimeout is needed to ensure correct event sequence
             if (!checkForRequiredBlocks()) {
@@ -256,8 +259,12 @@ const addBindings = blockly => {
 
     $('#stopButton').click(
         throttle(async e => {
+            globalObserver.setState({ isStopping: true });
             const isStarting = globalObserver.getState('isStarting');
-            if (isStarting) return;
+            if (isStarting) {
+                globalObserver.setState({ isStopping: false });
+                return;
+            }
             await stop(e);
         }, 300)
     );

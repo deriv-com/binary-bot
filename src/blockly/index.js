@@ -420,7 +420,7 @@ export default class _Blockly {
 
         save(file_name, collection, xml);
     }
-    run(limitations = {}) {
+    async run(limitations = {}) {
         disableStrayBlocks();
         let code;
         try {
@@ -474,7 +474,7 @@ export default class _Blockly {
             `;
             this.generatedJs = code;
             if (code) {
-                this.stop(true);
+                await this.stop(true);
                 this.interpreter = new Interpreter();
                 this.interpreter.run(code).catch(async e => {
                     await this.stop();
@@ -483,7 +483,7 @@ export default class _Blockly {
             }
         } catch (e) {
             globalObserver.emit('Error', e);
-            this.stop();
+            await this.stop();
         }
     }
     stop(stopBeforeStart) {

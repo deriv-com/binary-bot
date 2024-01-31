@@ -93,7 +93,7 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
         }
 
         globalObserver.setState({ isRunning: true });
-
+        globalObserver.emit('bot.running');
         this.tradeOptions = expectTradeOptions(tradeOptions);
         this.store.dispatch(start());
         this.checkLimits(tradeOptions);
