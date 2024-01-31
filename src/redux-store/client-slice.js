@@ -14,12 +14,17 @@ const initial_state = {
     is_gd_logged_in: !!localStorage.getItem('access_token'),
     accounts: {},
     account_type: {},
+    active_symbols: [],
+    has_wallet_account: false,
 };
 
 export const clientSlice = createSlice({
     name: 'client',
     initialState: initial_state,
     reducers: {
+        setActiveSymbols: (state, action) => {
+            state.active_symbols = action.payload;
+        },
         updateAccountType: (state, action) => {
             state.account_type = {
                 ...state.account_type,
@@ -48,6 +53,9 @@ export const clientSlice = createSlice({
          */
         setLoginId: (state, action) => {
             state.login_id = action.payload;
+        },
+        setHasWalletAccount: (state, action) => {
+            state.has_wallet_account = action.payload;
         },
         setGdLoggedIn: (state, action) => {
             state.is_gd_logged_in = action.payload;
@@ -84,6 +92,8 @@ export const {
     updateAccountType,
     setGdLoggedIn,
     setLoginId,
+    setActiveSymbols,
+    setHasWalletAccount,
 } = clientSlice.actions;
 
 export default clientSlice.reducer;

@@ -13,6 +13,7 @@ import {
 } from './utils';
 import { load } from '.';
 import Limits from '../components/Dialogs/Limits';
+import { throttle } from '../utils';
 
 const checkForRequiredBlocks = () => {
     const displayError = errorMessage => {
@@ -166,12 +167,15 @@ export const logButton = () => {
 };
 
 const addBindings = blockly => {
-    const stop = e => {
-        if (e) {
-            e.preventDefault();
-        }
-        stopBlockly(blockly);
-    };
+    const stop = e =>
+        new Promise((resolve, reject) => {
+            if (e) {
+                e.preventDefault();
+            }
+            stopBlockly(blockly)
+                .then(() => resolve())
+                .catch(err => reject(err));
+        });
 
     const removeTokens = () => {
         logoutAllTokens().then(() => {
@@ -226,30 +230,44 @@ const addBindings = blockly => {
         blockly.run(limitations);
     };
 
-    $('#runButton').click(() => {
-        // setTimeout is needed to ensure correct event sequence
-        if (!checkForRequiredBlocks()) {
-            setTimeout(() => $('#stopButton').triggerHandler('click'));
-            return;
-        }
+    $('#runButton').click(
+        throttle(() => {
+            const isStopping = globalObserver.getState('isStopping');
+            if (isStopping) return;
 
-        const login_id = getActiveLoginId();
-        const client_accounts = getClientAccounts();
+            globalObserver.setState({ isStarting: true });
+            // setTimeout is needed to ensure correct event sequence
+            if (!checkForRequiredBlocks()) {
+                setTimeout(() => $('#stopButton').triggerHandler('click'));
+                return;
+            }
 
-        if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
-            const limits = new Limits();
-            limits
-                .getLimits()
-                .then(startBot)
-                .catch(() => {});
-        } else {
-            startBot();
-        }
-    });
+            const login_id = getActiveLoginId();
+            const client_accounts = getClientAccounts();
 
-    $('#stopButton')
-        .click(e => stop(e))
-        .hide();
+            if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
+                const limits = new Limits();
+                limits
+                    .getLimits()
+                    .then(startBot)
+                    .catch(() => {});
+            } else {
+                startBot();
+            }
+        }, 300)
+    );
+
+    $('#stopButton').click(
+        throttle(async e => {
+            globalObserver.setState({ isStopping: true });
+            const isStarting = globalObserver.getState('isStarting');
+            if (isStarting) {
+                globalObserver.setState({ isStopping: false });
+                return;
+            }
+            await stop(e);
+        }, 300)
+    );
 
     $('[aria-describedby="summary-panel"]').on('click', '#summaryRunButton', () => {
         $('#runButton').trigger('click');
@@ -273,7 +291,13 @@ const addBindings = blockly => {
     });
 };
 
-const stopBlockly = blockly => blockly.stop();
+const stopBlockly = async blockly =>
+    new Promise((resolve, reject) => {
+        blockly
+            .stop()
+            .then(() => resolve())
+            .catch(err => reject(err));
+    });
 
 const addEventHandlers = blockly => {
     const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');
@@ -286,14 +310,15 @@ const addEventHandlers = blockly => {
         }
     });
 
-    globalObserver.register('Error', error => {
+    globalObserver.register('Error', async error => {
+        globalObserver.setState({ isStarting: false });
         getRunButtonElements().forEach(el => {
             const elRunButton = el;
             elRunButton.removeAttribute('disabled');
         });
         if (error?.error?.code === 'InvalidToken') {
             removeAllTokens();
-            stopBlockly(blockly);
+            await stopBlockly(blockly);
         }
     });
 

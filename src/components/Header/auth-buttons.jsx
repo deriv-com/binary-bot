@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import config from '@config';
 import { translate } from '@i18n';
 import { setIsHeaderLoaded } from '@redux-store/ui-slice';
-import Tour, { TourTargets } from '@components/common/tour';
 import { saveBeforeUnload } from '../../blockly/utils';
 
 const AuthButtons = () => {
@@ -32,8 +31,6 @@ const AuthButtons = () => {
             >
                 {translate(config.signup.label)}
             </a>
-            <TourTargets />
-            <Tour />
         </div>
     );
 };

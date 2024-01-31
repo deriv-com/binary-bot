@@ -1,0 +1,70 @@
+name: Binary Bot Production Workflow
+on:
+  push:
+    tags:
+      - production_*
+jobs:
+  release_production:
+    name: Build, Test and Deploy to Cloudflare Pages
+    environment: Production
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.extract_version.outputs.RELEASE_VERSION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: "./.github/actions/setup_node"
+        with:
+          node-version: "18.x"
+      - name: Install Dependencies
+        uses: "./.github/actions/npm_install_from_cache"
+      - name: Build
+        uses: "./.github/actions/build"
+        with:
+          GD_API_KEY: ${{ secrets.GD_API_KEY }}
+          GD_APP_ID: ${{ secrets.GD_APP_ID }}
+          GD_CLIENT_ID: ${{ secrets.GD_CLIENT_ID }}
+          TRACKJS_TOKEN: ${{ secrets.TRACKJS_TOKEN }}
+      - name: Test
+        uses: "./.github/actions/test"
+      - name: Versioning
+        uses: "./.github/actions/versioning"
+        with:
+          RELEASE_TYPE: production
+      - name: Extract version
+        id: extract_version
+        run: echo "RELEASE_VERSION=${VERSION}" >> $GITHUB_OUTPUT
+      - name: Deploy to Cloudflare Pages
+        uses: "./.github/actions/publish_to_cf_pages_production"
+        with:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Build Docker image and push to Docker hub and K8S
+        uses: "./.github/actions/build_and_push_docker_image"
+        with:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKERHUB_ORGANISATION: ${{ secrets.DOCKERHUB_ORGANISATION }}
+          K8S_NAMESPACE: bot-deriv-com-production
+          KUBE_SERVER: ${{ secrets.KUBE_SERVER }}
+          SERVICEACCOUNT_TOKEN: ${{ secrets.SERVICEACCOUNT_TOKEN }}
+          CA_CRT: ${{ secrets.CA_CRT }}
+          APP_VERSION: latest
+  send_slack_notification:
+    if: always()
+    needs: [release_production]
+    environment: Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Conclusion
+        uses: technote-space/workflow-conclusion-action@v3
+      - name: Send Slack Notification
+        uses: "./.github/actions/send_slack_notifications"
+        with:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          status: ${{ env.WORKFLOW_CONCLUSION }}
+          release_type: Production
+          version: ${{ needs.release_production.outputs.RELEASE_VERSION}}

@@ -7,6 +7,7 @@ import {
 } from '@storage';
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import APIMiddleware from './api-middleware';
+import { observer as globalObserver } from '@utilities/observer';
 
 const socket_url = `wss://${getServerAddressFallback()}/websockets/v3?app_id=${getAppIdFallback()}&l=${getLanguage().toUpperCase()}&brand=deriv`;
 
@@ -19,6 +20,7 @@ class APIBase {
     landing_compnay = {};
     landing_company_details = {};
     account_status = {};
+    active_symbols = [];
 
     constructor() {
         this.init();
@@ -26,15 +28,21 @@ class APIBase {
     }
 
     init() {
-        this.api = new DerivAPIBasic({
-            connection: new WebSocket(socket_url),
-            middleware: new APIMiddleware({}),
-        });
+        try {
+            this.api = new DerivAPIBasic({
+                connection: new WebSocket(socket_url),
+                middleware: new APIMiddleware({}),
+            });
 
-        this.api.onOpen().subscribe(() => {
-            // eslint-disable-next-line no-console
-            console.log('Connection has been established!', this.api);
-        });
+            this.api_chart = null;
+
+            this.api.onOpen().subscribe(() => {
+                // eslint-disable-next-line no-console
+                console.log('Connection has been established!', this.api);
+            });
+        } catch (error) {
+            globalObserver.emit('Error', error);
+        }
     }
 
     async authorize(token) {
@@ -48,6 +56,7 @@ class APIBase {
         this.getLandingCompanyDetails();
         this.getLandingCompany();
         this.getAccountStatus();
+        this.api.send({ proposal_open_contract: 1, subscribe: 1 });
         if (!this.balance_subscription_id) {
             this.getAllBalances();
         }
@@ -64,7 +73,10 @@ class APIBase {
         const { has_reality_check = false } = landing_company_details;
 
         const client_accounts = getClientAccounts();
-        client_accounts[this.active_login_id].hasRealityCheck = has_reality_check;
+        if (client_accounts && Object.keys(client_accounts).length) {
+            client_accounts[this.active_login_id].hasRealityCheck = has_reality_check;
+        }
+
         setClientAccounts(client_accounts);
 
         this.landing_company_details = landing_company_details;
@@ -134,6 +146,29 @@ class APIBase {
             this.init();
         }
     };
+
+    initChartWebSocket() {
+        try {
+            this.api_chart = new DerivAPIBasic({
+                connection: new WebSocket(socket_url),
+            });
+
+            this.api_chart.onOpen().subscribe(() => {
+                // eslint-disable-next-line no-console
+                console.log('Connection has been established for chart ws!', this.api_chart);
+            });
+        } catch (error) {
+            globalObserver.emit('Error', error);
+        }
+    }
+
+    async getActiveSymbols() {
+        const { active_symbols } = await this.api.send({ active_symbols: 'brief' });
+        this.active_symbols = active_symbols;
+        return {
+            active_symbols,
+        };
+    }
 }
 
 export default APIBase;
