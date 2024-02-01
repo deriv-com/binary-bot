@@ -178,7 +178,7 @@ const getConfig = () => ({
     },
     login: {
         // URL to the common login OAuth page
-        url: getOAuthURL(),
+        getURL: getOAuthURL,
         label: translate('Log in'),
     },
     signup: {
