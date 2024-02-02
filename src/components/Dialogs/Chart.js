@@ -23,6 +23,15 @@ const BarrierTypes = {
     NOTOUCH: 'NONE_SINGLE',
 };
 
+const settings = {
+    assetInformation: false,
+    countdown: true,
+    isHighestLowestMarkerEnabled: false,
+    language: getLanguage()?.toLowerCase(),
+    position: 'bottom',
+    theme: 'light',
+};
+
 const getInitialSymbolFromBlockly = () =>
     // eslint-disable-next-line no-underscore-dangle
     Blockly?.getMainWorkspace()
@@ -38,28 +47,78 @@ const ChartContent = ({ show_digits_stats }) => {
         low: undefined,
         symbol: getInitialSymbolFromBlockly(),
         should_barrier_display: false,
+        granularity: null,
+        chart_type: null,
     });
-    const [granularity, setGranularity] = React.useState(0);
-    const [chart_type, setChartType] = React.useState('line');
+
+    const chart_type_ref = React.useRef(null);
+    const granularity_ref = React.useRef(null);
 
     const ticksService = new ChartTicksService(api_base.api_chart);
     const listeners = [];
 
+    const saveToLocalStorage = data => {
+        localStorage.setItem(
+            'bot.chart_props',
+            JSON.stringify({
+                ...data,
+            })
+        );
+    };
+
+    const handleChartTypeChange = data => {
+        chart_type_ref.current = data;
+        setState(prev_state => ({
+            ...prev_state,
+            chart_type: data,
+        }));
+        saveToLocalStorage({
+            ...state,
+            granularity: granularity_ref.current,
+            chart_type: data,
+        });
+    };
+
+    const handleGranularityChange = data => {
+        granularity_ref.current = data;
+        setState(prev_state => ({
+            ...prev_state,
+            granularity: data,
+        }));
+        saveToLocalStorage({
+            ...state,
+            chart_type: chart_type_ref.current,
+            granularity: data,
+        });
+    };
+
     const restoreFromStorage = () => {
+        let tmp_granularity = 0;
+        let tmp_chart_type = 'line';
         try {
             const props = localStorage.getItem('bot.chart_props');
             if (props) {
-                const { granularity: tmp_granularity, chart_type: tmp_chart_type } = JSON.parse(props);
-                setGranularity(tmp_granularity);
-                setChartType(tmp_chart_type);
+                const stored_object = JSON.parse(props);
+                tmp_granularity = stored_object.granularity;
+                tmp_chart_type = stored_object.chart_type;
             }
         } catch {
             localStorage.remove('bot.chart_props');
         }
+        setState({
+            ...state,
+            granularity: tmp_granularity,
+            chart_type: tmp_chart_type,
+        });
+        chart_type_ref.current = tmp_chart_type;
+        granularity_ref.current = tmp_granularity;
     };
 
     React.useEffect(() => {
         restoreFromStorage();
+    }, []);
+
+    React.useEffect(() => {
         globalObserver.register('bot.init', initializeBot);
         globalObserver.register('bot.contract', updateContract);
 
@@ -157,36 +216,7 @@ const ChartContent = ({ show_digits_stats }) => {
 
     const renderTopWidgets = () => <span />;
 
-    if (!show) return null;
-
-    const settings = {
-        assetInformation: false,
-        countdown: true,
-        isHighestLowestMarkerEnabled: false,
-        language: getLanguage()?.toLowerCase(),
-        position: 'bottom',
-        theme: 'light',
-    };
-
-    const saveToLocalStorage = () => {
-        localStorage.setItem(
-            'bot.chart_props',
-            JSON.stringify({
-                granularity,
-                chart_type,
-            })
-        );
-    };
-
-    const handleChartTypeChange = data => {
-        setChartType(data);
-        saveToLocalStorage();
-    };
-
-    const handleGranularityChange = data => {
-        setGranularity(data);
-        saveToLocalStorage();
-    };
+    if (!show || !state.granularity || !state.chart_type) return null;
 
     return (
         <SmartChart
@@ -199,10 +229,10 @@ const ChartContent = ({ show_digits_stats }) => {
             toolbarWidget={() => (
                 <ToolbarWidgets updateChartType={handleChartTypeChange} updateGranularity={handleGranularityChange} />
             )}
-            chartType={chart_type}
+            chartType={state.chart_type}
             isMobile={false}
             enabledNavigationWidget={true}
-            granularity={granularity}
+            granularity={state.granularity}
             requestAPI={requestAPI}
             requestForget={requestForget}
             requestForgetStream={wsForgetStream}
@@ -227,10 +257,13 @@ const Chart = ({ setShowChart }) => (
         boundary={'.main'}
         minWidth={600}
         minHeight={600}
+        modalHeight={600}
+        modalWidth={600}
         header={translate('Chart')}
         onClose={() => {
             setShowChart(is_shown => !is_shown);
         }}
+        enableResizing
     >
         <ChartContent />
     </DraggableResizeWrapper>
