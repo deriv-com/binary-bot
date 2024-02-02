@@ -13,6 +13,11 @@
         justify-content: space-between;
         background-color: var(--general-section-1);
         border-radius: 16px;
+        margin-top: 3rem;
+
+        @include mobile {
+            margin-top: 2.4rem;
+        }
     }
 
     &__content {
