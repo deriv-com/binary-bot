@@ -44,6 +44,10 @@
         font-size: var(--font-size-s);
         font-weight: bold;
 
+        &:hover {
+            background: var(--color-deriv-red);
+        }
+
         @include mobile {
             font-size: var(--font-size-xs);
             padding: 8px 12px;

@@ -1,13 +1,17 @@
 import React from 'react';
 import { translate } from '@i18n';
 import { isMobile } from '@utils';
-import './fixed-banner.scss';
+import { getActiveLoginId } from '@storage';
+import GTM from '@utilities/integrations/gtm';
+import './fixed-dbot-banner.scss';
 
 const openDerivBot = () => {
+    const user_id = getActiveLoginId();
+    GTM.pushDataLayer({ event: 'bbot_moved_to_deriv_bot', user_id: user_id ?? null });
     window.open('https://app.deriv.com/bot/?redirect_from_bbot=1', '_self', 'noopener');
 };
 
-const FixedBanner = () => (
+const FixedDbotBanner = () => (
     <div className='fixed-banner'>
         <div className='fixed-banner__container'>
             <div className='fixed-banner__content'>
@@ -32,4 +36,4 @@ const FixedBanner = () => (
     </div>
 );
 
-export default FixedBanner;
+export default FixedDbotBanner;
