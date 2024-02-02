@@ -3,6 +3,11 @@
 
 .fixed-banner {
     padding: 16px 24px;
+
+    @include mobile {
+        padding: 16px 12px;
+    }
+
     &__container {
         display: flex;
         justify-content: space-between;
@@ -46,21 +51,10 @@
     }
 
     &__image {
-        display: flex;
-        justify-content: flex-end;
+        margin-right: 3rem;
 
         @include mobile {
-            display: unset;
-        }
-
-        img {
-            width: 60%;
-            max-width: 100%;
-
-            @include mobile {
-                width: 136%;
-                max-width: 140%;
-            }
+            margin-right: 0;
         }
     }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { translate } from '@i18n';
+import { isMobile } from '@utils';
 import './fixed-banner.scss';
 
-const visitDerivBot = () => {
+const openDerivBot = () => {
     window.open('https://app.deriv.com/bot/?redirect_from_bbot=1', '_self', 'noopener');
 };
 
@@ -15,13 +16,17 @@ const FixedBanner = () => (
                     {translate('For improved features and an overall better performance, switch to Deriv Bot now.')}
                 </div>
                 <div>
-                    <button className='fixed-banner__button' onClick={visitDerivBot}>
+                    <button className='fixed-banner__button' onClick={openDerivBot}>
                         {translate('Take me to Deriv Bot')}
                     </button>
                 </div>
             </div>
             <div className='fixed-banner__image'>
-                <img src='/public/images/deriv-banner.svg' alt='deriv-banner' />
+                {isMobile() ? (
+                    <img src='/public/images/deriv-banner-responsive.svg' alt='deriv-banner-responsive' />
+                ) : (
+                    <img src='/public/images/deriv-banner.svg' alt='deriv-banner' />
+                )}
             </div>
         </div>
     </div>
