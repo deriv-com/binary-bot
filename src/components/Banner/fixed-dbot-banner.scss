@@ -50,7 +50,7 @@
         font-weight: bold;
 
         &:hover {
-            background: var(--color-deriv-red);
+            background: var(--button-primary-hover);
         }
 
         @include mobile {

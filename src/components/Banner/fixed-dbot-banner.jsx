@@ -1,15 +1,8 @@
 import React from 'react';
 import { translate } from '@i18n';
 import { isMobile } from '@utils';
-import { getActiveLoginId } from '@storage';
-import GTM from '@utilities/integrations/gtm';
+import visitDerivBot from './redirect-to-dbot';
 import './fixed-dbot-banner.scss';
-
-const openDerivBot = () => {
-    const user_id = getActiveLoginId();
-    GTM.pushDataLayer({ event: 'bbot_moved_to_deriv_bot', user_id: user_id ?? null });
-    window.open('https://app.deriv.com/bot/?redirect_from_bbot=1', '_self', 'noopener');
-};
 
 const FixedDbotBanner = () => (
     <div className='fixed-banner'>
@@ -20,7 +13,7 @@ const FixedDbotBanner = () => (
                     {translate('For improved features and an overall better performance, switch to Deriv Bot now.')}
                 </div>
                 <div>
-                    <button className='fixed-banner__button' onClick={openDerivBot}>
+                    <button className='fixed-banner__button' onClick={visitDerivBot}>
                         {translate('Take me to Deriv Bot')}
                     </button>
                 </div>
