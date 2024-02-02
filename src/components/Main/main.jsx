@@ -20,6 +20,7 @@ import TradeInfoPanel from '../../botPage/view/TradeInfoPanel';
 import initialize, { applyToolboxPermissions } from '../../blockly/blockly-worksace';
 import BotUnavailableMessage from '../Error/bot-unavailable-message-page';
 import MoveToDbotBanner from '../Banner/move-to-dbot-banner';
+import FixedBanner from '../Banner/fixed-banner';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
@@ -136,6 +137,7 @@ const Main = () => {
                     },
                 ]}
             />
+            <FixedBanner />
             <MoveToDbotBanner />
             <BotUnavailableMessage />
             <div id='bot-blockly'>

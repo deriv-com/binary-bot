@@ -1,0 +1,66 @@
+@import '../../assets/css/variables';
+@import '../../assets/css/mixins';
+
+.fixed-banner {
+    padding: 16px 24px;
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        background-color: var(--general-section-1);
+        border-radius: 16px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px;
+
+        @include mobile {
+            padding: 16px;
+            font-size: var(--font-size-xxs);
+        }
+    }
+
+    &__content-title {
+        font-size: var(--font-size-xl);
+        font-weight: bold;
+
+        @include mobile {
+            font-size: var(--font-size-s);
+        }
+    }
+
+    &__button {
+        background-color: var(--color-deriv-red);
+        border-radius: 4px;
+        padding: 10px 16px;
+        font-size: var(--font-size-s);
+        font-weight: bold;
+
+        @include mobile {
+            font-size: var(--font-size-xs);
+            padding: 8px 12px;
+        }
+    }
+
+    &__image {
+        display: flex;
+        justify-content: flex-end;
+
+        @include mobile {
+            display: unset;
+        }
+
+        img {
+            width: 60%;
+            max-width: 100%;
+
+            @include mobile {
+                width: 136%;
+                max-width: 140%;
+            }
+        }
+    }
+}
