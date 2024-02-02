@@ -201,6 +201,9 @@ const getConfig = () => ({
         url: generateDerivLink('appstore/traders-hub'),
         label: translate('Trader\'s Hub'),
     },
+    wallets: {
+        url: generateDerivLink('wallets'),
+    },
     deposit: {
         visible: true,
         url: `${related_deriv_origin.origin}/cashier/deposit?lang=${localStorage.getItem('lang')}`,
