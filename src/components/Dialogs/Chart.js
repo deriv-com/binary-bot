@@ -41,7 +41,7 @@ const getInitialSymbolFromBlockly = () =>
         ?.fieldRow?.find(e => e?.name === 'SYMBOL_LIST')?.value_;
 
 const ChartContent = ({ show_digits_stats }) => {
-    const [show, setVisibility] = React.useState(true);
+    const [show, setVisibility] = React.useState(false);
     const [state, setState] = React.useState({
         high: undefined,
         low: undefined,
@@ -112,6 +112,7 @@ const ChartContent = ({ show_digits_stats }) => {
         });
         chart_type_ref.current = tmp_chart_type;
         granularity_ref.current = tmp_granularity;
+        setVisibility(true);
     };
 
     React.useEffect(() => {
@@ -216,7 +217,7 @@ const ChartContent = ({ show_digits_stats }) => {
 
     const renderTopWidgets = () => <span />;
 
-    if (!show || !state.granularity || !state.chart_type) return null;
+    if (!show) return null;
 
     return (
         <SmartChart
