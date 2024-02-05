@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { api_base } from '@api-base';
-import { setSmartChartsPublicPath, SmartChart } from '@deriv/deriv-charts';
 import { getLanguage } from '@storage';
 import { translate } from '@i18n';
 import { observer as globalObserver } from '@utilities/observer';
@@ -9,8 +8,7 @@ import ChartTicksService from '../../botPage/common/ChartTicksService';
 import ToolbarWidgets from './ToolbarWidgets';
 import './chart.scss';
 import { DraggableResizeWrapper } from '../Draggable';
-
-setSmartChartsPublicPath('./js/');
+import { SmartChart } from '../SmartChart';
 
 const BarrierTypes = {
     CALL: 'ABOVE',
@@ -220,32 +218,37 @@ const ChartContent = ({ show_digits_stats }) => {
     if (!show) return null;
 
     return (
-        <SmartChart
-            id='bbot'
-            barriers={[]}
-            showLastDigitStats={show_digits_stats}
-            chartControlsWidgets={null}
-            enabledChartFooter={false}
-            // chartStatusListener={v => !v}
-            toolbarWidget={() => (
-                <ToolbarWidgets updateChartType={handleChartTypeChange} updateGranularity={handleGranularityChange} />
-            )}
-            chartType={state.chart_type}
-            isMobile={false}
-            enabledNavigationWidget={true}
-            granularity={state.granularity}
-            requestAPI={requestAPI}
-            requestForget={requestForget}
-            requestForgetStream={wsForgetStream}
-            requestSubscribe={requestSubscribe}
-            settings={settings}
-            symbol={state.symbol}
-            topWidgets={renderTopWidgets}
-            // isConnectionOpened={is_socket_opened}
-            // getMarketsOrder={getMarketsOrder}
-            isLive
-            leftMargin={80}
-        />
+        <Suspense fallback={'Loading...'}>
+            <SmartChart
+                id='bbot'
+                barriers={[]}
+                showLastDigitStats={show_digits_stats}
+                chartControlsWidgets={null}
+                enabledChartFooter={false}
+                // chartStatusListener={v => !v}
+                toolbarWidget={() => (
+                    <ToolbarWidgets
+                        updateChartType={handleChartTypeChange}
+                        updateGranularity={handleGranularityChange}
+                    />
+                )}
+                chartType={state.chart_type}
+                isMobile={false}
+                enabledNavigationWidget={true}
+                granularity={state.granularity}
+                requestAPI={requestAPI}
+                requestForget={requestForget}
+                requestForgetStream={wsForgetStream}
+                requestSubscribe={requestSubscribe}
+                settings={settings}
+                symbol={state.symbol}
+                topWidgets={renderTopWidgets}
+                // isConnectionOpened={is_socket_opened}
+                // getMarketsOrder={getMarketsOrder}
+                isLive
+                leftMargin={80}
+            />
+        </Suspense>
     );
 };
 

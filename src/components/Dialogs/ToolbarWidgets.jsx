@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ChartMode, DrawTools, Share, StudyLegend, ToolbarWidget, Views } from '@deriv/deriv-charts';
+import { ChartMode, DrawTools, Share, StudyLegend, ToolbarWidget, Views } from '../SmartChart';
 
 // eslint-disable-next-line react/prop-types
 const ToolbarWidgets = ({ updateChartType, updateGranularity }) => (
