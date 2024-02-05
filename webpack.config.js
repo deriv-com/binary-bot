@@ -44,12 +44,12 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: 'node_modules/@deriv/deriv-charts/dist/',
-                    to: path.resolve(__dirname, 'www/js'),
+                    from: 'node_modules/@deriv/deriv-charts/dist/chart/assets',
+                    to: path.resolve(__dirname, 'www/assets'),
                 },
                 {
-                    from: 'www/js/chart/assets',
-                    to: path.resolve(__dirname, 'www/assets'),
+                    from: 'node_modules/@deriv/deriv-charts/dist/',
+                    to: path.resolve(__dirname, 'www/js'),
                 },
                 {
                     from: 'public',
