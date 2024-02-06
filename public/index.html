@@ -37,6 +37,11 @@
                 top.location = self.location;
             }
         </script>
+        <script>
+            window.addEventListener('unhandledrejection', function (event) {
+                console.log('Unhandled rejection (promise: ', event.promise, ', reason: ', event.reason, ').');
+            });
+        </script>
     </head>
 
     <body>
@@ -55,7 +60,7 @@
             <div class="rect5"></div>
         </div>
 
-        <div id="main"></div>
+        <div id="binary-bot"></div>
 
         <form id="fileUploadForm" style="display: none">
             <input
