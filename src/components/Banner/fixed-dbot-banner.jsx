@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from '@i18n';
 import { isMobile } from '@utils';
-import visitDerivBot from './redirect-to-dbot';
+import { visitDerivBot } from './redirect-to-dbot';
 import './fixed-dbot-banner.scss';
 
 const FixedDbotBanner = () => (

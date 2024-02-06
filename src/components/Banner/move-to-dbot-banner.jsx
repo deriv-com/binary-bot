@@ -4,7 +4,7 @@ import GTM from '@utilities/integrations/gtm';
 import { observer as globalObserver } from '@utilities/observer';
 import { getActiveLoginId } from '@storage';
 import DerivAppModal from '../common/deriv-app-modal';
-import visitDerivBot from './redirect-to-dbot';
+import { visitDerivBot } from './redirect-to-dbot';
 import './move-to-dbot-banner.scss';
 
 const updateLastPopupTime = () => {
