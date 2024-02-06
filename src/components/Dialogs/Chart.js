@@ -131,10 +131,10 @@ const ChartContent = ({ show_digits_stats }) => {
     const initializeBot = symbol => {
         if (symbol && state.symbol !== symbol) {
             setVisibility(false);
-            setState({
-                ...state,
+            setState(prev => ({
+                ...prev,
                 symbol,
-            });
+            }));
             setTimeout(() => {
                 setVisibility(true);
             }, 500);
