@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#3bwqd4
 import { translate } from '@i18n';
 
 Blockly.Blocks.total_profit = {

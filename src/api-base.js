@@ -38,7 +38,7 @@ class APIBase {
 
             this.api.onOpen().subscribe(() => {
                 // eslint-disable-next-line no-console
-                console.log('Connection has been established!', this.api);
+                console.log('Connection has been established!');
             });
         } catch (error) {
             globalObserver.emit('Error', error);
@@ -155,7 +155,7 @@ class APIBase {
 
             this.api_chart.onOpen().subscribe(() => {
                 // eslint-disable-next-line no-console
-                console.log('Connection has been established for chart ws!', this.api_chart);
+                console.log('Connection has been established for chart ws!');
             });
         } catch (error) {
             globalObserver.emit('Error', error);
