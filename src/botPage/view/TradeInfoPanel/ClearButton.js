@@ -22,6 +22,16 @@ const ClearButton = () => {
         }
     }, [is_bot_running, isRunning]);
 
+    React.useEffect(() => {
+        $(document).on('click', '#summaryClearButton', () => {
+            confirmClearLog();
+        });
+
+        return () => {
+            $(document).off('click', '#summaryClearButton');
+        };
+    }, []);
+
     const confirmClearLog = () => {
         showDialog({
             title: translate('Are you sure?'),
@@ -34,12 +44,12 @@ const ClearButton = () => {
             .then(() => globalObserver.emit('summary.clear'))
             .catch(() => {});
     };
+
     return (
         <button
             title={translate('Clear summary log')}
             id='summaryClearButton'
             className='toolbox-button icon-clear'
-            onClick={confirmClearLog}
             disabled={is_button_disabled}
         />
     );
