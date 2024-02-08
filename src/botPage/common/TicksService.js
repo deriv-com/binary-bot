@@ -323,18 +323,6 @@ export default class TicksService {
                         .catch(reject);
                 }
             }
-            if (this.candles_promise) {
-                const { stringified_options } = this.candles_promise;
-                const { symbol = '' } = JSON.parse(stringified_options);
-                if (symbol) {
-                    this.forgetCandleSubscription()
-                        .then(res => {
-                            globalObserver.emit('bot.stop');
-                            resolve(res);
-                        })
-                        .catch(reject);
-                }
-            }
         });
     }
 }
