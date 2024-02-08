@@ -182,10 +182,6 @@ export default class TicksService {
             }
 
             if (data.msg_type === 'history') {
-                const {
-                    subscription: { id },
-                } = data;
-                this.subscriptions = this.subscriptions.set('history', id);
                 globalObserver.setState({ isStarting: false });
             }
 
@@ -198,13 +194,6 @@ export default class TicksService {
                     this.subscriptions = this.subscriptions.setIn(['tick', symbol], id);
                     this.updateTicksAndCallListeners(symbol, updateTicks(this.ticks.get(symbol), parseTick(tick)));
                 }
-            }
-
-            if (data.msg_type === 'candles') {
-                const {
-                    subscription: { id },
-                } = data;
-                this.subscriptions = this.subscriptions.set('candle', id);
             }
 
             if (data?.msg_type === 'ohlc') {
@@ -292,33 +281,25 @@ export default class TicksService {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    forget = subscription_id =>
+    forget = () =>
         new Promise((resolve, reject) => {
-            if (subscription_id) {
-                api_base.api
-                    .forget(subscription_id)
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch(reject);
-            } else {
-                resolve();
-            }
+            api_base.api
+                .forgetAll('ticks')
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(reject);
         });
 
+    // eslint-disable-next-line class-methods-use-this
     forgetCandleSubscription = () =>
         new Promise((resolve, reject) => {
-            const { stringified_options } = this.candles_promise;
-            const { symbol = '' } = JSON.parse(stringified_options);
-            if (symbol) {
-                this.forget(this.subscriptions.get('candle'))
-                    .then(res => {
-                        resolve(res);
-                    })
-                    .catch(reject);
-            } else {
-                resolve();
-            }
+            api_base.api
+                .forgetAll('candles')
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(reject);
         });
 
     async unsubscribeFromTicksService() {
@@ -327,42 +308,26 @@ export default class TicksService {
                 const { stringified_options } = this.ticks_history_promise;
                 const { symbol = '' } = JSON.parse(stringified_options);
                 if (symbol) {
-                    if (!this.subscriptions.getIn(['tick', symbol])) {
-                        this.forget(this.subscriptions.get('history'))
-                            .then(res => {
-                                if (this.candles_promise) {
-                                    this.forgetCandleSubscription().then(() => {
-                                        globalObserver.emit('bot.stop');
-                                        resolve();
-                                    });
-                                } else {
+                    this.forget(this.subscriptions.getIn(['tick', symbol]))
+                        .then(res => {
+                            if (this.candles_promise) {
+                                this.forgetCandleSubscription().then(() => {
                                     globalObserver.emit('bot.stop');
-                                    resolve(res);
-                                }
-                            })
-                            .catch(reject);
-                    } else {
-                        this.forget(this.subscriptions.getIn(['tick', symbol]))
-                            .then(res => {
-                                if (this.candles_promise) {
-                                    this.forgetCandleSubscription().then(() => {
-                                        globalObserver.emit('bot.stop');
-                                        resolve();
-                                    });
-                                } else {
-                                    globalObserver.emit('bot.stop');
-                                    resolve(res);
-                                }
-                            })
-                            .catch(reject);
-                    }
+                                    resolve();
+                                });
+                            } else {
+                                globalObserver.emit('bot.stop');
+                                resolve(res);
+                            }
+                        })
+                        .catch(reject);
                 }
             }
             if (this.candles_promise) {
                 const { stringified_options } = this.candles_promise;
                 const { symbol = '' } = JSON.parse(stringified_options);
                 if (symbol) {
-                    this.forget(this.subscriptions.getIn(['candle', symbol]))
+                    this.forgetCandleSubscription()
                         .then(res => {
                             globalObserver.emit('bot.stop');
                             resolve(res);
