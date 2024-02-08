@@ -308,7 +308,7 @@ export default class TicksService {
                 const { stringified_options } = this.ticks_history_promise;
                 const { symbol = '' } = JSON.parse(stringified_options);
                 if (symbol) {
-                    this.forget(this.subscriptions.getIn(['tick', symbol]))
+                    this.forget()
                         .then(res => {
                             if (this.candles_promise) {
                                 this.forgetCandleSubscription().then(() => {
