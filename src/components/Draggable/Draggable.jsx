@@ -11,7 +11,8 @@ const TOP_RIGHT = 'top-right';
 const BOTTOM_RIGHT = 'bottom-right';
 const BOTTOM_LEFT = 'bottom-left';
 const TOP_LEFT = 'top-left';
-const BODY_REF = '.body';
+const BODY_REF = 'body';
+const SAFETY_MARGIN = 10;
 
 const Draggable = ({
     children,
@@ -29,18 +30,12 @@ const Draggable = ({
     header = '',
     onClose = () => {},
 }) => {
-    const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: initialValues.xAxis, y: initialValues.yAxis });
     const [size, setSize] = useState({ width: initialValues.width, height: initialValues.height });
-    const draggableRef = useRef(null);
-    const boundaryRef = useRef(document.querySelector(boundary ?? BODY_REF));
     const isResizing = useRef(false);
-
-    const boundaryRect = boundaryRef.current?.getBoundingClientRect();
-    const boundaryTop = boundaryRect ? boundaryRect.top + window.scrollY : 0;
-    const boundaryBottom = boundaryRect ? boundaryRect.bottom + window.scrollY : window.innerHeight;
-    const boundaryLeft = boundaryRect ? boundaryRect.left + window.scrollX : 0;
-    const boundaryRight = boundaryRect ? boundaryRect.right + window.scrollX : window.innerWidth;
+    const [isDragging, setIsDragging] = useState(false);
+    const draggableRef = useRef(null);
+    const [boundaryRef, setBoundaryRef] = useState(document.querySelector(boundary ?? BODY_REF));
 
     useEffect(() => {
         setSize({ width: initialValues.width, height: initialValues.height });
@@ -48,7 +43,8 @@ const Draggable = ({
     }, [initialValues]);
 
     useEffect(() => {
-        boundaryRef.current = document.querySelector(boundary ?? BODY_REF);
+        const boundaryEl = document.querySelector(boundary ?? BODY_REF);
+        setBoundaryRef(boundaryEl);
     }, [boundary]);
 
     const handleMouseDown = (event, action) => {
@@ -64,88 +60,70 @@ const Draggable = ({
             return;
         }
 
+        const boundaryRect = boundaryRef?.getBoundingClientRect();
+        const topOffset = boundaryRef?.offsetTop;
+        const leftOffset = boundaryRef?.offsetLeft;
         const initialMouseX = event?.clientX ?? 0;
         const initialMouseY = event?.clientY ?? 0;
         const initialWidth = size?.width;
         const initialHeight = size?.height;
-        const initialX = position?.x;
-        const initialY = position?.y;
+        const initialX = position ? position?.x : 0;
+        const initialY = position ? position.y : 0;
 
         const handleMouseMove = e => {
+            if (!e) return;
             const deltaX = e.clientX - initialMouseX;
             const deltaY = e.clientY - initialMouseY;
-            if (isResizing.current) {
-                handleResize(deltaX, deltaY);
-            } else {
-                handleDrag(deltaX, deltaY);
+            try {
+                if (isResizing.current) {
+                    handleResize(deltaX, deltaY);
+                } else {
+                    handleDrag(deltaX, deltaY);
+                }
+            } catch (error) {
+                handleMouseUp();
             }
         };
 
         const handleResize = (deltaX, deltaY) => {
-            let newX = position?.x;
-            let newY = position?.y;
+            let newX = position?.x ?? 0;
+            let newY = position?.y ?? 0;
             let newWidth = initialWidth;
             let newHeight = initialHeight;
 
             if (resize_direction.includes(RIGHT)) {
                 newWidth += deltaX;
-                if (newWidth <= minWidth) {
-                    newWidth = minWidth;
-                }
             } else if (resize_direction.includes(LEFT)) {
-                newWidth = Math.max(newWidth - deltaX, minWidth);
                 newX = deltaX + initialX;
-                const boundedLeftX = Math.max(newX, boundaryLeft);
-                setPosition(prev => {
-                    if (newWidth <= minWidth) {
-                        return { x: prev.x, y: prev.y };
-                    }
-                    return {
-                        x: boundedLeftX,
-                        y: prev.y,
-                    };
-                });
+                newWidth -= deltaX;
             }
 
             if (resize_direction.includes(BOTTOM)) {
                 newHeight += deltaY;
-                if (newHeight <= minHeight) {
-                    newHeight = minHeight;
-                }
             } else if (resize_direction.includes(TOP)) {
-                newHeight = Math.max(newHeight - deltaY, minHeight);
                 newY = deltaY + initialY;
-                setPosition(prev => {
-                    const boundedTopY = Math.max(newY, boundaryTop);
-                    if (newHeight <= minHeight) {
-                        return { x: prev.x, y: prev.y };
-                    }
-                    return { x: prev.x, y: boundedTopY };
-                });
+                newHeight -= deltaY;
             }
 
-            const maxBoundedWidth = boundaryRef.current
-                ? boundaryRef.current.getBoundingClientRect().right - newX
-                : window.innerWidth - newX;
-            const maxBoundedHeight = boundaryRef.current
-                ? boundaryRef.current.getBoundingClientRect().bottom - newY
-                : window.innerHeight - newY;
-
-            const boundedWidth = Math.min(newWidth, maxBoundedWidth < minWidth ? minWidth : maxBoundedWidth);
-            const boundedHeight = Math.min(newHeight, maxBoundedHeight < minHeight ? minHeight : maxBoundedHeight);
-
-            if (resize_direction.includes(LEFT) || resize_direction.includes(TOP)) {
-                const width = initialWidth - deltaX;
-                const height = initialHeight - deltaY;
-                setSize(prev => ({
-                    width: newX >= boundaryLeft || width <= minWidth ? boundedWidth : prev.width,
-                    height: newY >= boundaryTop || height <= minHeight ? boundedHeight : prev.height,
-                }));
-                return;
-            }
+            setPosition(prev => {
+                const maxY = Math.max(newY, topOffset + SAFETY_MARGIN);
+                const maxX = Math.max(newX, leftOffset + SAFETY_MARGIN);
+                return { x: newWidth <= minWidth ? prev.x : maxX, y: newHeight <= minHeight ? prev.y : maxY };
+            });
+            const self = draggableRef.current?.getBoundingClientRect();
             setSize(prev => ({
-                width: newX <= boundaryRight ? boundedWidth : prev.width,
-                height: newY <= boundaryBottom ? boundedHeight : prev.height,
+                width:
+                    newWidth >= minWidth &&
+                    newX > leftOffset &&
+                    self.left + newWidth < boundaryRect.left + boundaryRect.width
+                        ? newWidth
+                        : prev.width,
+                height:
+                    newHeight >= minHeight &&
+                    newY > topOffset &&
+                    self.top + newHeight < boundaryRect.top + boundaryRect.height
+                        ? newHeight
+                        : prev.height,
             }));
         };
 
@@ -153,21 +131,30 @@ const Draggable = ({
             const newX = deltaX + initialX;
             const newY = deltaY + initialY;
 
-            const boundedX = Math.min(Math.max(newX, boundaryLeft), boundaryRight - size.width);
-            const boundedY = Math.min(Math.max(newY, boundaryTop), boundaryBottom - size.height);
-
+            const boundedX = Math.min(
+                Math.max(newX, leftOffset + SAFETY_MARGIN),
+                leftOffset + boundaryRect.width - size.width - SAFETY_MARGIN
+            );
+            const boundedY = Math.min(
+                Math.max(newY, topOffset + SAFETY_MARGIN),
+                topOffset + boundaryRect.height - size.height - SAFETY_MARGIN
+            );
             setPosition({ x: boundedX, y: boundedY });
         };
 
         const handleMouseUp = () => {
             setIsDragging(false);
             isResizing.current = false;
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
+            if (boundaryRef) {
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mouseup', handleMouseUp);
+            }
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
+        if (boundaryRef) {
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
     };
 
     return (

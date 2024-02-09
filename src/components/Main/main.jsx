@@ -22,6 +22,7 @@ import BotUnavailableMessage from '../Error/bot-unavailable-message-page';
 import MoveToDbotBanner from '../Banner/move-to-dbot-banner';
 import Chart from '../Dialogs/Chart';
 import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
+import FixedDbotBanner from '../Banner/fixed-dbot-banner';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
@@ -140,6 +141,7 @@ const Main = () => {
                     },
                 ]}
             />
+            <FixedDbotBanner />
             <MoveToDbotBanner />
             <BotUnavailableMessage />
             <div id='bot-blockly'>
