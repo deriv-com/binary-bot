@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from '../../utilities/utility-functions';
 import Draggable from './Draggable';
@@ -15,7 +15,6 @@ const DraggableResizeWrapper = ({
     modalHeight = 400,
     modalWidth = 400,
 }) => {
-    const [show, setShow] = useState(false);
     const xAxisValue = (window.innerWidth - modalWidth) / 2;
     const yAxisValue = (window.innerHeight - modalHeight) / 2;
 
@@ -40,8 +39,7 @@ const DraggableResizeWrapper = ({
             xAxis: newx >= 0 ? newx : 0,
             yAxis: newy >= 0 ? newy : 0,
         });
-        setShow(true);
-    }, 300);
+    }, 500);
 
     React.useEffect(() => {
         handleResize();
@@ -53,20 +51,18 @@ const DraggableResizeWrapper = ({
 
     return (
         <div id='draggable_resize_container'>
-            {show && (
-                <Draggable
-                    boundary={boundary}
-                    initialValues={initialValues}
-                    minWidth={minWidth}
-                    minHeight={minHeight}
-                    enableResizing={enableResizing}
-                    enableDragging={enableDragging}
-                    header={header}
-                    onClose={onClose}
-                >
-                    {children}
-                </Draggable>
-            )}
+            <Draggable
+                boundary={boundary}
+                initialValues={initialValues}
+                minWidth={minWidth}
+                minHeight={minHeight}
+                enableResizing={enableResizing}
+                enableDragging={enableDragging}
+                header={header}
+                onClose={onClose}
+            >
+                {children}
+            </Draggable>
         </div>
     );
 };
