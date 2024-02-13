@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { api_base } from '@api-base';
-import { setSmartChartsPublicPath, SmartChart } from '@deriv/deriv-charts';
 import { getLanguage } from '@storage';
 import { translate } from '@i18n';
 import { observer as globalObserver } from '@utilities/observer';
-import Dialog from './Dialog';
+import PropTypes from 'prop-types';
 import ChartTicksService from '../../botPage/common/ChartTicksService';
 import ToolbarWidgets from './ToolbarWidgets';
-
-setSmartChartsPublicPath('./js/');
+import './chart.scss';
+import { DraggableResizeWrapper } from '../Draggable';
+import { SmartChart } from '../SmartChart';
 
 const BarrierTypes = {
     CALL: 'ABOVE',
@@ -21,22 +21,106 @@ const BarrierTypes = {
     NOTOUCH: 'NONE_SINGLE',
 };
 
-const ChartContent = () => {
-    const [show, setVisibility] = React.useState(true);
+const settings = {
+    assetInformation: false,
+    countdown: true,
+    isHighestLowestMarkerEnabled: false,
+    language: getLanguage()?.toLowerCase(),
+    position: 'bottom',
+    theme: 'light',
+};
+
+const getInitialSymbolFromBlockly = () =>
+    // eslint-disable-next-line no-underscore-dangle
+    Blockly?.getMainWorkspace()
+        ?.getAllBlocks()
+        ?.find(e => e?.type === 'trade')
+        ?.inputList?.find(e => e?.name === 'MARKETDEFINITION')
+        ?.fieldRow?.find(e => e?.name === 'SYMBOL_LIST')?.value_;
+
+const ChartContent = ({ show_digits_stats }) => {
+    const [show, setVisibility] = React.useState(false);
     const [state, setState] = React.useState({
-        chart_type: 'mountain',
-        granularity: 0,
         high: undefined,
         low: undefined,
-        symbol: globalObserver.getState('symbol'),
+        symbol: getInitialSymbolFromBlockly(),
         should_barrier_display: false,
+        granularity: null,
+        chart_type: null,
     });
+
+    const chart_type_ref = React.useRef(null);
+    const granularity_ref = React.useRef(null);
+
     const ticksService = new ChartTicksService(api_base.api_chart);
     const listeners = [];
+
+    const saveToLocalStorage = data => {
+        localStorage.setItem(
+            'bot.chart_props',
+            JSON.stringify({
+                ...data,
+            })
+        );
+    };
+
+    const handleChartTypeChange = data => {
+        chart_type_ref.current = data;
+        setState(prev_state => ({
+            ...prev_state,
+            chart_type: data,
+        }));
+        saveToLocalStorage({
+            ...state,
+            granularity: granularity_ref.current,
+            chart_type: data,
+        });
+    };
+
+    const handleGranularityChange = data => {
+        granularity_ref.current = data;
+        setState(prev_state => ({
+            ...prev_state,
+            granularity: data,
+        }));
+        saveToLocalStorage({
+            ...state,
+            chart_type: chart_type_ref.current,
+            granularity: data,
+        });
+    };
+
+    const restoreFromStorage = () => {
+        let tmp_granularity = 0;
+        let tmp_chart_type = 'line';
+        try {
+            const props = localStorage.getItem('bot.chart_props');
+            if (props) {
+                const stored_object = JSON.parse(props);
+                tmp_granularity = stored_object.granularity;
+                tmp_chart_type = stored_object.chart_type;
+            }
+        } catch {
+            localStorage.remove('bot.chart_props');
+        }
+        setState({
+            ...state,
+            granularity: tmp_granularity,
+            chart_type: tmp_chart_type,
+        });
+        chart_type_ref.current = tmp_chart_type;
+        granularity_ref.current = tmp_granularity;
+        setVisibility(true);
+    };
+
+    React.useEffect(() => {
+        restoreFromStorage();
+    }, []);
 
     React.useEffect(() => {
         globalObserver.register('bot.init', initializeBot);
         globalObserver.register('bot.contract', updateContract);
+
         return () => {
             globalObserver.unregister('bot.init', initializeBot);
             globalObserver.unregister('bot.contract', updateContract);
@@ -47,10 +131,10 @@ const ChartContent = () => {
     const initializeBot = symbol => {
         if (symbol && state.symbol !== symbol) {
             setVisibility(false);
-            setState({
-                ...state,
+            setState(prev => ({
+                ...prev,
                 symbol,
-            });
+            }));
             setTimeout(() => {
                 setVisibility(true);
             }, 500);
@@ -86,12 +170,12 @@ const ChartContent = () => {
         });
 
     const requestSubscribe = (request, callback) => {
-        const { ticks_history: symbol, style: dataType, granularity } = request;
+        const { ticks_history: symbol, style: dataType, granularity: tmp_granularity } = request;
 
         if (dataType === 'candles') {
             listeners[getKey(request)] = ticksService.monitor({
                 symbol,
-                granularity,
+                granularity: tmp_granularity,
                 callback,
                 is_chart_candles: true,
             });
@@ -104,14 +188,18 @@ const ChartContent = () => {
         }
     };
 
+    const wsForgetStream = stream_id => {
+        api_base.api_chart.forget(stream_id);
+    };
+
     const requestForget = request => {
-        const { ticks_history: symbol, style: dataType, granularity } = request;
+        const { ticks_history: symbol, style: dataType, granularity: tmp_granularity } = request;
 
         const requested_key = getKey(request);
         if (dataType === 'candles') {
             ticksService.stopMonitor({
                 symbol,
-                granularity,
+                granularity: tmp_granularity,
                 key: listeners[requested_key],
                 is_chart: true,
             });
@@ -129,34 +217,64 @@ const ChartContent = () => {
 
     if (!show) return null;
 
-    const handleStateChange = state_property => setState(state_property);
-
     return (
-        <SmartChart
-            barriers={[]}
-            chartControlsWidgets={null}
-            chartType={state.chart_type}
-            enabledChartFooter={false}
-            granularity={state.granularity}
-            id='binary-bot-chart'
-            isMobile={false}
-            requestAPI={requestAPI}
-            requestForget={requestForget}
-            requestSubscribe={requestSubscribe}
-            settings={{ language: getLanguage() }}
-            symbol={state.symbol}
-            toolbarWidget={() => <ToolbarWidgets handleStateChange={handleStateChange} />}
-            topWidgets={renderTopWidgets}
-        />
+        <Suspense fallback={'Loading...'}>
+            <SmartChart
+                id='bbot'
+                barriers={[]}
+                showLastDigitStats={show_digits_stats}
+                chartControlsWidgets={null}
+                enabledChartFooter={false}
+                // chartStatusListener={v => !v}
+                toolbarWidget={() => (
+                    <ToolbarWidgets
+                        updateChartType={handleChartTypeChange}
+                        updateGranularity={handleGranularityChange}
+                    />
+                )}
+                chartType={state.chart_type}
+                isMobile={false}
+                enabledNavigationWidget={true}
+                granularity={state.granularity}
+                requestAPI={requestAPI}
+                requestForget={requestForget}
+                requestForgetStream={wsForgetStream}
+                requestSubscribe={requestSubscribe}
+                settings={settings}
+                symbol={state.symbol}
+                topWidgets={renderTopWidgets}
+                // isConnectionOpened={is_socket_opened}
+                // getMarketsOrder={getMarketsOrder}
+                isLive
+                leftMargin={80}
+            />
+        </Suspense>
     );
 };
 
-export default class Chart extends Dialog {
-    constructor() {
-        super('chart-dialog', translate('Chart'), <ChartContent />, {
-            width: 600,
-            height: 600,
-            resizable: false,
-        });
-    }
-}
+ChartContent.propTypes = {
+    show_digits_stats: PropTypes.bool,
+};
+
+const Chart = ({ setShowChart }) => (
+    <DraggableResizeWrapper
+        boundary={'#bot-blockly'}
+        minWidth={600}
+        minHeight={600}
+        modalHeight={600}
+        modalWidth={600}
+        header={translate('Chart')}
+        onClose={() => {
+            setShowChart(is_shown => !is_shown);
+        }}
+        enableResizing
+    >
+        <ChartContent />
+    </DraggableResizeWrapper>
+);
+
+Chart.propTypes = {
+    setShowChart: PropTypes.func.isRequired,
+};
+
+export default Chart;

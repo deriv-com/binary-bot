@@ -20,11 +20,15 @@ import TradeInfoPanel from '../../botPage/view/TradeInfoPanel';
 import initialize, { applyToolboxPermissions } from '../../blockly/blockly-worksace';
 import BotUnavailableMessage from '../Error/bot-unavailable-message-page';
 import MoveToDbotBanner from '../Banner/move-to-dbot-banner';
+import Chart from '../Dialogs/Chart';
+import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
 import FixedDbotBanner from '../Banner/fixed-dbot-banner';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
     const [is_workspace_rendered, setIsWorkspaceRendered] = React.useState(false);
+    const [show_chart, setShowChart] = React.useState(false);
+    const [show_google_drive, setShowGoogleDrive] = React.useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { should_reload_workspace } = useSelector(state => state.ui);
@@ -141,7 +145,18 @@ const Main = () => {
             <MoveToDbotBanner />
             <BotUnavailableMessage />
             <div id='bot-blockly'>
-                {blockly && <ToolBox blockly={blockly} is_workspace_rendered={is_workspace_rendered} />}
+                {blockly && (
+                    <>
+                        <ToolBox
+                            blockly={blockly}
+                            is_workspace_rendered={is_workspace_rendered}
+                            setShowChart={setShowChart}
+                            setShowGoogleDrive={setShowGoogleDrive}
+                        />
+                        {show_chart && <Chart setShowChart={setShowChart} />}
+                        {show_google_drive && <GoogleDriveModal setShowGoogleDrive={setShowGoogleDrive} />}
+                    </>
+                )}
                 {/* Blockly workspace will be injected here */}
                 <div id='blocklyArea'>
                     <div id='blocklyDiv' style={{ position: 'absolute' }}></div>
