@@ -4,7 +4,6 @@ import GTM from '@utilities/integrations/gtm';
 import { observer as globalObserver } from '@utilities/observer';
 import { getActiveLoginId } from '@storage';
 import DerivAppModal from '../common/deriv-app-modal';
-import { visitDerivBot } from './redirect-to-dbot';
 import './move-to-dbot-banner.scss';
 
 const updateLastPopupTime = () => {
@@ -49,6 +48,12 @@ const MoveToDbotBanner = () => {
             globalObserver.emit('redirect pop-up error:', error);
         }
     }, []);
+
+    const visitDerivBot = () => {
+        const user_id = getActiveLoginId();
+        GTM.pushDataLayer({ event: 'bbot_moved_to_deriv_bot', user_id: user_id ?? null });
+        window.open('https://app.deriv.com/bot/?redirect_from_bbot=1', '_self', 'noopener');
+    };
 
     const closeModal = () => {
         const user_id = getActiveLoginId();

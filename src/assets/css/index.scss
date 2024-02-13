@@ -317,7 +317,6 @@ ul.bullet {
     width: 100%;
     border: none;
     z-index: 999;
-    position: fixed;
 
     @include mobile {
         height: 40px;
@@ -1040,7 +1039,7 @@ ul.bullet {
                 text-align: right;
 
                 &-text {
-                    color: var(--color-deriv-red);
+                    color: var(--color-driv-red);
                     font-size: var(--font-size-xs);
 
                     &:hover {
@@ -1056,7 +1055,7 @@ ul.bullet {
                 border-radius: 4px;
                 margin: 0 0 14px;
                 height: 40px;
-                color: var(--color-deriv-red);
+                color: var(--color-driv-red);
                 font-size: var(--font-size-s);
                 cursor: pointer;
 
@@ -1254,7 +1253,7 @@ ul.bullet {
                 cursor: pointer;
 
                 &.ui-tabs-active {
-                    border-bottom: solid 1.5px var(--color-deriv-red) !important;
+                    border-bottom: solid 1.5px var(--color-driv-red) !important;
                     cursor: default;
 
                     a {
@@ -1649,7 +1648,7 @@ ul.bullet {
 
     &__link {
         @include typeface(--paragraph-left-bold-prominent);
-        color: var(--color-deriv-red);
+        color: var(--color-driv-red);
         text-decoration: none;
     }
 
