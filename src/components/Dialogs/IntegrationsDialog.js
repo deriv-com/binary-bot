@@ -1,8 +1,7 @@
 import React from 'react';
 import { translate } from '@i18n';
 import GoogleDriveIntegration from '@components/GoogleDriveIntegration';
-import PropTypes from 'prop-types';
-import { DraggableResizeWrapper } from '../Draggable';
+import Dialog from './Dialog';
 import * as style from '../style';
 
 const IntegrationsContent = () => (
@@ -11,22 +10,20 @@ const IntegrationsContent = () => (
     </div>
 );
 
-const GoogleDriveModal = ({ setShowGoogleDrive }) => (
-    <DraggableResizeWrapper
-        boundary={'.main'}
-        minWidth={500}
-        minHeight={170}
-        header={translate('Google Drive Integration')}
-        onClose={() => setShowGoogleDrive(is_shown => !is_shown)}
-        modalWidth={500}
-        modalHeight={170}
-    >
-        <IntegrationsContent />
-    </DraggableResizeWrapper>
-);
-
-export default GoogleDriveModal;
-
-GoogleDriveModal.propTypes = {
-    setShowGoogleDrive: PropTypes.func.isRequired,
-};
+export default class IntegrationsDialog extends Dialog {
+    constructor() {
+        const closeDialog = () => {
+            this.close();
+        };
+        super(
+            'integrations-dialog',
+            translate('Google Drive Integration'),
+            <IntegrationsContent closeDialog={closeDialog} />,
+            {
+                width: 500,
+                height: 'auto',
+            }
+        );
+        this.registerCloseOnOtherDialog();
+    }
+}
