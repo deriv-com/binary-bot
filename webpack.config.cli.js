@@ -71,10 +71,6 @@ module.exports = {
                     to: path.resolve(__dirname, 'www/js'),
                 },
                 {
-                    from: 'node_modules/@deriv/deriv-charts/dist/chart/assets',
-                    to: path.resolve(__dirname, 'www/assets'),
-                },
-                {
                     from: 'public',
                     to: path.resolve(__dirname, 'www/public'),
                     globOptions: {

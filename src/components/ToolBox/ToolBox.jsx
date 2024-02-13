@@ -13,8 +13,10 @@ import Reset from './reset';
 import Modal from '@components/common/modal';
 import { setIsBotRunning } from '@redux-store/ui-slice';
 import Popover from '@components/common/popover';
+import Chart from '@components/Dialogs/Chart';
 import Save from './save';
 import TradingView from '@components/Dialogs/TradingView';
+import IntegrationsDialog from '@components/Dialogs/IntegrationsDialog';
 import { getActiveToken } from '@storage';
 import { api_base } from '../../api-base';
 
@@ -64,9 +66,11 @@ ToolboxButton.propTypes = {
     tooltip: PropTypes.string,
 };
 
+let chart;
 let tradingView;
+let integrations;
 
-const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDrive }) => {
+const ToolBox = ({ blockly, is_workspace_rendered }) => {
     const [should_show_modal, setShowModal] = React.useState(false);
     const [selected_modal, updateSelectedModal] = React.useState('');
     const [has_active_token, setHasActiveToken] = React.useState(false);
@@ -168,7 +172,10 @@ const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDr
                     position='bottom'
                     classes='toolbox-button icon-integrations'
                     onClick={() => {
-                        setShowGoogleDrive(is_shown => !is_shown);
+                        if (!integrations) {
+                            integrations = new IntegrationsDialog();
+                        }
+                        integrations.open();
                     }}
                 />
             )}
@@ -259,7 +266,10 @@ const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDr
                     if (!api_base.api_chart) {
                         api_base.initChartWebSocket();
                     }
-                    setShowChart(is_shown => !is_shown);
+                    if (!chart) {
+                        chart = new Chart();
+                    }
+                    chart?.open?.();
                 }}
             />
             {config.trading_view_chart.url && (
@@ -286,8 +296,6 @@ const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDr
 ToolBox.propTypes = {
     blockly: PropTypes.object.isRequired,
     is_workspace_rendered: PropTypes.bool,
-    setShowChart: PropTypes.func,
-    setShowGoogleDrive: PropTypes.func,
 };
 
 export default ToolBox;
