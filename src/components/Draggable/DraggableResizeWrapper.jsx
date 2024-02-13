@@ -27,12 +27,10 @@ const DraggableResizeWrapper = ({
     });
 
     const handleResize = debounce(() => {
-        const boundaryEl = document.querySelector(boundary ?? 'body');
-        const boundaryHeight = boundaryEl?.clientHeight ?? window.innerHeight;
         const newWidth = window.innerWidth > modalWidth ? modalWidth : window.innerWidth - 50;
         const newHeight = window.innerHeight > modalHeight ? modalHeight : window.innerHeight - 50;
         const newx = (window.innerWidth - newWidth) / 2;
-        const newy = boundaryHeight / 2;
+        const newy = (window.innerHeight - newHeight) / 2;
 
         setInitialValues({
             width: newWidth,
