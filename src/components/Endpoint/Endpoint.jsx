@@ -23,7 +23,7 @@ const getError = server => (
 
 let api; // to close the error connection
 const Endpoint = () => {
-    const [server, setServer] = React.useState('frontend.binaryws.com');
+    const [server, setServer] = React.useState('frontend.derivws.com');
     const [app_id, setAppId] = React.useState('');
     const [has_error, setError] = React.useState('');
     const [is_connected, setConnected] = React.useState(false);
@@ -119,7 +119,7 @@ const Endpoint = () => {
                                         maxLength='30'
                                         onChange={e => setServer(e.target.value)}
                                     />
-                                    <p className='hint no-margin'>e.g. frontend.binaryws.com</p>
+                                    <p className='hint no-margin'>e.g. frontend.derivws.com</p>
                                 </td>
                             </tr>
                             <tr>
