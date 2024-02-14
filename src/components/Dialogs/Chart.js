@@ -9,6 +9,7 @@ import ToolbarWidgets from './ToolbarWidgets';
 import './chart.scss';
 import { DraggableResizeWrapper } from '../Draggable';
 import { SmartChart } from '../SmartChart';
+import { debounce } from '../../utilities/utility-functions';
 
 const BarrierTypes = {
     CALL: 'ABOVE',
@@ -132,18 +133,14 @@ const ChartContent = ({ show_digits_stats }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.symbol]);
 
-    const initializeBot = symbol => {
+    const initializeBot = debounce(symbol => {
         if (symbol && state.symbol !== symbol) {
-            setVisibility(false);
             setState(prev_state => ({
                 ...prev_state,
                 symbol,
             }));
-            setTimeout(() => {
-                setVisibility(true);
-            }, 500);
         }
-    };
+    }, 600);
 
     const updateContract = contract => {
         if (!contract) return;
@@ -162,10 +159,11 @@ const ChartContent = ({ show_digits_stats }) => {
                 updated_state.high = contract.high_barrier;
                 updated_state.low = contract.low;
             }
-            setState(prev_state => ({
-                ...prev_state,
-                ...updated_state,
-            }));
+            // enable when should_barrier_display is available
+            // setState(prev_state => ({
+            //     ...prev_state,
+            //     ...updated_state,
+            // }));
         }
     };
 
@@ -194,11 +192,12 @@ const ChartContent = ({ show_digits_stats }) => {
     };
 
     const wsForgetStream = () => {
-        api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
         const requested_key = getKey({
             ticks_history: state.symbol,
             granularity: state.granularity,
         });
+        if (listeners[requested_key])
+            api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
         delete listeners[requested_key];
     };
 
@@ -220,6 +219,8 @@ const ChartContent = ({ show_digits_stats }) => {
                 is_chart: true,
             });
         }
+        if (listeners[requested_key])
+            api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
         delete listeners[requested_key];
     };
 
@@ -248,7 +249,7 @@ const ChartContent = ({ show_digits_stats }) => {
                 granularity={state.granularity}
                 requestAPI={requestAPI}
                 requestForget={requestForget}
-                requestForgetStream={wsForgetStream}
+                // requestForgetStream={wsForgetStream}
                 requestSubscribe={requestSubscribe}
                 settings={settings}
                 symbol={state.symbol}
