@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#pbvgpo
 import { translate } from '@i18n';
 import { insideDuringPurchase } from '../../relationChecker';
 

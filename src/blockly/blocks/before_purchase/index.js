@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#u7tjez
 import { translate } from '@i18n';
 import './purchase';
 import './ask_price';

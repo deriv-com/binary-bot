@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#szwuog
 import { translate } from '@i18n';
 import { expectValue } from '../../shared';
 
