@@ -5,15 +5,19 @@ import { ChartMode, DrawTools, Share, StudyLegend, ToolbarWidget, Views } from '
 // eslint-disable-next-line react/prop-types
 const ToolbarWidgets = ({ updateChartType, updateGranularity }) => (
     <>
-        <div id='modal_root'></div>
+        <div id='chart_modal_root'></div>
         <ToolbarWidget position='left'>
-            <ChartMode portalNodeId='modal_root' onChartType={updateChartType} onGranularity={updateGranularity} />
+            <ChartMode
+                portalNodeId='chart_modal_root'
+                onChartType={updateChartType}
+                onGranularity={updateGranularity}
+            />
 
             <>
-                <StudyLegend portalNodeId='modal_root' searchInputClassName='data-hj-whitelist' />
-                <Views portalNodeId='modal_root' searchInputClassName='data-hj-whitelist' />
-                <DrawTools portalNodeId='modal_root' />
-                <Share portalNodeId='modal_root' />
+                <StudyLegend portalNodeId='chart_modal_root' searchInputClassName='data-hj-whitelist' />
+                <Views portalNodeId='chart_modal_root' searchInputClassName='data-hj-whitelist' />
+                <DrawTools portalNodeId='chart_modal_root' />
+                <Share />
             </>
         </ToolbarWidget>
     </>
