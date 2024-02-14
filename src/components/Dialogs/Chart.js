@@ -196,8 +196,7 @@ const ChartContent = ({ show_digits_stats }) => {
             ticks_history: state.symbol,
             granularity: state.granularity,
         });
-        if (listeners[requested_key])
-            api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
+        api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
         delete listeners[requested_key];
     };
 
@@ -219,8 +218,9 @@ const ChartContent = ({ show_digits_stats }) => {
                 is_chart: true,
             });
         }
-        if (listeners[requested_key])
+        if (listeners[requested_key]) {
             api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
+        }
         delete listeners[requested_key];
     };
 
