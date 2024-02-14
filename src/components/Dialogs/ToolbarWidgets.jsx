@@ -25,6 +25,8 @@ const ToolbarWidgets = ({ updateChartType, updateGranularity }) => (
 
 ToolbarWidgets.propTypes = {
     handleStateChange: PropTypes.func,
+    updateChartType: PropTypes.func,
+    updateGranularity: PropTypes.func,
 };
 
 export default ToolbarWidgets;
