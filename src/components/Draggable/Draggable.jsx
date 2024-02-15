@@ -180,46 +180,49 @@ const Draggable = ({
                     <>
                         <div
                             className='resizable-handle__top'
-                            tabIndex={0}
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, TOP)}
                             onMouseDown={e => handleMouseDown(e, TOP)}
                         />
                         <div
                             className='resizable-handle__right'
-                            tabIndex={0}
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, RIGHT)}
                             onMouseDown={e => handleMouseDown(e, RIGHT)}
                         />
                         <div
                             className='resizable-handle__bottom'
-                            tabIndex={0}
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, BOTTOM)}
                             onMouseDown={e => handleMouseDown(e, BOTTOM)}
                         />
                         <div
                             className='resizable-handle__left'
-                            tabIndex={0}
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, LEFT)}
                             onMouseDown={e => handleMouseDown(e, LEFT)}
                         />
                         <div
                             className='resizable-handle__top-right'
-                            tabIndex={0}
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, TOP_RIGHT)}
                             onMouseDown={e => handleMouseDown(e, TOP_RIGHT)}
                         />
                         <div
                             className='resizable-handle__bottom-right'
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, BOTTOM_RIGHT)}
                             onMouseDown={e => handleMouseDown(e, BOTTOM_RIGHT)}
                         />
                         <div
                             className='resizable-handle__bottom-left'
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, BOTTOM_LEFT)}
                             onMouseDown={e => handleMouseDown(e, BOTTOM_LEFT)}
                         />
                         <div
                             className='resizable-handle__top-left'
+                            role='button'
                             onKeyDown={e => handleMouseDown(e, TOP_LEFT)}
                             onMouseDown={e => handleMouseDown(e, TOP_LEFT)}
                         />
