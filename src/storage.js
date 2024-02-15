@@ -241,7 +241,7 @@ const isRealAccount = () => {
 };
 
 export const getDefaultEndpoint = () => ({
-    url: isRealAccount() ? 'green.binaryws.com' : 'blue.binaryws.com',
+    url: isRealAccount() ? 'green.derivws.com' : 'blue.derivws.com',
     appId: getDefaultAppId() || getDomainAppId(),
 });
 
