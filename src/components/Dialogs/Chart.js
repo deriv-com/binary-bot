@@ -192,11 +192,12 @@ const ChartContent = ({ show_digits_stats }) => {
     };
 
     const wsForgetStream = () => {
+        api_base.api_chart.forgetAll('candles');
+        api_base.api_chart.forgetAll('ticks');
         const requested_key = getKey({
             ticks_history: state.symbol,
             granularity: state.granularity,
         });
-        api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
         delete listeners[requested_key];
     };
 
@@ -219,7 +220,7 @@ const ChartContent = ({ show_digits_stats }) => {
             });
         }
         if (listeners[requested_key]) {
-            api_base.api_chart.forgetAll(chart_type_ref.current === 'candles' ? 'candles' : 'ticks');
+            api_base.api_chart.forgetAll(dataType === 'candles' ? 'candles' : 'ticks');
         }
         delete listeners[requested_key];
     };
