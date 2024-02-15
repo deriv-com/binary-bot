@@ -39,6 +39,8 @@ const getInitialSymbolFromBlockly = () =>
         ?.inputList?.find(e => e?.name === 'MARKETDEFINITION')
         ?.fieldRow?.find(e => e?.name === 'SYMBOL_LIST')?.value_;
 
+const getType = isCandle => (isCandle ? 'candles' : 'ticks');
+
 const ChartContent = ({ show_digits_stats }) => {
     const [show, setVisibility] = React.useState(false);
     const [state, setState] = React.useState({
@@ -192,8 +194,7 @@ const ChartContent = ({ show_digits_stats }) => {
     };
 
     const wsForgetStream = () => {
-        api_base.api_chart.forgetAll('candles');
-        api_base.api_chart.forgetAll('ticks');
+        api_base.api_chart.forgetAll(getType(granularity_ref.current));
         const requested_key = getKey({
             ticks_history: state.symbol,
             granularity: state.granularity,
