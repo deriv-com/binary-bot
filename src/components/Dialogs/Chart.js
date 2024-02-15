@@ -225,6 +225,9 @@ const ChartContent = ({ show_digits_stats }) => {
     };
 
     const renderTopWidgets = () => <span />;
+    const renderToolbarWidgets = () => (
+        <ToolbarWidgets updateChartType={handleChartTypeChange} updateGranularity={handleGranularityChange} />
+    );
 
     if (!show) return null;
 
@@ -236,26 +239,17 @@ const ChartContent = ({ show_digits_stats }) => {
                 showLastDigitStats={show_digits_stats}
                 chartControlsWidgets={null}
                 enabledChartFooter={false}
-                // chartStatusListener={v => !v}
-                toolbarWidget={() => (
-                    <ToolbarWidgets
-                        updateChartType={handleChartTypeChange}
-                        updateGranularity={handleGranularityChange}
-                    />
-                )}
+                toolbarWidget={renderToolbarWidgets}
                 chartType={state.chart_type}
                 isMobile={false}
                 enabledNavigationWidget={true}
                 granularity={state.granularity}
                 requestAPI={requestAPI}
                 requestForget={requestForget}
-                // requestForgetStream={wsForgetStream}
                 requestSubscribe={requestSubscribe}
                 settings={settings}
                 symbol={state.symbol}
                 topWidgets={renderTopWidgets}
-                // isConnectionOpened={is_socket_opened}
-                // getMarketsOrder={getMarketsOrder}
                 isLive
                 leftMargin={80}
             />

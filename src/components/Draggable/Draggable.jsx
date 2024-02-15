@@ -178,20 +178,51 @@ const Draggable = ({
                 <span className='draggable-content__body'>{children}</span>
                 {enableResizing && (
                     <>
-                        <div className='resizable-handle__top' onMouseDown={e => handleMouseDown(e, TOP)} />
-                        <div className='resizable-handle__right' onMouseDown={e => handleMouseDown(e, RIGHT)} />
-                        <div className='resizable-handle__bottom' onMouseDown={e => handleMouseDown(e, BOTTOM)} />
-                        <div className='resizable-handle__left' onMouseDown={e => handleMouseDown(e, LEFT)} />
-                        <div className='resizable-handle__top-right' onMouseDown={e => handleMouseDown(e, TOP_RIGHT)} />
+                        <div
+                            className='resizable-handle__top'
+                            tabIndex={0}
+                            onKeyDown={e => handleMouseDown(e, TOP)}
+                            onMouseDown={e => handleMouseDown(e, TOP)}
+                        />
+                        <div
+                            className='resizable-handle__right'
+                            tabIndex={0}
+                            onKeyDown={e => handleMouseDown(e, RIGHT)}
+                            onMouseDown={e => handleMouseDown(e, RIGHT)}
+                        />
+                        <div
+                            className='resizable-handle__bottom'
+                            tabIndex={0}
+                            onKeyDown={e => handleMouseDown(e, BOTTOM)}
+                            onMouseDown={e => handleMouseDown(e, BOTTOM)}
+                        />
+                        <div
+                            className='resizable-handle__left'
+                            tabIndex={0}
+                            onKeyDown={e => handleMouseDown(e, LEFT)}
+                            onMouseDown={e => handleMouseDown(e, LEFT)}
+                        />
+                        <div
+                            className='resizable-handle__top-right'
+                            tabIndex={0}
+                            onKeyDown={e => handleMouseDown(e, TOP_RIGHT)}
+                            onMouseDown={e => handleMouseDown(e, TOP_RIGHT)}
+                        />
                         <div
                             className='resizable-handle__bottom-right'
+                            onKeyDown={e => handleMouseDown(e, BOTTOM_RIGHT)}
                             onMouseDown={e => handleMouseDown(e, BOTTOM_RIGHT)}
                         />
                         <div
                             className='resizable-handle__bottom-left'
+                            onKeyDown={e => handleMouseDown(e, BOTTOM_LEFT)}
                             onMouseDown={e => handleMouseDown(e, BOTTOM_LEFT)}
                         />
-                        <div className='resizable-handle__top-left' onMouseDown={e => handleMouseDown(e, TOP_LEFT)} />
+                        <div
+                            className='resizable-handle__top-left'
+                            onKeyDown={e => handleMouseDown(e, TOP_LEFT)}
+                            onMouseDown={e => handleMouseDown(e, TOP_LEFT)}
+                        />
                     </>
                 )}
             </div>
@@ -214,7 +245,6 @@ Draggable.propTypes = {
     enableDragging: PropTypes.bool,
     header: PropTypes.node,
     onClose: PropTypes.func,
-    draggableRef: PropTypes.object,
 };
 
 export default Draggable;
