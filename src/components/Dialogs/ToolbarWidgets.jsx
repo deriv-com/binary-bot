@@ -1,31 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ChartMode, DrawTools, Share, StudyLegend, ToolbarWidget, Views } from '@deriv/deriv-charts';
+import { ChartMode, DrawTools, Share, StudyLegend, ToolbarWidget, Views } from '../SmartChart';
 
 // eslint-disable-next-line react/prop-types
-const ToolbarWidgets = ({ handleStateChange }) => (
-    <ToolbarWidget>
-        <ChartMode
-            onChartType={chart_type =>
-                handleStateChange({
-                    chart_type,
-                })
-            }
-            onGranularity={granularity =>
-                handleStateChange({
-                    granularity,
-                })
-            }
-        />
-        <StudyLegend searchInputClassName='data-hj-whitelist' />
-        <DrawTools />
-        <Views searchInputClassName='data-hj-whitelist' />
-        <Share />
-    </ToolbarWidget>
+const ToolbarWidgets = ({ updateChartType, updateGranularity }) => (
+    <>
+        <div id='chart_modal_root'></div>
+        <ToolbarWidget position='left'>
+            <ChartMode
+                portalNodeId='chart_modal_root'
+                onChartType={updateChartType}
+                onGranularity={updateGranularity}
+            />
+
+            <>
+                <StudyLegend portalNodeId='chart_modal_root' searchInputClassName='data-hj-whitelist' />
+                <Views portalNodeId='chart_modal_root' searchInputClassName='data-hj-whitelist' />
+                <DrawTools portalNodeId='chart_modal_root' />
+                <Share />
+            </>
+        </ToolbarWidget>
+    </>
 );
 
 ToolbarWidgets.propTypes = {
-    handleStateChange: PropTypes.func,
+    updateChartType: PropTypes.func,
+    updateGranularity: PropTypes.func,
 };
 
 export default ToolbarWidgets;

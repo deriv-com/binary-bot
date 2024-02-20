@@ -34,7 +34,7 @@ const MenuLinks = () => {
                     </a>
                 </div>
             )}
-            {config.reports.visible && (
+            {!has_wallet_account && config.reports.visible && (
                 <div>
                     <a className='url-cashier-deposit header__menu-links-item' href={config.cashier.url}>
                         <div className='header__icon-container'>

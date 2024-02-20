@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#szwuog
 import { translate } from '@i18n';
 import config from '@currency-config';
 import { mainScope } from '../../relationChecker';

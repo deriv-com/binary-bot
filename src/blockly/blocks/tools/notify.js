@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#pmhydb
 import { translate } from '@i18n';
 import config from '@currency-config';
 import { expectValue } from '../shared';
