@@ -22,12 +22,14 @@ import BotUnavailableMessage from '../Error/bot-unavailable-message-page';
 import MoveToDbotBanner from '../Banner/move-to-dbot-banner';
 import Chart from '../Dialogs/Chart';
 import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
+import TradingView from '../Dialogs/TradingView';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
     const [is_workspace_rendered, setIsWorkspaceRendered] = React.useState(false);
     const [show_chart, setShowChart] = React.useState(false);
     const [show_google_drive, setShowGoogleDrive] = React.useState(false);
+    const [show_trading_view, setShowTradingView] = React.useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { should_reload_workspace } = useSelector(state => state.ui);
@@ -150,9 +152,11 @@ const Main = () => {
                             is_workspace_rendered={is_workspace_rendered}
                             setShowChart={setShowChart}
                             setShowGoogleDrive={setShowGoogleDrive}
+                            setShowTradingView={setShowTradingView}
                         />
                         {show_chart && <Chart setShowChart={setShowChart} />}
                         {show_google_drive && <GoogleDriveModal setShowGoogleDrive={setShowGoogleDrive} />}
+                        {show_trading_view && <TradingView setShowTradingView={setShowTradingView} />}
                     </>
                 )}
                 {/* Blockly workspace will be injected here */}
