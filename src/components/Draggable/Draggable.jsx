@@ -67,38 +67,29 @@ const Draggable = ({
         calculateZindex();
         if (!action) return;
         const resize_direction = action;
-        if (action !== MOVE && enableResizing) {
-            isResizing.current = true;
-        } else if (action === MOVE && enableDragging) {
-            isResizing.current = false;
-            setIsDragging(true);
-        } else {
-            return;
-        }
+        isResizing.current = action !== MOVE && enableResizing;
+        setIsDragging(action === MOVE && enableDragging);
 
         const boundaryRect = boundaryRef?.getBoundingClientRect();
-        const topOffset = boundaryRef?.offsetTop;
-        const leftOffset = boundaryRef?.offsetLeft;
+        const topOffset = boundaryRef?.offsetTop ?? 0;
+        const leftOffset = boundaryRef?.offsetLeft ?? 0;
         const initialMouseX = event?.clientX ?? 0;
         const initialMouseY = event?.clientY ?? 0;
-        const initialWidth = size?.width;
-        const initialHeight = size?.height;
-        const initialX = position ? position?.x : 0;
-        const initialY = position ? position.y : 0;
+        const initialWidth = size?.width ?? initialValues.width;
+        const initialHeight = size?.height ?? initialValues.height;
+        const initialX = position?.x ?? 0;
+        const initialY = position?.y ?? 0;
         const initialSelfRight = draggableRef.current?.getBoundingClientRect()?.right ?? size.width;
         const initialSelfBottom = draggableRef.current?.getBoundingClientRect()?.bottom ?? size.height;
 
         let previousStyle = {};
-        let draggableContentBody = null;
+        const draggableContentBody = draggableRef.current?.querySelector('#draggable-content-body');
 
-        if (draggableRef.current) {
-            draggableContentBody = draggableRef.current.querySelector('#draggable-content-body');
-            if (draggableContentBody) {
-                const { style } = draggableContentBody;
-                if (style && style.pointerEvents !== 'none') {
-                    previousStyle = style;
-                    style.pointerEvents = 'none';
-                }
+        if (draggableContentBody) {
+            const { style } = draggableContentBody;
+            if (style && style.pointerEvents !== 'none') {
+                previousStyle = style;
+                style.pointerEvents = 'none';
             }
         }
 
@@ -236,13 +227,7 @@ const Draggable = ({
                         </button>
                     </div>
                 </div>
-                <span
-                    className='draggable-content__body'
-                    id='draggable-content-body'
-                    onClick={() => {
-                        calculateZindex();
-                    }}
-                >
+                <span className='draggable-content__body' id='draggable-content-body'>
                     {children}
                 </span>
                 {enableResizing && (
