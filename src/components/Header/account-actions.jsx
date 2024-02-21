@@ -22,8 +22,8 @@ import { addTokenIfValid } from '../../common/appId.js';
 import AccountMenu from './account-menu.jsx';
 
 const AccountActions = () => {
-    const { is_virtual } = useSelector(state => state.client);
-    const { deposit } = config;
+    const { is_virtual, has_wallet_account } = useSelector(state => state.client);
+    const { deposit, deposit_wallets } = config;
     const { visible, label, url } = deposit;
     const { account_switcher_id, is_bot_running } = useSelector(state => state.ui);
     const [is_acc_dropdown_open, setIsAccDropdownOpen] = React.useState(false);
@@ -99,8 +99,11 @@ const AccountActions = () => {
                 <AccountDropdown virtual={is_virtual} ref={dropdownRef} setIsAccDropdownOpen={setIsAccDropdownOpen} />
             )}
 
-            {visible && (
-                <a className='url-cashier-deposit btn btn--primary header__deposit mobile-hide' href={url}>
+            {visible && (!has_wallet_account || (!is_virtual && has_wallet_account)) && (
+                <a
+                    className='url-cashier-deposit btn btn--primary header__deposit mobile-hide'
+                    href={!has_wallet_account ? url : deposit_wallets.url}
+                >
                     {translate(label)}
                 </a>
             )}
