@@ -2,17 +2,15 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { TrackJS } from 'trackjs';
 import { getRelatedDeriveOrigin, queryToObjectArray } from '@utils';
 import { translate } from '@i18n';
-import { getClientAccounts, isDone, getLanguage, getTourState, getActiveLoginId } from '@storage';
+import { getClientAccounts, isDone, getLanguage, getTourState } from '@storage';
 import SidebarToggle from '@components/common/SidebarToggle';
 import ToolBox from '@components/ToolBox';
 import useQuery from '@components/hooks/useQuery';
 import { updateActiveAccount, updateIsLogged, setLoginId } from '@redux-store/client-slice';
 import { setAccountSwitcherLoader, setShouldReloadWorkspace, updateShowTour } from '@redux-store/ui-slice';
 import { observer as globalObserver } from '@utilities/observer';
-import logHandler from '@utilities/logger';
 import { loginAndSetTokens } from '../../common/appId';
 import Blockly from '../../blockly';
 import LogTable from '../../botPage/view/LogTable';
@@ -32,10 +30,6 @@ const Main = () => {
     const navigate = useNavigate();
     const { should_reload_workspace } = useSelector(state => state.ui);
     const query_object = useQuery();
-
-    React.useEffect(() => {
-        logHandler();
-    }, [logHandler]);
 
     React.useEffect(() => {
         window.addEventListener('storage', event => {
@@ -116,10 +110,6 @@ const Main = () => {
             $('.show-on-load').show();
             $('.barspinner').hide();
             window.dispatchEvent(new Event('resize'));
-            const userId = getActiveLoginId();
-            if (userId) {
-                TrackJS.configure({ userId });
-            }
             return _blockly.initPromise;
         });
 

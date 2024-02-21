@@ -15,5 +15,5 @@ ReactDOM.render(
     <Provider store={store}>
         <App />
     </Provider>,
-    document.getElementById('main')
+    document.getElementById('binary-bot')
 );

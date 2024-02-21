@@ -71,7 +71,12 @@ class GoogleDriveUtil {
         this.auth = null;
         this.is_authorized = false;
         // Fetch Google API script and initialize class fields
-        loadExternalScript(this.api_url_identity).then(() => this.initUrlIdentity());
+        // eslint-disable-next-line no-console
+        loadExternalScript(this.api_url_identity)
+            .then(() => this.initUrlIdentity())
+            .catch(console.log);
+
+        // eslint-disable-next-line no-console
         loadExternalScript(this.api_url_gdrive)
             .then(() =>
                 gapi.load(this.auth_scope, async () => {
@@ -80,7 +85,9 @@ class GoogleDriveUtil {
             )
             .then(() => {
                 store.dispatch(setGdReady(true));
-            });
+                // eslint-disable-next-line no-console
+            })
+            .catch(console.error);
     }
 
     initUrlIdentity = () => {
