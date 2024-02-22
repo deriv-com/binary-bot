@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { TrackJS } from 'trackjs';
 import { getRelatedDeriveOrigin, queryToObjectArray } from '@utils';
 import { translate } from '@i18n';
-import { getClientAccounts, isDone, getLanguage, getTourState, getActiveLoginId } from '@storage';
+import { getClientAccounts, isDone, getLanguage, getTourState, getActiveLoginId, syncWithDerivApp } from '@storage';
 import SidebarToggle from '@components/common/SidebarToggle';
 import ToolBox from '@components/ToolBox';
 import useQuery from '@components/hooks/useQuery';
@@ -97,6 +97,7 @@ const Main = () => {
                         dispatch(updateIsLogged(true));
                         dispatch(updateActiveAccount(account_info));
                         applyToolboxPermissions();
+                        syncWithDerivApp();
                     } else {
                         dispatch(updateIsLogged(false));
                     }
