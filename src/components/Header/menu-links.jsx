@@ -7,7 +7,7 @@ const MenuLinks = () => {
     const { has_wallet_account } = useSelector(state => state.client);
     return (
         <div className='header__menu-item header__menu-links client_logged_in'>
-            {config.reports.visible && (
+            {config.tradershub.visible && (
                 <div>
                     <a
                         className='url-reports-positions header__menu-links-item'
@@ -34,7 +34,7 @@ const MenuLinks = () => {
                     </a>
                 </div>
             )}
-            {!has_wallet_account && config.reports.visible && (
+            {!has_wallet_account && config.cashier.visible && (
                 <div>
                     <a className='url-cashier-deposit header__menu-links-item' href={config.cashier.url}>
                         <div className='header__icon-container'>
