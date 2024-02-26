@@ -149,13 +149,10 @@ export const removeAllTokens = () => {
 export const isDone = varName => varName in store;
 
 export const syncWithDerivApp = () => {
-    console.log('syncWithDerivApp');
     const iframe = document.getElementById('localstorage-sync');
     const { origin } = getRelatedDeriveOrigin();
-    console.log({ origin, client_acc: JSON.stringify(getClientAccounts()), active_login_id: getActiveLoginId() });
 
     const postMessages = () => {
-        console.log('postMessages');
         iframe.contentWindow.postMessage(
             {
                 key: CLIENT_ACCOUNT,
@@ -173,10 +170,8 @@ export const syncWithDerivApp = () => {
     };
     if (iframe) {
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            console.log(document.readyState);
-            setTimeout(() => {
-                postMessages();
-            }, 100);
+            postMessages();
+            return;
         }
         if (!hasReadystateListener) {
             hasReadystateListener = true;
