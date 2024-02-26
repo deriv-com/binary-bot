@@ -169,7 +169,7 @@ export const syncWithDerivApp = () => {
         );
     };
     if (iframe) {
-        if (document.readyState === 'complete') {
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
             postMessages();
             return;
         }
