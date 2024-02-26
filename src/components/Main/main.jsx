@@ -92,25 +92,20 @@ const Main = () => {
             }
             loginAndSetTokens(token_list)
                 .then(({ account_info = {} }) => {
-                    console.log(account_info, '1st');
                     if (account_info?.loginid) {
-                        console.log(account_info, '2nd');
                         dispatch(setLoginId(account_info?.loginid));
                         dispatch(updateIsLogged(true));
                         dispatch(updateActiveAccount(account_info));
                         applyToolboxPermissions();
                         syncWithDerivApp();
                     } else {
-                        console.log(account_info, '3rd');
                         dispatch(updateIsLogged(false));
                     }
                 })
                 .catch(() => {
-                    console.log('6th');
                     dispatch(updateIsLogged(false));
                 })
                 .finally(() => {
-                    console.log('5th');
                     resolve();
                     dispatch(setAccountSwitcherLoader(false));
                 });
