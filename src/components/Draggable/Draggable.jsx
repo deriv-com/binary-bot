@@ -218,7 +218,9 @@ const Draggable = ({
                 <div
                     id='draggable-content__header'
                     className='draggable-content__header'
+                    role='button'
                     onMouseDown={e => handleMouseDown(e, MOVE)}
+                    onKeyDown={e => handleMouseDown(e, MOVE)}
                 >
                     <div className='draggable-content__header-title'>{header}</div>
                     <div>

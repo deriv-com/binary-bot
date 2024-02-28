@@ -28,6 +28,7 @@ function TradingViewComponent() {
                 id='iframe'
                 style={{ width: '100%', height: '100%', border: 'none' }}
                 src={config.trading_view_chart.url}
+                title={translate('Trading View')}
             />
         </div>
     );
