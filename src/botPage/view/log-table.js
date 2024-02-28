@@ -109,21 +109,6 @@ const LogTableContent = () => {
         </div>
     );
 
-    rowRenderer.propTypes = {
-        rowData: PropTypes.shape({
-            type: PropTypes.string,
-        }),
-        columns: PropTypes.shape({
-            props: PropTypes.shape({
-                style: PropTypes.object,
-                className: PropTypes.string,
-                role: PropTypes.string,
-                title: PropTypes.string,
-            }),
-            key: PropTypes.string,
-        }),
-    };
-
     return (
         <span id='logPanel' className='logpanel'>
             <div id='logtable' className='logTable-scroll logtable'>
