@@ -133,37 +133,8 @@ const setElementActions = blockly => {
     addEventHandlers(blockly);
 };
 
-const exportContent = {
-    'summary-panel': () => {
-        globalObserver.emit('summary.export');
-    },
-    logPanel: () => {
-        globalObserver.emit('log.export');
-    },
-};
-
-const addExportButtonToPanel = panelId => {
-    const buttonHtml =
-        '<button class="icon-save" style="position:absolute;top:50%;margin:-10px 0 0 0;right:2em;padding:0.2em"></button>';
-    const $button = $(buttonHtml);
-    const panelSelector = `[aria-describedby="${panelId}"]`;
-    if (!$(`${panelSelector} .icon-save`).length) {
-        $button.insertBefore(`${panelSelector} .icon-close`);
-        $(`${panelSelector} .icon-close`).blur();
-        $($(`${panelSelector} .icon-save`)).click(() => {
-            exportContent[panelId]();
-        });
-    }
-};
-
 export const showSummary = () => {
-    $('#summary-panel').dialog('option', 'minWidth', 770).dialog('open');
-    addExportButtonToPanel('summary-panel');
-};
-
-export const logButton = () => {
-    $('#logPanel').dialog('open');
-    addExportButtonToPanel('logPanel');
+    globalObserver.emit('summary.show');
 };
 
 const addBindings = blockly => {
@@ -270,14 +241,6 @@ const addBindings = blockly => {
             await stop(e);
         }, 300)
     );
-
-    $('[aria-describedby="summary-panel"]').on('click', '#summaryRunButton', () => {
-        $('#runButton').trigger('click');
-    });
-
-    $('[aria-describedby="summary-panel"]').on('click', '#summaryStopButton', () => {
-        $('#stopButton').trigger('click');
-    });
 
     globalObserver.register('ui.switch_account', () => {
         stopBlockly(blockly);

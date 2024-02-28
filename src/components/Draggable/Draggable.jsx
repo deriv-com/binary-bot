@@ -215,8 +215,12 @@ const Draggable = ({
             style={{ position: 'absolute', top: position.y, left: position.x, zIndex }}
         >
             <div ref={draggableRef} className='draggable-content' style={{ width: size.width, height: size.height }}>
-                <div className='draggable-content__header' onMouseDown={e => handleMouseDown(e, MOVE)}>
-                    <div>{header}</div>
+                <div
+                    id='draggable-content__header'
+                    className='draggable-content__header'
+                    onMouseDown={e => handleMouseDown(e, MOVE)}
+                >
+                    <div className='draggable-content__header-title'>{header}</div>
                     <div>
                         <button
                             type='button'

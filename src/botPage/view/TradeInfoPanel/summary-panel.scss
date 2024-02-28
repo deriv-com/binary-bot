@@ -8,6 +8,21 @@
 
     .content-row {
         margin-bottom: 1em;
+
+        &-table {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    table {
+        td {
+            text-align: center !important;
+            padding: 3px !important;
+            height: 2em;
+            font-size: 11px;
+        }
     }
 
     p {

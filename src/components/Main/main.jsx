@@ -15,7 +15,6 @@ import { observer as globalObserver } from '@utilities/observer';
 import logHandler from '@utilities/logger';
 import { loginAndSetTokens } from '../../common/appId';
 import Blockly from '../../blockly';
-import LogTable from '../../botPage/view/LogTable';
 import TradeInfoPanel from '../../botPage/view/TradeInfoPanel';
 import initialize, { applyToolboxPermissions } from '../../blockly/blockly-worksace';
 import BotUnavailableMessage from '../Error/bot-unavailable-message-page';
@@ -23,6 +22,7 @@ import MoveToDbotBanner from '../Banner/move-to-dbot-banner';
 import Chart from '../Dialogs/Chart';
 import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
 import TradingView from '../Dialogs/TradingView';
+import LogTable from '../../botPage/view/log-table';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
@@ -30,10 +30,22 @@ const Main = () => {
     const [show_chart, setShowChart] = React.useState(false);
     const [show_google_drive, setShowGoogleDrive] = React.useState(false);
     const [show_trading_view, setShowTradingView] = React.useState(false);
+    const [show_log_table, setShowLogTable] = React.useState(false);
+    const [show_summary, setShowSummary] = React.useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { should_reload_workspace } = useSelector(state => state.ui);
     const query_object = useQuery();
+
+    const showSummary = () => setShowSummary(true);
+
+    React.useEffect(() => {
+        globalObserver.register('summary.show', showSummary);
+        return () => {
+            globalObserver.unregister('summary.show', showSummary);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     React.useEffect(() => {
         logHandler();
@@ -153,10 +165,14 @@ const Main = () => {
                             setShowChart={setShowChart}
                             setShowGoogleDrive={setShowGoogleDrive}
                             setShowTradingView={setShowTradingView}
+                            setShowLogTable={setShowLogTable}
+                            setShowSummary={setShowSummary}
                         />
                         {show_chart && <Chart setShowChart={setShowChart} />}
                         {show_google_drive && <GoogleDriveModal setShowGoogleDrive={setShowGoogleDrive} />}
                         {show_trading_view && <TradingView setShowTradingView={setShowTradingView} />}
+                        {<LogTable setShowLogTable={setShowLogTable} show_log_table={show_log_table} />}
+                        {<TradeInfoPanel setShowSummary={setShowSummary} show_summary={show_summary} />}
                     </>
                 )}
                 {/* Blockly workspace will be injected here */}
@@ -164,8 +180,6 @@ const Main = () => {
                     <div id='blocklyDiv' style={{ position: 'absolute' }}></div>
                     <SidebarToggle />
                 </div>
-                {blockly && <LogTable />}
-                {blockly && <TradeInfoPanel />}
             </div>
         </div>
     );

@@ -182,8 +182,15 @@ export const createDetails = (contract, pip_size) => {
 
 export const getUUID = () => `${new Date().getTime() * Math.random()}`;
 
-export const showDialog = options =>
-    new Promise((resolve, reject) => {
+export const showDialog = options => {
+    const draggableModals = document.getElementsByClassName('draggable');
+    if (draggableModals.length) {
+        Array.from(draggableModals).forEach(dialog => {
+            dialog.style.zIndex = 100;
+        });
+    }
+
+    return new Promise((resolve, reject) => {
         const $dialog = $('<div/>', { class: `draggable-dialog ${options.className}`, title: options.title });
         options.text.forEach(text => $dialog.append(`<p style="margin: 0.7em;">${text}</p>`));
         const defaultButtons = [
@@ -223,3 +230,4 @@ export const showDialog = options =>
         $dialog.dialog(dialogOptions);
         $dialog.dialog('open');
     });
+};

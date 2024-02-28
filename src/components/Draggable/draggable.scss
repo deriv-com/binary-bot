@@ -18,12 +18,16 @@
             color: #fff;
             border: 1px solid var(--color-blue);
             border-radius: 3px;
+            width: 100%;
             &__title {
                 font-size: 16px;
                 font-weight: 700;
             }
             &__close {
                 cursor: pointer;
+            }
+            &-title {
+                width: 100%;
             }
         }
         &__body {
