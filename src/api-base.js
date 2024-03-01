@@ -9,6 +9,7 @@ import {
 } from '@storage';
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import { observer as globalObserver } from '@utilities/observer';
+import APIMiddleware from './api-middleware';
 
 const socket_url = `wss://${getServerAddressFallback()}/websockets/v3?app_id=${getAppIdFallback()}&l=${getLanguage().toUpperCase()}&brand=deriv`;
 
@@ -32,6 +33,7 @@ class APIBase {
         try {
             this.api = new DerivAPIBasic({
                 connection: new WebSocket(socket_url),
+                middleware: new APIMiddleware({}),
             });
 
             this.api_chart = null;
