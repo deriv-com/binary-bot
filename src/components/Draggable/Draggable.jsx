@@ -213,6 +213,8 @@ const Draggable = ({
         <div
             className={`draggable ${isDragging ? 'dragging' : ''}`}
             style={{ position: 'absolute', top: position.y, left: position.x, zIndex }}
+            onMouseDown={calculateZindex}
+            onKeyDown={calculateZindex}
         >
             <div ref={draggableRef} className='draggable-content' style={{ width: size.width, height: size.height }}>
                 <div
