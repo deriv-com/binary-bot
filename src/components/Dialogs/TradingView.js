@@ -37,8 +37,8 @@ function TradingViewComponent() {
 const TradingView = ({ setShowTradingView }) => (
     <DraggableResizeWrapper
         boundary={'body'}
-        minWidth={600}
-        minHeight={600}
+        minWidth={510}
+        minHeight={590}
         modalHeight={chartHeight}
         modalWidth={chartWidth}
         header={translate('Trading View')}
