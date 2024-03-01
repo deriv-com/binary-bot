@@ -9,7 +9,7 @@ import Text from '../../common/text/text.jsx';
 import './account-wallet-dropdown.scss';
 
 const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdownRef) => {
-    const { accounts, account_list } = useSelector(state => state.client);
+    const { accounts, account_list, is_virtual } = useSelector(state => state.client);
     const container_ref = React.useRef();
     let all_accounts = [];
     const { deposit } = config;
@@ -80,7 +80,7 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                     <WalletContent setIsAccDropdownOpen={setIsAccDropdownOpen} accounts={all_accounts} />
                 </div>
                 <div>
-                    {isMobile() && (
+                    {isMobile() && !is_virtual && (
                         <div className='account__switcher-manage-funds'>
                             <a href={url}>
                                 <button className='account__switcher-wallet-btn'>{translate(label)}</button>
@@ -90,7 +90,7 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                     <div className='account__switcher-total-wallet'>
                         <span>{translate('Looking for CFDs? Go to Trader\'s hub')}</span>
 
-                        <a href={config.tradershub.url} className={'account__switcher-total--link'}>
+                        <a href={config.wallets.url} className={'account__switcher-total--link'}>
                             <img
                                 className={'header__expand'}
                                 src='/public/images/ic-chevron-down-bold.svg'
