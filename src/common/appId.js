@@ -15,10 +15,10 @@ import { getRelatedDeriveOrigin } from '@utils';
 import GTM from '@utilities/integrations/gtm';
 
 const generateOAuthDomain = () => {
-    const related_deriv_origin = getRelatedDeriveOrigin;
-    const endpointUrl = getCustomEndpoint().url;
+    const related_deriv_origin = getRelatedDeriveOrigin();
+    const endpointUrl = getCustomEndpoint().url || '';
 
-    if (endpointUrl) {
+    if (endpointUrl && endpointUrl.includes('qa')) {
         return endpointUrl;
     }
 

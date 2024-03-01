@@ -42,7 +42,7 @@ export class TrackJSError extends Error {
 
 const notifyError = error => {
     if (!error) return;
-    const { message } = trackJSTrack(error);
+    const { message = '' } = trackJSTrack(error);
     notify({ className: 'error', message, position: isMobile() ? 'left' : 'right' });
 };
 

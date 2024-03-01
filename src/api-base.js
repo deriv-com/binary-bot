@@ -4,6 +4,8 @@ import {
     getServerAddressFallback,
     getClientAccounts,
     setClientAccounts,
+    setConfigURL,
+    setConfigAppID,
 } from '@storage';
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import APIMiddleware from './api-middleware';
@@ -38,7 +40,7 @@ class APIBase {
 
             this.api.onOpen().subscribe(() => {
                 // eslint-disable-next-line no-console
-                console.log('Connection has been established!', this.api);
+                console.log('Connection has been established!');
             });
         } catch (error) {
             globalObserver.emit('Error', error);
@@ -155,7 +157,7 @@ class APIBase {
 
             this.api_chart.onOpen().subscribe(() => {
                 // eslint-disable-next-line no-console
-                console.log('Connection has been established for chart ws!', this.api_chart);
+                console.log('Connection has been established for chart ws!');
             });
         } catch (error) {
             globalObserver.emit('Error', error);
@@ -163,11 +165,23 @@ class APIBase {
     }
 
     async getActiveSymbols() {
-        const { active_symbols } = await this.api.send({ active_symbols: 'brief' });
-        this.active_symbols = active_symbols;
-        return {
-            active_symbols,
-        };
+        try {
+            const { active_symbols } = await this.api.send({ active_symbols: 'brief' });
+            this.active_symbols = active_symbols;
+            return {
+                active_symbols,
+            };
+        } catch (err) {
+            if (err.error.code === 'InvalidAppID') {
+                globalObserver.emit('Error', err.error.message);
+                setConfigURL('');
+                setConfigAppID('');
+                window.location.reload();
+            }
+            return {
+                error: err,
+            };
+        }
     }
 }
 

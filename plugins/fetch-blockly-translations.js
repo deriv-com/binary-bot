@@ -62,8 +62,10 @@ const axios = require('axios');
     // eslint-disable-next-line no-console
     console.log(outputFile, 'output file');
     await fs.writeFile(outputFile, mergedContent, 'utf8', err => {
-        // eslint-disable-next-line no-console
-        console.log(err, 'Error fetching blockly');
+        if (err) {
+            // eslint-disable-next-line no-console
+            console.log(err, 'Error fetching blockly');
+        }
     });
 })()
     .then(() => {

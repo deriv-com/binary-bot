@@ -1,0 +1,17 @@
+.draggable {
+    .smartcharts {
+        position: relative;
+        height: calc(100% - 40px);
+        top: -18px;
+
+        .cq-modal__overlay {
+            z-index: 9999;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.72);
+        }
+
+        .smartcharts-desktop {
+            top: 0;
+        }
+    }
+}

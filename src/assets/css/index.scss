@@ -15,15 +15,16 @@ body {
     max-width: 100%;
     overflow-x: hidden;
 }
+
 .top-image {
     display: none;
 }
 
 #main {
     width: 100%;
-    // max-width: 960px;
     margin: 0 auto;
 }
+
 .left,
 .right {
     width: 45%;
@@ -31,19 +32,24 @@ body {
     display: inline-block;
     vertical-align: top;
 }
+
 .right img {
     width: 200%;
 }
+
 .cta {
     margin: 30px auto;
     text-align: center;
 }
+
 .contact {
     text-align: center;
 }
+
 ul.bullet {
     margin: 0 !important;
 }
+
 .barspinner {
     position: fixed;
     left: 50%;
@@ -51,26 +57,33 @@ ul.bullet {
     z-index: 9999;
     transform: translate(-50%, 50%);
 }
+
 .center {
     text-align: center;
 }
+
 .half-width {
     width: 50%;
     float: left;
 }
+
 .clear {
     clear: both;
 }
+
 .button span {
     text-transform: inherit !important;
 }
+
 .show-on-load {
     display: none;
 }
+
 #split-container {
     display: flex;
     flex-direction: row;
     width: 100%;
+
     .puzzle-logo {
         padding-left: 20px;
     }
@@ -84,37 +97,46 @@ ul.bullet {
     .half-width {
         width: 49%;
     }
+
     .logo-parent {
         margin-left: 21px;
     }
+
     .half-width p {
         padding: 0 20px 0 20px;
     }
 }
+
 @media only screen and (max-width: 480px) {
     #split-container {
         display: block;
         width: auto;
     }
+
     .top-image {
         display: block;
     }
+
     .half-width {
         width: 100%;
     }
+
     .half-width p,
     .half-width img {
         margin: 1em;
     }
+
     .bottom-image {
         display: none;
     }
+
     .left,
     .right {
         width: 100%;
         margin: 20px;
         display: block;
     }
+
     .clear {
         position: sticky;
         padding: 1px 0 1px 0;
@@ -295,6 +317,7 @@ ul.bullet {
         font-size: 12px;
         margin: 12px;
         height: 25px;
+
         & > span {
             background: var(--general-active);
             color: var(--text-prominent);
@@ -359,6 +382,7 @@ ul.bullet {
                     margin: 0;
                 }
             }
+
             &__popover {
                 position: absolute;
                 z-index: 1;
@@ -992,6 +1016,23 @@ ul.bullet {
 
                 @include mobile {
                     width: 90%;
+                    flex-direction: column;
+                }
+
+                &-wallet {
+                    @include mobile {
+                        display: flex;
+                        justify-content: space-between;
+                        height: 100%;
+                        width: 100%;
+                        position: fixed !important;
+                        top: 0;
+                        border-radius: 0;
+                    }
+
+                    .account__switcher-container {
+                        height: 75%;
+                    }
                 }
 
                 &-wrapper {
@@ -1006,6 +1047,10 @@ ul.bullet {
                         z-index: 99999;
                         display: none;
                         padding: 10vh 0;
+                    }
+
+                    &-wallet {
+                        padding: 0;
                     }
 
                     &.show {
@@ -1168,12 +1213,6 @@ ul.bullet {
                             font-size: 14px;
                         }
                     }
-                }
-            }
-
-            &-dropdown {
-                @include mobile {
-                    flex-direction: column;
                 }
             }
 

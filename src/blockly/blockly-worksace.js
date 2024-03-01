@@ -245,15 +245,17 @@ const addBindings = blockly => {
             const login_id = getActiveLoginId();
             const client_accounts = getClientAccounts();
 
-            if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
-                const limits = new Limits();
-                limits
-                    .getLimits()
-                    .then(startBot)
-                    .catch(() => {});
-            } else {
-                startBot();
-            }
+            setTimeout(() => {
+                if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
+                    const limits = new Limits();
+                    limits
+                        .getLimits()
+                        .then(startBot)
+                        .catch(() => {});
+                } else {
+                    startBot();
+                }
+            }, 0);
         }, 300)
     );
 

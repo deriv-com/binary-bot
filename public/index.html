@@ -37,6 +37,18 @@
                 top.location = self.location;
             }
         </script>
+        <script>
+            window.addEventListener('unhandledrejection', function (event) {
+                console.log(
+                    'Unhandled rejection (promise: ',
+                    event.promise,
+                    ', reason: ',
+                    event.reason,
+                    ').',
+                    JSON.stringify(event.promise)
+                );
+            });
+        </script>
     </head>
 
     <body>

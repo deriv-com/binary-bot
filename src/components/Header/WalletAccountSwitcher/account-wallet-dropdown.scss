@@ -1,9 +1,14 @@
+@import '../../../assets/css/variables';
+@import '../../../assets/css/mixins';
+
 .account {
     $color-black-1: #333333;
 
     &__wallet-switcher-list {
-        padding: 0.28rem 0.57rem !important;
-        border-bottom: 1px solid #e6e9e9 !important;
+        @include desktop {
+            padding: 0.28rem 0.57rem !important;
+            border-bottom: 1px solid #e6e9e9 !important;
+        }
     }
 
     &__switcher-wallet-acc {
@@ -45,7 +50,14 @@
     }
 
     &__wallet-switcher-tabs-content {
-        max-height: 450px;
+        @include mobile {
+            height: 100%;
+        }
+
+        @include desktop {
+            max-height: 450px;
+        }
+
         max-width: none;
         overflow-y: auto;
         overflow-x: hidden;
@@ -65,6 +77,29 @@
         }
     }
 
+    &__switcher {
+        &-manage-funds {
+            border-bottom: 1px solid #e6e9e9 !important;
+            padding: 1rem 0.8rem;
+        }
+
+        &-wallet-btn {
+            background: var(--button-primary-default);
+            color: var(--text-colored-background);
+            font-size: var(--font-size-s);
+            width: 100%;
+            height: 2.5rem;
+            text-transform: none;
+            font-weight: bold;
+            border-width: 2px;
+            min-width: 4rem;
+        }
+
+        &-wallet-btn:hover {
+            background-color: var(--button-primary-default);
+        }
+    }
+
     &__switcher-total-wallet {
         display: flex;
         justify-content: space-between;
@@ -81,6 +116,9 @@
 
     &-switcher-wallet {
         &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 0.71rem;
             border-bottom: 1px solid var(--general-hover);
 

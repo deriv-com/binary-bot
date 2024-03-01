@@ -24,6 +24,8 @@ export function trackJSTrack(error) {
             ({ message } = error.error);
             ({ code } = error.error);
         }
+    } else if (error?.error && typeof error.error === 'string') {
+        message = error.error;
     } else {
         ({ message } = error);
         ({ code } = error);

@@ -56,6 +56,11 @@ export default class ChartTicksService extends TicksService {
                 })
                 .catch(e => {
                     globalObserver.emit('Error', e);
+                    if (e?.error?.code === 'AlreadySubscribed') {
+                        api_base.api_chart.forgetAll(style !== 'ticks' ? 'candles' : 'ticks').then(() => {
+                            this.requestTicks(options);
+                        });
+                    }
                 });
         });
     }

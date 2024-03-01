@@ -169,9 +169,10 @@ export const syncWithDerivApp = () => {
         );
     };
     if (iframe) {
-        if (document.readyState === 'complete') {
-            postMessages();
-            return;
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(() => {
+                postMessages();
+            }, 100);
         }
         if (!hasReadystateListener) {
             hasReadystateListener = true;
@@ -241,7 +242,7 @@ const isRealAccount = () => {
 };
 
 export const getDefaultEndpoint = () => ({
-    url: isRealAccount() ? 'green.binaryws.com' : 'blue.binaryws.com',
+    url: isRealAccount() ? 'green.derivws.com' : 'blue.derivws.com',
     appId: getDefaultAppId() || getDomainAppId(),
 });
 
