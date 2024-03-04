@@ -265,7 +265,7 @@ ChartContent.propTypes = {
 
 const Chart = ({ setShowChart }) => (
     <DraggableResizeWrapper
-        boundary={'#bot-blockly'}
+        boundary={'body'}
         minWidth={600}
         minHeight={600}
         modalHeight={600}

@@ -12,7 +12,8 @@ const BOTTOM_RIGHT = 'bottom-right';
 const BOTTOM_LEFT = 'bottom-left';
 const TOP_LEFT = 'top-left';
 const BODY_REF = 'body';
-const SAFETY_MARGIN = 10;
+const SAFETY_MARGIN = 7;
+const EXTRA_BOTTOM_RIGHT_SAFETY_MARGIN = 3;
 
 const Draggable = ({
     children,
@@ -32,6 +33,8 @@ const Draggable = ({
 }) => {
     const [position, setPosition] = useState({ x: initialValues.xAxis, y: initialValues.yAxis });
     const [size, setSize] = useState({ width: initialValues.width, height: initialValues.height });
+    const [zIndex, setZIndex] = useState(100);
+
     const isResizing = useRef(false);
     const [isDragging, setIsDragging] = useState(false);
     const draggableRef = useRef(null);
@@ -45,38 +48,59 @@ const Draggable = ({
     useEffect(() => {
         const boundaryEl = document.querySelector(boundary ?? BODY_REF);
         setBoundaryRef(boundaryEl);
+        calculateZindex();
     }, [boundary]);
+
+    const calculateZindex = () => {
+        const draggableModals = document.getElementsByClassName('draggable');
+        if (!draggableModals.length) return;
+        const maxZIndex = Array.from(draggableModals).reduce(
+            (maxZ, modal) => Math.max(maxZ, parseInt(window.getComputedStyle(modal).zIndex) || 0),
+            0
+        );
+        const newZIndex = maxZIndex + 3;
+        setZIndex(newZIndex);
+    };
 
     const handleMouseDown = (event, action) => {
         event.stopPropagation();
+        calculateZindex();
         if (!action) return;
         const resize_direction = action;
-        if (resize_direction !== MOVE && enableResizing) {
-            isResizing.current = true;
-        } else if (action === MOVE && enableDragging) {
-            isResizing.current = false;
-            setIsDragging(true);
-        } else {
-            return;
-        }
+        isResizing.current = action !== MOVE && enableResizing;
+        setIsDragging(action === MOVE && enableDragging);
 
         const boundaryRect = boundaryRef?.getBoundingClientRect();
-        const topOffset = boundaryRef?.offsetTop;
-        const leftOffset = boundaryRef?.offsetLeft;
+        const topOffset = boundaryRef?.offsetTop ?? 0;
+        const leftOffset = boundaryRef?.offsetLeft ?? 0;
         const initialMouseX = event?.clientX ?? 0;
         const initialMouseY = event?.clientY ?? 0;
-        const initialWidth = size?.width;
-        const initialHeight = size?.height;
-        const initialX = position ? position?.x : 0;
-        const initialY = position ? position.y : 0;
+        const initialWidth = size?.width ?? initialValues.width;
+        const initialHeight = size?.height ?? initialValues.height;
+        const initialX = position?.x ?? 0;
+        const initialY = position?.y ?? 0;
+        const initialSelfRight = draggableRef.current?.getBoundingClientRect()?.right ?? size.width;
+        const initialSelfBottom = draggableRef.current?.getBoundingClientRect()?.bottom ?? size.height;
+
+        let previousStyle = {};
+        const draggableContentBody = draggableRef.current?.querySelector('#draggable-content-body');
+
+        if (draggableContentBody) {
+            const { style } = draggableContentBody;
+            if (style && style.pointerEvents !== 'none') {
+                previousStyle = style;
+                style.pointerEvents = 'none';
+            }
+        }
 
         const handleMouseMove = e => {
             if (!e) return;
-            const deltaX = e.clientX - initialMouseX;
-            const deltaY = e.clientY - initialMouseY;
+            const { clientX, clientY } = e;
+            const deltaX = clientX - initialMouseX;
+            const deltaY = clientY - initialMouseY;
             try {
                 if (isResizing.current) {
-                    handleResize(deltaX, deltaY);
+                    handleResize(deltaX, deltaY, clientX, clientY);
                 } else {
                     handleDrag(deltaX, deltaY);
                 }
@@ -85,7 +109,7 @@ const Draggable = ({
             }
         };
 
-        const handleResize = (deltaX, deltaY) => {
+        const handleResize = (deltaX, deltaY, clientX, clientY) => {
             let newX = position?.x ?? 0;
             let newY = position?.y ?? 0;
             let newWidth = initialWidth;
@@ -110,34 +134,61 @@ const Draggable = ({
                 const maxX = Math.max(newX, leftOffset + SAFETY_MARGIN);
                 return { x: newWidth <= minWidth ? prev.x : maxX, y: newHeight <= minHeight ? prev.y : maxY };
             });
+
             const self = draggableRef.current?.getBoundingClientRect();
+
+            const calculateWidth = prevWidth => {
+                const leftLimit = leftOffset + SAFETY_MARGIN;
+                const rightLimit =
+                    boundaryRect.left + boundaryRect.width - (SAFETY_MARGIN + EXTRA_BOTTOM_RIGHT_SAFETY_MARGIN);
+                const calculatedPreviousWidth = rightLimit - leftLimit - (rightLimit - initialSelfRight);
+                if (resize_direction.includes(LEFT)) {
+                    if (newWidth >= minWidth && clientX > leftLimit) return newWidth;
+                    if (clientX < leftLimit) return calculatedPreviousWidth;
+                    return prevWidth;
+                }
+                if (resize_direction.includes(RIGHT)) {
+                    if (newWidth >= minWidth && clientX < rightLimit) return newWidth;
+                    if (clientX > rightLimit) return rightLimit - self.left;
+                    return prevWidth;
+                }
+                return prevWidth;
+            };
+
+            const calculateHeight = prevHeight => {
+                const topLimit = topOffset + SAFETY_MARGIN;
+                const bottomLimit =
+                    boundaryRect.top + boundaryRect.height - (SAFETY_MARGIN + EXTRA_BOTTOM_RIGHT_SAFETY_MARGIN);
+                const calculatedPreviousHeight = bottomLimit - topLimit - (bottomLimit - initialSelfBottom);
+                if (resize_direction.includes(TOP)) {
+                    if (newHeight >= minHeight && clientY > topLimit) return newHeight;
+                    if (clientY < topLimit) return calculatedPreviousHeight;
+                    return prevHeight;
+                }
+                if (resize_direction.includes(BOTTOM)) {
+                    if (newHeight >= minHeight && clientY < bottomLimit) return newHeight;
+                    if (clientY > bottomLimit) return bottomLimit - self.top;
+                    return prevHeight;
+                }
+                return prevHeight;
+            };
+
             setSize(prev => ({
-                width:
-                    newWidth >= minWidth &&
-                    newX > leftOffset &&
-                    self.left + newWidth < boundaryRect.left + boundaryRect.width
-                        ? newWidth
-                        : prev.width,
-                height:
-                    newHeight >= minHeight &&
-                    newY > topOffset &&
-                    self.top + newHeight < boundaryRect.top + boundaryRect.height
-                        ? newHeight
-                        : prev.height,
+                width: calculateWidth(prev.width),
+                height: calculateHeight(prev.height),
             }));
         };
 
         const handleDrag = (deltaX, deltaY) => {
             const newX = deltaX + initialX;
             const newY = deltaY + initialY;
-
             const boundedX = Math.min(
                 Math.max(newX, leftOffset + SAFETY_MARGIN),
-                leftOffset + boundaryRect.width - size.width - SAFETY_MARGIN
+                leftOffset + boundaryRect.width - size.width - (SAFETY_MARGIN + EXTRA_BOTTOM_RIGHT_SAFETY_MARGIN * 2)
             );
             const boundedY = Math.min(
                 Math.max(newY, topOffset + SAFETY_MARGIN),
-                topOffset + boundaryRect.height - size.height - SAFETY_MARGIN
+                topOffset + boundaryRect.height - size.height - (SAFETY_MARGIN + EXTRA_BOTTOM_RIGHT_SAFETY_MARGIN * 2)
             );
             setPosition({ x: boundedX, y: boundedY });
         };
@@ -145,6 +196,7 @@ const Draggable = ({
         const handleMouseUp = () => {
             setIsDragging(false);
             isResizing.current = false;
+            if (draggableContentBody?.style) draggableContentBody.style = previousStyle;
             if (boundaryRef) {
                 window.removeEventListener('mousemove', handleMouseMove);
                 window.removeEventListener('mouseup', handleMouseUp);
@@ -160,11 +212,19 @@ const Draggable = ({
     return (
         <div
             className={`draggable ${isDragging ? 'dragging' : ''}`}
-            style={{ position: 'absolute', top: position.y, left: position.x }}
+            style={{ position: 'absolute', top: position.y, left: position.x, zIndex }}
+            onMouseDown={calculateZindex}
+            onKeyDown={calculateZindex}
         >
             <div ref={draggableRef} className='draggable-content' style={{ width: size.width, height: size.height }}>
-                <div className='draggable-content__header' onMouseDown={e => handleMouseDown(e, MOVE)}>
-                    <div>{header}</div>
+                <div
+                    id='draggable-content__header'
+                    className='draggable-content__header'
+                    role='button'
+                    onMouseDown={e => handleMouseDown(e, MOVE)}
+                    onKeyDown={e => handleMouseDown(e, MOVE)}
+                >
+                    <div className='draggable-content__header-title'>{header}</div>
                     <div>
                         <button
                             type='button'
@@ -175,7 +235,9 @@ const Draggable = ({
                         </button>
                     </div>
                 </div>
-                <span className='draggable-content__body'>{children}</span>
+                <span className='draggable-content__body' id='draggable-content-body'>
+                    {children}
+                </span>
                 {enableResizing && (
                     <>
                         <div

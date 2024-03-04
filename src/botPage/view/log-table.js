@@ -6,8 +6,10 @@ import { Table, Column, CellMeasurerCache } from 'react-virtualized';
 import { translate } from '@i18n';
 import { saveAs, appendRow } from '@utils';
 import { observer as globalObserver } from '@utilities/observer';
+import { DraggableResizeWrapper } from '../../components/Draggable';
+import './log-table.scss';
 
-const Logtable = () => {
+const LogTableContent = () => {
     const [id, setId] = React.useState(0);
     const [rows, setRows] = React.useState([]);
     const [widths, setWidths] = React.useState({
@@ -108,8 +110,8 @@ const Logtable = () => {
     );
 
     return (
-        <span id='logPanel' className='draggable-dialog' title={translate('Log')}>
-            <div id='logTable' className='logTable-scroll'>
+        <span id='logPanel' className='logpanel'>
+            <div id='logtable' className='logTable-scroll logtable'>
                 <div className='content-row'>
                     <div>
                         <div className='content-row-table'>
@@ -128,9 +130,9 @@ const Logtable = () => {
                                     rowRenderer={rowRenderer}
                                     deferredMeasurementCache={cache}
                                 >
-                                    {columns.map(({ label, dataKey }, index) => (
+                                    {columns.map(({ label, dataKey }) => (
                                         <Column
-                                            key={index}
+                                            key={label + dataKey}
                                             headerRenderer={headerRenderer}
                                             width={widths[dataKey] * total_width}
                                             label={label}
@@ -147,8 +149,44 @@ const Logtable = () => {
     );
 };
 
-Logtable.propTypes = {
-    rows: PropTypes.array,
+const LogTable = ({ setShowLogTable, show_log_table }) => (
+    <div
+        style={{
+            visibility: show_log_table ? 'visible' : 'hidden',
+            opacity: show_log_table ? 1 : 0,
+        }}
+    >
+        <DraggableResizeWrapper
+            boundary={show_log_table ? 'body' : '.main'}
+            minWidth={770}
+            minHeight={600}
+            modalHeight={600}
+            modalWidth={770}
+            header={
+                <div className='log-table__header-container'>
+                    <span>{translate('Log')}</span>
+                    <span>
+                        <button
+                            className='icon-save'
+                            onClick={() => {
+                                globalObserver.emit('log.export');
+                            }}
+                        />
+                    </span>
+                </div>
+            }
+            onClose={() => {
+                setShowLogTable(is_shown => !is_shown);
+            }}
+        >
+            <LogTableContent />
+        </DraggableResizeWrapper>
+    </div>
+);
+
+LogTable.propTypes = {
+    setShowLogTable: PropTypes.func.isRequired,
+    show_log_table: PropTypes.bool.isRequired,
 };
 
-export default Logtable;
+export default LogTable;

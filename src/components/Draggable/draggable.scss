@@ -2,7 +2,6 @@
     border: 1px solid rgb(0 0 0 / 12%);
     box-shadow: 0px 0px 4px 1px rgb(0 0 0 / 8%);
     padding: 2px;
-    z-index: 998;
     border-radius: 4px;
     background: var(--general-main-1);
     user-select: none;
@@ -19,12 +18,16 @@
             color: #fff;
             border: 1px solid var(--color-blue);
             border-radius: 3px;
+            width: 100%;
             &__title {
                 font-size: 16px;
                 font-weight: 700;
             }
             &__close {
                 cursor: pointer;
+            }
+            &-title {
+                width: 100%;
             }
         }
         &__body {

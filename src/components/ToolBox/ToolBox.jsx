@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { showSummary, logButton } from '@blockly/blockly-worksace';
 import config from '@config';
 import { isMobile } from '@utils';
 import { translate } from '@i18n';
@@ -14,7 +13,6 @@ import Modal from '@components/common/modal';
 import { setIsBotRunning } from '@redux-store/ui-slice';
 import Popover from '@components/common/popover';
 import Save from './save';
-import TradingView from '@components/Dialogs/TradingView';
 import { getActiveToken } from '@storage';
 import { api_base } from '../../api-base';
 
@@ -64,9 +62,15 @@ ToolboxButton.propTypes = {
     tooltip: PropTypes.string,
 };
 
-let tradingView;
-
-const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDrive }) => {
+const ToolBox = ({
+    blockly,
+    is_workspace_rendered,
+    setShowChart,
+    setShowGoogleDrive,
+    setShowTradingView,
+    setShowLogTable,
+    setShowSummary,
+}) => {
     const [should_show_modal, setShowModal] = React.useState(false);
     const [selected_modal, updateSelectedModal] = React.useState('');
     const [has_active_token, setHasActiveToken] = React.useState(false);
@@ -216,7 +220,9 @@ const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDr
                 id='showSummary'
                 tooltip={translate('Show/hide the summary pop-up')}
                 position={'bottom'}
-                onClick={() => showSummary()}
+                onClick={() => {
+                    setShowSummary(is_shown => !is_shown);
+                }}
                 classes={classNames('toolbox-button icon-summary', {
                     'toolbox-hide': !has_active_token,
                 })}
@@ -245,7 +251,9 @@ const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDr
                 class_container={classNames({ 'toolbox-hide': !has_active_token })}
                 tooltip={translate('Show log')}
                 position='bottom'
-                onClick={() => logButton()}
+                onClick={() => {
+                    setShowLogTable(is_shown => !is_shown);
+                }}
                 classes={classNames('toolbox-button icon-info', { 'toolbox-hide': !has_active_token })}
             />
             {has_active_token && <span className='toolbox-separator' />}
@@ -269,10 +277,7 @@ const ToolBox = ({ blockly, is_workspace_rendered, setShowChart, setShowGoogleDr
                     position='bottom'
                     classes='toolbox-button icon-trading-view'
                     onClick={() => {
-                        if (!tradingView) {
-                            tradingView = new TradingView();
-                        }
-                        tradingView?.open?.();
+                        setShowTradingView(is_shown => !is_shown);
                     }}
                 />
             )}
@@ -288,6 +293,9 @@ ToolBox.propTypes = {
     is_workspace_rendered: PropTypes.bool,
     setShowChart: PropTypes.func,
     setShowGoogleDrive: PropTypes.func,
+    setShowTradingView: PropTypes.func,
+    setShowLogTable: PropTypes.func,
+    setShowSummary: PropTypes.func,
 };
 
 export default ToolBox;
