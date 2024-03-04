@@ -57,7 +57,10 @@
             border: 1px solid (--disabled-color);
         }
     }
+}
 
+.draggable-dialog,
+.draggable {
     table {
         overflow: auto;
         width: 100%;
