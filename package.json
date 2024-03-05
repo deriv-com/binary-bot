@@ -107,6 +107,7 @@
         "webpack-dev-server": "^4.15.1"
     },
     "dependencies": {
+        "@datadog/browser-logs": "^5.10.0",
         "@deriv/deriv-api": "^1.0.9",
         "@deriv/deriv-charts": "^2.0.1",
         "@reduxjs/toolkit": "^1.7.1",

@@ -207,6 +207,30 @@ const addBindings = blockly => {
             if (isStopping) return;
 
             globalObserver.setState({ isStarting: true });
+
+            let timer = globalObserver.getState('timer');
+
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            let timer_counter = 1;
+            if (window.sendRequestsStatistic) {
+                // Log is sent every 10 seconds for 2 minutes
+                timer = setInterval(() => {
+                    window.sendRequestsStatistic();
+
+                    performance.clearMeasures();
+                    if (timer_counter === 12) {
+                        clearInterval(timer);
+                    } else {
+                        timer_counter++;
+                    }
+                }, 10000);
+
+                globalObserver.setState({ timer });
+            }
+
             // setTimeout is needed to ensure correct event sequence
             if (!checkForRequiredBlocks()) {
                 setTimeout(() => $('#stopButton').triggerHandler('click'));
@@ -256,13 +280,21 @@ const addBindings = blockly => {
     });
 };
 
-const stopBlockly = async blockly =>
-    new Promise((resolve, reject) => {
+const stopBlockly = async blockly => {
+    const timer = globalObserver.getState('timer');
+
+    if (timer) {
+        clearInterval(timer);
+    }
+    performance.clearMeasures();
+
+    return new Promise((resolve, reject) => {
         blockly
             .stop()
             .then(() => resolve())
             .catch(err => reject(err));
     });
+};
 
 const addEventHandlers = blockly => {
     const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');
