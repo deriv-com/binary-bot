@@ -6,7 +6,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 const isStaging = process.env.NODE_ENV === 'staging';
 let dataDogSessionSampleRate = 0;
 
-dataDogSessionSampleRate = +process.env.DATADOG_SESSION_SAMPLE_RATE_LOGS ?? 1;
+dataDogSessionSampleRate = process.env.DATADOG_SESSION_SAMPLE_RATE_LOGS
+    ? +process.env.DATADOG_SESSION_SAMPLE_RATE_LOGS
+    : 1;
 let dataDogVersion = '';
 let dataDogEnv = '';
 
