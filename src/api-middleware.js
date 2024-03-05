@@ -47,7 +47,6 @@ export const REQUESTS = [
 class APIMiddleware {
     constructor(config) {
         this.config = config;
-        this.debounced_calls = {};
         this.addGlobalMethod();
     }
 
