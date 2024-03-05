@@ -36,7 +36,7 @@ module.exports = {
         new CleanWebpackPlugin(['www']),
         new Dotenv(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.TRACKJS_TOKEN': JSON.stringify(process.env.TRACKJS_TOKEN),
             'process.env.GD_APP_ID': JSON.stringify(process.env.GD_APP_ID),
             'process.env.GD_CLIENT_ID': JSON.stringify(process.env.GD_CLIENT_ID),

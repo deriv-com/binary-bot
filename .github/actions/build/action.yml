@@ -1,6 +1,14 @@
 name: build
 description: Build all packages
 inputs:
+  NODE_ENV:
+    description: 'Node environment'
+    required: false
+    default: 'test'
+  REF_NAME:
+    description: 'Git ref name'
+    required: true
+    default: 'test'
   GD_API_KEY:
     description: "Google drive api key"
     required: false
@@ -13,14 +21,24 @@ inputs:
   TRACKJS_TOKEN:
     description: "trackjs token"
     required: false
+  DATADOG_CLIENT_TOKEN_LOGS:
+    description: 'Datadog client token for logs'
+    required: false
+  DATADOG_SESSION_SAMPLE_RATE_LOGS:
+    description: 'Datadog session sample rate for logs'
+    required: false
 runs:
   using: composite
   steps:
     - name: Build all packages
       env:
+        NODE_ENV: ${{ inputs.NODE_ENV }}
         GD_CLIENT_ID: ${{ inputs.GD_CLIENT_ID }}
         GD_API_KEY: ${{ inputs.GD_API_KEY }}
         GD_APP_ID: ${{ inputs.GD_APP_ID }}
         TRACKJS_TOKEN: ${{ inputs.TRACKJS_TOKEN }}
+        DATADOG_CLIENT_TOKEN_LOGS: ${{ inputs.DATADOG_CLIENT_TOKEN_LOGS }}
+        DATADOG_SESSION_SAMPLE_RATE_LOGS: ${{ inputs.DATADOG_SESSION_SAMPLE_RATE_LOGS }}
+        REF_NAME: ${{ inputs.REF_NAME }}
       run: npm run build
       shell: bash
