@@ -36,11 +36,16 @@ module.exports = {
         new CleanWebpackPlugin(['www']),
         new Dotenv(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.TRACKJS_TOKEN': JSON.stringify(process.env.TRACKJS_TOKEN),
             'process.env.GD_APP_ID': JSON.stringify(process.env.GD_APP_ID),
             'process.env.GD_CLIENT_ID': JSON.stringify(process.env.GD_CLIENT_ID),
             'process.env.GD_API_KEY': JSON.stringify(process.env.GD_API_KEY),
+            'process.env.DATADOG_CLIENT_LOGS_TOKEN': JSON.stringify(process.env.DATADOG_CLIENT_LOGS_TOKEN),
+            'process.env.DATADOG_LOGS_SESSION_SAMPLE_RATE': JSON.stringify(
+                process.env.DATADOG_LOGS_SESSION_SAMPLE_RATE
+            ),
+            'process.env.REF_NAME': JSON.stringify(process.env.REF_NAME),
         }),
         new BlocklyConcatPlugin({
             outputPath: '/',
