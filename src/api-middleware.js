@@ -1,13 +1,13 @@
 import { datadogLogs } from '@datadog/browser-logs';
 import { formatDate } from './utilities/utility-functions';
 
-const DATADOG_CLIENT_TOKEN_LOGS = process.env.DATADOG_CLIENT_TOKEN_LOGS ?? '';
+const DATADOG_CLIENT_LOGS_TOKEN = process.env.DATADOG_CLIENT_LOGS_TOKEN ?? '';
 const isProduction = process.env.NODE_ENV === 'production';
 const isStaging = process.env.NODE_ENV === 'staging';
 let dataDogSessionSampleRate = 0;
 
-dataDogSessionSampleRate = process.env.DATADOG_SESSION_SAMPLE_RATE_LOGS
-    ? +process.env.DATADOG_SESSION_SAMPLE_RATE_LOGS
+dataDogSessionSampleRate = process.env.DATADOG_LOGS_SESSION_SAMPLE_RATE
+    ? +process.env.DATADOG_LOGS_SESSION_SAMPLE_RATE
     : 1;
 let dataDogVersion = '';
 let dataDogEnv = '';
@@ -20,9 +20,9 @@ if (isProduction) {
     dataDogEnv = 'staging';
 }
 
-if (DATADOG_CLIENT_TOKEN_LOGS) {
+if (DATADOG_CLIENT_LOGS_TOKEN) {
     datadogLogs.init({
-        clientToken: DATADOG_CLIENT_TOKEN_LOGS,
+        clientToken: DATADOG_CLIENT_LOGS_TOKEN,
         site: 'datadoghq.com',
         forwardErrorsToLogs: false,
         service: 'BinaryBot',
@@ -109,7 +109,7 @@ class APIMiddleware {
         REQUESTS.forEach(req_type => {
             const measure = performance.getEntriesByName(req_type);
             if (measure && measure.length) {
-                if (DATADOG_CLIENT_TOKEN_LOGS) {
+                if (DATADOG_CLIENT_LOGS_TOKEN) {
                     this.log(measure, is_bot_running, req_type);
                 }
             }

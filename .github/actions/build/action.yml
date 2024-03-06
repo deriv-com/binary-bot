@@ -21,10 +21,10 @@ inputs:
   TRACKJS_TOKEN:
     description: "trackjs token"
     required: false
-  DATADOG_CLIENT_TOKEN_LOGS:
+  DATADOG_CLIENT_LOGS_TOKEN:
     description: 'Datadog client token for logs'
     required: false
-  DATADOG_SESSION_SAMPLE_RATE_LOGS:
+  DATADOG_LOGS_SESSION_SAMPLE_RATE:
     description: 'Datadog session sample rate for logs'
     required: false
 runs:
@@ -37,8 +37,8 @@ runs:
         GD_API_KEY: ${{ inputs.GD_API_KEY }}
         GD_APP_ID: ${{ inputs.GD_APP_ID }}
         TRACKJS_TOKEN: ${{ inputs.TRACKJS_TOKEN }}
-        DATADOG_CLIENT_TOKEN_LOGS: ${{ inputs.DATADOG_CLIENT_TOKEN_LOGS }}
-        DATADOG_SESSION_SAMPLE_RATE_LOGS: ${{ inputs.DATADOG_SESSION_SAMPLE_RATE_LOGS }}
+        DATADOG_CLIENT_LOGS_TOKEN: ${{ inputs.DATADOG_CLIENT_LOGS_TOKEN }}
+        DATADOG_LOGS_SESSION_SAMPLE_RATE: ${{ inputs.DATADOG_LOGS_SESSION_SAMPLE_RATE }}
         REF_NAME: ${{ inputs.REF_NAME }}
       run: npm run build
       shell: bash
