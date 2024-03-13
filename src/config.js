@@ -209,8 +209,10 @@ const getConfig = () => ({
         url: `${related_deriv_origin.origin}/cashier/deposit?lang=${localStorage.getItem('lang')}`,
         label: translate('Deposit'),
     },
-    deposit_wallets: {
-        url: `${related_deriv_origin.origin}/wallets/cashier/deposit?lang=${localStorage.getItem('lang')}`,
+    manage_funds: {
+        visible: true,
+        url: `${related_deriv_origin.origin}/wallets/cashier/transfer?lang=${localStorage.getItem('lang')}`,
+        label: translate('Manage Funds'),
     },
 });
 
