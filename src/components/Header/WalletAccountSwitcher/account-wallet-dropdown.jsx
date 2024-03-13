@@ -12,8 +12,7 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
     const { accounts, account_list, is_virtual } = useSelector(state => state.client);
     const container_ref = React.useRef();
     let all_accounts = [];
-    const { deposit } = config;
-    const { label, url } = deposit;
+    const { manage_funds } = config;
 
     const transformAccounts = () =>
         Object.keys(accounts).forEach(account => {
@@ -82,8 +81,10 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                 <div>
                     {isMobile() && !is_virtual && (
                         <div className='account__switcher-manage-funds'>
-                            <a href={url}>
-                                <button className='account__switcher-wallet-btn'>{translate(label)}</button>
+                            <a href={manage_funds.url}>
+                                <button className='account__switcher-wallet-btn'>
+                                    {translate(manage_funds.label)}
+                                </button>
                             </a>
                         </div>
                     )}
