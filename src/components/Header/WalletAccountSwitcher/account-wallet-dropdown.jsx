@@ -9,7 +9,7 @@ import Text from '../../common/text/text.jsx';
 import './account-wallet-dropdown.scss';
 
 const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdownRef) => {
-    const { accounts, account_list, is_virtual } = useSelector(state => state.client);
+    const { accounts, account_list } = useSelector(state => state.client);
     const container_ref = React.useRef();
     let all_accounts = [];
     const { manage_funds } = config;
@@ -79,7 +79,7 @@ const AccountWalletDropdown = React.forwardRef(({ setIsAccDropdownOpen }, dropdo
                     <WalletContent setIsAccDropdownOpen={setIsAccDropdownOpen} accounts={all_accounts} />
                 </div>
                 <div>
-                    {isMobile() && !is_virtual && (
+                    {isMobile() && (
                         <div className='account__switcher-manage-funds'>
                             <a href={manage_funds.url}>
                                 <button className='account__switcher-wallet-btn'>

@@ -102,7 +102,7 @@ const AccountActions = () => {
                     {deposit.label}
                 </a>
             )}
-            {manage_funds.visible && has_wallet_account && !is_virtual && (
+            {manage_funds.visible && has_wallet_account && (
                 <a className='url-cashier-deposit btn btn--primary header__deposit mobile-hide' href={manage_funds.url}>
                     {manage_funds.label}
                 </a>
