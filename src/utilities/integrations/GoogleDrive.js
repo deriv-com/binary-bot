@@ -18,7 +18,7 @@ export const loadExternalScript = (src, async = true) =>
         script.onload = () => resolve(window.external_global_component);
         script.onerror = reject;
 
-        document?.body?.appendChild(script);
+        document.body.appendChild(script);
     });
 
 const errLogger = (err, msg) => {
@@ -71,27 +71,17 @@ class GoogleDriveUtil {
         this.auth = null;
         this.is_authorized = false;
         // Fetch Google API script and initialize class fields
-        this.initializeLoadExternalScript();
-    }
-
-    async initializeLoadExternalScript() {
         try {
-            await loadExternalScript(this.api_url_identity);
-            await this.initUrlIdentity();
-
-            await loadExternalScript(this.api_url_gdrive);
-            await new Promise((resolve, reject) => {
-                gapi.load(this.auth_scope, async () => {
-                    try {
+            loadExternalScript(this.api_url_identity).then(() => this.initUrlIdentity());
+            loadExternalScript(this.api_url_gdrive)
+                .then(() =>
+                    gapi.load(this.auth_scope, async () => {
                         await gapi.client.load(...this.discovery_docs);
-                        resolve();
-                    } catch (error) {
-                        reject(error);
-                    }
+                    })
+                )
+                .then(() => {
+                    store.dispatch(setGdReady(true));
                 });
-            });
-
-            store.dispatch(setGdReady(true));
         } catch (error) {
             // Added this console log to suppress the {{ some_error }} on TrackJS,
             // which occurs when the loading of external scripts fails.
