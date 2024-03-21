@@ -23,8 +23,7 @@ import AccountMenu from './account-menu.jsx';
 
 const AccountActions = () => {
     const { is_virtual, has_wallet_account } = useSelector(state => state.client);
-    const { deposit, deposit_wallets } = config;
-    const { visible, label, url } = deposit;
+    const { deposit, manage_funds } = config;
     const { account_switcher_id, is_bot_running } = useSelector(state => state.ui);
     const [is_acc_dropdown_open, setIsAccDropdownOpen] = React.useState(false);
     const dropdownRef = React.useRef();
@@ -98,13 +97,14 @@ const AccountActions = () => {
             {is_acc_dropdown_open && (
                 <AccountDropdown virtual={is_virtual} ref={dropdownRef} setIsAccDropdownOpen={setIsAccDropdownOpen} />
             )}
-
-            {visible && (!has_wallet_account || (!is_virtual && has_wallet_account)) && (
-                <a
-                    className='url-cashier-deposit btn btn--primary header__deposit mobile-hide'
-                    href={!has_wallet_account ? url : deposit_wallets.url}
-                >
-                    {translate(label)}
+            {deposit.visible && !has_wallet_account && (
+                <a className='url-cashier-deposit btn btn--primary header__deposit mobile-hide' href={deposit.url}>
+                    {deposit.label}
+                </a>
+            )}
+            {manage_funds.visible && has_wallet_account && (
+                <a className='url-cashier-deposit btn btn--primary header__deposit mobile-hide' href={manage_funds.url}>
+                    {manage_funds.label}
                 </a>
             )}
             {account_switcher_id && (
