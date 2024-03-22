@@ -6,7 +6,7 @@ import Footer from '@components/Footer';
 import Endpoint from '@components/Endpoint';
 import NotFound from '@components/NotFound';
 import OfficialVersionWarning from '../botPage/view/react-components/OfficialVersionWarning';
-import { OFFICIAL_DOMAINS } from '../constants';
+import { OFFICIAL_BOT_DOMAINS } from '../constants';
 
 const generateBaseName = () => {
     const branch = process.env.BRANCH;
@@ -18,7 +18,7 @@ const generateBaseName = () => {
 };
 
 const Routes = () => {
-    const is_official = OFFICIAL_DOMAINS.includes(window.location.hostname);
+    const is_official = OFFICIAL_BOT_DOMAINS.includes(window.location.hostname);
     return (
         <BrowserRouter basename={generateBaseName()}>
             <Header />

@@ -16,11 +16,11 @@ export const APP_ID_MAP = Object.freeze({
     }),
 });
 
-export const OFFICIAL_DOMAINS = [
-    'https://app.deriv.com',
-    'https://app.deriv.be',
-    'https://app.deriv.me',
-    'https://staging-app.deriv.com',
-    'https://staging-app.deriv.be',
-    'https://staging-app.deriv.me',
+export const OFFICIAL_BOT_DOMAINS = [
+    'bot.deriv.com',
+    'bot.deriv.be',
+    'bot.deriv.me',
+    'staging-bot.deriv.com',
+    'staging-bot.deriv.be',
+    'staging-bot.deriv.me',
 ];
