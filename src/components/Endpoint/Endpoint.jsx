@@ -137,8 +137,8 @@ const Endpoint = () => {
                                     <p>
                                         You have to register and get App ID before you can use different OAuth server
                                         for authentication. For more information refer to OAuth details on{' '}
-                                        <a href='https://developers.binary.com/' target='_blank' rel='noreferrer'>
-                                            https://developers.binary.com
+                                        <a href='https://api.deriv.com/dashboard' target='_blank' rel='noreferrer'>
+                                            https://api.deriv.com/dashboard
                                         </a>
                                     </p>
                                     {has_error && (

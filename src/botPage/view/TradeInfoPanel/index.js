@@ -57,7 +57,7 @@ const TradeInfoPanelContent = () => {
                     <div>
                         <p id='sync-warning'>
                             {translate(
-                                'Stopping the bot will prevent further trades. Any ongoing trades will be completed by our system. Please be aware that some completed transactions may not be displayed in the table if the bot is stopped while placing trades. You may refer to the Binary.com statement page for details of all completed transactions.'
+                                'Stopping the bot will prevent further trades. Any ongoing trades will be completed by our system. Please be aware that some completed transactions may not be displayed in the table if the bot is stopped while placing trades. You may refer to the https://app.deriv.com/reports statement page for details of all completed transactions.'
                             )}
                         </p>
                     </div>
