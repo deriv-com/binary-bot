@@ -71,16 +71,23 @@ class GoogleDriveUtil {
         this.auth = null;
         this.is_authorized = false;
         // Fetch Google API script and initialize class fields
-        loadExternalScript(this.api_url_identity).then(() => this.initUrlIdentity());
-        loadExternalScript(this.api_url_gdrive)
-            .then(() =>
-                gapi.load(this.auth_scope, async () => {
-                    await gapi.client.load(...this.discovery_docs);
-                })
-            )
-            .then(() => {
-                store.dispatch(setGdReady(true));
-            });
+        try {
+            loadExternalScript(this.api_url_identity).then(() => this.initUrlIdentity());
+            loadExternalScript(this.api_url_gdrive)
+                .then(() =>
+                    gapi.load(this.auth_scope, async () => {
+                        await gapi.client.load(...this.discovery_docs);
+                    })
+                )
+                .then(() => {
+                    store.dispatch(setGdReady(true));
+                });
+        } catch (error) {
+            // Added this console log to suppress the {{ some_error }} on TrackJS,
+            // which occurs when the loading of external scripts fails.
+            // eslint-disable-next-line no-console
+            console.log('Error initializing GoogleDrive:', error);
+        }
     }
 
     initUrlIdentity = () => {
