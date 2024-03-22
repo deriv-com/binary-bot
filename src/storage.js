@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import { parseQueryString, getRelatedDeriveOrigin, getDomainAppId } from '@utils';
 import { supported_languages, redirectToSupportedLang } from '@i18n';
 import { setCookieLanguage } from './common/utils/cookieManager';
+import { OFFICIAL_DOMAINS } from './constants';
 
 const CLIENT_ACCOUNT = 'client.accounts';
 const CLIENT_COUNTRY = 'client.country';
@@ -241,10 +242,14 @@ const isRealAccount = () => {
     return isReal;
 };
 
-export const getDefaultEndpoint = () => ({
-    url: isRealAccount() ? 'green.derivws.com' : 'blue.derivws.com',
-    appId: getDefaultAppId() || getDomainAppId(),
-});
+export const getDefaultEndpoint = () => {
+    const isOfficial = OFFICIAL_DOMAINS.includes(window.location.host);
+    const real_server_url = isRealAccount() ? 'green.derivws.com' : 'blue.derivws.com';
+    return {
+        url: isOfficial ? real_server_url : 'red.derivws.com',
+        appId: getDefaultAppId() || getDomainAppId(),
+    };
+};
 
 export const getAppIdFallback = () => getCustomEndpoint().appId || getDefaultEndpoint().appId;
 

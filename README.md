@@ -5,7 +5,7 @@
 
 Visual automation for binary bot on deriv - [bot.deriv.com](https://bot.deriv.com)
 
-Binary Bot on Deriv uses [Google Blockly](https://developers.google.com/blockly) to provide a puzzle like automation environment to trade using binary.com API version 3.
+Binary Bot on Deriv uses [Google Blockly](https://developers.google.com/blockly) to provide a puzzle like automation environment to trade using api.deriv.com API version 3.
 
 ## Pre-installation
 
