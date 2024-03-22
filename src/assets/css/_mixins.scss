@@ -258,7 +258,7 @@
 
     @if $type== 'tertiary' {
         background: var(--button-tertiary-default);
-        color: var(--color-driv-red) !important;
+        color: var(--color-deriv-red) !important;
 
         &:focus,
         &:hover {
@@ -272,7 +272,7 @@
 
     @if $type== 'link' {
         background: transparent;
-        color: var(--color-driv-red) !important;
+        color: var(--color-deriv-red) !important;
 
         &:focus:not([disabled]),
         &:hover:not([disabled]) {

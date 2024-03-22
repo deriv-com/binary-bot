@@ -40,7 +40,7 @@ body {
 }
 
 #bot-blockly {
-    height: calc(100vh - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT});
+    height: calc(100vh - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT} - #{$BANNER_HEIGHT});
 
     @include mobile {
         height: calc(100vh - 7.5rem);
@@ -49,7 +49,7 @@ body {
 
 #blocklyDiv {
     position: absolute;
-    height: 100%;
+    height: 83%;
     width: 100%;
 
     //fix for chrome, safari comment box by unsetting cordinates

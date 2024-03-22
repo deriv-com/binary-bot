@@ -23,6 +23,7 @@ import Chart from '../Dialogs/Chart';
 import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
 import TradingView from '../Dialogs/TradingView';
 import LogTable from '../../botPage/view/log-table';
+import FixedDbotBanner from '../Banner/fixed-dbot-banner';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
@@ -155,6 +156,7 @@ const Main = () => {
                     },
                 ]}
             />
+            <FixedDbotBanner />
             <MoveToDbotBanner />
             <BotUnavailableMessage />
             <div id='bot-blockly'>

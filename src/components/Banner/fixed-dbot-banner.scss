@@ -1,0 +1,44 @@
+@import '../../assets/css/variables';
+@import '../../assets/css/mixins';
+
+.fixed-banner {
+    &__container {
+        display: flex;
+        justify-content: center;
+        background-color: #ffeabf;
+        margin-top: 3rem;
+
+        @include mobile {
+            margin-top: 2.4rem;
+        }
+    }
+
+    &__content {
+        display: flex;
+        align-items: center;
+        height: 56px;
+
+        @include mobile {
+            padding: 1.6rem;
+            font-size: var(--font-size-xs);
+        }
+    }
+
+    &__visit-deriv-bot {
+        color: var(--text-prominent);
+        text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:visited {
+            color: unset;
+            font-weight: normal;
+        }
+    }
+
+    &__icon-info {
+        margin-right: 0.5rem;
+        font-size: 1.4rem;
+    }
+}
