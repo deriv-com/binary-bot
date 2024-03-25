@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { parseQueryString, getRelatedDeriveOrigin, getDomainAppId } from '@utils';
+import { parseQueryString, getRelatedDerivOrigin, getDomainAppId } from '@utils';
 import { supported_languages, redirectToSupportedLang } from '@i18n';
 import { setCookieLanguage } from './common/utils/cookieManager';
 import { OFFICIAL_BOT_DOMAINS } from './constants';
@@ -151,7 +151,7 @@ export const isDone = varName => varName in store;
 
 export const syncWithDerivApp = () => {
     const iframe = document.getElementById('localstorage-sync');
-    const { origin } = getRelatedDeriveOrigin();
+    const { origin } = getRelatedDerivOrigin();
 
     const postMessages = () => {
         iframe.contentWindow.postMessage(

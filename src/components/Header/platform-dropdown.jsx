@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import config from '@config';
 import { getLang } from '@storage';
-import { getRelatedDeriveOrigin } from '@utils';
+import { getRelatedDerivOrigin } from '@utils';
 import { useLocation } from 'react-router-dom';
 import { translate } from '@i18n';
 
@@ -30,15 +30,15 @@ const PlatformDropdown = React.forwardRef(({ hideDropdown, setIsPlatformSwitcher
             <div id='platform__list' className='platform__dropdown-list' ref={platformDropdownRef}>
                 {config.platforms.map(platform => {
                     if (platform.title === 'DTrader') {
-                        const related_deriv_origin = getRelatedDeriveOrigin();
+                        const related_deriv_origin = getRelatedDerivOrigin();
                         platform.link = `${related_deriv_origin.origin}/?lang=${lang || 'en'}`;
                     }
                     if (platform.title === 'DBot') {
-                        const related_deriv_origin = getRelatedDeriveOrigin();
+                        const related_deriv_origin = getRelatedDerivOrigin();
                         platform.link = `${related_deriv_origin.origin}/bot/?lang=${lang || 'en'}`;
                     }
                     if (platform.title === 'SmartTrader') {
-                        const related_deriv_origin = getRelatedDeriveOrigin();
+                        const related_deriv_origin = getRelatedDerivOrigin();
                         platform.link = `https://${related_deriv_origin.prefix}smarttrader.deriv.${
                             related_deriv_origin.extension
                         }/${lang || 'en'}/trading`;

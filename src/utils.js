@@ -16,7 +16,7 @@ export const parseQueryString = () => {
 
 export const isProduction = () => document.location.hostname.replace(/^www./, '') in APP_ID_MAP.production;
 
-export const getRelatedDeriveOrigin = () => {
+export const getRelatedDerivOrigin = () => {
     let origin = 'https://app.deriv.com';
     let is_official = false;
     const split_host_name = /^(staging-)?(bot.deriv.)([a-zA-Z]*)$/.exec(window.location.hostname);
@@ -44,7 +44,7 @@ export const generateDerivLink = (path, ...queries) => {
         'lang'
     )}`;
     queries.push(redirect_query);
-    return `${getRelatedDeriveOrigin().origin}/${path}?${queries.join('&')}`;
+    return `${getRelatedDerivOrigin().origin}/${path}?${queries.join('&')}`;
 };
 
 export const getDomainAppId = () => {

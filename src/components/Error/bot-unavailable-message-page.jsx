@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getRelatedDeriveOrigin } from '@utils';
+import { getRelatedDerivOrigin } from '@utils';
 import { translate } from '@i18n';
 import MessagePage from './message-page.jsx';
 
@@ -17,12 +17,12 @@ const BotUnavailableMessage = () => {
             >
                 <div className='bot-unavailable-message-page__container'>
                     <a
-                        href={`${getRelatedDeriveOrigin().origin}/mt5#real`}
+                        href={`${getRelatedDerivOrigin().origin}/mt5#real`}
                         className='link_button bot-unavailable-message-page__container-button'
                     >
                         {translate('Trade on DMT5')}
                     </a>
-                    <a href={getRelatedDeriveOrigin().origin} className='link_button'>
+                    <a href={getRelatedDerivOrigin().origin} className='link_button'>
                         {translate('Trade on DTrader')}
                     </a>
                 </div>

@@ -17,10 +17,11 @@
         display: flex;
         align-items: center;
         height: 56px;
+        font-family: var(--font-stack);
 
         @include mobile {
             padding: 1.6rem;
-            font-size: var(--font-size-xs);
+            font-size: var(--font-size-s);
         }
     }
 
