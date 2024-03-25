@@ -33,7 +33,6 @@
 
         &:visited {
             color: unset;
-            font-weight: normal;
         }
     }
 
@@ -41,4 +40,9 @@
         margin-right: 0.5rem;
         font-size: 1.4rem;
     }
+}
+
+a,
+a:visited {
+    font-weight: normal;
 }
