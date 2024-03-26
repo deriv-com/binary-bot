@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TrackJS } from 'trackjs';
-import { getRelatedDeriveOrigin, queryToObjectArray } from '@utils';
+import { getRelatedDerivOrigin, queryToObjectArray } from '@utils';
 import { translate } from '@i18n';
 import { getClientAccounts, isDone, getLanguage, getTourState, getActiveLoginId, syncWithDerivApp } from '@storage';
 import SidebarToggle from '@components/common/SidebarToggle';
@@ -23,6 +23,7 @@ import Chart from '../Dialogs/Chart';
 import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
 import TradingView from '../Dialogs/TradingView';
 import LogTable from '../../botPage/view/log-table';
+import FixedDbotBanner from '../Banner/fixed-dbot-banner';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
@@ -80,7 +81,7 @@ const Main = () => {
     const init = () => {
         const local_storage_sync = document.getElementById('localstorage-sync');
         if (local_storage_sync) {
-            local_storage_sync.src = `${getRelatedDeriveOrigin().origin}/localstorage-sync.html`;
+            local_storage_sync.src = `${getRelatedDerivOrigin().origin}/localstorage-sync.html`;
         }
 
         const days_passed = Date.now() > (getTourState() || 0) + 24 * 60 * 60 * 1000;
@@ -155,6 +156,7 @@ const Main = () => {
                     },
                 ]}
             />
+            <FixedDbotBanner />
             <MoveToDbotBanner />
             <BotUnavailableMessage />
             <div id='bot-blockly'>

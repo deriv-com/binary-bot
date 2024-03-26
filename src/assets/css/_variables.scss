@@ -47,6 +47,7 @@ $BORDER_RADIUS: 4px;
 $HEADER_HEIGHT: 48px;
 $FOOTER_HEIGHT: 36px;
 $TOOLBOX_HEIGHT: 42px;
+$BANNER_HEIGHT: 56px;
 
 /*
     Variables
@@ -126,7 +127,7 @@ $TYPEFACES_LIST: generate-typefaces();
     --disabled-color: #f2f2f2;
     --static-circle-diameter: 0.5rem;
     --dynamic-circle-diameter: 2rem;
-    --color-driv-red: #ff444f;
+    --color-deriv-red: #ff444f;
 
     --font-size-l: 18px;
     --font-size-n: 16px;
@@ -149,7 +150,7 @@ $TYPEFACES_LIST: generate-typefaces();
     --text-loss-danger: #{$color-red-1};
     --text-colored-background: #{$color-white};
     // Buttons
-    --button-primary-default: var(--color-driv-red);
+    --button-primary-default: var(--color-deriv-red);
     --button-secondary-default: #{$color-grey-1};
     --button-tertiary-default: transparent;
     --button-primary-hover: #{$color-red-5};

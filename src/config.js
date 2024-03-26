@@ -1,8 +1,8 @@
-import { generateDerivLink, getRelatedDeriveOrigin } from '@utils';
+import { generateDerivLink, getRelatedDerivOrigin } from '@utils';
 import { translate } from '@i18n';
 import { getOAuthURL } from './common/appId';
 
-const related_deriv_origin = getRelatedDeriveOrigin();
+const related_deriv_origin = getRelatedDerivOrigin();
 
 const getConfig = () => ({
     app_title: 'Binary Bot',

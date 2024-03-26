@@ -1,4 +1,4 @@
-import { parseQueryString, getRelatedDeriveOrigin } from '@utils';
+import { parseQueryString, getRelatedDerivOrigin } from '@utils';
 import { getActiveAccount, getLanguage } from '@storage';
 import { translate, xml as translateXml } from '@i18n';
 import { observer as globalObserver } from '@utilities/observer';
@@ -205,7 +205,7 @@ export const load = (blockStr, dropEvent = {}) => {
                     text: translate('Take me to DBot'),
                     class: 'button-primary',
                     click() {
-                        window.location.href = `${getRelatedDeriveOrigin().origin}/bot`;
+                        window.location.href = `${getRelatedDerivOrigin().origin}/bot`;
                     },
                 },
             ],
