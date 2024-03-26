@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@i18n';
-import './official-version-warning.scss';
 
 const OfficialVersionWarning = ({ show }) =>
     show ? (
