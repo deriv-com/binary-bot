@@ -6,16 +6,20 @@
         display: flex;
         justify-content: center;
         background-color: #ffeabf;
+        height: 56px;
+
+        @include mobile {
+            height: unset;
+        }
     }
 
     &__content {
         display: flex;
         align-items: center;
-        height: 56px;
         font-family: var(--font-stack);
 
         @include mobile {
-            padding: 1.6rem;
+            padding: 16px;
             font-size: var(--font-size-s);
         }
     }
