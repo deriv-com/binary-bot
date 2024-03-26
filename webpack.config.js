@@ -82,7 +82,7 @@ module.exports = {
         }),
     ],
     devServer: {
-        port: 8009,
+        port: 80,
         host: 'localbot.binary.sx',
         open: true,
         historyApiFallback: true,
