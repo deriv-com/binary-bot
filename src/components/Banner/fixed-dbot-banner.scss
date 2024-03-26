@@ -21,6 +21,7 @@
         @include mobile {
             padding: 16px;
             font-size: var(--font-size-s);
+            align-items: flex-start;
         }
     }
 
