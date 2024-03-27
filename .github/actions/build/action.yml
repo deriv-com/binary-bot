@@ -1,4 +1,4 @@
-name: build
+name: jose
 description: Build all packages
 inputs:
   NODE_ENV:
