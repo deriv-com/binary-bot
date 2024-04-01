@@ -10,7 +10,6 @@ import {
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import APIMiddleware from './api-middleware';
 import { observer as globalObserver } from '@utilities/observer';
-import APIMiddleware from './api-middleware';
 
 const socket_url = `wss://${getServerAddressFallback()}/websockets/v3?app_id=${getAppIdFallback()}&l=${getLanguage().toUpperCase()}&brand=deriv`;
 
