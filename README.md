@@ -5,7 +5,7 @@
 
 Visual automation for binary bot on deriv - [bot.deriv.com](https://bot.deriv.com)
 
-Binary Bot on Deriv uses [Google Blockly](https://developers.google.com/blockly) to provide a puzzle like automation environment to trade using binary.com API version 3.
+Binary Bot on Deriv uses [Google Blockly](https://developers.google.com/blockly) to provide a puzzle like automation environment to trade using api.deriv.com API version 3.
 
 ## Pre-installation
 
@@ -147,11 +147,11 @@ User can make changes to Deriv branding related logo, text and their visibility.
 ### Running with a specific endpoint **Use only if you know what you're doing**
 
 ```
-ENDPOINT='wss://ws.binaryws.com/websockets/v3?l=en&app_id=1169' bot bot-example.js
+ENDPOINT='wss://ws.derivws.com/websockets/v3?l=en&app_id=1169' bot bot-example.js
 
 ```
 
-To set the endpoint for running the application on the localhost. For this, Go to http://localbot.binary.sx/endpoint.html. Make sure the Server is set to blue.binaryws.com and O Auth App ID is 16014 Click submit
+To set the endpoint for running the application on the localhost. For this, Go to http://localbot.binary.sx/endpoint.html. Make sure the Server is set to blue.derivws.com and O Auth App ID is 16014 Click submit
 
 ## Think you found a bug?
 

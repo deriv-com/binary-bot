@@ -133,37 +133,8 @@ const setElementActions = blockly => {
     addEventHandlers(blockly);
 };
 
-const exportContent = {
-    'summary-panel': () => {
-        globalObserver.emit('summary.export');
-    },
-    logPanel: () => {
-        globalObserver.emit('log.export');
-    },
-};
-
-const addExportButtonToPanel = panelId => {
-    const buttonHtml =
-        '<button class="icon-save" style="position:absolute;top:50%;margin:-10px 0 0 0;right:2em;padding:0.2em"></button>';
-    const $button = $(buttonHtml);
-    const panelSelector = `[aria-describedby="${panelId}"]`;
-    if (!$(`${panelSelector} .icon-save`).length) {
-        $button.insertBefore(`${panelSelector} .icon-close`);
-        $(`${panelSelector} .icon-close`).blur();
-        $($(`${panelSelector} .icon-save`)).click(() => {
-            exportContent[panelId]();
-        });
-    }
-};
-
 export const showSummary = () => {
-    $('#summary-panel').dialog('option', 'minWidth', 770).dialog('open');
-    addExportButtonToPanel('summary-panel');
-};
-
-export const logButton = () => {
-    $('#logPanel').dialog('open');
-    addExportButtonToPanel('logPanel');
+    globalObserver.emit('summary.show');
 };
 
 const addBindings = blockly => {
@@ -236,6 +207,30 @@ const addBindings = blockly => {
             if (isStopping) return;
 
             globalObserver.setState({ isStarting: true });
+
+            let timer = globalObserver.getState('timer');
+
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            let timer_counter = 1;
+            if (window.sendRequestsStatistic) {
+                // Log is sent every 10 seconds for 2 minutes
+                timer = setInterval(() => {
+                    window.sendRequestsStatistic();
+
+                    performance.clearMeasures();
+                    if (timer_counter === 12) {
+                        clearInterval(timer);
+                    } else {
+                        timer_counter++;
+                    }
+                }, 10000);
+
+                globalObserver.setState({ timer });
+            }
+
             // setTimeout is needed to ensure correct event sequence
             if (!checkForRequiredBlocks()) {
                 setTimeout(() => $('#stopButton').triggerHandler('click'));
@@ -245,15 +240,17 @@ const addBindings = blockly => {
             const login_id = getActiveLoginId();
             const client_accounts = getClientAccounts();
 
-            if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
-                const limits = new Limits();
-                limits
-                    .getLimits()
-                    .then(startBot)
-                    .catch(() => {});
-            } else {
-                startBot();
-            }
+            setTimeout(() => {
+                if (login_id && client_accounts?.[login_id]?.hasTradeLimitation) {
+                    const limits = new Limits();
+                    limits
+                        .getLimits()
+                        .then(startBot)
+                        .catch(() => {});
+                } else {
+                    startBot();
+                }
+            }, 0);
         }, 300)
     );
 
@@ -269,14 +266,6 @@ const addBindings = blockly => {
         }, 300)
     );
 
-    $('[aria-describedby="summary-panel"]').on('click', '#summaryRunButton', () => {
-        $('#runButton').trigger('click');
-    });
-
-    $('[aria-describedby="summary-panel"]').on('click', '#summaryStopButton', () => {
-        $('#stopButton').trigger('click');
-    });
-
     globalObserver.register('ui.switch_account', () => {
         stopBlockly(blockly);
         GTM.setVisitorId();
@@ -291,13 +280,21 @@ const addBindings = blockly => {
     });
 };
 
-const stopBlockly = async blockly =>
-    new Promise((resolve, reject) => {
+const stopBlockly = async blockly => {
+    const timer = globalObserver.getState('timer');
+
+    if (timer) {
+        clearInterval(timer);
+    }
+    performance.clearMeasures();
+
+    return new Promise((resolve, reject) => {
         blockly
             .stop()
             .then(() => resolve())
             .catch(err => reject(err));
     });
+};
 
 const addEventHandlers = blockly => {
     const getRunButtonElements = () => document.querySelectorAll('#runButton, #summaryRunButton');

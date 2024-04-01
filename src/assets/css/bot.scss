@@ -40,7 +40,7 @@ body {
 }
 
 #bot-blockly {
-    height: calc(100vh - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT});
+    height: calc(100vh - #{$HEADER_HEIGHT} - #{$TOOLBOX_HEIGHT} - #{$BANNER_HEIGHT});
 
     @include mobile {
         height: calc(100vh - 7.5rem);
@@ -49,7 +49,7 @@ body {
 
 #blocklyDiv {
     position: absolute;
-    height: 100%;
+    height: 83%;
     width: 100%;
 
     //fix for chrome, safari comment box by unsetting cordinates
@@ -223,4 +223,29 @@ label {
     max-height: 80vh;
     overflow: auto;
     z-index: 10001 !important;
+}
+
+.version-warning {
+    position: fixed;
+    background-color: #2a3052;
+    font-size: 12px;
+    bottom: 36px;
+    width: 100%;
+    height: 24px;
+    z-index: 99999;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+    @include mobile {
+        height: 24px;
+        text-align: center;
+        bottom: 0;
+        font-size: 10px;
+    }
 }

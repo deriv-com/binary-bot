@@ -23,7 +23,7 @@ const getError = server => (
 
 let api; // to close the error connection
 const Endpoint = () => {
-    const [server, setServer] = React.useState('frontend.binaryws.com');
+    const [server, setServer] = React.useState('frontend.derivws.com');
     const [app_id, setAppId] = React.useState('');
     const [has_error, setError] = React.useState('');
     const [is_connected, setConnected] = React.useState(false);
@@ -119,7 +119,7 @@ const Endpoint = () => {
                                         maxLength='30'
                                         onChange={e => setServer(e.target.value)}
                                     />
-                                    <p className='hint no-margin'>e.g. frontend.binaryws.com</p>
+                                    <p className='hint no-margin'>e.g. frontend.derivws.com</p>
                                 </td>
                             </tr>
                             <tr>
@@ -137,8 +137,8 @@ const Endpoint = () => {
                                     <p>
                                         You have to register and get App ID before you can use different OAuth server
                                         for authentication. For more information refer to OAuth details on{' '}
-                                        <a href='https://developers.binary.com/' target='_blank' rel='noreferrer'>
-                                            https://developers.binary.com
+                                        <a href='https://api.deriv.com/dashboard' target='_blank' rel='noreferrer'>
+                                            https://api.deriv.com/dashboard
                                         </a>
                                     </p>
                                     {has_error && (

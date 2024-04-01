@@ -1,8 +1,8 @@
-import { generateDerivLink, getRelatedDeriveOrigin } from '@utils';
+import { generateDerivLink, getRelatedDerivOrigin } from '@utils';
 import { translate } from '@i18n';
 import { getOAuthURL } from './common/appId';
 
-const related_deriv_origin = getRelatedDeriveOrigin();
+const related_deriv_origin = getRelatedDerivOrigin();
 
 const getConfig = () => ({
     app_title: 'Binary Bot',
@@ -173,12 +173,12 @@ const getConfig = () => ({
     trading_view_chart: {
         visible: true,
         // URL to the chart
-        url: 'https://tradingview.deriv.com/deriv?hide_banner=1',
+        url: 'https://charts.deriv.com/deriv?hide-signup=true',
         label: translate('Trading View'),
     },
     login: {
         // URL to the common login OAuth page
-        url: getOAuthURL(),
+        getURL: getOAuthURL,
         label: translate('Log in'),
     },
     signup: {
@@ -201,10 +201,18 @@ const getConfig = () => ({
         url: generateDerivLink('appstore/traders-hub'),
         label: translate('Trader\'s Hub'),
     },
+    wallets: {
+        url: generateDerivLink('wallets'),
+    },
     deposit: {
         visible: true,
         url: `${related_deriv_origin.origin}/cashier/deposit?lang=${localStorage.getItem('lang')}`,
         label: translate('Deposit'),
+    },
+    manage_funds: {
+        visible: true,
+        url: `${related_deriv_origin.origin}/wallets/cashier/transfer?lang=${localStorage.getItem('lang')}`,
+        label: translate('Manage Funds'),
     },
 });
 

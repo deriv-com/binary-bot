@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { showSummary, logButton } from '@blockly/blockly-worksace';
 import config from '@config';
 import { isMobile } from '@utils';
 import { translate } from '@i18n';
@@ -13,10 +12,7 @@ import Reset from './reset';
 import Modal from '@components/common/modal';
 import { setIsBotRunning } from '@redux-store/ui-slice';
 import Popover from '@components/common/popover';
-import Chart from '@components/Dialogs/Chart';
 import Save from './save';
-import TradingView from '@components/Dialogs/TradingView';
-import IntegrationsDialog from '@components/Dialogs/IntegrationsDialog';
 import { getActiveToken } from '@storage';
 import { api_base } from '../../api-base';
 
@@ -66,11 +62,15 @@ ToolboxButton.propTypes = {
     tooltip: PropTypes.string,
 };
 
-let chart;
-let tradingView;
-let integrations;
-
-const ToolBox = ({ blockly, is_workspace_rendered }) => {
+const ToolBox = ({
+    blockly,
+    is_workspace_rendered,
+    setShowChart,
+    setShowGoogleDrive,
+    setShowTradingView,
+    setShowLogTable,
+    setShowSummary,
+}) => {
     const [should_show_modal, setShowModal] = React.useState(false);
     const [selected_modal, updateSelectedModal] = React.useState('');
     const [has_active_token, setHasActiveToken] = React.useState(false);
@@ -172,10 +172,7 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                     position='bottom'
                     classes='toolbox-button icon-integrations'
                     onClick={() => {
-                        if (!integrations) {
-                            integrations = new IntegrationsDialog();
-                        }
-                        integrations.open();
+                        setShowGoogleDrive(is_shown => !is_shown);
                     }}
                 />
             )}
@@ -223,7 +220,9 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                 id='showSummary'
                 tooltip={translate('Show/hide the summary pop-up')}
                 position={'bottom'}
-                onClick={() => showSummary()}
+                onClick={() => {
+                    setShowSummary(is_shown => !is_shown);
+                }}
                 classes={classNames('toolbox-button icon-summary', {
                     'toolbox-hide': !has_active_token,
                 })}
@@ -255,7 +254,9 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                 class_container={classNames({ 'toolbox-hide': !has_active_token })}
                 tooltip={translate('Show log')}
                 position='bottom'
-                onClick={() => logButton()}
+                onClick={() => {
+                    setShowLogTable(is_shown => !is_shown);
+                }}
                 classes={classNames('toolbox-button icon-info', { 'toolbox-hide': !has_active_token })}
             />
             {has_active_token && <span className='toolbox-separator' />}
@@ -269,10 +270,7 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                     if (!api_base.api_chart) {
                         api_base.initChartWebSocket();
                     }
-                    if (!chart) {
-                        chart = new Chart();
-                    }
-                    chart?.open?.();
+                    setShowChart(is_shown => !is_shown);
                 }}
             />
             {config.trading_view_chart.url && (
@@ -282,10 +280,7 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
                     position='bottom'
                     classes='toolbox-button icon-trading-view'
                     onClick={() => {
-                        if (!tradingView) {
-                            tradingView = new TradingView();
-                        }
-                        tradingView?.open?.();
+                        setShowTradingView(is_shown => !is_shown);
                     }}
                 />
             )}
@@ -299,6 +294,11 @@ const ToolBox = ({ blockly, is_workspace_rendered }) => {
 ToolBox.propTypes = {
     blockly: PropTypes.object.isRequired,
     is_workspace_rendered: PropTypes.bool,
+    setShowChart: PropTypes.func,
+    setShowGoogleDrive: PropTypes.func,
+    setShowTradingView: PropTypes.func,
+    setShowLogTable: PropTypes.func,
+    setShowSummary: PropTypes.func,
 };
 
 export default ToolBox;

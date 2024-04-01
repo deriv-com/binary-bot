@@ -52,11 +52,11 @@ Bot.stop
 | amount | <code>number</code> | Amount for the contract |
 | currency | <code>string</code> | The currency for the contract |
 | basis | <code>string</code> | Basis for the contract ("stake") |
-| candleInterval | <code>number</code> | Interval for candles list (valid inputs in   [#ticks_history](https://developers.binary.com/api/#ticks_history)) |
+| candleInterval | <code>number</code> | Interval for candles list (valid inputs in   [#ticks_history](https://api.deriv.com/api-explorer#ticks_history)) |
 | contractTypes | <code>Array.&lt;string&gt;</code> | The desired contract types |
 | duration | <code>number</code> | Contract duration |
-| duration_unit | <code>string</code> | Contract duration unit (valid inputs in   [#proposal](https://developers.binary.com/api/#proposal)) |
-| symbol | <code>string</code> | The underlying symbol (valid inputs in   [#active_symbols](https://developers.binary.com/api/#active_symbols)) |
+| duration_unit | <code>string</code> | Contract duration unit (valid inputs in   [#proposal](https://api.deriv.com/api-explorer#proposal)) |
+| symbol | <code>string</code> | The underlying symbol (valid inputs in   [#active_symbols](https://api.deriv.com/api-explorer#active_symbols)) |
 | restartOnError | <code>boolean</code> | Whether to restart on error or not |
 | prediction | <code>number</code> | prediction number for trades (optional) |
 | barrierOffset | <code>number</code> | barrier offset for the trade (optional) |

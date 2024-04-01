@@ -3,9 +3,9 @@ import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TrackJS } from 'trackjs';
-import { getRelatedDeriveOrigin, queryToObjectArray } from '@utils';
+import { getRelatedDerivOrigin, queryToObjectArray } from '@utils';
 import { translate } from '@i18n';
-import { getClientAccounts, isDone, getLanguage, getTourState, getActiveLoginId } from '@storage';
+import { getClientAccounts, isDone, getLanguage, getTourState, getActiveLoginId, syncWithDerivApp } from '@storage';
 import SidebarToggle from '@components/common/SidebarToggle';
 import ToolBox from '@components/ToolBox';
 import useQuery from '@components/hooks/useQuery';
@@ -15,19 +15,38 @@ import { observer as globalObserver } from '@utilities/observer';
 import logHandler from '@utilities/logger';
 import { loginAndSetTokens } from '../../common/appId';
 import Blockly from '../../blockly';
-import LogTable from '../../botPage/view/LogTable';
 import TradeInfoPanel from '../../botPage/view/TradeInfoPanel';
 import initialize, { applyToolboxPermissions } from '../../blockly/blockly-worksace';
 import BotUnavailableMessage from '../Error/bot-unavailable-message-page';
 import MoveToDbotBanner from '../Banner/move-to-dbot-banner';
+import Chart from '../Dialogs/Chart';
+import GoogleDriveModal from '../Dialogs/IntegrationsDialog';
+import TradingView from '../Dialogs/TradingView';
+import LogTable from '../../botPage/view/log-table';
+import FixedDbotBanner from '../Banner/fixed-dbot-banner';
 
 const Main = () => {
     const [blockly, setBlockly] = React.useState(null);
     const [is_workspace_rendered, setIsWorkspaceRendered] = React.useState(false);
+    const [show_chart, setShowChart] = React.useState(false);
+    const [show_google_drive, setShowGoogleDrive] = React.useState(false);
+    const [show_trading_view, setShowTradingView] = React.useState(false);
+    const [show_log_table, setShowLogTable] = React.useState(false);
+    const [show_summary, setShowSummary] = React.useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { should_reload_workspace } = useSelector(state => state.ui);
     const query_object = useQuery();
+
+    const showSummary = () => setShowSummary(true);
+
+    React.useEffect(() => {
+        globalObserver.register('summary.show', showSummary);
+        return () => {
+            globalObserver.unregister('summary.show', showSummary);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     React.useEffect(() => {
         logHandler();
@@ -62,7 +81,7 @@ const Main = () => {
     const init = () => {
         const local_storage_sync = document.getElementById('localstorage-sync');
         if (local_storage_sync) {
-            local_storage_sync.src = `${getRelatedDeriveOrigin().origin}/localstorage-sync.html`;
+            local_storage_sync.src = `${getRelatedDerivOrigin().origin}/localstorage-sync.html`;
         }
 
         const days_passed = Date.now() > (getTourState() || 0) + 24 * 60 * 60 * 1000;
@@ -93,6 +112,7 @@ const Main = () => {
                         dispatch(updateIsLogged(true));
                         dispatch(updateActiveAccount(account_info));
                         applyToolboxPermissions();
+                        syncWithDerivApp();
                     } else {
                         dispatch(updateIsLogged(false));
                     }
@@ -136,17 +156,33 @@ const Main = () => {
                     },
                 ]}
             />
+            <FixedDbotBanner />
             <MoveToDbotBanner />
             <BotUnavailableMessage />
             <div id='bot-blockly'>
-                {blockly && <ToolBox blockly={blockly} is_workspace_rendered={is_workspace_rendered} />}
+                {blockly && (
+                    <>
+                        <ToolBox
+                            blockly={blockly}
+                            is_workspace_rendered={is_workspace_rendered}
+                            setShowChart={setShowChart}
+                            setShowGoogleDrive={setShowGoogleDrive}
+                            setShowTradingView={setShowTradingView}
+                            setShowLogTable={setShowLogTable}
+                            setShowSummary={setShowSummary}
+                        />
+                        {show_chart && <Chart setShowChart={setShowChart} />}
+                        {show_google_drive && <GoogleDriveModal setShowGoogleDrive={setShowGoogleDrive} />}
+                        {show_trading_view && <TradingView setShowTradingView={setShowTradingView} />}
+                        {<LogTable setShowLogTable={setShowLogTable} show_log_table={show_log_table} />}
+                        {<TradeInfoPanel setShowSummary={setShowSummary} show_summary={show_summary} />}
+                    </>
+                )}
                 {/* Blockly workspace will be injected here */}
                 <div id='blocklyArea'>
                     <div id='blocklyDiv' style={{ position: 'absolute' }}></div>
                     <SidebarToggle />
                 </div>
-                {blockly && <LogTable />}
-                {blockly && <TradeInfoPanel />}
             </div>
         </div>
     );

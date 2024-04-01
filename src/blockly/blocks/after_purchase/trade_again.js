@@ -1,4 +1,3 @@
-// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#xkasg4
 import { translate } from '@i18n';
 import { insideAfterPurchase } from '../../relationChecker';
 

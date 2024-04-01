@@ -4,10 +4,13 @@ import {
     getServerAddressFallback,
     getClientAccounts,
     setClientAccounts,
+    setConfigURL,
+    setConfigAppID,
 } from '@storage';
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
 import APIMiddleware from './api-middleware';
 import { observer as globalObserver } from '@utilities/observer';
+import APIMiddleware from './api-middleware';
 
 const socket_url = `wss://${getServerAddressFallback()}/websockets/v3?app_id=${getAppIdFallback()}&l=${getLanguage().toUpperCase()}&brand=deriv`;
 
@@ -24,21 +27,21 @@ class APIBase {
 
     constructor() {
         this.init();
-        this.initEventListeners();
     }
 
     init() {
         try {
             this.api = new DerivAPIBasic({
                 connection: new WebSocket(socket_url),
-                middleware: new APIMiddleware({}),
+                middleware: new APIMiddleware(),
             });
 
             this.api_chart = null;
 
             this.api.onOpen().subscribe(() => {
                 // eslint-disable-next-line no-console
-                console.log('Connection has been established!', this.api);
+                console.log('Connection has been established!');
+                this.initEventListeners();
             });
         } catch (error) {
             globalObserver.emit('Error', error);
@@ -140,7 +143,7 @@ class APIBase {
         // eslint-disable-next-line no-console
         console.log('connection state: ', this.api.connection.readyState);
 
-        if (this.api.connection.readyState !== 1) {
+        if (![0, 1].includes(this.api.connection.readyState)) {
             // eslint-disable-next-line no-console
             console.log('Info: Connection to the server was closed, trying to reconnect.');
             this.init();
@@ -155,7 +158,7 @@ class APIBase {
 
             this.api_chart.onOpen().subscribe(() => {
                 // eslint-disable-next-line no-console
-                console.log('Connection has been established for chart ws!', this.api_chart);
+                console.log('Connection has been established for chart ws!');
             });
         } catch (error) {
             globalObserver.emit('Error', error);
@@ -163,11 +166,23 @@ class APIBase {
     }
 
     async getActiveSymbols() {
-        const { active_symbols } = await this.api.send({ active_symbols: 'brief' });
-        this.active_symbols = active_symbols;
-        return {
-            active_symbols,
-        };
+        try {
+            const { active_symbols } = await this.api.send({ active_symbols: 'brief' });
+            this.active_symbols = active_symbols;
+            return {
+                active_symbols,
+            };
+        } catch (err) {
+            if (err.error.code === 'InvalidAppID') {
+                globalObserver.emit('Error', err.error.message);
+                setConfigURL('');
+                setConfigAppID('');
+                window.location.reload();
+            }
+            return {
+                error: err,
+            };
+        }
     }
 }
 

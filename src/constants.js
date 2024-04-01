@@ -15,3 +15,12 @@ export const APP_ID_MAP = Object.freeze({
         'localbot.binary.sx': '16014',
     }),
 });
+
+export const OFFICIAL_BOT_DOMAINS = [
+    'bot.deriv.com',
+    'bot.deriv.be',
+    'bot.deriv.me',
+    'staging-bot.deriv.com',
+    'staging-bot.deriv.be',
+    'staging-bot.deriv.me',
+];

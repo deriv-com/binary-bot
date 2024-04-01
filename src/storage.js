@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie';
-import { parseQueryString, getRelatedDeriveOrigin, getDomainAppId } from '@utils';
+import { parseQueryString, getRelatedDerivOrigin, getDomainAppId } from '@utils';
 import { supported_languages, redirectToSupportedLang } from '@i18n';
 import { setCookieLanguage } from './common/utils/cookieManager';
+import { OFFICIAL_BOT_DOMAINS } from './constants';
 
 const CLIENT_ACCOUNT = 'client.accounts';
 const CLIENT_COUNTRY = 'client.country';
@@ -150,7 +151,7 @@ export const isDone = varName => varName in store;
 
 export const syncWithDerivApp = () => {
     const iframe = document.getElementById('localstorage-sync');
-    const { origin } = getRelatedDeriveOrigin();
+    const { origin } = getRelatedDerivOrigin();
 
     const postMessages = () => {
         iframe.contentWindow.postMessage(
@@ -169,9 +170,10 @@ export const syncWithDerivApp = () => {
         );
     };
     if (iframe) {
-        if (document.readyState === 'complete') {
-            postMessages();
-            return;
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(() => {
+                postMessages();
+            }, 100);
         }
         if (!hasReadystateListener) {
             hasReadystateListener = true;
@@ -240,10 +242,14 @@ const isRealAccount = () => {
     return isReal;
 };
 
-export const getDefaultEndpoint = () => ({
-    url: isRealAccount() ? 'green.binaryws.com' : 'blue.binaryws.com',
-    appId: getDefaultAppId() || getDomainAppId(),
-});
+export const getDefaultEndpoint = () => {
+    const isOfficial = OFFICIAL_BOT_DOMAINS.includes(window.location.host);
+    const real_server_url = isRealAccount() ? 'green.derivws.com' : 'blue.derivws.com';
+    return {
+        url: isOfficial ? real_server_url : 'red.derivws.com',
+        appId: getDefaultAppId() || getDomainAppId(),
+    };
+};
 
 export const getAppIdFallback = () => getCustomEndpoint().appId || getDefaultEndpoint().appId;
 

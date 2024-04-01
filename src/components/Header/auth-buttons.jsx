@@ -10,7 +10,7 @@ const AuthButtons = () => {
 
     const onLogin = () => {
         saveBeforeUnload();
-        document.location = config.login.url;
+        document.location = config.login.getURL();
     };
 
     useEffect(() => {
