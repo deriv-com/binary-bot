@@ -509,12 +509,14 @@
   "c5308e66942e2f7d7df852c970b3a057e00c1ecf": "Tình trạng Mạng",
   "63c78e309e7a876e6f1c5fe3e636c9422c40459d": "Multiplers",
   "753634ab7e1b03cda76e1781b45652aaefaac751": "Tether TRC20",
-  "7ae31c80e03a681e2552ac2125a0dfbba0302b0d": "Nâng cấp giao dịch bot của bạn",
-  "e1498f9eaee71b604ad0496b5aa54d39be0f37fd": "Để có các tính năng được cải thiện và hiệu suất tổng thể tốt hơn, hãy chuyển sang Deriv Bot ngay bây giờ.",
-  "30d45bf479993bcb72665e0632c245b8e6839a50": "Đưa tôi đến Deriv Bot",
-  "1a591a3e91fcb7a47f2c08e9e2e117f39af22078": "Cộng hòa Malta",
+  "e733c45da6dd80cc92ea52d9533afc7abe6ed465": "Dừng bot sẽ ngăn giao dịch tiếp theo. Bất kỳ giao dịch đang diễn ra sẽ được hoàn thành bởi hệ thống của chúng tôi. Xin lưu ý rằng một số giao dịch đã hoàn thành có thể không được hiển thị trong bảng nếu bot bị dừng trong khi đặt giao dịch. Bạn có thể tham khảo trang sao kê https://app.deriv.com/reports để biết chi tiết về tất cả các giao dịch đã hoàn thành.",
+  "cdbe0cace9f8a90cfc06a182fa7743e23589ec7b": "Để có các tính năng được cải thiện và hiệu suất tổng thể tốt hơn, ",
+  "7becab7941ae5ec9e0f55de768be17b450f2858c": "chuyển sang Deriv Bot",
+  "5eef41e07d5227234d18fe8d3d2099b8f6675d3c": " ngay bây giờ.",
+  "1a591a3e91fcb7a47f2c08e9e2e117f39af22078": "Malta",
   "a72310cea1dcce7466887418f51e962733bf9f57": "Tài khoản Deriv Apps",
   "070f0f8bdc34d7a78d1ff0e3617efc2cb111a655": "Tìm kiếm giao dịch CFD? Đi tới Trader's hub",
-  "923bd614d34029ade982ad020004aef1e4aed445": "Ứng dụng Deriv",
-  "b60862f4855a392f00cc9f27e0862c0b979075a6": "Ví"
+  "923bd614d34029ade982ad020004aef1e4aed445": "Deriv Apps",
+  "b60862f4855a392f00cc9f27e0862c0b979075a6": "Ví",
+  "1f5045ef7c9382c16e2fb9bca1fa9214e0d2a5a9": "Quản lý các quỹ"
 }
