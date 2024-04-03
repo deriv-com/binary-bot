@@ -18,19 +18,16 @@ runs:
   using: composite
   steps:
     - name: Send Slack Notification on Success
-
+      env:
       if: inputs.status == 'success'
       uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
       with:
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
-        MESSAGE: 'Release succeeded[staging-test]'
+        MESSAGE: ${{ inputs.RELEASE_TYPE }} Release succeeded for binary-bot with version ${{ inputs.VERSION }}
 
     - name: Send Slack Notification on Failure
       if: inputs.status == 'failure'
-      run: |
-        curl -X POST -H 'Content-type: application/json' \
-        --data '{
-          "text": "${{ inputs.RELEASE_TYPE }} Release failed for deriv bot with version ${{ inputs.VERSION }}"
-        }' \
-        ${{ inputs.SLACK_WEBHOOK_URL }}
-      shell: bash
+      uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
+      with:
+        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
+        MESSAGE: ${{ inputs.RELEASE_TYPE }} Release failed for binary-bot with version ${{ inputs.VERSION }}
