@@ -18,7 +18,6 @@ runs:
   using: composite
   steps:
     - name: Send Slack Notification on Success
-      env:
       if: inputs.status == 'success'
       uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
       with:
