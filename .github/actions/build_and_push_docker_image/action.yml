@@ -54,7 +54,7 @@ runs:
         APP_NAME: deriv-static-bot
       run: |
         set -e
-        docker run --rm $DOCKERHUB_ORGANISATION/$APP_NAME:GITHUB_REF_NAME nginx -t
+        docker run --rm $DOCKERHUB_ORGANISATION/$APP_NAME:$GITHUB_REF_NAME nginx -t
         echo "docker image validated successfully"
       shell: bash
 
