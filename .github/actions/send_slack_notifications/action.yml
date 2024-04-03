@@ -14,6 +14,10 @@ inputs:
     description: "Version"
     required: true
     default: "N/A"
+  app_url:
+    description: "App URL"
+    required: true
+    default: "https://bot.deriv.com/"
 runs:
   using: composite
   steps:
@@ -22,11 +26,11 @@ runs:
       uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
       with:
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
-        MESSAGE: ${{ inputs.RELEASE_TYPE }} Release succeeded for binary-bot with version ${{ inputs.VERSION }}
+        MESSAGE: ${{ inputs.RELEASE_TYPE }} Release succeeded for ${{ inputs.APP_URL }} with version ${{ inputs.VERSION }}
 
     - name: Send Slack Notification on Failure
       if: inputs.status == 'failure'
       uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
       with:
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
-        MESSAGE: ${{ inputs.RELEASE_TYPE }} Release failed for binary-bot with version ${{ inputs.VERSION }}
+        MESSAGE: ${{ inputs.RELEASE_TYPE }} Release failed for ${{ inputs.APP_URL }} with version ${{ inputs.VERSION }}

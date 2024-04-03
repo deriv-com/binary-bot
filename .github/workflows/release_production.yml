@@ -71,4 +71,5 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           status: ${{ env.WORKFLOW_CONCLUSION }}
           release_type: Production
-          version: ${{ needs.release_production.outputs.RELEASE_VERSION}}
+          version: ${{ needs.release_production.outputs.RELEASE_VERSION }}
+          app_url: https://bot.deriv.com/
