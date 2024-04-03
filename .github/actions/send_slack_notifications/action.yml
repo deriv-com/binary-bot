@@ -18,22 +18,23 @@ runs:
   using: composite
   steps:
     - name: Send Slack Notification on Success
-
+      env:
+        RELEASE_TYPE: ${{ inputs.RELEASE_TYPE }}
+        VERSION: ${{ inputs.VERSION }}
+        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
       if: inputs.status == 'success'
-      run: |
-        curl -X POST -H 'Content-type: application/json' \
-        --data '{
-        "text": "${{ inputs.RELEASE_TYPE }} Release succeeded for deriv bot with version ${{ inputs.VERSION }}"
-        }' \
-          ${{ inputs.SLACK_WEBHOOK_URL }}
-      shell: bash
+      uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
+        with:
+          SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
+          MESSAGE: "$RELEASE_TYPE Release succeeded for deriv bot with version $VERSION"
 
     - name: Send Slack Notification on Failure
+      env:
+        RELEASE_TYPE: ${{ inputs.RELEASE_TYPE }}
+        VERSION: ${{ inputs.VERSION }}
+        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
       if: inputs.status == 'failure'
-      run: |
-        curl -X POST -H 'Content-type: application/json' \
-        --data '{
-          "text": "${{ inputs.RELEASE_TYPE }} Release failed for deriv bot with version ${{ inputs.VERSION }}"
-        }' \
-        ${{ inputs.SLACK_WEBHOOK_URL }}
-      shell: bash
+      uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
+        with:
+          SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
+          MESSAGE: "$RELEASE_TYPE Release failed for deriv bot with version $VERSION"
