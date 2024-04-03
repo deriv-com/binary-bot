@@ -31,13 +31,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Setup Environment variables
-      run: |
-        echo "NAMESPACE=${{ inputs.K8S_NAMESPACE }}" >> "$GITHUB_ENV"
-        echo "KUBE_SERVER=${{ inputs.KUBE_SERVER }}" >> "$GITHUB_ENV"
-        echo "SERVICEACCOUNT_TOKEN=${{ inputs.SERVICEACCOUNT_TOKEN }}" >> "$GITHUB_ENV"
-      shell: bash
-
     - name: Build docker image 🐳
       env:
         GITHUB_REF_NAME: ${{ github.ref_name }}
