@@ -21,12 +21,12 @@ runs:
       env:
         RELEASE_TYPE: ${{ inputs.RELEASE_TYPE }}
         VERSION: ${{ inputs.VERSION }}
-        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       if: inputs.status == 'success'
       uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
-        with:
-          SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
-          MESSAGE: $RELEASE_TYPE Release succeeded for binary-bot with version $VERSION
+      with:
+        SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
+        MESSAGE: $RELEASE_TYPE Release succeeded for binary-bot with version $VERSION
 
     - name: Send Slack Notification on Failure
       env:
@@ -35,6 +35,6 @@ runs:
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
       if: inputs.status == 'failure'
       uses: 'deriv-com/shared-actions/.github/actions/send_slack_notification@master'
-        with:
-          SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
-          MESSAGE: $RELEASE_TYPE Release failed for binary-bot with version $VERSION
+      with:
+        SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
+        MESSAGE: $RELEASE_TYPE Release failed for binary-bot with version $VERSION
