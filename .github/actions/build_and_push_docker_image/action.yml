@@ -73,6 +73,7 @@ runs:
         NAMESPACE: ${{ inputs.K8S_NAMESPACE }}
         KUBE_SERVER: ${{ inputs.KUBE_SERVER }}
         SERVICEACCOUNT_TOKEN: ${{ inputs.SERVICEACCOUNT_TOKEN }}
+        DOCKERHUB_ORGANISATION: ${{ inputs.DOCKERHUB_ORGANISATION }}
       run: |
         git clone https://github.com/binary-com/devops-ci-scripts
         cd devops-ci-scripts/k8s-build_tools
