@@ -43,7 +43,7 @@
                     'Unhandled rejection (promise: ',
                     event.promise,
                     ', reason: ',
-                    event.reason,
+                    JSON.stringify(event.reason, ['message', 'arguments', 'type', 'name']),
                     ').',
                     JSON.stringify(event.promise)
                 );
