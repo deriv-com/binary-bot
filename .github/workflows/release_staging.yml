@@ -55,7 +55,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Conclusion
-        uses: technote-space/workflow-conclusion-action@v3
+        uses: technote-space/workflow-conclusion-action@45ce8e0eb155657ab8ccf346ade734257fd196a5
       - name: Send Slack Notification
         uses: "./.github/actions/send_slack_notifications"
         with:
