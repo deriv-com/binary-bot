@@ -259,7 +259,8 @@ export const loadWorkspace = xml => {
         },
         e => {
             Blockly.Events.setGroup(false);
-            throw e;
+            const serialized_error = JSON.stringify(e, ['message', 'arguments', 'type', 'name']);
+            trackJSTrack(new TrackJSError(translate('Blocks aren`t loaded successfully'), `${e}, ${serialized_error}`));
         }
     );
 };
@@ -287,7 +288,8 @@ export const loadBlocks = (xml, dropEvent = {}) => {
             globalObserver.emit('ui.log.success', translate('Blocks are loaded successfully'));
         },
         e => {
-            throw e;
+            const serialized_error = JSON.stringify(e, ['message', 'arguments', 'type', 'name']);
+            trackJSTrack(new TrackJSError(translate('Blocks aren`t loaded successfully'), `${e} ${serialized_error}`));
         }
     );
 };
@@ -502,10 +504,15 @@ export default class _Blockly {
                 });
             }
             if (this.interpreter) {
-                this.interpreter.stop().then(() => {
-                    this.interpreter = null;
-                    resolve();
-                });
+                this.interpreter
+                    .stop()
+                    .then(() => {
+                        this.interpreter = null;
+                        resolve();
+                    })
+                    .catch(error => {
+                        globalObserver.emit('Error', error);
+                    });
             } else {
                 resolve();
             }
