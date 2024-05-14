@@ -529,7 +529,9 @@ ul.bullet {
             margin-right: 8px;
             cursor: pointer;
             user-select: none;
-
+            &.no-padding {
+                padding-right: 8px;
+            }
             &.disabled {
                 cursor: not-allowed;
             }
@@ -1475,7 +1477,9 @@ ul.bullet {
         height: 100vh;
         width: 295px;
         background: var(--general-main-2);
-        box-shadow: 0 16px 16px 0 var(--shadow-menu), 0 0 16px 0 var(--shadow-menu);
+        box-shadow:
+            0 16px 16px 0 var(--shadow-menu),
+            0 0 16px 0 var(--shadow-menu);
 
         &-header {
             display: flex;

@@ -46,6 +46,53 @@
         &__wallets-container {
             width: 4rem;
             height: 2.5rem;
+
+            &.is_menu {
+                background-color: red !important;
+            }
+        }
+    }
+}
+
+.acc-info {
+    &__wallets-container {
+        &.is_menu {
+            width: 40px !important;
+            height: 24px !important;
+            .app-icon {
+                &__top-icon {
+                    top: 1px;
+                    left: 1px;
+                    .wallet-icon {
+                        img {
+                            width: 16px;
+                            height: 16px;
+                        }
+                        &--small {
+                            width: 24px;
+                            height: 14px;
+                            img {
+                                height: 12px;
+                                width: 12px;
+                            }
+                        }
+                    }
+                }
+                &__bottom-icon {
+                    bottom: 1px;
+                    right: 1px;
+                    .wallet-icon {
+                        &--small {
+                            width: 24px;
+                            height: 14px;
+                            img {
+                                height: 12px;
+                                width: 12px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

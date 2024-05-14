@@ -61,7 +61,7 @@ const AccountActions = () => {
 
     return (
         <React.Fragment>
-            <Notifications />
+            {!has_wallet_account && <Notifications />}
             <a
                 className='url-account-details header__account header__menu-item mobile-hide'
                 href={generateDerivLink('account')}
@@ -93,7 +93,7 @@ const AccountActions = () => {
                     </span>
                 )}
             </div>
-
+            {has_wallet_account && <Notifications />}
             {is_acc_dropdown_open && (
                 <AccountDropdown virtual={is_virtual} ref={dropdownRef} setIsAccDropdownOpen={setIsAccDropdownOpen} />
             )}

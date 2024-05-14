@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './wallet-icon.scss';
+import cn from 'classnames';
+import { isMobile } from '@utils';
 
-const WalletIcon = ({ currency, is_virtual, currency_icon }) => {
+const WalletIcon = ({ currency, is_virtual, currency_icon, is_menu = false }) => {
     const wallet_icon_path = '/public/images/wallet/';
     const default_currency_icon_path = `/public/images/currency/ic-currency-${currency_icon}.svg`;
     const isWalletIcon = _currency => {
@@ -20,7 +22,7 @@ const WalletIcon = ({ currency, is_virtual, currency_icon }) => {
     }
 
     return (
-        <div className='acc-info__wallets-container'>
+        <div className={cn('acc-info__wallets-container', { is_menu: isMobile() && is_menu })}>
             {
                 <div className='app-icon__top-icon'>
                     <div className='wallet-icon'>
@@ -45,6 +47,7 @@ WalletIcon.propTypes = {
     currency: PropTypes.string,
     is_virtual: PropTypes.bool,
     currency_icon: PropTypes.string,
+    is_menu: PropTypes.bool,
 };
 
 export default WalletIcon;
