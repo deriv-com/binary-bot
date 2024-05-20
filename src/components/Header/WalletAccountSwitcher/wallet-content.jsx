@@ -12,7 +12,7 @@ import './wallet-icon.scss';
 
 const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
     const dispatch = useDispatch();
-    const { login_id, has_wallet_account } = useSelector(state => state.client);
+    const { login_id } = useSelector(state => state.client);
 
     const active_account = { ...api_base.account_info };
     const { landing_company_name } = active_account;
@@ -59,7 +59,6 @@ const WalletContent = ({ setIsAccDropdownOpen, accounts }) => {
                                 <div className='app-icon'>
                                     <WalletIcon
                                         currency={currency}
-                                        has_wallet_account={has_wallet_account}
                                         is_virtual={!!demo_account}
                                         currency_icon={currency_icon}
                                     />

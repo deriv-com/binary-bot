@@ -25,9 +25,9 @@ const AccountMenu = ({ is_open }) => {
     }, [account_list]);
 
     return (
-        <div className={classNames('header__acc-info', { disabled: is_bot_running })}>
+        <div className={classNames('header__acc-info', { disabled: is_bot_running, 'no-padding': has_wallet_account })}>
             {has_wallet_account ? (
-                <WalletIcon currency={currency} is_virtual={is_virtual} currency_icon={currency_icon} />
+                <WalletIcon currency={currency} is_virtual={is_virtual} currency_icon={currency_icon} is_menu />
             ) : (
                 <img
                     className='header__acc-icon'
