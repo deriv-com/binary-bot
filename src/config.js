@@ -198,7 +198,7 @@ const getConfig = () => ({
     },
     tradershub: {
         visible: true,
-        url: generateDerivLink('appstore/traders-hub'),
+        url: generateDerivLink(''),
         label: translate('Trader\'s Hub'),
     },
     wallets: {
