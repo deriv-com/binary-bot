@@ -8,9 +8,12 @@ runs:
   using: composite
   steps:
     - name: Set version
+      env:
+        RELEASE_TYPE: ${{ inputs.RELEASE_TYPE }}
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
       run: |
         current_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-        version="${{ inputs.RELEASE_TYPE }}-GH_Run#:${{ github.run_number }}-Date:$current_date"
+        version="$RELEASE_TYPE-GH_Run#:$GITHUB_RUN_NUMBER-Date:$current_date"
         echo "Setting version to: $version"
         echo "VERSION=$version" >> $GITHUB_ENV
       shell: bash

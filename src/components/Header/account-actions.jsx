@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { api_base } from '@api-base';
 import config from '@config';
-import { generateDerivLink } from '@utils';
+import { generateDerivLink , isMobile } from '@utils';
 import { setActiveLoginId, getClientAccounts, syncWithDerivApp } from '@storage';
 import { translate } from '@i18n';
 import Modal from '@components/common/modal';
@@ -59,9 +59,11 @@ const AccountActions = () => {
         dispatch(setAccountSwitcherId(''));
     };
 
+    const is_mobile = isMobile();
+
     return (
         <React.Fragment>
-            <Notifications />
+            {(!is_mobile || !has_wallet_account) && <Notifications />}
             <a
                 className='url-account-details header__account header__menu-item mobile-hide'
                 href={generateDerivLink('account')}
@@ -93,7 +95,7 @@ const AccountActions = () => {
                     </span>
                 )}
             </div>
-
+            {has_wallet_account && is_mobile && <Notifications />}
             {is_acc_dropdown_open && (
                 <AccountDropdown virtual={is_virtual} ref={dropdownRef} setIsAccDropdownOpen={setIsAccDropdownOpen} />
             )}

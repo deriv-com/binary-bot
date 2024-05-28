@@ -46,3 +46,21 @@ jobs:
           SERVICEACCOUNT_TOKEN: ${{ secrets.SERVICEACCOUNT_TOKEN }}
           CA_CRT: ${{ secrets.CA_CRT }}
           APP_VERSION: latest-staging
+  send_slack_notification:
+    if: always()
+    needs: [release_staging]
+    environment: Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Conclusion
+        uses: technote-space/workflow-conclusion-action@45ce8e0eb155657ab8ccf346ade734257fd196a5
+      - name: Send Slack Notification
+        uses: "./.github/actions/send_slack_notifications"
+        with:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          status: ${{ env.WORKFLOW_CONCLUSION }}
+          release_type: Staging
+          version: latest-master
+          app_url: https://staging-bot.deriv.com/

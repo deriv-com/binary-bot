@@ -246,7 +246,7 @@ export const getDefaultEndpoint = () => {
     const isOfficial = OFFICIAL_BOT_DOMAINS.includes(window.location.host);
     const real_server_url = isRealAccount() ? 'green.derivws.com' : 'blue.derivws.com';
     return {
-        url: isOfficial ? real_server_url : 'red.derivws.com',
+        url: isOfficial ? real_server_url : 'ws.derivws.com',
         appId: getDefaultAppId() || getDomainAppId(),
     };
 };

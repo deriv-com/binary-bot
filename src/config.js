@@ -202,7 +202,7 @@ const getConfig = () => ({
         label: translate('Trader\'s Hub'),
     },
     wallets: {
-        url: generateDerivLink('wallets'),
+        url: generateDerivLink(''),
     },
     deposit: {
         visible: true,
@@ -211,7 +211,7 @@ const getConfig = () => ({
     },
     manage_funds: {
         visible: true,
-        url: `${related_deriv_origin.origin}/wallets/cashier/transfer?lang=${localStorage.getItem('lang')}`,
+        url: `${related_deriv_origin.origin}/redirect?action=payment_transfer&lang=${localStorage.getItem('lang')}`,
         label: translate('Manage Funds'),
     },
 });
