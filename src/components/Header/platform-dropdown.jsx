@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import config from '@config';
+import CONFIG from '@config';
 import { getLang } from '@storage';
 import { getRelatedDerivOrigin } from '@utils';
 import { useLocation } from 'react-router-dom';
@@ -28,15 +28,7 @@ const PlatformDropdown = React.forwardRef(({ hideDropdown, setIsPlatformSwitcher
     return (
         <div id='platform__dropdown' className='platform__dropdown show'>
             <div id='platform__list' className='platform__dropdown-list' ref={platformDropdownRef}>
-                {config.platforms.map(platform => {
-                    if (platform.title === 'DTrader') {
-                        const related_deriv_origin = getRelatedDerivOrigin();
-                        platform.link = `${related_deriv_origin.origin}/?lang=${lang || 'en'}`;
-                    }
-                    if (platform.title === 'DBot') {
-                        const related_deriv_origin = getRelatedDerivOrigin();
-                        platform.link = `${related_deriv_origin.origin}/bot/?lang=${lang || 'en'}`;
-                    }
+                {CONFIG.platforms.map(platform => {
                     if (platform.title === 'SmartTrader') {
                         const related_deriv_origin = getRelatedDerivOrigin();
                         platform.link = `https://${related_deriv_origin.prefix}smarttrader.deriv.${
@@ -62,7 +54,7 @@ const PlatformDropdown = React.forwardRef(({ hideDropdown, setIsPlatformSwitcher
                     );
                 })}
             </div>
-            <a href={config.tradershub.url}>
+            <a href={CONFIG.tradershub.url}>
                 <span>{translate('Looking for CFDs? Go to Trader\'s Hub')}</span>
             </a>
         </div>
