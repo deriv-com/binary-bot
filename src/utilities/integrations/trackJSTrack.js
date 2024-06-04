@@ -8,6 +8,7 @@ export const default_errors_to_ignore = [
     'RateLimit',
     'DisconnectError',
     'MarketIsClosed',
+    'authError', // Invalid Credentials, access token's been expired, show pop-up modal to sign in
 ];
 
 export function trackJSTrack(error) {
