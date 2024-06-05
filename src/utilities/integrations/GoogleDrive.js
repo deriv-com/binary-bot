@@ -151,15 +151,11 @@ class GoogleDriveUtil {
 
                 this.client.requestAccessToken({ prompt: '' });
 
-                const {
-                    result: {
-                        error: {
-                            errors: [{ message, reason }],
-                            code,
-                            status,
-                        },
-                    },
-                } = err;
+                const message = err?.result?.error?.errors[0]?.message;
+                const reason = err?.result?.error?.errors[0]?.reason;
+                const code = err?.result?.error?.code;
+                const status = err?.result?.error?.status;
+
                 const errorObject = {
                     error: {
                         error: {
