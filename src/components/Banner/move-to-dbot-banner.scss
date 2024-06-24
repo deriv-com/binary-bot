@@ -12,15 +12,21 @@
 
 .mv-dbot-banner {
     text-align: center;
-    padding: 32px 108px;
+    padding: 16px 24px;
+    width: 440px;
     @include mobile {
-        padding: 28px;
+        padding: 16px;
+        width: 100%;
     }
 
     &__title {
-        font-size: var(--font-size-l);
+        font-size: 20px;
         font-weight: bold;
         margin-bottom: 16px;
+
+        @include mobile {
+            font-size: var(--font-size-n);
+        }
     }
 
     &__content {
@@ -28,17 +34,14 @@
         font-size: var(--font-size-s);
         line-height: 20px;
         text-align: left;
-        ol,
-        ul {
-            list-style: disc;
+        p {
             line-height: 20px;
-            padding: 0px 32px;
         }
     }
     &__icon-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 24px;
+        margin-bottom: 16px;
     }
 }

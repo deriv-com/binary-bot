@@ -25,7 +25,7 @@ const shouldShowPopup = () => {
         return true;
     }
 
-    const allowed_delay = 7; // One week in days
+    const allowed_delay = 1; // One week in days
     const last_popup_date = new Date(last_deriv_redirect_popup_time);
     const current_date = new Date();
 
@@ -60,45 +60,26 @@ const MoveToDbotBanner = () => {
         <div>
             {open_modal && (
                 <DerivAppModal
-                    title={translate('Discover Deriv Bot')}
+                    title={translate('Important notice')}
                     close_on_outside_click={false}
                     primary_button={{
-                        title: translate('Explore Deriv Bot'),
+                        title: translate('Upgrade to Deriv Bot'),
                         onClick: visitDerivBot,
-                    }}
-                    secondary_button={{
-                        title: translate('No, thanks'),
-                        onClick: closeModal,
                     }}
                     onClose={closeModal}
                 >
                     <div className={container_class}>
                         <div className={`${container_class}__icon-container`}>
-                            <img alt='move to deriv' src='/public/images/move-to-deriv.svg' />
+                            <img alt='move to deriv' src='/public/images/upgrade-to-deriv-bot.svg' />
                         </div>
-                        <div className={`${container_class}__title`}>
-                            {translate('Take your bot trading to the next level')}
-                        </div>
+                        <div className={`${container_class}__title`}>{translate('Binary bot is retiring soon')} </div>
                         <div className={`${container_class}__content`}>
-                            <div>{translate('On Deriv Bot, you\'ll enjoy:')}</div>
-                            <ul>
-                                <li>
-                                    {translate('New features and tools with faster execution and enhanced stability')}
-                                </li>
-                                <li>{translate('The ability to use your existing XML files from Binary Bot')}</li>
-                                <li>
-                                    {translate(
-                                        'A familiar drag-and-drop interface; create and customise your trading bot easily'
-                                    )}
-                                </li>
-                            </ul>
-                            <div>
-                                <span>{translate('What are you waiting for?')}</span>{' '}
-                                <span>
-                                    <strong>{translate('Explore Deriv Bot')}</strong>
-                                </span>{' '}
-                                <span>{translate('today and unlock new trading possibilities!')}</span>
-                            </div>
+                            <p>{translate('Binary bot will be discontinued soon.')}</p>
+                            <p>
+                                {translate(
+                                    'Import your existing strategies (XML files) to Deriv Bot today and enjoy a faster, more efficient trading experience with advanced features.'
+                                )}
+                            </p>
                         </div>
                     </div>
                 </DerivAppModal>

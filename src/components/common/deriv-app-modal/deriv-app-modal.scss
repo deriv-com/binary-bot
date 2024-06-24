@@ -72,10 +72,14 @@
         }
 
         &-title {
-            font-size: var(--font-size-l);
+            font-size: var(--font-size-n);
             font-weight: bold;
             margin: 0;
-            padding: 16px;
+            padding: 24px;
+            @include mobile {
+                padding: 16px;
+                font-size: var(--font-size-s);
+            }
         }
     }
 
@@ -96,9 +100,12 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        padding: 8px 16px;
+        padding: 16px 24px;
         border: none;
         border-top: 1px solid var(--border-normal);
+        @include mobile {
+            padding: 16px;
+        }
         &__btn-container {
             @include mobile {
                 display: flex;
@@ -108,10 +115,10 @@
         }
         &__btn-container,
         * {
-            margin: 4px;
-            font-weight: 600;
-            font-size: medium;
+            font-weight: 700;
+            font-size: var(--font-size-s);
             text-transform: none;
+            line-height: 20px;
         }
         &-primary-btn {
             background: var(--button-primary-default);
