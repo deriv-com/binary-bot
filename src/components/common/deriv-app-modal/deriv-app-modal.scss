@@ -56,14 +56,16 @@
                 justify-content: center;
                 align-items: center;
                 color: var(--text-prominent);
-                padding: 24px;
+                padding: 20px 24px;
                 font-size: 1rem;
+                @include mobile {
+                    padding: 16px 24px;
+                }
 
                 &:after {
                     content: '\00d7';
                     font-weight: 200;
                     font-size: 24px;
-                    margin-top: -2px;
                 }
                 &:hover {
                     background: transparent;
@@ -75,9 +77,9 @@
             font-size: var(--font-size-n);
             font-weight: bold;
             margin: 0;
-            padding: 24px;
+            padding: 0 24px;
             @include mobile {
-                padding: 16px;
+                padding: 0 16px;
                 font-size: var(--font-size-s);
             }
         }
@@ -123,7 +125,7 @@
         &-primary-btn {
             background: var(--button-primary-default);
             border: 2px solid var(--button-primary-default);
-            padding-inline: 18px;
+            padding: 8px 18px;
             &:hover {
                 background: var(--button-primary-hover);
             }
