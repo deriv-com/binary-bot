@@ -148,16 +148,27 @@ class GoogleDriveUtil {
                     const picker = document.getElementsByClassName('picker-dialog-content')[0];
                     picker.parentNode.removeChild(picker);
                 }, 500);
+
                 this.client.requestAccessToken({ prompt: '' });
+
+                const message = err?.result?.error?.errors[0]?.message;
+                const reason = err?.result?.error?.errors[0]?.reason;
+                const code = err?.result?.error?.code;
+                const status = err?.result?.error?.status;
+
+                const errorObject = {
+                    error: {
+                        error: {
+                            message: `${message}, status: ${status}, code: ${code} `,
+                            code: reason,
+                        },
+                    },
+                };
+                trackJSTrack(errorObject);
+            } else {
+                errLogger(JSON.stringify(err, ['message', 'arguments', 'type', 'name']));
             }
-
             const error = translate('There was an error listing files from Google Drive');
-
-            errLogger(
-                JSON.stringify(err, ['message', 'arguments', 'type', 'name']),
-                translate('There was an error listing files from Google Drive')
-            );
-
             globalObserver.emit('Error', error);
         }
     };

@@ -132,13 +132,13 @@ const getConfig = () => ({
         {
             title: 'DTrader',
             description: translate('A whole new trading experience on a powerful yet easy to use platform.'),
-            link: related_deriv_origin.origin,
+            link: generateDerivLink('dtrader'),
             logo: 'public/images/ic-brand-dtrader.svg',
         },
         {
             title: 'DBot',
             description: translate('Automated trading at your fingertips. No coding needed.'),
-            link: `${related_deriv_origin.origin}/bot`,
+            link: generateDerivLink('bot'),
             logo: 'public/images/ic-brand-dbot.svg',
         },
         {
@@ -198,7 +198,7 @@ const getConfig = () => ({
     },
     tradershub: {
         visible: true,
-        url: generateDerivLink('appstore/traders-hub'),
+        url: generateDerivLink(''),
         label: translate('Trader\'s Hub'),
     },
     wallets: {
