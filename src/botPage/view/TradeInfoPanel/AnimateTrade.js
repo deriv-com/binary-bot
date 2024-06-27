@@ -29,6 +29,10 @@ const AnimateTrade = () => {
     const [contract_status, setContractStatus] = React.useState(CONTRACT_STATUS.not_running);
     const isMounted = useIsMounted();
 
+    const resetSummary = () => {
+        setIndicatorMessage(INDICATOR_MESSAGES.not_running);
+    };
+
     React.useEffect(() => {
         globalObserver.register('reset_animation', resetSummary);
         globalObserver.register('summary.clear', resetSummary);
@@ -57,10 +61,6 @@ const AnimateTrade = () => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const resetSummary = () => {
-        setIndicatorMessage(INDICATOR_MESSAGES.not_running);
-    };
 
     const animateStage = contract => {
         if (contract.id === 'contract.purchase_sent') {
