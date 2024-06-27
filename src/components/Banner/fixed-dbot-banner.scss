@@ -7,7 +7,7 @@
         justify-content: center;
         background-color: #ffeabf;
         height: 56px;
-
+        font-size: var(--font-size-s);
         @include mobile {
             height: unset;
         }
@@ -37,10 +37,8 @@
         }
     }
 
-    &__icon-info {
+    &__icon {
         margin-right: 0.5rem;
-        font-size: 1.4rem;
-        transform: rotate(180deg);
     }
 }
 
