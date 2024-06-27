@@ -72,13 +72,18 @@ const Header = () => {
     }, [login_id]);
 
     React.useEffect(() => {
-        api_base.api.expectResponse('balance').then(({ balance }) => {
-            dispatch(client_slice.updateBalance(balance));
-            globalObserver.setState({
-                balance: Number(balance.balance),
-                currency: balance.currency,
+        api_base.api
+            .expectResponse('balance')
+            .then(({ balance }) => {
+                dispatch(client_slice.updateBalance(balance));
+                globalObserver.setState({
+                    balance: Number(balance.balance),
+                    currency: balance.currency,
+                });
+            })
+            .catch(error => {
+                globalObserver.emit('Error', error);
             });
-        });
 
         api_base.api.onMessage().subscribe(({ data }) => {
             if (data.msg_type === 'balance') {

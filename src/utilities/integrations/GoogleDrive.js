@@ -117,7 +117,11 @@ class GoogleDriveUtil {
                 store.dispatch(setGdLoggedIn(false));
                 this.updateLoginStatus(true);
             };
-            this.client.requestAccessToken({ prompt: '' });
+            try {
+                this.client.requestAccessToken({ prompt: '' });
+            } catch (err) {
+                trackJSTrack(new TrackJSError(err));
+            }
         }
     };
 
@@ -129,8 +133,12 @@ class GoogleDriveUtil {
     logout = () => {
         this.updateLoginStatus(false);
         if (this.access_token) {
-            gapi.client.setToken('');
-            google.accounts.oauth2.revoke(this.access_token);
+            try {
+                gapi.client.setToken('');
+                google.accounts.oauth2.revoke(this.access_token);
+            } catch (err) {
+                trackJSTrack(new TrackJSError(err));
+            }
             localStorage.removeItem('access_token');
         }
         this.access_token = '';

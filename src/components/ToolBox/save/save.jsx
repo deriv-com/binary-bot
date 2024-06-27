@@ -3,6 +3,8 @@ import React from 'react';
 import { translate } from '@i18n';
 import { observer as globalObserver } from '@utilities/observer';
 import google_drive_util from '@utilities/integrations/GoogleDrive';
+import { TrackJSError } from '@utilities/logger';
+import { trackJSTrack } from '@utilities/integrations/trackJSTrack';
 import LoadingButton from '../loading_button';
 import SAVE_LOAD_TYPE from '../common';
 import useIsMounted from '../../../common/hooks/isMounted';
@@ -33,6 +35,10 @@ const Save = ({ blockly, closeDialog, is_gd_logged_in }) => {
                 mimeType: 'application/xml',
             })
             .then(() => globalObserver.emit('ui.log.success', translate('Successfully uploaded to Google Drive')))
+            .catch(e => {
+                const serialized_error = JSON.stringify(e, ['message', 'arguments', 'type', 'name']);
+                trackJSTrack(new TrackJSError(`${e}, ${serialized_error}`));
+            })
             .finally(() => isMounted() && setLoading(false));
     };
     const onSubmit = e => {

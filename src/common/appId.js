@@ -13,6 +13,8 @@ import {
 } from '@storage';
 import { getRelatedDerivOrigin } from '@utils';
 import GTM from '@utilities/integrations/gtm';
+import { TrackJSError } from '@utilities/logger';
+import { trackJSTrack } from '@utilities/integrations/trackJSTrack';
 
 const generateOAuthDomain = () => {
     const related_deriv_origin = getRelatedDerivOrigin();
@@ -48,6 +50,8 @@ export async function addTokenIfValid(token) {
         return account;
     } catch (e) {
         GTM.setVisitorId();
+        const serialized_error = JSON.stringify(e, ['message', 'arguments', 'type', 'name']);
+        trackJSTrack(new TrackJSError(`${e}, ${serialized_error}`));
         throw e;
     }
 }
@@ -106,6 +110,8 @@ export async function loginAndSetTokens(token_list = []) {
         return { account_info, accounts_list };
     } catch (e) {
         GTM.setVisitorId();
+        const serialized_error = JSON.stringify(e, ['message', 'arguments', 'type', 'name']);
+        trackJSTrack(new TrackJSError(`${e}, ${serialized_error}`));
         throw e;
     }
 }
