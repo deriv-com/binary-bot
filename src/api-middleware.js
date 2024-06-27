@@ -1,5 +1,4 @@
 import { datadogLogs } from '@datadog/browser-logs';
-import { formatDate } from './utilities/utility-functions';
 
 const DATADOG_CLIENT_LOGS_TOKEN = process.env.DATADOG_CLIENT_LOGS_TOKEN ?? '';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -16,7 +15,6 @@ if (isProduction) {
     dataDogVersion = `binary-bot-${process.env.REF_NAME}`;
     dataDogEnv = 'production';
 } else if (isStaging) {
-    dataDogVersion = `binary-bot-staging-v${formatDate(new Date())}`;
     dataDogEnv = 'staging';
 }
 
