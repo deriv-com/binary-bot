@@ -8,7 +8,7 @@ import { visitDerivBot } from './redirect-to-dbot';
 import './move-to-dbot-banner.scss';
 
 const updateLastPopupTime = () => {
-    localStorage.setItem('last_deriv_redirect_popup_time', new Date().toString());
+    localStorage.setItem('migration_popup_timer', new Date().toString());
 };
 
 const daysBetween = (date1, date2) => {
@@ -18,15 +18,15 @@ const daysBetween = (date1, date2) => {
 };
 
 const shouldShowPopup = () => {
-    const last_deriv_redirect_popup_time = localStorage.getItem('last_deriv_redirect_popup_time');
+    const migration_popup_timer = localStorage.getItem('migration_popup_timer');
 
-    if (!last_deriv_redirect_popup_time) {
+    if (!migration_popup_timer) {
         updateLastPopupTime();
         return true;
     }
 
     const allowed_delay = 1; // One week in days
-    const last_popup_date = new Date(last_deriv_redirect_popup_time);
+    const last_popup_date = new Date(migration_popup_timer);
     const current_date = new Date();
 
     if (daysBetween(last_popup_date, current_date) >= allowed_delay) {
