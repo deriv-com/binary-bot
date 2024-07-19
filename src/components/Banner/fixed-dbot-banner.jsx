@@ -11,10 +11,13 @@ const FixedDbotBanner = () => (
                 <span>
                     <strong>{translate('Important: ')}</strong>
                 </span>
-                <span>{translate('Binary Bot will be discontinued soon. ')}</span>
-                <a className='fixed-banner__visit-deriv-bot' href='#' onClick={visitDerivBot}>
-                    {translate('Upgrade to Deriv Bot')}
-                </a>
+                <span>{translate('Binary Bot will be discontinued on')} </span>
+                <strong>
+                    <span>{translate('31 August 2024.')} </span>
+                    <a className='fixed-banner__visit-deriv-bot' href='#' onClick={visitDerivBot}>
+                        {translate('Upgrade to Deriv Bot')}
+                    </a>
+                </strong>
                 <span>{translate(' to continue trading.')}</span>
             </div>
         </div>

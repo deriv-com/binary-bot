@@ -39,7 +39,7 @@ const shouldShowPopup = () => {
 
 const MoveToDbotBanner = () => {
     const container_class = 'mv-dbot-banner';
-    const [open_modal, setOpenModal] = useState(false);
+    const [open_modal, setOpenModal] = useState(true);
 
     useEffect(() => {
         try {
@@ -72,14 +72,20 @@ const MoveToDbotBanner = () => {
                         <div className={`${container_class}__icon-container`}>
                             <img alt='move to deriv' src='/public/images/upgrade-to-deriv-bot.svg' />
                         </div>
-                        <div className={`${container_class}__title`}>{translate('Binary bot is retiring soon')} </div>
+                        <div className={`${container_class}__title`}>
+                            {translate('Binary bot is retiring on 31 August 2024')}{' '}
+                        </div>
                         <div className={`${container_class}__content`}>
-                            <p>{translate('Binary bot will be discontinued soon.')}</p>
                             <p>
                                 {translate(
-                                    'Import your existing strategies (XML files) to Deriv Bot today and enjoy a faster, more efficient trading experience with advanced features.'
+                                    'Follow these steps to keep trading with your favourite strategies on Deriv Bot:'
                                 )}
                             </p>
+                            <p>{translate('1. Download your Binary Bot strategy in XML format.')}</p>
+                            <p>{translate('2. Switch to Deriv Bot and import your strategy.')}</p>
+                            <p>{translate('3. Run your updated strategy to check its performance.')}</p>
+                            <p>{translate('4. Save the updated strategy for quicker re-imports.')}</p>
+                            <p>{translate('Upgrade today and experience seamless trading on Deriv Bot.')}</p>
                         </div>
                     </div>
                 </DerivAppModal>
