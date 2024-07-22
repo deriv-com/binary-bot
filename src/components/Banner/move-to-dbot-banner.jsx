@@ -73,7 +73,7 @@ const MoveToDbotBanner = () => {
                             <img alt='move to deriv' src='/public/images/upgrade-to-deriv-bot.svg' />
                         </div>
                         <div className={`${container_class}__title`}>
-                            {translate('Binary bot is retiring on 31 August 2024')}{' '}
+                            {translate('Binary bot is retiring on 31 August 2024')}
                         </div>
                         <div className={`${container_class}__content`}>
                             <p>
