@@ -81,10 +81,12 @@ const MoveToDbotBanner = () => {
                                     'Follow these steps to keep trading with your favourite strategies on Deriv Bot:'
                                 )}
                             </p>
-                            <p>{translate('1. Download your Binary Bot strategy in XML format.')}</p>
-                            <p>{translate('2. Switch to Deriv Bot and import your strategy.')}</p>
-                            <p>{translate('3. Run your updated strategy to check its performance.')}</p>
-                            <p>{translate('4. Save the updated strategy for quicker re-imports.')}</p>
+                            <ol className={`${container_class}__orderd-list`}>
+                                <li>{translate('Download your Binary Bot strategy in XML format.')}</li>
+                                <li>{translate('Switch to Deriv Bot and import your strategy.')}</li>
+                                <li>{translate('Run your updated strategy to check its performance.')}</li>
+                                <li>{translate('Save the updated strategy for quicker re-imports.')}</li>
+                            </ol>
                             <p>{translate('Upgrade today and experience seamless trading on Deriv Bot.')}</p>
                         </div>
                     </div>
