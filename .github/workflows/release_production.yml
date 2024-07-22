@@ -44,17 +44,26 @@ jobs:
         with:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - name: Build Docker image and push to Docker hub and K8S
-        uses: "./.github/actions/build_and_push_docker_image"
-        with:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          DOCKERHUB_ORGANISATION: ${{ secrets.DOCKERHUB_ORGANISATION }}
-          K8S_NAMESPACE: bot-deriv-com-production
-          KUBE_SERVER: ${{ secrets.KUBE_SERVER }}
-          SERVICEACCOUNT_TOKEN: ${{ secrets.SERVICEACCOUNT_TOKEN }}
-          CA_CRT: ${{ secrets.CA_CRT }}
-          APP_VERSION: latest
+  publish_to_vercel:
+        runs-on: ubuntu-latest
+        environment: Production
+        steps:
+            - name: Upload to vercel
+              uses: 'deriv-com/shared-actions/.github/actions/vercel_DR_publish@master'
+              id: dr_action
+              with:
+                VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+                VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+                VERCEL_TOKEN: ${{ secrets.VERCEL_API_TOKEN }}
+                ENVIRONMENT: Production
+                VERCEL_SCOPE: deriv
+                ALIAS_DOMAIN_URL: 'bot-dr.binary.sx'
+            - name: Send Slack Notification on Vercel Publish failure
+              uses: "deriv-com/shared-actions/.github/actions/send_slack_notification@master"
+              if: steps.dr_action.conclusion == 'failure'
+              with:
+                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+                MESSAGE: "Vercel Publish failed for bot.deriv.com with version ${{ jobs.release_production.outputs.RELEASE_VERSION }}"   
   send_slack_notification:
     if: always()
     needs: [release_production]
