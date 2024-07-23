@@ -47,6 +47,7 @@ jobs:
   publish_to_vercel:
         runs-on: ubuntu-latest
         environment: Production
+        needs: [release_production]
         steps:
             - name: Upload to vercel
               uses: 'deriv-com/shared-actions/.github/actions/vercel_DR_publish@master'
@@ -63,7 +64,7 @@ jobs:
               if: steps.dr_action.conclusion == 'failure'
               with:
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-                MESSAGE: "Vercel Publish failed for bot.deriv.com with version ${{ jobs.release_production.outputs.RELEASE_VERSION }}"   
+                MESSAGE: "Vercel Publish failed for bot.deriv.com with version ${{ needs.release_production.outputs.RELEASE_VERSION }}"   
   send_slack_notification:
     if: always()
     needs: [release_production]
