@@ -6,13 +6,19 @@ import './fixed-dbot-banner.scss';
 const FixedDbotBanner = () => (
     <div className='fixed-banner__container'>
         <div className='fixed-banner__content'>
-            <div className='fixed-banner__icon-info icon-info'></div>
+            <img className='fixed-banner__icon' alt='move to deriv' src='/public/images/ic-megaphone.svg' />
             <div>
-                <span>{translate('For improved features and an overall better performance, ')}</span>
-                <a className='fixed-banner__visit-deriv-bot' href='#' onClick={visitDerivBot}>
-                    {translate('switch to Deriv Bot')}
-                </a>
-                <span>{translate(' now.')}</span>
+                <span>
+                    <strong>{translate('Important: ')}</strong>
+                </span>
+                <span>{translate('Binary Bot will be discontinued on')} </span>
+                <strong>
+                    <span>{translate('31 August 2024.')} </span>
+                    <a className='fixed-banner__visit-deriv-bot' href='#' onClick={visitDerivBot}>
+                        {translate('Upgrade to Deriv Bot')}
+                    </a>
+                </strong>
+                <span>{translate(' to continue trading.')}</span>
             </div>
         </div>
     </div>

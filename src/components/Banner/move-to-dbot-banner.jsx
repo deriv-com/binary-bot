@@ -8,7 +8,7 @@ import { visitDerivBot } from './redirect-to-dbot';
 import './move-to-dbot-banner.scss';
 
 const updateLastPopupTime = () => {
-    localStorage.setItem('last_deriv_redirect_popup_time', new Date().toString());
+    localStorage.setItem('migration_popup_timer', new Date().toString());
 };
 
 const daysBetween = (date1, date2) => {
@@ -18,15 +18,15 @@ const daysBetween = (date1, date2) => {
 };
 
 const shouldShowPopup = () => {
-    const last_deriv_redirect_popup_time = localStorage.getItem('last_deriv_redirect_popup_time');
+    const migration_popup_timer = localStorage.getItem('migration_popup_timer');
 
-    if (!last_deriv_redirect_popup_time) {
+    if (!migration_popup_timer) {
         updateLastPopupTime();
         return true;
     }
 
-    const allowed_delay = 7; // One week in days
-    const last_popup_date = new Date(last_deriv_redirect_popup_time);
+    const allowed_delay = 1; // One week in days
+    const last_popup_date = new Date(migration_popup_timer);
     const current_date = new Date();
 
     if (daysBetween(last_popup_date, current_date) >= allowed_delay) {
@@ -39,7 +39,7 @@ const shouldShowPopup = () => {
 
 const MoveToDbotBanner = () => {
     const container_class = 'mv-dbot-banner';
-    const [open_modal, setOpenModal] = useState(false);
+    const [open_modal, setOpenModal] = useState(true);
 
     useEffect(() => {
         try {
@@ -60,45 +60,34 @@ const MoveToDbotBanner = () => {
         <div>
             {open_modal && (
                 <DerivAppModal
-                    title={translate('Discover Deriv Bot')}
+                    title={translate('Important notice')}
                     close_on_outside_click={false}
                     primary_button={{
-                        title: translate('Explore Deriv Bot'),
+                        title: translate('Upgrade to Deriv Bot'),
                         onClick: visitDerivBot,
-                    }}
-                    secondary_button={{
-                        title: translate('No, thanks'),
-                        onClick: closeModal,
                     }}
                     onClose={closeModal}
                 >
                     <div className={container_class}>
                         <div className={`${container_class}__icon-container`}>
-                            <img alt='move to deriv' src='/public/images/move-to-deriv.svg' />
+                            <img alt='move to deriv' src='/public/images/upgrade-to-deriv-bot.svg' />
                         </div>
                         <div className={`${container_class}__title`}>
-                            {translate('Take your bot trading to the next level')}
+                            {translate('Binary bot is retiring on 31 August 2024')}
                         </div>
                         <div className={`${container_class}__content`}>
-                            <div>{translate('On Deriv Bot, you\'ll enjoy:')}</div>
-                            <ul>
-                                <li>
-                                    {translate('New features and tools with faster execution and enhanced stability')}
-                                </li>
-                                <li>{translate('The ability to use your existing XML files from Binary Bot')}</li>
-                                <li>
-                                    {translate(
-                                        'A familiar drag-and-drop interface; create and customise your trading bot easily'
-                                    )}
-                                </li>
-                            </ul>
-                            <div>
-                                <span>{translate('What are you waiting for?')}</span>{' '}
-                                <span>
-                                    <strong>{translate('Explore Deriv Bot')}</strong>
-                                </span>{' '}
-                                <span>{translate('today and unlock new trading possibilities!')}</span>
-                            </div>
+                            <p>
+                                {translate(
+                                    'Follow these steps to keep trading with your favourite strategies on Deriv Bot:'
+                                )}
+                            </p>
+                            <ol className={`${container_class}__orderd-list`}>
+                                <li>{translate('Download your Binary Bot strategy in XML format.')}</li>
+                                <li>{translate('Switch to Deriv Bot and import your strategy.')}</li>
+                                <li>{translate('Run your updated strategy to check its performance.')}</li>
+                                <li>{translate('Save the updated strategy for quicker re-imports.')}</li>
+                            </ol>
+                            <p>{translate('Upgrade today and experience seamless trading on Deriv Bot.')}</p>
                         </div>
                     </div>
                 </DerivAppModal>
