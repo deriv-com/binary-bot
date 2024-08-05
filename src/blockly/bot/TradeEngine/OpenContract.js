@@ -2,6 +2,7 @@ import { api_base } from '@api-base';
 import { roundBalance } from '../helpers';
 import { contractStatus, contractSettled, contract as broadcastContract } from '../broadcast';
 import { sell, openContractReceived } from './state/actions';
+import { doUntilDone } from '../tools';
 
 const AFTER_FINISH_TIMEOUT = 5;
 
@@ -58,6 +59,11 @@ export default Engine =>
 
         subscribeToOpenContract(contract_id = this.contractId) {
             this.contractId = contract_id;
+            doUntilDone(() =>
+                api_base.api.send({ proposal_open_contract: 1, contract_id }).then(response => {
+                    this.contractId = response.proposal_open_contract.contract_id;
+                })
+            );
         }
 
         resetSubscriptionTimeout(timeout = this.getContractDuration() + AFTER_FINISH_TIMEOUT) {
@@ -80,7 +86,7 @@ export default Engine =>
         }
 
         expectedContractId(contract_id) {
-            return this.contractId && contract_id === this.contractId;
+            return (this.contractId && contract_id === this.contractId) || this.contractId === undefined;
         }
 
         getSellPrice() {

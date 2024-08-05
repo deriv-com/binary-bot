@@ -3,19 +3,18 @@ import { observer as globalObserver } from '@utilities/observer';
 import { createScope } from './CliTools';
 import Interface from './Interface';
 import { clone } from '../../botPage/common/clone';
+import { api_base } from '../../api-base';
 
 /* eslint-disable func-names, no-underscore-dangle */
 JSInterpreter.prototype.takeStateSnapshot = function () {
-    const new_state_stack = clone(this.state_stack, undefined, undefined, undefined, true);
-    return new_state_stack;
+    const newStateStack = clone(this.stateStack, undefined, undefined, undefined, true);
+    return newStateStack;
 };
 
 JSInterpreter.prototype.restoreStateSnapshot = function (snapshot) {
-    this.state_stack = clone(snapshot, undefined, undefined, undefined, true);
-    if (this.state_stack?.length) {
-        this.global_object = this.state_stack[0]?.scope?.object;
-        this.initFunc_(this, this.global_object);
-    }
+    this.stateStack = clone(snapshot, undefined, undefined, undefined, true);
+    this.globalObject = this.stateStack[0]?.scope?.object;
+    this.initFunc_(this, this.globalObject);
 };
 /* eslint-enable */
 
@@ -69,9 +68,24 @@ export default class Interpreter {
         this.$scope.observer.register('REVERT', watchName =>
             this.revert(watchName === 'before' ? this.beforeState : this.duringState)
         );
+
+        api_base.api.onClose().subscribe(() => {
+            const reRunBot = e => {
+                if (e.id === 'contract.sold') {
+                    // TODO check for trage again block and run it
+                    this.revert(this.startState);
+                    globalObserver.unregister('contract.status', reRunBot);
+                }
+            };
+            api_base.init().then(() => {
+                globalObserver.register('contract.status', reRunBot);
+
+                this.$scope.observer.emit('Error', { error: { code: 'DisconnectError', message: '' } });
+            });
+        });
     }
 
-    run(code) {
+    run = code => {
         const initFunc = (interpreter, scope) => {
             const botInterface = this.bot.getInterface('Bot');
             const ticksInterface = this.bot.getTicksInterface();
@@ -165,7 +179,8 @@ export default class Interpreter {
                     this.$scope.observer.register('Error', onError);
                     this.bot.tradeEngine.init(...initArgs);
                     this.bot.tradeEngine.start(tradeOptions);
-                    this.revert(this.startState);
+                    // TODO to add it back in case of normal error and we bot the coninue
+                    //  this.revert(this.startState);
                 });
             };
 
@@ -174,7 +189,7 @@ export default class Interpreter {
             this.onFinish = resolve;
             this.loop();
         });
-    }
+    };
 
     loop() {
         if (this.stopped || !this.interpreter.run()) {
@@ -182,12 +197,12 @@ export default class Interpreter {
         }
     }
 
-    revert(state) {
+    revert = state => {
         this.interpreter.restoreStateSnapshot(state);
         // eslint-disable-next-line no-underscore-dangle
         this.interpreter.paused_ = false;
         this.loop();
-    }
+    };
 
     terminateSession() {
         return new Promise((resolve, reject) => {

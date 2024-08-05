@@ -28,24 +28,26 @@ class APIBase {
         this.init();
     }
 
-    init() {
-        try {
-            this.api = new DerivAPIBasic({
-                connection: new WebSocket(socket_url),
-                middleware: new APIMiddleware(),
-            });
-
-            this.api_chart = null;
-
-            this.api.onOpen().subscribe(() => {
-                // eslint-disable-next-line no-console
-                console.log('Connection has been established!');
-                this.initEventListeners();
-            });
-        } catch (error) {
-            globalObserver.emit('Error', error);
-        }
-    }
+    init = () =>
+        new Promise(resolve => {
+            try {
+                this.api = new DerivAPIBasic({
+                    connection: new WebSocket(socket_url),
+                    middleware: new APIMiddleware(),
+                });
+                this.api_chart = null;
+                this.api.onOpen().subscribe(async () => {
+                    // eslint-disable-next-line no-console
+                    console.log('Connection has been established!');
+                    this.initEventListeners();
+                    this.api.send({ authorize: this.token }).then(async () => {
+                        resolve();
+                    });
+                });
+            } catch (error) {
+                globalObserver.emit('Error', error);
+            }
+        });
 
     async authorize(token) {
         if (this.token === token) return { authorize: this.account_info };
@@ -58,7 +60,6 @@ class APIBase {
         this.getLandingCompanyDetails();
         this.getLandingCompany();
         this.getAccountStatus();
-        this.api.send({ proposal_open_contract: 1, subscribe: 1 });
         if (!this.balance_subscription_id) {
             this.getAllBalances();
         }
