@@ -1,6 +1,8 @@
 import { translate } from '@i18n';
 import { observer as globalObserver } from '@utilities/observer';
+import { TrackJSError } from '@utilities/logger';
 import { deleteBlocksLoadedBy, loadRemote, recoverDeletedBlock } from '../../utils';
+import { trackJSTrack } from '../../../utilities/integrations/trackJSTrack';
 
 Blockly.Blocks.loader = {
     init: function init() {
@@ -44,7 +46,10 @@ Blockly.Blocks.loader = {
                 },
                 e => {
                     Blockly.Events.recordUndo = recordUndo;
-                    throw e;
+                    const serialized_error = JSON.stringify(e, ['message', 'arguments', 'type', 'name']);
+                    trackJSTrack(
+                        new TrackJSError(translate('Blocks aren`t loaded successfully'), `${e}, ${serialized_error}`)
+                    );
                 }
             );
         }

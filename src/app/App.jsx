@@ -28,11 +28,16 @@ const App = () => {
     };
 
     React.useEffect(() => {
-        api_base.api.expectResponse('authorize').then(() =>
-            api_base.getActiveSymbols().then(data => {
-                initActiveSymbols(data);
-            })
-        );
+        api_base.api
+            .expectResponse('authorize')
+            .then(() =>
+                api_base.getActiveSymbols().then(data => {
+                    initActiveSymbols(data);
+                })
+            )
+            .catch(error => {
+                globalObserver.emit('Error', error);
+            });
 
         /* This code is used to monitor active_symbols when the user is not logged in and
         will initialize the app without requiring an authorization response. */
