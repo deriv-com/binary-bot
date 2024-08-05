@@ -11,8 +11,9 @@ www
 lib/
 old/
 CNAME
-*.env
 .env
+.env.*
+*.env
 blockly-translations
 temp
 .vercel
