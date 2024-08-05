@@ -231,7 +231,10 @@ const ToolBox = ({
                 id_container='runButton'
                 tooltip={translate('Run the bot')}
                 position='bottom'
-                onClick={() => globalObserver.emit('blockly.start')}
+                onClick={() => {
+                    globalObserver.emit("blockly.start")
+                    performance.mark('bot-start');
+                }}
                 classes={classNames('toolbox-button icon-run', {
                     'toolbox-hide': !is_workspace_rendered,
                 })}
