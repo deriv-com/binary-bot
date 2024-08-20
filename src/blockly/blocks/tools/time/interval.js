@@ -1,22 +1,36 @@
-import { translate } from '@i18n';
-import { disable } from '../../../utils';
+// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wupwb4
+import {
+    translate
+} from '../../../../i18n';
+import theme from '../../../theme';
 
 Blockly.Blocks.interval = {
     init: function init() {
-        this.appendStatementInput('TIMERSTACK').setCheck(null);
-        this.appendValueInput('SECONDS').setCheck(null).appendField(translate('Run Every'));
-        this.appendDummyInput().appendField(translate('Second(s)'));
+        this.appendDummyInput().appendField(translate('This block will keep looping until breakout'), 'titleWarn');
+        this.appendStatementInput('TICKANALYSIS_STACK').setCheck(null);
         this.setInputsInline(true);
-        this.setColour('#fef1cf');
-        this.setTooltip(translate('Run the blocks inside every n seconds'));
-        this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(theme.warnColor);
+        this.setTooltip(translate('Run the blocks inside until it breaks out'));
     },
     onchange: function onchange() {
-        disable(
-            this,
-            translate('Run every seconds block has been deprecated. Please contact us if you have a valid use case.')
-        );
+        Blockly.utils.addClass(this.getField('titleWarn').textElement_, 'title-warn-block');
     },
 };
 
-Blockly.JavaScript.interval = () => '';
+Blockly.JavaScript.interval = block => {
+    const stack = Blockly.JavaScript.statementToCode(block, 'TICKANALYSIS_STACK');
+    return `
+        while(true) {
+            ${stack}
+            sleep(2);
+        }
+    `
+};
+
+
+
+
+// WEBPACK FOOTER //
+// ./src/botPage/view/blockly/blocks/tools/time/interval.js

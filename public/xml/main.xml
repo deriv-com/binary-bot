@@ -1,37 +1,166 @@
-﻿<xml xmlns="http://www.w3.org/1999/xhtml" collection="false">
+<xml xmlns="http://www.w3.org/1999/xhtml" collection="false">
+  <variables></variables>
   <block type="trade" id="xgH69|xFn9=70w.*3Vo@" x="0" y="0">
+    <field name="MARKET_LIST">synthetic_index</field>
+    <field name="SUBMARKET_LIST">random_index</field>
+    <field name="SYMBOL_LIST">R_100</field>
+    <field name="TRADETYPECAT_LIST">callput</field>
+    <field name="TRADETYPE_LIST">risefall</field>
+    <field name="TYPE_LIST">both</field>
+    <field name="CANDLEINTERVAL_LIST">60</field>
+    <statement name="INITIALIZATION">
+      <block type="virtual_config" id="Q`K(wTA|y4Ku:xC0}:+A" collapsed="true">
+        <value name="STATUS">
+					<shadow type="logic_boolean">
+						<field name="BOOL">FALSE</field>
+					</shadow>
+				</value>
+        <value name="TOKEN">
+					<shadow type="text">
+						<field name="TEXT">Input your token here</field>
+					</shadow>
+				</value>
+				<value name="STEPSCOUNT">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+				<value name="RESETTYPE">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<value name="MINREAL">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="MAXREAL">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="BACKREAL">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+        <next>
+          <block type="martingale_tradedefinitions" id="123124123123123">
+            <value name="INITIAL">
+              <shadow type="math_number">
+                <field name="NUM">0.35</field>
+              </shadow>
+            </value>
+            <value name="FACTOR">
+              <shadow type="math_number">
+                <field name="NUM">2.1</field>
+              </shadow>
+            </value>
+            <value name="MAXSTEPS">
+              <shadow type="math_number">
+                <field name="NUM">12</field>
+              </shadow>
+            </value>
+            <value name="STARTAFTER">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+            <value name="RESET">
+              <shadow type="logic_boolean">
+                <field name="BOOL">TRUE</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="risk_tradedefinitions"  id="Q`K(afdssh:xC0}:+A">
+                <value name="TAKEPROFIT">
+                  <shadow type="math_number">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+                <value name="STOPLOSS">
+                  <shadow type="math_number">
+                    <field name="NUM">50</field>
+                  </shadow>
+                </value>
+                <value name="MAXSTEPS">
+                  <shadow type="math_number">
+                    <field name="NUM">12</field>
+                  </shadow>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
     <statement name="SUBMARKET">
       <block type="tradeOptions" id="x=V33~4Lb|(sLv`J[:Eb">
         <field name="DURATIONTYPE_LIST">t</field>
         <field name="CURRENCY_LIST">USD</field>
-        <value name="DURATION"></value>
-        <value name="AMOUNT">
-          <shadow type="math_number" id="ml)25~7^q}3I9}vjf:%K">
+        <field name="BARRIEROFFSETTYPE_LIST">+</field>
+        <field name="SECONDBARRIEROFFSETTYPE_LIST">-</field>
+        <value name="DURATION">
+          <shadow type="math_number" id="shadow">
             <field name="NUM">1</field>
           </shadow>
         </value>
-      </block>
-    </statement>
-  </block>
-  <block type="before_purchase" id="i-CIx.(Onm4?ihxzA}Y]" x="0" y="301">
-    <statement name="BEFOREPURCHASE_STACK">
-      <block type="purchase" id="W6q#Z-I3q3d[d3-`S[dS">
-        <field name="PURCHASE_LIST"></field>
-      </block>
-    </statement>
-  </block>
-  <block type="during_purchase" id="(4;NieXd}j|Bn!c-YiC|" x="0" y="391">
-    <statement name="DURING_PURCHASE_STACK">
-      <block type="controls_if" id="8?eYKAW%VczmRXQ-ou3r">
-        <value name="IF0">
-          <block type="check_sell" id="M=:_KpEeRAJY_}XTU^8~"></block>
+        <value name="AMOUNT">
+          <block type="martingale_stake"></block>
+          <!-- <shadow type="math_number" id="ml)25~7^q}3I9}vjf:%K">
+            <field name="NUM">1</field>
+          </shadow> -->
         </value>
       </block>
     </statement>
   </block>
-  <block type="after_purchase" id="D^Jz1^n=2vtZku1vBN@;" x="0" y="516">
+  <block type="before_purchase" id="i-CIx.(Onm4?ihxzA}Y]" x="591.64" y="0">
+    <statement name="BEFOREPURCHASE_STACK">
+      <block type="purchase" id="W6q#Z-I3q3d[d3-`S[dS">
+        <field name="PURCHASE_LIST">CALL</field>
+      </block>
+    </statement>
+  </block>
+  <block type="after_purchase" id="D^Jz1^n=2vtZku1vBN@;" x="591.64" y="0">
     <statement name="AFTERPURCHASE_STACK">
-      <block type="trade_again" id="c)S|KjoQdXc8l#J@5z3P"></block>
+      <block type="report" id="W6dfgsdgasdg">
+        <value name="PROFIT">
+          <shadow type="read_details">
+            <field name="DETAIL_INDEX">4</field>
+          </shadow>
+        </value>
+        <next>
+        <block type="martingale_afterpurchase">
+          <value name="RESULT">
+            <shadow type="read_details">
+              <field name="DETAIL_INDEX">11</field>
+            </shadow>
+          </value>
+          <next>
+            <block type="controls_if">
+              <value name="IF0">
+                <block type="risk_afterpurchase">
+                  <value name="PROFIT">
+                    <shadow type="read_details">
+                      <field name="DETAIL_INDEX">4</field>
+                    </shadow>
+                  </value>
+                </block>
+              </value>
+              <statement name="DO0">
+                <block type="trade_again"></block>
+              </statement>
+            </block>
+          </next>
+        </block>
+        </next>
+      </block>
     </statement>
   </block>
 </xml>

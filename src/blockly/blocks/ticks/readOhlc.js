@@ -1,4 +1,4 @@
-import { translate } from '@i18n';
+import { translate } from '../../../i18n';
 import config from '@currency-config';
 import { mainScope } from '../../relationChecker';
 import candleInterval, { getGranularity } from './candleInterval';
@@ -13,7 +13,7 @@ Blockly.Blocks.read_ohlc = {
         candleInterval(this);
         this.setOutput(true, 'Number');
         this.setInputsInline(true);
-        this.setColour('#f2f2f2');
+        this.setColour('#162d41');                    // In candle list read block <<<<<<<//
         this.setTooltip(translate('Read the selected candle value in the nth recent candle'));
         this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
     },

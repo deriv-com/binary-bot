@@ -109,5 +109,9 @@ module.exports = {
             '@utilities': path.resolve(__dirname, 'src/utilities'),
             '@currency-config': path.resolve(__dirname, 'src/currency-config'),
         },
+        fallback: {
+            "util": require.resolve("util/"),
+            "stream": require.resolve("stream-browserify")
+        }
     },
 };

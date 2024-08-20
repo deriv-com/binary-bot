@@ -1,6 +1,7 @@
-import { translate } from '@i18n';
-import config from '@currency-config';
+import { translate } from '../../../common/i18n';
+import config from '../../../botPage/common/const';
 import { insideAfterPurchase } from '../../relationChecker';
+import theme from '../../theme';
 
 Blockly.Blocks.contract_check_result = {
     init: function init() {
@@ -8,16 +9,20 @@ Blockly.Blocks.contract_check_result = {
             .appendField(translate('Result is'))
             .appendField(new Blockly.FieldDropdown(config.lists.CHECK_RESULT), 'CHECK_RESULT');
         this.setOutput(true, 'Boolean');
-        this.setColour('#f2f2f2');
+        this.setColour(theme.subBlockColor);
         this.setTooltip(translate('True if the result matches the selection'));
-        this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
     },
     onchange: function onchange(ev) {
-        insideAfterPurchase(this, ev, 'Check Result');
+        insideAfterPurchase(this, ev, 'After');
     },
 };
 Blockly.JavaScript.contract_check_result = block => {
     const checkWith = block.getFieldValue('CHECK_RESULT');
-    const code = `Bot.isResult('${checkWith}')`;
+    const code = Bot[BinaryBotPrivateVirtualSettings.ongoing && BinaryBotPrivateVirtualSettings.active && Bot.isVirtualValid() ? 'isResultVirtual' : 'isResult']('${checkWith}');
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+
+
+
+// WEBPACK FOOTER //
+// ./src/botPage/view/blockly/blocks/after_purchase/check_result.js

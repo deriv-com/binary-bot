@@ -1,4 +1,4 @@
-import { translate } from '@i18n';
+import { translate } from '../../../i18n';
 import config from '@currency-config';
 import { mainScope } from '../../relationChecker';
 
@@ -8,7 +8,7 @@ Blockly.Blocks.check_direction = {
             .appendField(translate('Direction is'))
             .appendField(new Blockly.FieldDropdown(config.lists.CHECK_DIRECTION), 'CHECK_DIRECTION');
         this.setOutput(true, 'Boolean');
-        this.setColour('#f2f2f2');
+        this.setColour('#162d41');                                               // Direction is rise or fall block colour <<<<<<<//
         this.setTooltip(translate('True if the direction matches the selection'));
         this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
     },

@@ -1,500 +1,1610 @@
 <xml id="toolbox" style="display: none">
-    <category name="Logic" i18n-text="Logic">
-        <block type="controls_if"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-        <block type="logic_negate"></block>
-        <block type="logic_boolean"></block>
-        <block type="logic_null"></block>
-        <block type="logic_ternary"></block>
-    </category>
-    <category name="Math" i18n-text="Math">
-        <block type="math_number">
-            <field name="NUM">1</field>
-        </block>
-        <block type="math_arithmetic">
-            <value name="A">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-            <value name="B">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_single">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM">9</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_trig">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM">45</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_constant"></block>
-        <block type="math_number_property">
-            <value name="NUMBER_TO_CHECK">
-                <shadow type="math_number">
-                    <field name="NUM">0</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_change">
-            <value name="DELTA">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_round">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM">3.1</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_on_list"></block>
-        <block type="math_modulo">
-            <value name="DIVIDEND">
-                <shadow type="math_number">
-                    <field name="NUM">64</field>
-                </shadow>
-            </value>
-            <value name="DIVISOR">
-                <shadow type="math_number">
-                    <field name="NUM">10</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_constrain">
-            <value name="VALUE">
-                <shadow type="math_number">
-                    <field name="NUM">50</field>
-                </shadow>
-            </value>
-            <value name="LOW">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-            <value name="HIGH">
-                <shadow type="math_number">
-                    <field name="NUM">100</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_random_int">
-            <value name="FROM">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-            <value name="TO">
-                <shadow type="math_number">
-                    <field name="NUM">100</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="math_random_float"></block>
-    </category>
-    <category name="Text" i18n-text="Text">>
-        <block type="text"></block>
-        <block type="text_join"></block>
-        <block type="text_append">
-            <value name="TEXT">
-                <shadow type="text"></shadow>
-            </value>
-        </block>
-        <block type="text_length">
-            <value name="VALUE">
-                <shadow type="text">
-                    <field name="TEXT">abc</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="text_isEmpty">
-            <value name="VALUE">
-                <shadow type="text">
-                    <field name="TEXT"></field>
-                </shadow>
-            </value>
-        </block>
-        <block type="text_indexOf">
-            <value name="VALUE">
-                <block type="variables_get">
-                    <field name="VAR">text</field>
-                </block>
-            </value>
-            <value name="FIND">
-                <shadow type="text">
-                    <field name="TEXT">abc</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="text_charAt">
-            <value name="VALUE">
-                <block type="variables_get">
-                    <field name="VAR">text</field>
-                </block>
-            </value>
-        </block>
-        <block type="text_getSubstring">
-            <value name="STRING">
-                <block type="variables_get">
-                    <field name="VAR">text</field>
-                </block>
-            </value>
-        </block>
-        <block type="text_changeCase">
-            <value name="TEXT">
-                <shadow type="text">
-                    <field name="TEXT">abc</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="text_trim">
-            <value name="TEXT">
-                <shadow type="text">
-                    <field name="TEXT">abc</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="text_print">
-            <value name="TEXT">
-                <shadow type="text">
-                    <field name="TEXT">abc</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="text_prompt_ext">
-            <value name="TEXT">
-                <shadow type="text">
-                    <field name="TEXT">abc</field>
-                </shadow>
-            </value>
-        </block>
-    </category>
-    <category name="Advanced" i18n-text="Advanced">
-        <category name="List" i18n-text="List">
-            <block type="lists_create_with">
-                <mutation items="0"></mutation>
-            </block>
-            <block type="lists_create_with"></block>
-            <block type="lists_repeat">
-                <value name="NUM">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="lists_length"></block>
-            <block type="lists_isEmpty"></block>
-            <block type="lists_indexOf">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">list</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_getIndex">
-                <value name="VALUE">
-                    <block type="variables_get">
-                        <field name="VAR">list</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_setIndex">
-                <value name="LIST">
-                    <block type="variables_get">
-                        <field name="VAR">list</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_getSublist">
-                <value name="LIST">
-                    <block type="variables_get">
-                        <field name="VAR">list</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_split">
-                <value name="DELIM">
-                    <shadow type="text">
-                        <field name="TEXT">,</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="lists_sort"></block>
-        </category>
-        <category name="Variable" id="Variables" custom="VARIABLE" i18n-text="Variable">></category>
-        <category name="Functions" id="Functions" custom="PROCEDURE" i18n-text="Functions"></category>
-        <category name="Loop" i18n-text="Loop">
-            <block type="controls_repeat_ext"></block>
-            <block type="controls_repeat"></block>
-            <block type="controls_whileUntil"></block>
-            <block type="controls_for"></block>
-            <block type="controls_forEach"></block>
-            <block type="controls_flow_statements"></block>
-        </category>
-    </category>
-    <category name="Binary" i18n-text="Binary">
-        <category name="Trade Definition" i18n-text="Trade Definition">
-            <block type="trade"></block>
-            <block type="tradeOptions">
-                <value name="DURATION">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-                <value name="AMOUNT">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="tradeOptions_payout">
-                <value name="DURATION">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-                <value name="AMOUNT">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-            </block>
-        </category>
-        <category name="Before Purchase" i18n-text="Before Purchase">
-            <block type="before_purchase"></block>
-            <block type="payout"></block>
-            <block type="ask_price"></block>
-            <block type="purchase"></block>
-        </category>
-        <category name="During Purchase" i18n-text="During Purchase">
-            <block type="during_purchase"></block>
-            <block type="check_sell"></block>
-            <block type="sell_price"></block>
-            <block type="sell_at_market"></block>
-        </category>
-        <category name="After Purchase" i18n-text="After Purchase">
-            <block type="after_purchase"></block>
-            <block type="contract_check_result"></block>
-            <block type="read_details"></block>
-            <block type="trade_again"></block>
-        </category>
-        <category name="Tick Analysis" i18n-text="Tick Analysis">
-            <block type="tick_analysis"></block>
-            <block type="tick"></block>
-            <block type="tick_string"></block>
-            <block type="last_digit"></block>
-            <block type="read_ohlc">
-                <field name="OHLCFIELD_LIST">open</field>
-                <value name="CANDLEINDEX">
-                    <shadow type="math_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="check_direction"></block>
-            <category name="Advanced" i18n-text="Advanced">
-                <block type="get_ohlc">
-                    <value name="CANDLEINDEX">
-                        <shadow type="math_number">
-                            <field name="NUM">1</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="ticks"></block>
-                <block type="ticks_string"></block>
-                <block type="lastDigitList"></block>
-                <block type="ohlc"></block>
-                <block type="ohlc_values"></block>
-            </category>
-        </category>
-        <category name="Indicators" i18n-text="Indicators">
-            <block type="sma">
-                <value name="PERIOD">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="ema">
-                <value name="PERIOD">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="bb">
-                <field name="BBRESULT_LIST">1</field>
-                <value name="PERIOD">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-                <value name="UPMULTIPLIER">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-                <value name="DOWNMULTIPLIER">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="rsi">
-                <value name="PERIOD">
-                    <shadow type="math_number">
-                        <field name="NUM">10</field>
-                    </shadow>
-                </value>
-            </block>
-            <category name="Advanced" i18n-text="Advanced">
-                <block type="smaa">
-                    <value name="PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">10</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="emaa">
-                    <value name="PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">10</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="bba">
-                    <field name="BBRESULT_LIST">1</field>
-                    <value name="PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">10</field>
-                        </shadow>
-                    </value>
-                    <value name="UPMULTIPLIER">
-                        <shadow type="math_number">
-                            <field name="NUM">5</field>
-                        </shadow>
-                    </value>
-                    <value name="DOWNMULTIPLIER">
-                        <shadow type="math_number">
-                            <field name="NUM">5</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="rsia">
-                    <value name="PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">10</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="macda">
-                    <field name="MACDFIELDS_LIST">0</field>
-                    <value name="FAST_EMA_PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">12</field>
-                        </shadow>
-                    </value>
-                    <value name="SLOW_EMA_PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">26</field>
-                        </shadow>
-                    </value>
-                    <value name="SIGNAL_EMA_PERIOD">
-                        <shadow type="math_number">
-                            <field name="NUM">9</field>
-                        </shadow>
-                    </value>
-                </block>
-            </category>
-        </category>
-        <category name="Tools" i18n-text="Tools">
-            <category name="Time" i18n-text="Time">
-                <block type="epoch"></block>
-                <block type="totimestamp">
-                    <value name="DATETIME">
-                        <shadow type="text">
-                            <field name="TEXT">yyyy-mm-dd hh:mm:ss</field>
-                        </shadow>
-                    </value>                
-                </block>
-                <block type="todatetime">
-                    <value name="TIMESTAMP">
-                        <shadow type="math_number">
-                            <field name="NUM">0</field>
-                        </shadow>
-                    </value>
-                </block>                
-                <block type="timeout">
-                    <value name="SECONDS">
-                        <shadow type="math_number">
-                            <field name="NUM">1</field>
-                        </shadow>
-                    </value>
-                </block>
-            </category>
-            <category name="Candle" i18n-text="Candle">
-                <block type="is_candle_black"></block>
-                <block type="ohlc_values_in_list"></block>
-                <block type="read_ohlc_obj"></block>
-            </category>
-            <category name="Misc." i18n-text="Misc.">
-                <block type="balance"></block>
-                <block type="total_profit"></block>
-                <block type="total_profit_string"></block>
-                <block type="total_runs"></block>
-                <block type="notify">
-                    <field name="NOTIFICATION_TYPE">success</field>
-                    <value name="MESSAGE">
-                        <shadow type="text">
-                            <field name="TEXT">abc</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="notify_telegram" id=":L;o$/S0X^2^nt%taS5}">
-                    <value name="TELEGRAM_ACCESS_TOKEN">
-                        <shadow type="text">
-                            <field name="TEXT"></field>
-                        </shadow>
-                    </value>
-                    <value name="TELEGRAM_CHAT_ID">
-                        <shadow type="text">
-                            <field name="TEXT"></field>
-                        </shadow>
-                    </value>
-                    <value name="TELEGRAM_MESSAGE">
-                        <shadow type="text" id="Blg?@.4Ebc6#:s7+f$oa">
-                            <field name="TEXT">abc</field>
-                        </shadow>
-                    </value>
-                </block>
-                <block type="loader"></block>
-                <block type="block_holder"></block>
-                <block type="webhook">
-                    <value name="WEBHOOK_URL">
-                        <shadow type="text">
-                            <field name="TEXT">https://example.com</field>
-                        </shadow>
-                    </value>
-                    <value name="ADD0">
-                        <block type="key_value_pair">
-                        </block>
-                    </value>
-                </block>
-                <block type="key_value_pair">
-                </block>
-            </category>
-        </category>
-    </category>
+	<category name="Logic" i18n-text="Logic">
+		<block type="controls_if"></block>
+		<block type="logic_compare"></block>
+		<block type="logic_operation"></block>
+		<block type="logic_negate"></block>
+		<block type="logic_boolean"></block>
+		<block type="logic_null"></block>
+		<block type="logic_ternary"></block>
+	</category>
+	<category name="Math" i18n-text="Math">
+		<block type="math_number">
+			<field name="NUM">1</field>
+		</block>
+		<block type="math_arithmetic">
+			<value name="A">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="B">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_single">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">9</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_trig">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">45</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_constant"></block>
+		<block type="math_number_property">
+			<value name="NUMBER_TO_CHECK">
+				<shadow type="math_number">
+					<field name="NUM">0</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_change">
+			<value name="DELTA">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="round_decimals">
+			<value name="VALUE">
+				<shadow type="math_number">
+					<field name="NUM">5.22585</field>
+				</shadow>
+			</value>
+			<value name="DECIMALS">
+				<shadow type="math_number">
+					<field name="NUM">2</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_round">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">3.1</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_on_list"></block>
+		<block type="math_modulo">
+			<value name="DIVIDEND">
+				<shadow type="math_number">
+					<field name="NUM">64</field>
+				</shadow>
+			</value>
+			<value name="DIVISOR">
+				<shadow type="math_number">
+					<field name="NUM">10</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_constrain">
+			<value name="VALUE">
+				<shadow type="math_number">
+					<field name="NUM">50</field>
+				</shadow>
+			</value>
+			<value name="LOW">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="HIGH">
+				<shadow type="math_number">
+					<field name="NUM">100</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_random_int">
+			<value name="FROM">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="TO">
+				<shadow type="math_number">
+					<field name="NUM">100</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_random_float">
+		</block>
+	</category>
+	<category name="Text" i18n-text="Text">
+		<block type="text"></block>
+		<block type="text_join"></block>
+		<block type="text_append">
+			<value name="TEXT">
+				<shadow type="text"></shadow>
+			</value>
+		</block>
+		<block type="text_length">
+			<value name="VALUE">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_isEmpty">
+			<value name="VALUE">
+				<shadow type="text">
+					<field name="TEXT"></field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_indexOf">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">text</field>
+				</block>
+			</value>
+			<value name="FIND">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_charAt">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">text</field>
+				</block>
+			</value>
+		</block>
+		<block type="text_getSubstring">
+			<value name="STRING">
+				<block type="variables_get">
+					<field name="VAR">text</field>
+				</block>
+			</value>
+		</block>
+		<block type="text_changeCase">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_trim">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_print">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_prompt_ext">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+	</category>
+	<category name="List" i18n-text="List">
+		<block type="lists_create_with">
+			<mutation items="0"></mutation>
+		</block>
+		<block type="get_index_when"></block>
+		<block type="get_highest_value"></block>
+		<block type="get_lowest_value"></block>
+		<block type="lists_create_with"></block>
+		<block type="lists_repeat">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">5</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="lists_length"></block>
+		<block type="lists_isEmpty"></block>
+		<block type="lists_indexOf">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">list</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_getIndex">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">list</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_setIndex">
+			<value name="LIST">
+				<block type="variables_get">
+					<field name="VAR">list</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_getSublist">
+			<value name="LIST">
+				<block type="variables_get">
+					<field name="VAR">list</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_split">
+			<value name="DELIM">
+				<shadow type="text">
+					<field name="TEXT">,</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="lists_sort"></block>
+	</category>
+	<category name="Loops" i18n-text="Loops">
+		<block type="controls_repeat_ext"></block>
+		<block type="controls_repeat"></block>
+		<block type="controls_whileUntil"></block>
+		<block type="controls_for"></block>
+		<block type="controls_forEach"></block>
+		<block type="controls_flow_statements"></block>
+	</category>
+	<category name="Objects" i18n-text="Objects">
+		<block type="new_object">
+			<value name="PROPERTIES">
+				<block type="object_property">
+					<value name="VALUE">
+						<block type="text">
+							<field name="TEXT">value</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="object_property">
+			<value name="VALUE">
+				<block type="text">
+					<field name="TEXT">value</field>
+				</block>
+			</value>
+		</block>
+		<block type="get_property">
+			<value name="PROPERTY">
+				<block type="text">
+					<field name="TEXT">prop</field>
+				</block>
+			</value>
+			<value name="VAR">
+				<block type="variables_get">
+					<field name="VAR">object</field>
+				</block>
+			</value>
+		</block>
+		<block type="set_property">
+			<value name="VAR">
+				<block type="variables_get">
+					<field name="VAR">object</field>
+				</block>
+			</value>
+			<value name="PROPERTY">
+				<block type="text">
+					<field name="TEXT">prop</field>
+				</block>
+			</value>
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+		</block>
+		<block type="remove_property">
+			<value name="VAR">
+				<block type="variables_get">
+					<field name="VAR">object</field>
+				</block>
+			</value>
+			<value name="PROPERTY">
+				<block type="text">
+					<field name="TEXT">prop</field>
+				</block>
+			</value>
+		</block>
+	</category>
+	<category name="Variables" id="Variables" custom="VARIABLE" i18n-text="Variables"></category>
+	<category name="Functions" id="Functions" custom="PROCEDURE" i18n-text="Functions"></category>
+	<category name="Main Blocks" i18n-text="Main Blocks">
+		<category name="Trade Definition" i18n-text="Trade Definition">
+			<block type="trade"></block>
+			<block type="tradeOptions">
+				<value name="DURATION">
+					<shadow type="math_number">
+						<field name="NUM">5</field>
+					</shadow>
+				</value>
+				<value name="AMOUNT">
+					<shadow type="math_number">
+					</shadow>
+				</value>
+			</block>
+			<block type="tradeOptions_payout">
+				<value name="DURATION">
+					<shadow type="math_number">
+						<field name="NUM">5</field>
+					</shadow>
+				</value>
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Before Purchase" i18n-text="Before Purchase">
+			<block type="before_purchase"></block>
+			<block type="payout"></block>
+			<block type="ask_price"></block>
+			<block type="purchase"></block>
+		</category>
+		<category name="During Purchase" i18n-text="During Purchase">
+			<block type="during_purchase"></block>
+			<block type="check_sell"></block>
+			<block type="sell_price"></block>
+			<block type="sell_at_market"></block>
+		</category>
+		<category name="After Purchase" i18n-text="After Purchase">
+			<block type="after_purchase"></block>
+			<block type="contract_check_result"></block>
+			<block type="read_details"></block>
+			<block type="read_all_details"></block>
+			<block type="trade_again"></block>
+		</category>
+	</category>
+	<category name="Advanced" i18n-text="Advanced">
+		<category name="CopyTrading" i18n-text="Copy Trading">
+			<block type="copy_trading">
+				<value name="TOKENS">
+					<block type="lists_create_with"></block>
+				</value>
+			</block>
+		</category>
+		<category name="Virtual Trades" i18n-text="Virtual Trades">
+			<block type="virtual_config">
+				<value name="STATUS">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+				<value name="TOKEN">
+					<shadow type="text">
+						<field name="TEXT">Input your token here</field>
+					</shadow>
+				</value>
+				<value name="STEPSCOUNT">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+				<value name="RESETTYPE">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<value name="MINREAL">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="MAXREAL">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="BACKREAL">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="is_virtual"></block>
+			<block type="actual_virtual_step"></block>
+			<block type="max_virtual_steps"></block>
+			<block type="go_back_to_virtual"></block>
+			<block type="go_back_to_real"></block>
+			<block type="reset_steps"></block>
+		</category>
+		<category name="Account Details" i18n-text="Account Details">
+			<block type="account_email"></block>
+			<block type="account_loginid"></block>
+			<block type="account_name"></block>
+			<block type="account_type"></block>
+		</category>
+		<category name="Contracts" i18n-text="Contracts">
+			<block type="read_actual_details">
+				<field name="DETAIL_INDEX">4</field>
+			</block>
+		</category>
+	</category>
+	<category name="Risk Management" i18n-text="Risk Management">
+		<block type="risk_tradedefinitions">
+			<value name="TAKEPROFIT">
+				<shadow type="math_number">
+					<field name="NUM">3</field>
+				</shadow>
+			</value>
+			<value name="STOPLOSS">
+				<shadow type="math_number">
+					<field name="NUM">50</field>
+				</shadow>
+			</value>
+			<value name="MAXSTEPS">
+				<shadow type="math_number">
+					<field name="NUM">12</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="controls_if">
+			<value name="IF0">
+				<block type="risk_afterpurchase">
+					<value name="PROFIT">
+						<shadow type="read_details">
+							<field name="DETAIL_INDEX">4</field>
+						</shadow>
+					</value>
+				</block>
+			</value>
+			<statement name="DO0">
+          		<block type="trade_again"></block>
+        	</statement>
+		</block>
+	</category>
+	<category name="Money Management" i18n-text="Money Management">
+		<category name="Martingale" i18n-text="Martingale">
+			<block type="martingale_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="FACTOR">
+					<shadow type="math_number">
+						<field name="NUM">2.1</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">12</field>
+					</shadow>
+				</value>
+				<value name="STARTAFTER">
+					<shadow type="math_number">
+						<field name="NUM">0</field>
+					</shadow>
+				</value>
+				<value name="RESET">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="martingale_stake"></block>
+			<block type="martingale_afterpurchase">
+				<value name="RESULT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">11</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Martingale List" i18n-text="Martingale List">
+			<block type="martingale_list_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="FACTORS">
+					<block type="lists_create_with">
+						<mutation items="4"></mutation>
+						<value name="ADD0">
+							<shadow type="math_number" id="Ev2dRGvQ**Z;+b8sfZx[">
+								<field name="NUM">1</field>
+							</shadow>
+						</value>
+						<value name="ADD1">
+							<shadow type="math_number" id=".JkoG:-%W0xUqpHQ$cpu">
+								<field name="NUM">2</field>
+							</shadow>
+						</value>
+						<value name="ADD2">
+							<shadow type="math_number" id=",t]t=!r7+z0]{L|MSuzl">
+								<field name="NUM">3</field>
+							</shadow>
+						</value>
+						<value name="ADD3">
+							<shadow type="math_number" id=",t]t=!r7+z0]{L|MSuzl">
+								<field name="NUM">4</field>
+							</shadow>
+						</value>
+					</block>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">12</field>
+					</shadow>
+				</value>
+				<value name="STARTAFTER">
+					<shadow type="math_number">
+						<field name="NUM">0</field>
+					</shadow>
+				</value>
+				<value name="RESET">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="martingale_list_stake"></block>
+			<block type="martingale_list_afterpurchase">
+				<value name="RESULT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">11</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Stake List" i18n-text="Stake List">
+			<block type="stake_list_tradedefinitions">
+				<value name="FACTORS">
+					<block type="lists_create_with">
+						<mutation items="4"></mutation>
+						<value name="ADD0">
+							<shadow type="math_number" id="Ev2dRGvQ**Z;+b8sfZx[">
+								<field name="NUM">1</field>
+							</shadow>
+						</value>
+						<value name="ADD1">
+							<shadow type="math_number" id=".JkoG:-%W0xUqpHQ$cpu">
+								<field name="NUM">2</field>
+							</shadow>
+						</value>
+						<value name="ADD2">
+							<shadow type="math_number" id=",t]t=!r7+z0]{L|MSuzl">
+								<field name="NUM">3</field>
+							</shadow>
+						</value>
+						<value name="ADD3">
+							<shadow type="math_number" id=",t]t=!r7+z0]{L|MSuzl">
+								<field name="NUM">4</field>
+							</shadow>
+						</value>
+					</block>
+				</value>
+			</block>
+			<block type="stake_list_stake"></block>
+			<block type="stake_list_afterpurchase">
+				<value name="RESULT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">11</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Profit Compound" i18n-text="Profit Compound">
+			<block type="profitcompound_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="PERCENTAGE">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">5</field>
+					</shadow>
+				</value>
+				<value name="RESTART">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="profitcompound_stake"></block>
+			<block type="profitcompound_afterpurchase">
+				<value name="PROFIT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">4</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Masaniello" i18n-text="Masaniello">
+			<block type="masaniello_tradedefinitions">
+				<value name="STAKE">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="TRADES">
+					<shadow type="math_number">
+						<field name="NUM">30</field>
+					</shadow>
+				</value>
+				<value name="BALANCE">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+				<value name="PAYOUT">
+					<shadow type="math_number">
+						<field name="NUM">190</field>
+					</shadow>
+				</value>
+				<value name="WINRATE">
+					<shadow type="math_number">
+						<field name="NUM">60</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="masaniello_stake"></block>
+			<block type="controls_if">
+				<value name="IF0">
+					<block type="masaniello_afterpurchase">
+						<value name="RESULT">
+							<shadow type="read_all_details"></shadow>
+						</value>
+					</block>
+				</value>
+				<statement name="DO0">
+					<block type="trade_again"></block>
+				</statement>
+			</block>
+		</category>
+		<category name="Binary Martingale" i18n-text="Binary Martingale">
+			<block type="binarymartingale_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="FACTOR">
+					<shadow type="math_number">
+						<field name="NUM">2.1</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="USECUMULATIVE">
+					<shadow type="logic_boolean">
+						<field name="BOOL">FALSE</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="binarymartingale_stake"></block>
+			<block type="binarymartingale_afterpurchase">
+				<value name="RESULT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">11</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Smart Martingale" i18n-text="Smart Martingale">
+			<block type="smartmartingale_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="FACTOR">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<value name="STARTAFTER">
+					<shadow type="math_number">
+						<field name="NUM">0</field>
+					</shadow>
+				</value>
+				<value name="RESET">
+					<shadow type="logic_boolean">
+						<field name="BOOL">TRUE</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="smartmartingale_stake"></block>
+			<block type="smartmartingale_afterpurchase">
+				<value name="RESULT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">11</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Compound" i18n-text="Compound">
+			<block type="compound_tradedefinitions">
+				<value name="BASE">
+					<shadow type="math_number">
+						<field name="NUM">50</field>
+					</shadow>
+				</value>
+				<value name="PERCENTAGE">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="compound_stake"></block>
+			<block type="compound_afterpurchase">
+				<value name="PROFIT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">4</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Oscar's Grind" i18n-text="Oscar's Grind">
+			<block type="oscarsgrind_tradedefinitions">
+				<value name="WAGER">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="oscarsgrind_stake"></block>
+			<block type="oscarsgrind_afterpurchase">
+				<value name="DETAILS">
+					<shadow type="read_all_details"></shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Recover" i18n-text="Recover">
+			<block type="recover_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="PROFIT">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="STARTAFTER">
+					<shadow type="math_number">
+						<field name="NUM">0</field>
+					</shadow>
+				</value>
+				<value name="MAXSTEPS">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="recover_stake"></block>
+			<block type="recover_afterpurchase">
+				<value name="DETAILS">
+					<shadow type="read_all_details"></shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Equilibrium" i18n-text="Equilibrium">
+			<block type="equilibrium_tradedefinitions">
+				<value name="INITIAL">
+					<shadow type="math_number">
+						<field name="NUM">0.35</field>
+					</shadow>
+				</value>
+				<value name="FACTOR">
+					<shadow type="math_number">
+						<field name="NUM">2.2</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="equilibrium_stake"></block>
+			<block type="equilibrium_afterpurchase">
+				<value name="RESULT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">11</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+	</category>
+	<category name="Market Data" i18n-text="Market Data">
+		<category name="Digits" i18n-text="Digits">
+			<block type="last_digit"></block>
+			<block type="lastDigitList"></block>
+			<block type="get_decimals"></block>
+			<block type="digitpercentage">
+				<field name="DIGIT">0</field>
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="least_frequent_digit">
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="most_frequent_digit">
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="evenoddamount">
+				<field name="EVENORODD">Even</field>
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="are_the_last_digits_the_same">
+				<field name="DIGIT">same</field>
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Ticks" i18n-text="Ticks">
+			<block type="tick_analysis"></block>
+			<block type="tick"></block>
+			<block type="tick_string"></block>
+			<block type="ticks"></block>
+			<block type="ticks_string"></block>
+			<block type="amount_of_ticks_direction">
+				<field name="CHECK_DIRECTION">rise</field>
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">100</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+		<category name="Candles" i18n-text="Candles">
+			<block type="is_candle_black"></block>
+			<block type="ohlc_values_in_list"></block>
+			<block type="read_ohlc_obj"></block>
+			<block type="get_ohlc">
+				<value name="CANDLEINDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="ohlc"></block>
+			<block type="ohlc_values"></block>
+			<block type="read_ohlc">
+				<field name="OHLCFIELD_LIST">open</field>
+				<value name="CANDLEINDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="check_direction"></block>
+		</category>
+	</category>
+	<category name="Technical Analysis" i18n-text="Technical Analysis">
+		<category name="Indicators" i18n-text="Indicators">
+			<block type="adx">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="ADXFIELDS_LIST">adx</field>
+				<field name="RETURNADX">latest</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="ao">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="RETURNAO">latest</field>
+				<value name="FASTPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">5</field>
+					</shadow>
+				</value>
+				<value name="SLOWPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">34</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="aroon">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="AROONFIELDS_LIST">upper</field>
+				<field name="RETURNAROON">latest</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="atr">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="RETURNATR">latest</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="bb">
+				<field name="BBRESULT_LIST">upper</field>
+				<field name="RETURNBB">latest</field>
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+				<value name="MULTIPLIER">
+					<shadow type="math_number">
+						<field name="NUM">2</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="cci">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="RETURNCCI">latest</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="chop">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="RETURNCHOP">latest</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="ema">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNEMA">latest</field>
+			</block>
+			<block type="hma">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">9</field>
+					</shadow>
+				</value>
+				<field name="RETURNHMA">latest</field>
+			</block>
+			<block type="ichimokucloud">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="RETURNICHIMOKUCLOUD">latest</field>
+				<field name="ICHIMOKUCLOUD_LIST">base</field>
+				<value name="CONVERSIONPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">9</field>
+					</shadow>
+				</value>
+				<value name="BASEPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">26</field>
+					</shadow>
+				</value>
+				<value name="SPANPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">52</field>
+					</shadow>
+				</value>
+				<value name="DISPLACEMENT">
+					<shadow type="math_number">
+						<field name="NUM">26</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="kc">
+				<field name="BBRESULT_LIST">upper</field>
+				<field name="RETURNKC">latest</field>
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<value name="ATRPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+				<value name="MULTIPLIER">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="MAPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+				<block type="USESMA">
+					<shadow type="math_number">
+						<field name="BOOL">FALSE</field>
+					</shadow>
+				</block>
+			</block>
+			<block type="kst">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<field name="KSTFIELDS_LIST">kst</field>
+				<field name="RETURNKST">latest</field>
+				<value name="ROCPERIOD1">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="ROCPERIOD2">
+					<shadow type="math_number">
+						<field name="NUM">15</field>
+					</shadow>
+				</value>
+				<value name="ROCPERIOD3">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+				<value name="ROCPERIOD4">
+					<shadow type="math_number">
+						<field name="NUM">30</field>
+					</shadow>
+				</value>
+				<value name="SMAPERIOD1">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="SMAPERIOD2">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="SMAPERIOD3">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="SMAPERIOD4">
+					<shadow type="math_number">
+						<field name="NUM">15</field>
+					</shadow>
+				</value>
+				<value name="SIGNALPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="macda">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<field name="MACDFIELDS_LIST">histogram</field>
+				<field name="RETURNMACD">latest</field>
+				<value name="FAST_EMA_PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">12</field>
+					</shadow>
+				</value>
+				<value name="SLOW_EMA_PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">26</field>
+					</shadow>
+				</value>
+				<value name="SIGNAL_EMA_PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">9</field>
+					</shadow>
+				</value>
+				<block type="SIMPLE_MA_OSCILLATOR">
+					<shadow type="math_number">
+						<field name="BOOL">FALSE</field>
+					</shadow>
+				</block>
+				<block type="SIMPLE_MA_SIGNAL">
+					<shadow type="math_number">
+						<field name="BOOL">FALSE</field>
+					</shadow>
+				</block>
+			</block>
+			<block type="psar">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="RETURNPSAR">latest</field>
+				<value name="STEP">
+					<shadow type="math_number">
+						<field name="NUM">0.02</field>
+					</shadow>
+				</value>
+				<value name="MAX">
+					<shadow type="math_number">
+						<field name="NUM">0.2</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="roc">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<field name="RETURNROC">latest</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="rsi">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNRSI">latest</field>
+			</block>
+			<block type="sma">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNSMA">latest</field>
+			</block>
+			<block type="swma">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<field name="RETURNSWMA">latest</field>
+			</block>
+			<block type="stochastic">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="STOCHASTICFIELDS_LIST">k</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+				<value name="PERIODSIGNAL">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<field name="RETURNSTOCHASTIC">latest</field>
+			</block>
+			<block type="stochasticrsi">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<field name="STOCHASTICFIELDS_LIST">k</field>
+				<value name="RSIPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+				<value name="STOCHPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">14</field>
+					</shadow>
+				</value>
+				<value name="KPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<value name="DPERIOD">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<field name="RETURNSTOCHASTICRSI">latest</field>
+			</block>
+			<block type="supertrend">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<field name="SUPERTRENDFIELDS_LIST">direction</field>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<value name="FACTOR">
+					<shadow type="math_number">
+						<field name="NUM">3</field>
+					</shadow>
+				</value>
+				<field name="RETURNSUPERTREND">latest</field>
+			</block>
+			<block type="tma">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNTMA">latest</field>
+			</block>
+			<block type="trix">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNTRIX">latest</field>
+			</block>
+			<block type="wma">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNWMA">latest</field>
+			</block>
+			<block type="williamsr">
+				<value name="INPUT">
+					<block type="ohlc"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNWILLIAMSR">latest</field>
+			</block>
+			<block type="wema">
+				<value name="INPUT">
+					<block type="ticks"></block>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<field name="RETURNWEMA">latest</field>
+			</block>
+		</category>
+		<category name="Helpers" i18n-text="Helpers">
+			<block type="candle_body">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="candle_range">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="candle_wick">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="candle_upper_wick">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="candle_lower_wick">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="support_resistance">
+				<field name="SRFIELDS_LIST">support</field>
+				<field name="SOURCEFILEDS_LIST">candles</field>
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="PERIOD">
+					<shadow type="math_number">
+						<field name="NUM">20</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="cross">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<value name="INPUT1"></value>
+				<value name="INPUT2"></value>
+				<field name="CROSSTYPE">over</field>
+			</block>
+		</category>
+		<category name="Patterns" i18n-text="Patterns">
+			<block type="tick_direction">
+				<field name="DIRECTION">up</field>
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="shooting_star_pattern">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="inverted_hammer_pattern">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="hammer_pattern">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="hanging_man_pattern">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="bullish_engulfing">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="bearish_engulfing">
+				<value name="INDEX">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="bullish_fractal"></block>
+			<block type="bearish_fractal"></block>
+			<block type="last_n_ticks_same">
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">2</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="last_n_candles_same">
+				<value name="AMOUNT">
+					<shadow type="math_number">
+						<field name="NUM">2</field>
+					</shadow>
+				</value>
+			</block>
+		</category>
+	</category>
+	<category name="Utilities" i18n-text="Utilities">
+		<category name="Time" i18n-text="Time">
+			<block type="seconds_to_tf">
+				<field name="CANDLEINTERVAL_LIST">60</field>
+			</block>
+			<block type="epoch"></block>
+			<block type="is_new_candle">
+				<field name="CANDLEINTERVAL_LIST">60</field>
+			</block>
+			<block type="is_last_tick_of_candle">
+				<value name="SECONDS">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+				<field name="CANDLEINTERVAL_LIST">60</field>
+			</block>
+			<block type="totimestamp">
+				<value name="DATETIME">
+					<shadow type="text">
+						<field name="TEXT">yyyy-mm-dd hh:mm:ss</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="todatetime">
+				<value name="TIMESTAMP">
+					<shadow type="math_number">
+						<field name="NUM">0</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="timeout">
+				<value name="SECONDS">
+					<shadow type="math_number">
+						<field name="NUM">1</field>
+					</shadow>
+				</value>
+			</block>
+			<!-- <block type="sleep">
+				<value name="VALIDATION">
+					<block type="lists_create_with">
+						<mutation items="2"></mutation>
+						<value name="ADD0">
+							<block type="logic_boolean">
+								<field name="BOOL">TRUE</field>
+							</block>
+						</value>
+						<value name="ADD1">
+							<block type="logic_boolean">
+								<field name="BOOL">TRUE</field>
+							</block>
+						</value>
+					</block>
+				</value>
+				<value name="RETURN">
+					<block type="procedures_callreturn">
+						<mutation name="ReturnFromSleep">
+							<arg name="index"></arg>
+						</mutation>
+						<value name="ARG0">
+							<block type="logic_null"></block>
+						</value>
+					</block>
+				</value>
+			</block> -->
+			<block type="breakout"></block>
+			<block type="interval">
+				<statement name="TICKANALYSIS_STACK">
+					<block type="controls_if">
+						<value name="IF0">
+							<block type="logic_boolean">
+								<field name="BOOL">TRUE</field>
+							</block>
+						</value>
+						<statement name="DO0">
+							<block type="breakout"></block>
+						</statement>
+					</block>
+				</statement>
+			</block>
+		</category>
+		<category name="Misc." i18n-text="Misc.">
+			<block type="report" i18n-text="Report">
+				<value name="PROFIT">
+					<shadow type="read_details">
+						<field name="DETAIL_INDEX">4</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="stop_the_bot"></block>
+			<block type="balance"></block>
+			<block type="total_profit"></block>
+			<block type="total_profit_string"></block>
+			<block type="total_runs"></block>
+			<block type="total_wins"></block>
+			<block type="total_losses"></block>
+			<block type="notify">
+				<field name="NOTIFICATION_TYPE">success</field>
+				<value name="MESSAGE">
+					<shadow type="text">
+						<field name="TEXT">abc</field>
+					</shadow>
+				</value>
+			</block>
+			<block type="notify_telegram" id=":L;o$/S0X^2^nt%taS5}">
+				<value name="TELEGRAM_ACCESS_TOKEN">
+					<shadow type="text">
+						<field name="TEXT"></field>
+					</shadow>
+				</value>
+				<value name="TELEGRAM_CHAT_ID">
+					<shadow type="text">
+						<field name="TEXT"></field>
+					</shadow>
+				</value>
+				<value name="TELEGRAM_MESSAGE">
+					<shadow type="text" id="Blg?@.4Ebc6#:s7+f$oa">
+						<field name="TEXT">abc</field>
+					</shadow>
+				</value>
+			</block>
+			<!-- <block type="loader"></block> -->
+			<block type="block_holder"></block>
+			<block type="webhook">
+				<value name="WEBHOOK_URL">
+					<shadow type="text">
+						<field name="TEXT">https://example.com</field>
+					</shadow>
+				</value>
+				<value name="ADD0">
+					<block type="key_value_pair"></block>
+				</value>
+			</block>
+			<block type="key_value_pair"></block>
+		</category>
+	</category>
 </xml>

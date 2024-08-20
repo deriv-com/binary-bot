@@ -1,18 +1,21 @@
 /* eslint-disable no-underscore-dangle */
-import { translate } from '@i18n';
-import { expectValue } from '../shared';
+import {
+    translate
+} from '../../../i18n';
+import {
+    expectValue
+} from '../shared';
+import theme from '../../theme';
 
 Blockly.Blocks.webhook = {
     init() {
         this.jsonInit({
             message0: translate('Webhook URL: %1'),
-            args0: [
-                {
-                    type: 'input_value',
-                    name: 'WEBHOOK_URL',
-                },
-            ],
-            colour: '#dedede',
+            args0: [{
+                type: 'input_value',
+                name: 'WEBHOOK_URL',
+            }, ],
+            colour: theme.subBlockColor,
             previousStatement: null,
             nextStatement: null,
             tooltip: translate('Sends a POST request to a URL'),
@@ -51,7 +54,9 @@ Blockly.Blocks.webhook = {
         const containerBlock = workspace.newBlock('lists_create_with_container');
         containerBlock.initSvg();
 
-        let { connection } = containerBlock.getInput('STACK');
+        let {
+            connection
+        } = containerBlock.getInput('STACK');
         for (let i = 0; i < this.itemCount_; i++) {
             const itemBlock = workspace.newBlock('lists_create_with_item');
             itemBlock.initSvg();
@@ -71,7 +76,7 @@ Blockly.Blocks.webhook = {
         const connections = [];
         while (itemBlock) {
             connections.push(itemBlock.valueConnection_);
-            itemBlock = itemBlock?.nextConnection?.targetBlock?.();
+            itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
         }
         this.itemCount_ = connections.length;
         this.updateShape_(true);
@@ -99,7 +104,9 @@ Blockly.Blocks.webhook = {
                 if (!attachInput) {
                     return;
                 }
-                const { connection } = input;
+                const {
+                    connection
+                } = input;
                 const keypair = this.workspace.newBlock('key_value_pair', `keyvalue${i}`);
                 keypair.initSvg();
                 keypair.render();
@@ -113,6 +120,13 @@ Blockly.Blocks.webhook = {
         }
     },
     onchange: function onchange(ev) {
+        this.childBlocks_.map(a => {
+            if (a.isShadow_) {
+                a.svgPath_.style.fill = theme.underBlockColor;
+                a.svgPathDark_.style.display = 'none';
+                // a.svgGroup_.children[a.type === 'text' ? 4 : 3].children[0].style.fill = theme.shadowDefault;
+            }
+        });
         if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
             return;
         }
@@ -144,8 +158,13 @@ Blockly.JavaScript.webhook = block => {
         .filter(item => item !== null)
         .map(item => {
             const regExp = /^{(.*?)}$/;
-            return item?.match(regExp)[1];
+            return item && item.match(regExp)[1];
         });
 
     return `Bot.sendWebhook(${url}, {${params}});\n`;
 };
+
+
+
+// WEBPACK FOOTER //
+// ./src/botPage/view/blockly/blocks/tools/webhook.js

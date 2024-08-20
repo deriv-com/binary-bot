@@ -1,12 +1,23 @@
-import { translate } from '@i18n';
+// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#i7qkfj
+import {
+    translate
+} from '../../../i18n';
+import theme from '../../theme';
 
 Blockly.Blocks.block_holder = {
     init: function init() {
-        this.appendDummyInput().appendField(translate('Blocks inside are ignored'));
+        this.appendDummyInput().appendField(translate('Blocks inside are ignored'), 'titleWarn');
         this.appendStatementInput('USELESS_STACK').setCheck(null);
-        this.setColour('#fef1cf');
+        this.setColour(theme.warnColor);
         this.setTooltip(translate('Put your blocks in here to prevent them from being removed'));
-        this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
+    },
+    onchange: function onchange() {
+        Blockly.utils.addClass(this.getField('titleWarn').textElement_, 'title-warn-block');
     },
 };
 Blockly.JavaScript.block_holder = () => '';
+
+
+
+// WEBPACK FOOTER //
+// ./src/botPage/view/blockly/blocks/tools/block_holder.js

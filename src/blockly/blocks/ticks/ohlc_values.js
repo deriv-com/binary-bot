@@ -1,4 +1,4 @@
-import { translate } from '@i18n';
+import { translate } from '../../../i18n';
 import config from '@currency-config';
 import { mainScope } from '../../relationChecker';
 import candleInterval, { getGranularity } from './candleInterval';
@@ -11,7 +11,7 @@ Blockly.Blocks.ohlc_values = {
             .appendField(translate('values in candles list'));
         candleInterval(this);
         this.setOutput(true, 'Array');
-        this.setColour('#f2f2f2');
+        this.setColour('#162d41');               // Make a list of values in candle block colour <<<<<<<<//
         this.setTooltip(translate('Returns a list of the selected candle values'));
         this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
     },

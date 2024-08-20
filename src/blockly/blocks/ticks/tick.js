@@ -1,11 +1,11 @@
-import { translate } from '@i18n';
+import { translate } from '../../../i18n';
 import { mainScope } from '../../relationChecker';
 
 Blockly.Blocks.tick = {
     init: function init() {
         this.appendDummyInput().appendField(translate('Last Tick'));
         this.setOutput(true, 'Number');
-        this.setColour('#f2f2f2');
+        this.setColour('#162d41');                    // Last tick block colour <<<<<<//
         this.setTooltip(translate('Returns the tick value received by a before purchase block'));
         this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
     },
@@ -23,7 +23,7 @@ Blockly.Blocks.tick_string = {
     init: function init() {
         this.appendDummyInput().appendField(translate('Last Tick String'));
         this.setOutput(true, 'Number');
-        this.setColour('#f2f2f2');
+        this.setColour('#162d41');                  //last tick string block colour <<<<<<//
         this.setTooltip(translate('Returns the tick value received by a before purchase block (String)'));
         this.setHelpUrl('https://github.com/binary-com/binary-bot/wiki');
     },
